@@ -1,0 +1,4 @@
+/etc/rc.conf.local
+/etc/#rc.conf.local#
+/etc/pf.conf
+/etc/#pf.conf#
