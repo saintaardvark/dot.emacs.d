@@ -5,14 +5,15 @@
 
 ;; Author: Gabriel Saldana <gsaldana@gmail.com>
 ;; Last update: 2009-02-21
-;; Version: 0.4
+;; Version: 0.6
 ;; Keywords: identica web
-;; URL: http://blog.nethazard.net/2008/08/20/identica-mode-for-emacs/
+;; URL: http://blog.nethazard.net/identica-mode-for-emacs/
 ;; Contributors:
 ;;     Jason McBrayer <jmcbray@carcosa.net> (minor updates for working under Emacs 23)
 ;;     Alex Schröder <kensanata@gmail.com> (mode map patches)
 ;;     Christian Cheng (fixed long standing xml parsing bug)
 ;;     Carlos A. Perilla from denting-mode
+;;     Alberto Garcia <agarcia@igalia.com> (integrated patch from twittering-mode for retrieving multiplemethods)
 
 ;; Identica Mode is a major mode to check friends timeline, and update your
 ;; status on Emacs.
@@ -38,14 +39,19 @@
 
 ;; Installation
 
-;; Add the following to your .emacs or your prefered customizations file
+;; You can use M-x customize-group identica-mode to setup all settings or simply
+;; add the following to your .emacs or your prefered customizations file
 
 ;; (require 'identica-mode)
 ;; (setq identica-username "yourusername")
 ;; (setq identica-password "yourpassword")
 
 ;; If you want to post from the minibufer without having identica buffer active, add the following global keybinding.
+;; Add this to send status updates
 ;; (global-set-key "\C-cip" 'identica-update-status-interactive)
+;; Add this to send direct messages
+;; (global-set-key "\C-cid" 'identica-direct-message-interactive)
+
 
 ;; If you want to connect to a custom laconica server add this and change
 ;; identi.ca with your server's doman name.
@@ -58,8 +64,13 @@
 (require 'xml)
 (require 'parse-time)
 
-(defconst identica-mode-version "0.4")
+(defconst identica-mode-version "0.6")
 
+(defgroup identica-mode nil "Customize Identica Mode"
+  :tag "Microblogging"
+  :link '(url-link http://blog.nethazard.net/identica-mode-for-emacs/)
+  :group 'applications
+)
 (defun identica-mode-version ()
   "Display a message for identica-mode version."
   (interactive)
@@ -72,16 +83,41 @@
 (defvar identica-mode-map (make-sparse-keymap))
 
 (defvar identica-timer nil "Timer object for timeline refreshing will be stored here. DO NOT SET VALUE MANUALLY.")
+(defvar identica-last-timeline-retrieved nil)
 
-(defvar identica-idle-time 20)
+(defcustom identica-idle-time 20
+  "Idle time"
+  :type 'integer
+  :group 'identica-mode)
 
-(defvar identica-timer-interval 90)
+(defcustom identica-timer-interval 90
+  "Timer interval to refresh the timeline"
+  :type 'integer
+  :group 'identica-mode)
 
-(defvar identica-username nil)
+(defcustom identica-username nil
+  "Username"
+  :type 'string
+  :group 'identica-mode)
 
-(defvar identica-password nil)
+(defcustom identica-password nil
+  "Password"
+  :type 'string
+  :group 'identica-mode)
 
-(defvar laconica-server "identi.ca")
+(defcustom laconica-server "identi.ca"
+  "Laconica instance url"
+  :type 'string
+  :group 'identica-mode)
+
+(defcustom identica-default-timeline "friends_timeline"
+  "Default timeline to retrieve"
+  :type 'string
+  :options '("friends_timeline" "public_timeline" "replies")
+  :group 'identica-mode)
+
+;; Initialize with default timeline
+(defvar identica-method identica-default-timeline)
 
 (defvar identica-scroll-mode nil)
 (make-variable-buffer-local 'identica-scroll-mode)
@@ -89,8 +125,10 @@
 (defvar identica-jojo-mode nil)
 (make-variable-buffer-local 'identica-jojo-mode)
 
-(defvar identica-status-format nil)
-(setq identica-status-format "%i %s,  %@:\n  %t // from %f%L")
+(defcustom identica-status-format "%i %s,  %@:\n  %t // from %f%L"
+  "The format used to display the status updates"
+  :type 'string
+  :group 'identica-mode)
 ;; %s - screen_name
 ;; %S - name
 ;; %i - profile_image
@@ -109,18 +147,21 @@
 ;; %# - id
 
 (defvar identica-buffer "*identica*")
-(defun identica-buffer ()
+(defun identica-buffer (&optional method)
+  (unless method
+    (setq method "friends_timeline"))
   (identica-get-or-generate-buffer identica-buffer))
 
 (defvar identica-http-buffer "*identica-http-buffer*")
 (defun identica-http-buffer ()
   (identica-get-or-generate-buffer identica-http-buffer))
 
-(defvar identica-friends-timeline-data nil)
-(defvar identica-friends-timeline-last-update nil)
+(defvar identica-timeline-data nil)
+(defvar identica-timeline-last-update nil)
 
 (defvar identica-username-face 'identica-username-face)
 (defvar identica-uri-face 'identica-uri-face)
+(defvar identica-reply-face 'identica-reply-face)
 
 (defun identica-get-or-generate-buffer (buffer)
   (if (bufferp buffer)
@@ -193,7 +234,7 @@
 		(if (not (file-directory-p identica-tmp-dir))
 		    (make-directory identica-tmp-dir))
 		t)))))
-  (identica-render-friends-timeline))
+  (identica-render-timeline))
 
 (defun identica-scroll-mode (&optional arg)
   (interactive)
@@ -229,7 +270,7 @@
 
 
 (defvar identica-debug-mode nil)
-(defvar identica-debug-buffer "*debug*")
+(defvar identica-debug-buffer "*identica-debug*")
 (defun identica-debug-buffer ()
   (identica-get-or-generate-buffer identica-debug-buffer))
 (defmacro debug-print (obj)
@@ -251,7 +292,11 @@
 (if identica-mode-map
     (let ((km identica-mode-map))
       (define-key km "\C-c\C-f" 'identica-friends-timeline)
+      (define-key km "\C-c\C-r" 'identica-replies-timeline)
+      (define-key km "\C-c\C-g" 'identica-public-timeline)
+      (define-key km "\C-c\C-u" 'identica-user-timeline)
       (define-key km "\C-c\C-s" 'identica-update-status-interactive)
+      (define-key km "\C-c\C-d" 'identica-direct-message-interactive)
       (define-key km "\C-c\C-e" 'identica-erase-old-statuses)
       (define-key km "\C-m" 'identica-enter)
       (define-key km "\C-c\C-l" 'identica-update-lambda)
@@ -269,6 +314,7 @@
       (define-key km "p" 'identica-goto-previous-status-of-user)
       (define-key km [backspace] 'backward-char)
       (define-key km "G" 'end-of-buffer)
+      (define-key km "g" 'identica-current-timeline)
       (define-key km "H" 'beginning-of-buffer)
       (define-key km "i" 'identica-icon-mode)
       (define-key km "s" 'identica-scroll-mode)
@@ -293,8 +339,14 @@
     `((t nil)) "" :group 'faces)
   (copy-face 'font-lock-string-face 'identica-username-face)
   (set-face-attribute 'identica-username-face nil :underline t)
+  (defface identica-reply-face
+    `((t nil)) "" :group 'faces)
+  (copy-face 'font-lock-string-face 'identica-reply-face)
+  (set-face-attribute 'identica-reply-face nil :foreground "white")
+  (set-face-attribute 'identica-reply-face nil :background "DarkSlateGray")
   (defface identica-uri-face
     `((t nil)) "" :group 'faces)
+
   (set-face-attribute 'identica-uri-face nil :underline t)
   (add-to-list 'minor-mode-alist '(identica-icon-mode " id-icon"))
   (add-to-list 'minor-mode-alist '(identica-scroll-mode " id-scroll"))
@@ -320,8 +372,11 @@
       `(ucs-to-char ,num)
     `(decode-char 'ucs ,num)))
 
-(defvar identica-mode-string "Identica mode")
+(defvar identica-mode-string (concat"Identica mode " identica-method))
 
+(defun identica-set-mode-string ()
+  (setq mode-name (concat "Identica mode " identica-method))
+)
 (defvar identica-mode-hook nil
   "Identica-mode hook.")
 
@@ -336,7 +391,7 @@
   (setq major-mode 'identica-mode)
   (setq mode-name identica-mode-string)
   (set-syntax-table identica-mode-syntax-table)
-  (run-hooks 'identica-mode-hook)
+  (run-mode-hooks 'identica-mode-hook)
   (font-lock-mode -1)
   (identica-start)
   )
@@ -375,7 +430,7 @@
 	   (let ((nl "\r\n")
 		 request)
 	     (setq request
-		   (concat "GET http://" laconica-server "/api/" method-class "/" method
+		   (concat "GET https://" laconica-server "/api/" method-class "/" method
 			   ".xml?"
 			   (when parameters
 			     (concat "?"
@@ -430,13 +485,13 @@
 	     #'identica-cache-status-datum
 	     (reverse (identica-xmltree-to-status
 		       body)))
-	    (identica-render-friends-timeline)
+	    (identica-render-timeline)
 	    (message (if suc-msg suc-msg "Success: Get.")))
 	   (t (message status))))
       (message "Failure: Bad http response.")))
   )
 
-(defun identica-render-friends-timeline ()
+(defun identica-render-timeline ()
   (with-current-buffer (identica-buffer)
     (let ((point (point))
 	  (end (point-max)))
@@ -448,12 +503,13 @@
 	      (fill-region-as-paragraph
 	       (save-excursion (beginning-of-line) (point)) (point))
 	      (insert "\n"))
-	    identica-friends-timeline-data)
+	    identica-timeline-data)
       (if identica-image-stack
 	  (clear-image-cache))
       (setq buffer-read-only t)
       (debug-print (current-buffer))
       (goto-char (+ point (if identica-scroll-mode (- (point-max) end) 0))))
+      (identica-set-mode-string)
     ))
 
 (defun identica-format-status (status format-str)
@@ -609,7 +665,7 @@ PARAMETERS is alist of URI parameters. ex) ((\"mode\" . \"view\") (\"page\" . \"
        (let ((nl "\r\n")
 	     request)
 	 (setq  request
-		(concat "POST http://" laconica-server "/api/" method-class "/" method ".xml"
+		(concat "POST https://" laconica-server "/api/" method-class "/" method ".xml"
 			(when parameters
 			  (concat "?"
 				  (mapconcat
@@ -707,10 +763,10 @@ in tags."
     (replace-match "")))
 
 (defun identica-cache-status-datum (status-datum &optional data-var)
-  "Cache status datum into data-var(default identica-friends-timeline-data)
+  "Cache status datum into data-var(default identica-timeline-data)
 If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
   (if (null data-var)
-      (setf data-var 'identica-friends-timeline-data))
+      (setf data-var 'identica-timeline-data))
   (let ((id (cdr (assq 'id status-datum))))
     (if (or (null (symbol-value data-var))
 	    (not (find-if
@@ -764,7 +820,7 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
       (add-text-properties
        0 (length user-name)
        `(mouse-face highlight
-		    uri ,(concat "http://" laconica-server "/" user-screen-name)
+		    uri ,(concat "https://" laconica-server "/" user-screen-name)
 		    face identica-username-face)
        user-name)
 
@@ -773,7 +829,7 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
        0 (length user-screen-name)
        `(mouse-face highlight
 		    face identica-username-face
-		    uri ,(concat "http://" laconica-server "/" user-screen-name)
+		    uri ,(concat "https://" laconica-server "/" user-screen-name)
 		    face identica-username-face)
        user-screen-name)
 
@@ -801,10 +857,10 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 		   highlight
 		   face identica-uri-face
 		   uri ,(if screen-name
-			    (concat "http://" laconica-server "/" screen-name)
+			    (concat "https://" laconica-server "/" screen-name)
 			  (if group-name
-			      (concat "http://" laconica-server "/group/" group-name)
-			    (concat "http://" laconica-server "/tag/" tag-name)
+			      (concat "https://" laconica-server "/group/" group-name)
+			    (concat "https://" laconica-server "/tag/" tag-name)
 			    )))
 	       `(mouse-face highlight
 			    face identica-uri-face
@@ -821,15 +877,18 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 	    (add-text-properties
 	     0 (length source)
 	     `(mouse-face highlight
-			  uri ,uri
 			  face identica-uri-face
 			  source ,source)
 	     source)
 	    ))
 
 ;; Last update Thu Oct  2 19:03:12 2008 Gabriel Saldana
-      (setq identica-friends-timeline-last-update created-at)
+      (setq identica-timeline-last-update created-at)
 
+      ;; highlight replies
+      (if (string-match (concat "@" identica-username) text)
+	  (add-text-properties 0 (length text)
+			       `(face identica-reply-face) text))
       (mapcar
        (lambda (sym)
 	 `(,sym . ,(symbol-value sym)))
@@ -907,28 +966,52 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
       (funcall func)
       )))
 
-(defun identica-update-status-if-not-blank (status)
+(defun identica-update-status-if-not-blank (method-class method status &optional parameters)
   (if (string-match "^\\s-*\\(?:@[-_a-z0-9]+\\)?\\s-*$" status)
       nil
-    (identica-http-post "statuses" "update"
-			  `(("status" . ,status)
-			    ("source" . "identicamode")))
+    (if (equal method-class "statuses")
+	(identica-http-post method-class method
+			    `(("status" . ,status)
+			      ("source" . "emacs-identicamode")))
+      (identica-http-post method-class method
+			  `(("text" . ,status)
+			    ("user" . ,parameters) ;must change this to parse parameters as list
+			    ("source" . "emacs-identicamode"))))
+
     t))
 
-(defun identica-update-status-from-minibuffer (&optional init-str)
+(defun identica-update-status-from-minibuffer (&optional init-str method-class method parameters)
   (if (null init-str) (setq init-str ""))
-  (let ((status init-str) (not-posted-p t))
+  (let ((status init-str) (not-posted-p t) (user nil))
     (while not-posted-p
-      (setq status (read-from-minibuffer "status: " status nil nil nil nil t))
+      (if (null method-class)
+	  (progn (setq msgtype "Status")
+	   (setq method-class "statuses")
+	   (setq method "update"))
+	  (progn (setq msgtype "Direct message")
+	   (setq method-class "direct_messages")
+	   (setq parameters (read-from-minibuffer "To user: " user nil nil nil nil t))
+	   (setq method "new")))
+      (setq status (read-from-minibuffer (concat msgtype ": ") status nil nil nil nil t))
+      (while (<= 140 (length status))
+        (setq status (read-from-minibuffer (format (concat msgtype "(%d): ")
+                                                   (- 140 (length status)))
+                                           status nil nil nil nil t)))
       (setq not-posted-p
-	    (not (identica-update-status-if-not-blank status))))))
+	    (not (identica-update-status-if-not-blank method-class method status parameters))))))
+
+(defun identica-update-status-from-region (beg end)
+  (interactive "r")
+  (if (> (- end beg) 140) (setq end (+ beg 140)))
+  (if (< (- end beg) -140) (setq beg (+ end 140)))
+  (identica-update-status-if-not-blank ("statuses" "update" buffer-substring beg end)))
 
 (defun identica-update-lambda ()
   (interactive)
   (identica-http-post
    "statuses" "update"
    `(("status" . "\xd34b\xd22b\xd26f\xd224\xd224\xd268\xd34b")
-     ("source" . "identicamode"))))
+     ("source" . "emacs-identicamode"))))
 
 (defun identica-update-jojo (usr msg)
   (if (string-match "\xde21\xd24b\\(\xd22a\xe0b0\\|\xdaae\xe6cd\\)\xd24f\xd0d6\\([^\xd0d7]+\\)\xd0d7\xd248\xdc40\xd226"
@@ -939,7 +1022,7 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 		       "@" usr " "
 		       (match-string-no-properties 2 msg)
 		       "\xd0a1\xd24f\xd243!?"))
-	 ("source" . "identicamode")))))
+	 ("source" . "emacs-identicamode")))))
 
 ;;;
 ;;; Commands
@@ -948,7 +1031,7 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 (defun identica-start (&optional action)
   (interactive)
   (if (null action)
-      (setq action #'identica-friends-timeline))
+      (setq action #'identica-current-timeline))
   (if identica-timer
       nil
     (setq identica-timer
@@ -961,19 +1044,22 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
   (cancel-timer identica-timer)
   (setq identica-timer nil))
 
-(defun identica-friends-timeline ()
-  (interactive)
+(defun identica-get-timeline ()
+  (if (not (eq identica-last-timeline-retrieved identica-method))
+      (setq identica-timeline-last-update nil
+	    identica-timeline-data nil))
+  (setq identica-last-timeline-retrieved identica-method)
   (let ((buf (get-buffer identica-buffer)))
     (if (not buf)
 	(identica-stop)
-       (if (not identica-friends-timeline-last-update)
-	   (identica-http-get "statuses" "friends_timeline")
+       (if (not identica-timeline-last-update)
+	   (identica-http-get "statuses" identica-method)
 	 (let* ((system-time-locale "C")
 		(since
 		  (identica-global-strftime
 		   "%a, %d %b %Y %H:%M:%S GMT"
-		   identica-friends-timeline-last-update)))
-	   (identica-http-get "statuses" "friends_timeline"
+		   identica-timeline-last-update)))
+	   (identica-http-get "statuses" identica-method
 			       `(("since" . ,since))
 				)))))
 
@@ -996,22 +1082,51 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 	       (save-excursion
 		 (set-buffer (identica-wget-buffer))
 		 )))))))
+(defun identica-friends-timeline ()
+  (interactive)
+  (setq identica-method "friends_timeline")
+  (identica-get-timeline))
+
+(defun identica-replies-timeline ()
+  (interactive)
+  (setq identica-method "replies")
+  (identica-get-timeline))
+
+(defun identica-public-timeline ()
+  (interactive)
+  (setq identica-method "public_timeline")
+  (identica-get-timeline))
+
+(defun identica-user-timeline ()
+  (interactive)
+  (setq identica-method "user_timeline")
+  (identica-get-timeline))
+
+(defun identica-current-timeline ()
+  (interactive)
+  (identica-get-timeline))
 
 (defun identica-update-status-interactive ()
   (interactive)
   (identica-update-status-from-minibuffer))
 
+(defun identica-direct-message-interactive ()
+  (interactive)
+  (identica-update-status-from-minibuffer nil "direct_messages" "new"))
+
 (defun identica-erase-old-statuses ()
   (interactive)
-  (setq identica-friends-timeline-data nil)
-  (if (not identica-friends-timeline-last-update)
-      (identica-http-get "statuses" "friends_timeline")
+  (setq identica-timeline-data nil)
+  (if (not identica-last-timeline-retrieved)
+      (setq identica-last-timeline-retrieved identica-method))
+  (if (not identica-timeline-last-update)
+      (identica-http-get "statuses" identica-last-timeline-retrieved)
     (let* ((system-time-locale "C")
 	   (since
 	     (identica-global-strftime
 	      "%a, %d %b %Y %H:%M:%S GMT"
-	      identica-friends-timeline-last-update)))
-      (identica-http-get "statuses" "friends_timeline"
+	      identica-timeline-last-update)))
+      (identica-http-get "statuses" identica-last-timeline-retrieved
 			    `(("since" . ,since))
 			   ))))
 
@@ -1044,7 +1159,7 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 
 (defun identica-get-password ()
   (or identica-password
-      (setq identica-password (read-passwd "identica-mode: "))))
+      (setq identica-password (read-passwd "password: "))))
 
 (defun identica-goto-next-status ()
   "Go to next status."
@@ -1125,7 +1240,7 @@ If STATUS-DATUM is already in DATA-VAR, return nil. If not, return t."
 
 (defun identica-get-status-url (id)
   "Generate status URL."
-  (format "http://%s/notice/%d" laconica-server id))
+  (format "https://%s/notice/%d" laconica-server id))
 
 ;;;###autoload
 (defun identica ()
