@@ -47,4 +47,7 @@
 
 (global-set-key (kbd "<f9> y")	'x-hugh-boxquote-yank-and-indent)
 
+; Markdown mode
+(define-key markdown-mode-map (kbd "C-c l") 'x-hugh-markdown-footnote)
+
 (provide 'x-hugh-keymap)

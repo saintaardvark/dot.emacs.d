@@ -393,6 +393,32 @@ If POINT is nil then called on (point)."
   (setq point (point))
   (message "%s" (text-properties-at point)))
 
+(defun x-hugh-markdown-footnote (description)
+  "Add a footnote in Markdown mode at the *end* of the buffer.
+
+Uses numbers for links."
+  (interactive "sDescription: ")
+  (let ((current-line (line-number-at-pos))
+	(last-line (line-number-at-pos (point-max)))
+	(link (read-string "Link: "))
+	(link-number (x-hugh-get-next-link-number)))
+    (save-excursion
+      (if (> (- last-line current-line) 1)
+	  ()
+	(insert-string "\n"))
+      (goto-char (point-max))
+      (insert-string (format "\n[%d]: %s" link-number link)))
+    (insert-string (format "[%s][%d]" description link-number))))
+
+(defun x-hugh-get-next-link-number ()
+  "Figure out the number for the next link."
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (beginning-of-line)
+    (if (looking-at "\\[\\([0-9]\\)]:")
+	(eval (+ 1 (string-to-number (match-string 1))))
+      (eval 0))))
 
 (provide 'x-hugh-functions)
 
