@@ -4,6 +4,8 @@
 (server-start)
 (setq default-major-mode 'text-mode)
 
+(wg-load "~/.emacs.d/workgroups-save.el")
+
 ;; Lastly, like fortune:
 (totd)
 
