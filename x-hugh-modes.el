@@ -32,6 +32,8 @@
 (setq load-path  (cons (expand-file-name "~/.emacs.d/magit/") load-path))
 (require 'magit nil 'noerror)
 
+(require 'markdown-mode nil 'noerror)
+
 (add-hook 'twiki-org-load-hook (longlines-mode))
 
 ;; Perl
