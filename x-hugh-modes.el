@@ -116,7 +116,9 @@
 
 (setq w3m-p (executable-find "w3m"))
 (if w3m-p
-    (require 'w3m-load) nil 'noerror)
+    (progn
+      (add-to-list 'load-path "~/.emacs.d/w3m")
+      (require 'w3m) nil 'noerror))
 
 ;; FIXME: Move to modes.
 (setq load-path (cons "~/.emacs.d/twittering-mode" load-path))
