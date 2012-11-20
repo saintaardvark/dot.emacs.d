@@ -18,8 +18,9 @@
 (require 'x-hugh-cfengine)
 (require 'x-hugh-settings)
 (require 'x-hugh-reference)
+(require 'x-hugh-modes)
 (require 'x-hugh-keymap)
 ;; Any startup things (server-start), etc.
-(require 'x-hugh-startup)
+(require 'x-hugh-finally)
 
 (provide 'x-hugh-init)
