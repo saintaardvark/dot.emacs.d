@@ -10,5 +10,4 @@
 (totd)
 
 
-(provide 'x-hugh-startup)
-
+(provide 'x-hugh-finally)
