@@ -3,6 +3,19 @@
 
 ;; Use post for Mutt.
 (require 'post nil 'noerror)
+;; Tell it manually to just use goddamn server-edit, not
+;; save-buffers-kill-emacs.
+
+;; If you look at where post-finish gets defined, it's looking to see
+;; if server-edit is fboundp to anything; if not, it falls through to
+;; save-buffers-kill-emacs.  However, I think what's happening is that
+;; server-edit is not bound to anything until after post is loaded --
+;; which is seriously fucking with my use of Mutt and having an Emacs
+;; daemon hanging around all the time.  This is new behaviour as of
+;; 24.2; not sure what is different.  This is ugly but it works.
+
+(fset 'post-finish 'server-edit)
+
 (add-to-list 'auto-mode-alist '("mutt.*$" . post-mode))
 
 ;; Use scp for tramp.
