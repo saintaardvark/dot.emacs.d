@@ -432,9 +432,13 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
   (interactive)
   (save-excursion
     (goto-char (point-max))
+;    (goto-char (search-backward-regexp "^[^\\s-]+$" (point-min) t))
+    (goto-char (search-backward-regexp (rx bol "[") (point-min) t))
     (beginning-of-line)
-    (if (looking-at "\\[\\([0-9]\\)]:")
-	(eval (+ 1 (string-to-number (match-string 1))))
+    (if (looking-at "\\[\\([0-9]+\\)]:")
+	(progn
+	  (message (match-string 1))
+	  (eval (+ 1 (string-to-number (match-string 1)))))
       (eval 0))))
 
 (provide 'x-hugh-functions)
