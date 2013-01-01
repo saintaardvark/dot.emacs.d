@@ -403,9 +403,9 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 	(link (read-string "Link: "))
 	(link-number (x-hugh-get-next-link-number))
 	(first-prefix
-	 (if (equal imgplease nil)
+	 (if (equal imgplease 1)
 	     (setq first-prefix "[")
-	   (setq first-prefix "![")))))
+	   (setq first-prefix "!["))))
     (save-excursion
       (if (> (- last-line current-line) 1)
 	  ()
