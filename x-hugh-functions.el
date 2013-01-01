@@ -426,7 +426,7 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 	  (insert-string "[")
 	  (goto-char pos2)
 	  (insert-string (format "][%d]" link-number)))
-      (insert-string (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number))))
+      (insert-string (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
 
 (defun x-hugh-get-next-link-number ()
   "Figure out the number for the next link."
