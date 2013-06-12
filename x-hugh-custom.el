@@ -1,8 +1,8 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "/home/aardvark/.emacs.d/backups/"))))
  '(c-basic-offset 8)
  '(calendar-offset 0)
@@ -20,6 +20,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(iswitchb-prompt-newbuffer nil)
  '(midnight-mode t nil (midnight))
+ '(org-agenda-columns-add-appointments-to-effort-sum t)
  '(org-agenda-files (quote ("~/.orgmode/home.org")))
  '(org-log-into-drawer t)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-habit org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m)))
@@ -37,8 +38,8 @@
  '(w3m-use-cookies t)
  '(wg-morph-on nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
