@@ -448,4 +448,17 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 	      ()))
 	(eval 0)))))
 
+(defun x-hugh-wiki-attach-file-to-wiki-page (filename)
+  "This is my way of doing things."
+  (interactive "fAttach file: ")
+  ;; doubled slash, but this makes it clear
+  (let* ((page-name (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
+	  (local-attachments-dir (format "%s/attachments/%s" (file-name-directory (buffer-file-name)) page-name))
+	   (attachment-file (file-name-nondirectory filename))
+	    (attachment-url (format "http://saintaardvarkthecarpeted.com/attachments/%s/%s" page-name attachment-file)))
+    (make-directory local-attachments-dir 1)
+    (copy-file filename local-attachments-dir 1)
+    (insert-string (format "[[%s|%s]]" attachment-file attachment-url))))
+
+
 (provide 'x-hugh-functions)
