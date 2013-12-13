@@ -313,12 +313,6 @@ Returns nil if no differences found, 't otherwise."
 (defun x-hugh-chronicle-new-blog-entry (title)
   "A Small but Useful(tm) function to make a new blog entry in Chronicle."
   (interactive "sTitle: ")
-  ;; (let (filename (downcase title))
-  ;;   (; convert spaces to underscores
-  ;;    ; strip out non-[a-zA-Z0-9]
-  ;;    insert filename))
-  ;; (let (filename (downcase title))
-  ;;   message filename)
   (setq filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title)))
   (message filename)
   (find-file (concat "/home/aardvark/blog/" (format-time-string "%Y-%m") "/" filename ".mdwn"))
@@ -329,19 +323,6 @@ Returns nil if no differences found, 't otherwise."
 (defun x-hugh-chronicle-list-tags ()
   "A Small but Useful9tm) function to list the tags available for Chronicle."
   (interactive)
-;; That works, but it's dirt-simple and doesn't have the title "Tags:" anywhere
-;;  (list-directory "/home/aardvark/public_html/blog/tags"))
-;;
-;; This works, but: it's just a cherry-picking of a couple lines from
-;; list-directory().  1) That seems like a duplication of effort 2)
-;; list-directory() is actually a lot more complicated, and I don't know why.
-;;
-;; Aha: stuff like terpri and princ appear to go back to initial CVS
-;; commit in '91, and doubtless long before that...so that's that.
-;;
-;; But why does with-output-to-temp-buffer(), when run on its own, not
-  ;; output to temp buffer?  instead, it seems to put it into the
-  ;; current buffer.
   (with-output-to-temp-buffer "*Blog tags*"
     (with-current-buffer "*Blog tags*"
       (insert-directory "/home/aardvark/public_html/blog/tags" "-CF"))))
