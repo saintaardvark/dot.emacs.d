@@ -315,7 +315,7 @@ Returns nil if no differences found, 't otherwise."
   (interactive "sTitle: ")
   (setq filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title)))
   (message filename)
-  (find-file (concat "/home/aardvark/blog/" (format-time-string "%Y-%m") "/" filename ".mdwn"))
+  (find-file (concat "/home/aardvark/blog/input/" (format-time-string "%Y-%m") "/" filename ".mdwn"))
   (insert (format "Title: %s\n" title))
   (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
   (insert (format "Tags: \n\n")))
@@ -325,14 +325,14 @@ Returns nil if no differences found, 't otherwise."
   (interactive)
   (with-output-to-temp-buffer "*Blog tags*"
     (with-current-buffer "*Blog tags*"
-      (insert-directory "/home/aardvark/public_html/blog/tags" "-CF"))))
+      (insert-directory "/home/aardvark/blog/output/tags" "-CF"))))
 
 (defun x-hugh-chronicle-add-tag ()
   (interactive)
 ;; This turns out to be surprisingly simple
   (insert
    (completing-read "Tag: "
-		    (directory-files "/home/aardvark/public_html/blog/tags"))))
+		    (directory-files "/home/aardvark/blog/output/tags"))))
 
 (defun x-hugh-boxquote-yank-and-indent ()
   "My attempt to combine boxquote-yank and indent.
