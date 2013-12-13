@@ -422,4 +422,8 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 	  (eval (+ 1 (string-to-number (match-string 1)))))
       (eval 0))))
 
+(fset 'x-hugh-fix-epub-pdf-paragraph-breaks
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([67108896 19 32 60 47 112 62 13 24 24 134217765 60 47 112 62 return return 33 60 47 112 62 24 24 134217830 134217830 134217830 6 6 134217765 60 112 32 99 108 97 115 115 61 34 99 97 108 105 98 114 101 49 34 62 return return 33 24 24 19 60 47 112 62 13 return backspace 14 1] 0 "%d")) arg)))
+
+
 (provide 'x-hugh-functions)
