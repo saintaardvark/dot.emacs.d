@@ -384,15 +384,16 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 	(link (read-string "Link: "))
 	(link-number (x-hugh-get-next-link-number))
 	(first-prefix
-	 (if (equal imgplease nil)
+	 (if (equal imgplease 1)
 	     (setq first-prefix "[")
-	   (setq first-prefix "![")))))
+	   (setq first-prefix "!["))))
     (save-excursion
       (if (> (- last-line current-line) 1)
 	  ()
 	(insert-string "\n"))
       (goto-char (point-max))
-      (goto-char (search-backward-regexp (rx bol "[") (point-min) t))
+      (if (search-backward-regexp (rx bol "[") (point-min) t)
+	  ())
       (forward-line)
       (if (looking-at (rx bol))
 	  ()
@@ -406,21 +407,40 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 	  (insert-string "[")
 	  (goto-char pos2)
 	  (insert-string (format "][%d]" link-number)))
-      (insert-string (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number))))
+      (insert-string (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
 
 (defun x-hugh-get-next-link-number ()
   "Figure out the number for the next link."
   (interactive)
   (save-excursion
     (goto-char (point-max))
-;    (goto-char (search-backward-regexp "^[^\\s-]+$" (point-min) t))
-    (goto-char (search-backward-regexp (rx bol "[") (point-min) t))
     (beginning-of-line)
     (if (looking-at "\\[\\([0-9]+\\)]:")
 	(progn
 	  (message (match-string 1))
 	  (eval (+ 1 (string-to-number (match-string 1)))))
-      (eval 0))))
+      ; else:
+      (if (search-backward-regexp (rx bol "[") (point-min) t)
+	  (progn
+	    (if (looking-at "\\[\\([0-9]+\\)]:")
+		(progn
+		  (message (match-string 1))
+		  (eval (+ 1 (string-to-number (match-string 1)))))
+	      ()))
+	(eval 0)))))
+
+(defun x-hugh-wiki-attach-file-to-wiki-page (filename)
+  "This is my way of doing things."
+  (interactive "fAttach file: ")
+  ;; doubled slash, but this makes it clear
+  (let* ((page-name (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
+	  (local-attachments-dir (format "%s/attachments/%s" (file-name-directory (buffer-file-name)) page-name))
+	   (attachment-file (file-name-nondirectory filename))
+	    (attachment-url (format "http://saintaardvarkthecarpeted.com/attachments/%s/%s" page-name attachment-file)))
+    (make-directory local-attachments-dir 1)
+    (copy-file filename local-attachments-dir 1)
+    (insert-string (format "[[%s|%s]]" attachment-file attachment-url))))
+
 
 (fset 'x-hugh-fix-epub-pdf-paragraph-breaks
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([67108896 19 32 60 47 112 62 13 24 24 134217765 60 47 112 62 return return 33 60 47 112 62 24 24 134217830 134217830 134217830 6 6 134217765 60 112 32 99 108 97 115 115 61 34 99 97 108 105 98 114 101 49 34 62 return return 33 24 24 19 60 47 112 62 13 return backspace 14 1] 0 "%d")) arg)))
