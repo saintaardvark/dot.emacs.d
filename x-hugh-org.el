@@ -35,4 +35,13 @@
   (org-insert-heading-after-current)
   (insert-string (format "RT #%d -- " ticket)))
 
+(setq org-fontify-done-headline t)
+(custom-set-faces
+ '(org-done ((t (:foreground "PaleGreen"
+                 :weight normal
+                 :strike-through t))))
+ '(org-headline-done
+            ((((class color) (min-colors 16) (background dark))
+               (:foreground "LightSalmon" :strike-through t)))))
+
 (provide 'x-hugh-org)
