@@ -3,9 +3,11 @@
 (defun x-hugh-reload-dot-emacs ()
   (interactive)
   (load-file "~/.emacs"))
+
 (defun x-hugh-edit-dot-emacs ()
   (interactive)
-  (find-file "~/.emacs"))
+  (find-file (completing-read "File: "
+			      (directory-files "/home/hugh/.emacs.d/" t "x-hugh-"))))
 
 (defun x-hugh-delete-to-sig ()
   "Delete from point to signature.
@@ -54,6 +56,17 @@ idiom for working on region or current word."
   (interactive)
   (x-hugh-tag-quote-dwim "<blockquote>"))
 
+(defun x-hugh-wiki-attach-file-to-wiki-page (filename)
+  "This is my way of doing things."
+  (interactive "fAttach file: ")
+  ;; doubled slash, but this makes it clear
+  (let* ((page-name (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
+	 (local-attachments-dir (format "%s/attachments/%s" (file-name-directory (buffer-file-name)) page-name))
+	 (attachment-file (file-name-nondirectory filename))
+	 (attachment-url (format "https://noc.chibi.ubc.ca/wiki/attachments/%s/%s" page-name attachment-file)))
+    (make-directory local-attachments-dir 1)
+    (copy-file filename local-attachments-dir 1)
+    (insert-string (format "[[%s|%s]]" attachment-file attachment-url))))
 
 (defun x-hugh-email-rt (&optional arg ticket)
   "A Small but Useful(tm) function to email RT about a particular ticket. Universal argument to make it Bcc."
@@ -67,22 +80,36 @@ idiom for working on region or current word."
     (search-forward "Subject:")
     (insert-string (format " [rt.chibi.ubc.ca #%d] " ticket))))
 
-(defun x-hugh-email-rt-dwim ()
-  "A Small but Useful(tm) function to email RT about a particular ticket.
-  Will do its best to figure out the ticket number on its own, and prompt if needed; and will send a Bcc: if it looks like there's already a To: address."
+(defun x-hugh-new-rt-email ()
+  "A Small but Useful(tm) function to send an email to RT for a new ticket."
   (interactive)
   (save-excursion
     (goto-char (point-min))
     (search-forward "To:")
-    (if (search-forward "@" (line-end-position) t)
+    (insert-string " help@chibi.ubc.ca")))
+
+(defun x-hugh-email-rt-dwim (&optional arg)
+  "A Small but Useful(tm) function to email RT about a particular ticket. Universal argument to send to rt instead of rt-comment.
+
+  Will do its best to figure out the ticket number on its own, and prompt if needed; and will send a Bcc: if it looks like there's already a To: address."
+  (interactive "P\n")
+  (if arg
+      (setq sendto "rt")
+    (setq sendto "rtc"))
+  (save-excursion
+    (goto-char (point-min))
+    (search-forward "To:")
+    (if (search-forward-regexp "\\w" (line-end-position) t)
 	(progn
 	  (search-forward "Bcc:")
-	  (insert-string " rtc"))
-      (insert-string " rtc"))
+	  (insert-string (format " %s" sendto)))
+      (insert-string  (format " %s" sendto)))
     (search-forward "Subject:")
     (if (search-forward "[rt.chibi.ubc.ca #" (line-end-position) t)
 	()
-      (insert-string (format " [rt.chibi.ubc.ca #%s] " (read-string "Ticket: "))))))
+      (insert-string
+       (format " [rt.chibi.ubc.ca #%s] "
+	       (read-string "Ticket: " nil nil (format "%s" (x-hugh-clocked-into-rt-ticket-number-only))))))))
 
 ; Not ideal, but a good start.
 ; TODO:
@@ -105,6 +132,15 @@ idiom for working on region or current word."
 ;; Gah, this is awful
 (fset 'x-hugh-yank-and-uncomment-region
    [?\C-y ?\C-x ?\C-x ?\M-x ?u ?n ?c ?o ?m ?m ?e ?n ?t ?- ?r ?e tab return ?\C-x ?\C-x])
+
+(defun x-hugh-show-rt-tickets-queue (searchqueue)
+  "Show list of tickets owned by me and status open or new."
+  (interactive "sQueue: ")
+  (rt-liber-browse-query
+   (rt-liber-compile-query
+    (and (queue searchqueue)
+	 (not (status "resolved"))))))
+
 (defun x-hugh-show-rt-tickets ()
   "Show list of tickets owned by me and status open or new."
   (interactive)
@@ -115,7 +151,7 @@ idiom for working on region or current word."
 	     (status "new"))))))
 
 (defun x-hugh-show-rt-tickets-2 ()
-  "Show list of tickets owned by me and status open or new."
+  "Show list of tickets, status open or new, owned by anyone."
   (interactive)
   (rt-liber-browse-query
    (rt-liber-compile-query
@@ -181,22 +217,14 @@ See https://dgl.cx/2008/10/wikipedia-summary-dns for details.
   (interactive)
   (message "Hello, world!"))
 
-(defun x-hugh-figl ()
-  (interactive)
-  (find-grep-dired))
-
 (defun x-hugh-open-chibi-account-file ()
   (interactive)
   (find-file "~/chibi/chibi-acc.gpg"))
 
-
 (defun x-hugh-figl (regex)
   "A Small but Useful(tm) shortcut for find-grep-dired, like my figl alias."
-
   (interactive "sRegex: ")
   (find-grep-dired "." regex))
-(global-set-key "\C-cf" 'x-hugh-figl)
-
 
 (defun mrc-dired-do-command (command)
   "Run COMMAND on marked files. Any files not already open will be opened.
@@ -347,8 +375,8 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 (defun x-hugh-ticket-into-org (&optional point)
   "A Small but Useful(tm) function to insert an RT ticket into Org.
 
-If POINT is nil then called on (point)."
-  (interactive)
+If POINT is nil then called on (point).  If called with arg, check in as well."
+  (interactive "P")
   (when (not point)
     (setq point (point)))
   ;; (let ((id (rt-liber-browser-ticket-id-at-point)))
@@ -358,8 +386,25 @@ If POINT is nil then called on (point)."
     (setq id (rt-liber-browser-ticket-id-at-point))
     (save-excursion
       (set-buffer "all.org")
-      (goto-char (point-max))
-      (insert (format "** RT #%s -- %s" id subject)))))
+      (goto-char (point-min))
+      (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
+	  (message "Already in org!")
+	(progn
+	  (goto-char (point-max))
+	  (if (bolp)
+	      ()
+	    (insert "\n"))
+	  (insert (format "** RT #%s -- %s\n" id subject))))
+      (if arg
+	  (org-clock-in)))))
+
+(defun x-hugh-unixify-buffer ()
+  "Convert from whatever (ie, DOS) to unix-undecided.
+
+I can never remember how to do this."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-unix)
+  (save-buffer))
 
 (defun x-hugh-get-rt-ticket-subject ()
   "Get RT ticket subject."
@@ -374,39 +419,82 @@ If POINT is nil then called on (point)."
   (setq point (point))
   (message "%s" (text-properties-at point)))
 
+(defun x-hugh-set-appearance ()
+  "Reload x-hugh-appearance.el."
+  (interactive)
+  (load-file "/home/hugh/.emacs.d/x-hugh-appearance.el"))
+
+(defun x-hugh-insert-wiki-rt-link (ticket)
+  (interactive "nTicket: ")
+  (insert-string (format "[[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]" ticket ticket)))
+
+(defun x-hugh-insert-wiki-rt-link-as-detailed-in (ticket)
+  (interactive "nTicket: ")
+  (insert-string (format "As detailed in [[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]," ticket ticket)))
+
+(defun x-hugh-blog-entry (title)
+  "A Small but Useful(tm) function to make a new blog entry in Markdown format."
+  (interactive "sTitle: ")
+  (condition-case nil
+      (wg-switch-to-index-1)
+    (error nil))
+  (delete-other-windows)
+  (find-file   (format-time-string "/home/hugh/SysadminWiki/blog/%B%Y.mdwn"))
+  (end-of-buffer)
+  (insert (format "\n\n## %s" title))
+  (insert "\n\n\n\n-- main.hugh ")
+  (x-hugh-insert-date)
+  (previous-line 2))
+
+(defun x-hugh-open-blog-page ()
+  "A Small but Useful(tm) function to open this month's blog page."
+  (interactive)
+  (condition-case nil
+      (wg-switch-to-index-1)
+    (error nil))
+  (delete-other-windows)
+  (find-file   (format-time-string "/home/hugh/SysadminWiki/blog/%B%Y.mdwn"))
+  (end-of-buffer)
+  (previous-line 2))
+
+(defun x-hugh-align-cf3-promise (beg end)
+  "Align a Cf3 promise on '=>'.  FIXME: Not working yet"
+  (interactive "r")
+  (align-regexp beg end "=\\>"))
+
 (defun x-hugh-markdown-footnote (&optional imgplease)
   "Add a footnote in Markdown mode at the *end* of the buffer.
 
 Uses numbers for links. Linkify the region if region active. Prefix means make it an image."
   (interactive "p")
   (let ((current-line (line-number-at-pos))
-	(last-line (line-number-at-pos (point-max)))
-	(link (read-string "Link: "))
-	(link-number (x-hugh-get-next-link-number))
-	(first-prefix
-	 (if (equal imgplease 1)
-	     (setq first-prefix "[")
-	   (setq first-prefix "!["))))
+        (last-line (line-number-at-pos (point-max)))
+        (link (read-string "Link: "))
+        (link-number (x-hugh-get-next-link-number))
+        (first-prefix
+         (if (equal imgplease 1)
+             (setq first-prefix "[")
+           (setq first-prefix "!["))))
     (save-excursion
       (if (> (- last-line current-line) 1)
-	  ()
-	(insert-string "\n"))
+          ()
+        (insert-string "\n"))
       (goto-char (point-max))
       (if (search-backward-regexp (rx bol "[") (point-min) t)
-	  ())
+          ())
       (forward-line)
       (if (looking-at (rx bol))
-	  ()
-	(insert-string "\n")
-	(forward-line))
+          ()
+        (insert-string "\n")
+        (forward-line))
       (insert-string (format "[%d]: %s" link-number link)))
     (if (region-active-p)
-	(progn
-	  (setq pos1 (region-beginning) pos2 (region-end))
-	  (goto-char pos1)
-	  (insert-string "[")
-	  (goto-char pos2)
-	  (insert-string (format "][%d]" link-number)))
+        (progn
+          (setq pos1 (region-beginning) pos2 (region-end))
+          (goto-char pos1)
+          (insert-string "[")
+          (goto-char pos2)
+          (insert-string (format "][%d]" link-number)))
       (insert-string (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
 
 (defun x-hugh-get-next-link-number ()
@@ -416,34 +504,60 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
     (goto-char (point-max))
     (beginning-of-line)
     (if (looking-at "\\[\\([0-9]+\\)]:")
-	(progn
-	  (message (match-string 1))
-	  (eval (+ 1 (string-to-number (match-string 1)))))
+        (progn
+          (message (match-string 1))
+          (eval (+ 1 (string-to-number (match-string 1)))))
       ; else:
       (if (search-backward-regexp (rx bol "[") (point-min) t)
-	  (progn
-	    (if (looking-at "\\[\\([0-9]+\\)]:")
-		(progn
-		  (message (match-string 1))
-		  (eval (+ 1 (string-to-number (match-string 1)))))
-	      ()))
-	(eval 0)))))
+          (progn
+            (if (looking-at "^\\[\\([0-9]+\\)]:")
+                (progn
+                  (message (match-string 1))
+                  (eval (+ 1 (string-to-number (match-string 1)))))
+              (eval 0)))
+        (eval 0)))))
 
-(defun x-hugh-wiki-attach-file-to-wiki-page (filename)
-  "This is my way of doing things."
-  (interactive "fAttach file: ")
-  ;; doubled slash, but this makes it clear
-  (let* ((page-name (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
-	  (local-attachments-dir (format "%s/attachments/%s" (file-name-directory (buffer-file-name)) page-name))
-	   (attachment-file (file-name-nondirectory filename))
-	    (attachment-url (format "http://saintaardvarkthecarpeted.com/attachments/%s/%s" page-name attachment-file)))
-    (make-directory local-attachments-dir 1)
-    (copy-file filename local-attachments-dir 1)
-    (insert-string (format "[[%s|%s]]" attachment-file attachment-url))))
+(defun hlu-make-script-executable ()
+  "If file starts with a shebang, make `buffer-file-name' executable.
 
+Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
+  (save-excursion
+    (save-restriction
+      (widen)
+      (goto-char (point-min))
+      (when (and (looking-at "^#!")
+		  (not (file-executable-p buffer-file-name)))
+	(set-file-modes buffer-file-name
+			(logior (file-modes buffer-file-name) #o100))
+	(message (concat "Made " buffer-file-name " executable"))))))
 
-(fset 'x-hugh-fix-epub-pdf-paragraph-breaks
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([67108896 19 32 60 47 112 62 13 24 24 134217765 60 47 112 62 return return 33 60 47 112 62 24 24 134217830 134217830 134217830 6 6 134217765 60 112 32 99 108 97 115 115 61 34 99 97 108 105 98 114 101 49 34 62 return return 33 24 24 19 60 47 112 62 13 return backspace 14 1] 0 "%d")) arg)))
+(add-hook 'after-save-hook 'hlu-make-script-executable)
 
+(defun x-hugh-git-commit-and-push-without-mercy ()
+  "Commit all outstanding and push without hesitation. Meant to be called from within a file buffer.
+
+Do it, monkey boy!"
+  (interactive)
+  (start-process "nomercy" "git-commit-and-push-without-mercy" "/home/hugh/bin/git-commit-and-push-without-mercy.sh" (concat "-r" (buffer-file-name))))
+
+(defun x-hugh-rt-resolve-without-mercy-interactive (ticket)
+  "Resolve an RT ticket without hesitation.
+
+Do it, monkey boy!"
+  (interactive "sTicket: ")
+  (start-process "nomercy" "rt-resolve-without-mercy" "/home/hugh/bin/rt-resolve-without-mercy.sh" ticket))
+
+;; FIXME: Too stupid right now to figure out how to do the right
+;; thing: only prompting if there's no ticket supplied.
+(defun x-hugh-rt-resolve-without-mercy-noninteractive (ticket)
+  "Resolve an RT ticket without hesitation.
+
+Do it, monkey boy!"
+  (start-process "nomercy" "rt-resolve-without-mercy" "/home/hugh/bin/rt-resolve-without-mercy.sh" ticket))
+
+(defun x-hugh-rt-get-already-existing-ticket-subject (ticket)
+  "Get the subject from an already-existing ticket."
+  (interactive "sTicket: ")
+  (insert (shell-command-to-string "/home/hugh/bin/rt-get-ticket-subjectline.sh" ticket)))
 
 (provide 'x-hugh-functions)

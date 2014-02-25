@@ -41,13 +41,19 @@
            t)
 
 ;; Magit ROX.
-;; FIXME: Move magit to modes.
+;; We need cl-lib if less than 24.  This check taken from post.el.
+(if (< (string-to-number (substring (emacs-version)
+				    (string-match "[0-9]+\.[0-9]"
+						  (emacs-version) 5))) 24)
+    (load-file "~/.emacs.d/cl-lib-0.3.el"))
+(setq load-path  (cons (expand-file-name "~/.emacs.d/git-modes/") load-path))
+(require 'git-commit-mode nil 'noerror)
 (setq load-path  (cons (expand-file-name "~/.emacs.d/magit/") load-path))
 (require 'magit nil 'noerror)
 
 (require 'markdown-mode nil 'noerror)
 
-(add-hook 'twiki-org-load-hook (longlines-mode))
+;(add-hook 'twiki-org-load-hook (longlines-mode))
 
 ;; Perl
 (require 'perldoc nil 'noerror)
@@ -78,44 +84,48 @@
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
 ;;
-;; LongLines mode: http://www.emacswiki.org/emacs-en/LongLines
+;; LongLines mode: http://www.emacswiki.org/emacs-en/LongLines.
+;; Note: Replaced by visual-line-mode
+;; (https://github.com/djcb/mu/issues/116). Not sure how the hook will
+;; work.
 ;;
 
-(autoload 'longlines-mode "longlines" "LongLines Mode." t)
+;; (autoload 'longlines-mode "longlines" "LongLines Mode." t)
+(autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
-(eval-after-load "longlines"
-  '(progn
-     (defvar longlines-mode-was-active nil)
-     (make-variable-buffer-local 'longlines-mode-was-active)
+;; (eval-after-load "longlines"
+;;   '(progn
+;;      (defvar longlines-mode-was-active nil)
+;;      (make-variable-buffer-local 'longlines-mode-was-active)
 
-     (defun longlines-suspend ()
-       (if longlines-mode
-           (progn
-             (setq longlines-mode-was-active t)
-             (longlines-mode 0))))
+;;      (defun longlines-suspend ()
+;;        (if longlines-mode
+;;            (progn
+;;              (setq longlines-mode-was-active t)
+;;              (longlines-mode 0))))
 
-     (defun longlines-restore ()
-       (if longlines-mode-was-active
-           (progn
-             (setq longlines-mode-was-active nil)
-             (longlines-mode 1))))
+;;      (defun longlines-restore ()
+;;        (if longlines-mode-was-active
+;;            (progn
+;;              (setq longlines-mode-was-active nil)
+;;              (longlines-mode 1))))
 
-     ;; longlines doesn't play well with ediff, so suspend it during diffs
-     (defadvice ediff-make-temp-file (before make-temp-file-suspend-ll
-                                             activate compile preactivate)
-       "Suspend longlines when running ediff."
-       (with-current-buffer (ad-get-arg 0)
-         (longlines-suspend)))
+;;      ;; longlines doesn't play well with ediff, so suspend it during diffs
+;;      (defadvice ediff-make-temp-file (before make-temp-file-suspend-ll
+;;                                              activate compile preactivate)
+;;        "Suspend longlines when running ediff."
+;;        (with-current-buffer (ad-get-arg 0)
+;;          (longlines-suspend)))
 
 
-     (add-hook 'ediff-cleanup-hook
-               '(lambda ()
-                  (dolist (tmp-buf (list ediff-buffer-A
-                                         ediff-buffer-B
-                                         ediff-buffer-C))
-                    (if (buffer-live-p tmp-buf)
-                        (with-current-buffer tmp-buf
-                          (longlines-restore))))))))
+;;      (add-hook 'ediff-cleanup-hook
+;;                '(lambda ()
+;;                   (dolist (tmp-buf (list ediff-buffer-A
+;;                                          ediff-buffer-B
+;;                                          ediff-buffer-C))
+;;                     (if (buffer-live-p tmp-buf)
+;;                         (with-current-buffer tmp-buf
+;;                           (longlines-restore))))))))
 
 
 ;; tidy up diffs when closing the file
@@ -142,19 +152,40 @@
 
 ;; RT Liberation
 
-;; (add-to-list 'load-path "/home/hugh/src/rt-liberation/")
-;; (require 'rt-liberation nil 'noerror)
-;; (require 'rt-liberation-gnus)
-;; (setq rt-liber-rt-binary "/usr/bin/rt")
-;; (setq rt-liber-rt-version "3.6.5")
-;; (setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
-;;       rt-liber-gnus-address         "rt@chibi.ubc.ca"
-;;       rt-liber-gnus-subject-name    "rt.chibi.ubc.ca"
-;;       rt-liber-user-name	    "hugh"
-;;       rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
-;; 				      ("X-Ethics" . "Use GNU"))
-;;       rt-liber-gnus-signature       "Thanks,Hugh")
+;; RT Liberation
 
-;; (setq user-mail-address "hbrown@chibi.ubc.ca")
+(add-to-list 'load-path "/home/hugh/.emacs.d/rt-liberation/")
+(require 'rt-liberation)
+(require 'rt-liberation-gnus)
+(setq rt-liber-rt-binary "/usr/bin/rt")
+(setq rt-liber-rt-version "3.8.11")
+(setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
+      rt-liber-gnus-address         "rt@chibi.ubc.ca"
+      rt-liber-gnus-subject-name    "rt.chibi.ubc.ca"
+      rt-liber-user-name	    "hugh"
+      rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
+				      ("X-Ethics" . "Use GNU"))
+      rt-liber-gnus-signature       "Thanks,Hugh")
+
+(setq user-mail-address "hbrown@chibi.ubc.ca")
+
+;; Cfengine mode comes w/Emacs 24.
+(add-to-list 'auto-mode-alist '("\\.cf\\'" . cfengine3-mode))
+
+(require 'boxquote)
+(defun x-hugh-boxquote-yank-and-indent ()
+  "My attempt to combine boxquote-yank and indent.
+
+The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly to run it twice, but it was simple."
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+	(boxquote-region (region-beginning) (region-end))
+      (boxquote-yank))
+    (next-line)
+    ;; boxquote-points gives you the first point of the boxquote
+    ;; formatting, and the last line of the stuff being quoted.  We
+    ;; have to add six to get the *end* of the boxquote formatting.
+    (indent-region (car (boxquote-points)) (+ 6 (cdr (boxquote-points))))))
 
 (provide 'x-hugh-modes)

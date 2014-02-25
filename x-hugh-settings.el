@@ -1,5 +1,10 @@
 ;; Random settings.
 
+;; Packages -- should be broken out into separate file, I think.
+;; (package-initialize)
+;; (add-to-list 'package-archives
+;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 ;; So can kill (and thus paste) text from read-only buffer
 (setq kill-read-only-ok 1)
 (put 'narrow-to-region 'disabled nil)
@@ -14,6 +19,7 @@
 ;;(setq perl-indent-level 8)
 (add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
 (add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
+(add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
 (add-hook 'diff-mode 'font-lock-mode)
 
 ;; To set shell-script mode by default
@@ -29,10 +35,16 @@
 (setq select-active-regions t) ;  active region sets primary X11 selection
 (global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
 
-(put 'set-goal-column 'disabled nil)
+;
 
 ;; http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/
 (setq custom-file "~/.emacs.d/x-hugh-custom.el")
 (load custom-file 'noerror)
+
+;; Ibuffer
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+
 
 (provide 'x-hugh-settings)
