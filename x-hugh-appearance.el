@@ -8,7 +8,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (if window-system
-    (scroll-bar-mode nil)
+    (scroll-bar-mode -1)
   ())
 ;; Only works in X mode, sadly...see .bashrc for a commented-out line
 ;; that'll turn off blinking in a linux terminal.
