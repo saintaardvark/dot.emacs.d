@@ -155,8 +155,8 @@
 ;; RT Liberation
 
 (add-to-list 'load-path "/home/hugh/.emacs.d/rt-liberation/")
-(require 'rt-liberation)
-(require 'rt-liberation-gnus)
+(require 'rt-liberation nil 'noerror)
+(require 'rt-liberation-gnus nil 'no-error)
 (setq rt-liber-rt-binary "/usr/bin/rt")
 (setq rt-liber-rt-version "3.8.11")
 (setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
