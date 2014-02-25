@@ -17,8 +17,13 @@
 (setq inhibit-splash-screen t)
 
 (if window-system
-    (set-default-font "Inconsolata-14"))
-(global-set-key "\C-c\C-f" (set-default-font "Inconsolata-14"))
+      (set-default-font "Inconsolata-14")
+  ())
+
+(defun x-hugh-set-font-smaller ()
+  "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
+  (interactive)
+  (set-default-font "Inconsolata-12"))
 
 (require 'color-theme nil 'noerror)
 
