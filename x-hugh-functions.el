@@ -7,7 +7,7 @@
 (defun x-hugh-edit-dot-emacs ()
   (interactive)
   (find-file (completing-read "File: "
-			      (directory-files "/home/hugh/.emacs.d/" t "x-hugh-"))))
+			      (directory-files "~/.emacs.d/" t "x-hugh-"))))
 
 (defun x-hugh-delete-to-sig ()
   "Delete from point to signature.
@@ -219,7 +219,7 @@ See https://dgl.cx/2008/10/wikipedia-summary-dns for details.
 
 (defun x-hugh-open-chibi-account-file ()
   (interactive)
-  (find-file "~/chibi/chibi-acc.gpg"))
+  (find-file "~/passwords.gpg"))
 
 (defun x-hugh-figl (regex)
   "A Small but Useful(tm) shortcut for find-grep-dired, like my figl alias."
