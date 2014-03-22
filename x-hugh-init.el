@@ -10,6 +10,7 @@
 ;; Is this redundant?
 (setq load-path  (cons (expand-file-name "~/.emacs.d/") load-path))
 
+(require 'x-hugh-packages)
 (require 'x-hugh-modes)
 (require 'x-hugh-functions)
 (require 'x-hugh-appearance)
