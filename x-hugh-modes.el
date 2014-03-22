@@ -64,9 +64,9 @@
 
 ;; Workgroups.
 ;; FIXME: Move to modes/submodule
-(add-to-list 'load-path "~/src/workgroups.el/")
+;; (add-to-list 'load-path "~/src/workgroups.el/")
 ;; (add-to-list 'load-path "~/.emacs.d/workgroups/")
-(require 'workgroups)
+(require 'workgroups2)
 (setq wg-prefix-key (kbd "C-c w"))
 (workgroups-mode 1)
 ;(wg-load "~/.emacs.d/saved_workgroups")
