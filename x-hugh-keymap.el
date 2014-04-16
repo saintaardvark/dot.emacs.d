@@ -4,7 +4,7 @@
 (global-set-key "\C-xwf"	'confluence-get-page)
 (global-set-key "\C-xwc"	'confluence-create-page)
 (global-set-key "\C-xs"		'replace-region-command-output)
-(global-set-key "\C-cb" 'x-hugh-chronicle-new-blog-entry)
+(global-set-key "\C-cb"		'x-hugh-chronicle-new-blog-entry)
 (global-set-key "\C-cc"		'comment-region)
 (global-set-key "\C-ce"		'x-hugh-edit-dot-emacs)
 (global-set-key "\C-cf"		'x-hugh-figl)
