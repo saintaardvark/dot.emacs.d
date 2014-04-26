@@ -21,7 +21,7 @@
  '(iswitchb-prompt-newbuffer nil)
  '(midnight-mode t nil (midnight))
  '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-agenda-files (quote ("~/.orgmode/home.org")))
+ '(org-agenda-files (quote ("~/orgmode/home.org" "~/orgmode/TODO.org")))
  '(org-log-into-drawer t)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-habit org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m)))
  '(org-stuck-projects (quote ("+PROJECT/-MAYBE-DONE" ("TODO" "NBIJ" "Waiting" "NEXT" "NEXTACTION") nil "")))
