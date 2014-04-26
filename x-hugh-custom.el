@@ -35,6 +35,7 @@
  '(spell-command "ispell")
  '(split-window-preferred-function nil)
  '(standard-indent 8)
+ '(vc-follow-symlinks nil)
  '(w3m-use-cookies t)
  '(wg-morph-on nil))
 (custom-set-faces
