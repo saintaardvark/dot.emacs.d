@@ -560,4 +560,20 @@ Do it, monkey boy!"
   (interactive "sTicket: ")
   (insert (shell-command-to-string "/home/hugh/bin/rt-get-ticket-subjectline.sh" ticket)))
 
+(defun x-hugh-die-outlook-die ()
+  "Decode HTML mail when replying.  Not quite perfect, but close."
+  (interactive)
+  (save-excursion
+    (post-goto-body)
+    (search-forward-regexp "^>")
+    (let ((beg (point)))
+      (goto-char (point-max))
+      (search-backward-regexp ">")
+      (end-of-line)
+      (shell-command-on-region beg (point) "/usr/bin/w3m -T text/html" t t)
+      (flush-lines (rx bol ">" (zero-or-more blank) eol))
+      (flush-lines (rx bol (zero-or-more blank) eol))
+      (post-goto-signature)
+      (post-quote-region beg (point)))))
+
 (provide 'x-hugh-functions)
