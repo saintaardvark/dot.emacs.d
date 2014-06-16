@@ -16,6 +16,7 @@
  '(delete-selection-mode nil nil (delsel))
  '(dired-dwim-target t)
  '(dired-recursive-deletes (quote top))
+ '(erc-nick "SaintAardvark")
  '(eshell-visual-commands (quote ("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
  '(global-font-lock-mode t nil (font-lock))
  '(iswitchb-prompt-newbuffer nil)
