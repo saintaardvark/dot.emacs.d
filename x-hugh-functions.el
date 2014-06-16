@@ -359,6 +359,15 @@ Returns nil if no differences found, 't otherwise."
   (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
   (insert (format "Tags: \n\n")))
 
+(defun x-hugh-chronicle-update-datestamp ()
+  "Update the timestamp on a blog post."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (search-forward-regexp (rx bol "Date: "))
+    (kill-line)
+    (insert (format "%s" (format-time-string "%a %b %d %R:%S %Z %Y")))))
+
 (defun x-hugh-chronicle-list-tags ()
   "A Small but Useful9tm) function to list the tags available for Chronicle."
   (interactive)
