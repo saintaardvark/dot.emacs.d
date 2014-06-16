@@ -9,6 +9,17 @@
   (find-file (completing-read "File: "
 			      (directory-files "~/.emacs.d/" t "x-hugh-"))))
 
+(defun x-hugh-company-coming ()
+  "Clean up email."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (replace-regexp "Saint Aardvark the Carpeted" "Hugh Brown")
+    (goto-char (point-min))
+    (replace-regexp "disturbed my sleep to write" "wrote")
+    (goto-char (point-min))
+    (replace-regexp "Because the plural of Anecdote is Myth" "")))
+
 (defun x-hugh-delete-to-sig ()
   "Delete from point to signature.
 
