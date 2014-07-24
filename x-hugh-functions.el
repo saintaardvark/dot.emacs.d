@@ -4,10 +4,14 @@
   (interactive)
   (load-file "~/.emacs"))
 
+;; Thanks, alezost from #emacs! http://paste.debian.net/111217
+;; TODO: Look at using ido-completing-read.
 (defun x-hugh-edit-dot-emacs ()
   (interactive)
-  (find-file (completing-read "File: "
-			      (directory-files "~/.emacs.d/" t "x-hugh-"))))
+  (let ((path (expand-file-name "~/.emacs.d/")))
+    (find-file (completing-read "File: "
+                                (directory-files path t "x-hugh-")
+                                nil nil (concat path "x-hugh-")))))
 
 (defun x-hugh-company-coming ()
   "Clean up email."
