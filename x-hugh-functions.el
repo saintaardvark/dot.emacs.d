@@ -514,7 +514,7 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
       (insert-string (format "[%d]: %s" link-number link)))
     (if (region-active-p)
         (progn
-          (setq pos1 (region-beginning) pos2 (region-end))
+          (setq pos1 (region-beginning) pos2 (1+ (region-end)))
           (goto-char pos1)
           (insert-string "[")
           (goto-char pos2)
