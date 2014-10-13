@@ -188,4 +188,20 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
     ;; have to add six to get the *end* of the boxquote formatting.
     (indent-region (car (boxquote-points)) (+ 6 (cdr (boxquote-points))))))
 
+;; Diminish mode: silence the modeline.
+(require 'diminish)
+(diminish 'abbrev-mode)
+;; (diminish 'projectile-mode)
+;; (diminish 'eldoc-mode)
+(diminish 'magit-auto-revert-mode)
+;; (diminish 'flyspell-mode (string 32 #x2708))
+(diminish 'auto-fill-function (string 32 #xa7))
+(diminish 'isearch-mode (string 32 #x279c))
+(setq-default mode-line-format
+	      '(:eval mode-line-buffer-identification
+		"   " :eval mode-line-position
+		"  " mode-line-modes
+		mode-line-misc-info))
+
+
 (provide 'x-hugh-modes)
