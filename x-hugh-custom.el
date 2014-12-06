@@ -30,7 +30,7 @@
  '(global-flycheck-mode t nil (flycheck))
  '(global-font-lock-mode t nil (font-lock))
  '(helm-ff-newfile-prompt-p nil)
- '(ispell-program-name "/usr/local/bin/ispell")
+ '(ispell-program-name "/usr/bin/ispell")
  '(iswitchb-prompt-newbuffer nil)
  '(magit-git-executable "/usr/bin/git")
  '(magit-use-overlays nil)
