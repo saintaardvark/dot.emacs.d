@@ -7,6 +7,7 @@
 ;; Thanks, alezost from #emacs! http://paste.debian.net/111217
 ;; TODO: Look at using ido-completing-read.
 (defun x-hugh-edit-dot-emacs ()
+  "Edit .emacs.d/x-hugh-* files."
   (interactive)
   (let ((path (expand-file-name "~/.emacs.d/")))
     (find-file (completing-read "File: "
@@ -23,6 +24,20 @@
     (replace-regexp "disturbed my sleep to write" "wrote")
     (goto-char (point-min))
     (replace-regexp "Because the plural of Anecdote is Myth" "")))
+(defun x-hugh-edit-dot-bashrc (arg)
+  "Edit .bashrc_local, or (with arg) .bashrc."
+  (interactive "P")
+  (if arg
+      (find-file "~/.bashrc")
+    (find-file "~/.bashrc_local")))
+
+(defun x-hugh-zap (arg char)
+  "Wrapper around zap-to-char so does *not* including character."
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+		     (read-char "Zap to char: " t)))
+  (zap-to-char arg char)
+  (insert-char char)
+  (backward-char))
 
 (defun x-hugh-delete-to-sig ()
   "Delete from point to signature.
@@ -234,7 +249,18 @@ See https://dgl.cx/2008/10/wikipedia-summary-dns for details.
 
 (defun x-hugh-open-chibi-account-file ()
   (interactive)
-  (find-file "~/passwords.gpg"))
+  (find-file "~/chibi/chibi-acc.gpg"))
+
+(defun x-hugh-open-chibi-account-file-maybe-matching-string (&optional arg)
+  "Open the password file. If arg, only list lines matching string."
+  (interactive "p")
+  (save-excursion
+    (find-file "~/chibi/chibi-acc.gpg")
+    (when (arg)
+	(progn
+	  (list-matching-lines
+	   (read-from-minibuffer "String to look for (case-insensitive): "))
+	  (kill-buffer (get-file-buffer "~/chibi/chibi-acc.gpg"))))))
 
 (defun x-hugh-figl (regex)
   "A Small but Useful(tm) shortcut for find-grep-dired, like my figl alias."
@@ -446,7 +472,7 @@ I can never remember how to do this."
 (defun x-hugh-set-appearance ()
   "Reload x-hugh-appearance.el."
   (interactive)
-  (load-file "/home/hugh/.emacs.d/x-hugh-appearance.el"))
+  (load-file "~/.emacs.d/x-hugh-appearance.el"))
 
 (defun x-hugh-insert-wiki-rt-link (ticket)
   (interactive "nTicket: ")
@@ -463,7 +489,7 @@ I can never remember how to do this."
       (wg-switch-to-index-1)
     (error nil))
   (delete-other-windows)
-  (find-file   (format-time-string "/home/hugh/SysadminWiki/blog/%B%Y.mdwn"))
+  (find-file   (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
   (end-of-buffer)
   (insert (format "\n\n## %s" title))
   (insert "\n\n\n\n-- main.hugh ")
@@ -477,7 +503,7 @@ I can never remember how to do this."
       (wg-switch-to-index-1)
     (error nil))
   (delete-other-windows)
-  (find-file   (format-time-string "/home/hugh/SysadminWiki/blog/%B%Y.mdwn"))
+  (find-file   (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
   (end-of-buffer)
   (previous-line 2))
 
@@ -562,14 +588,14 @@ Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
 
 Do it, monkey boy!"
   (interactive)
-  (start-process "nomercy" "git-commit-and-push-without-mercy" "/home/hugh/bin/git-commit-and-push-without-mercy.sh" (concat "-r" (buffer-file-name))))
+  (start-process "nomercy" "git-commit-and-push-without-mercy" "~/bin/git-commit-and-push-without-mercy.sh" (concat "-r" (buffer-file-name))))
 
 (defun x-hugh-rt-resolve-without-mercy-interactive (ticket)
   "Resolve an RT ticket without hesitation.
 
 Do it, monkey boy!"
   (interactive "sTicket: ")
-  (start-process "nomercy" "rt-resolve-without-mercy" "/home/hugh/bin/rt-resolve-without-mercy.sh" ticket))
+  (start-process "nomercy" "rt-resolve-without-mercy" "~/bin/rt-resolve-without-mercy.sh" ticket))
 
 ;; FIXME: Too stupid right now to figure out how to do the right
 ;; thing: only prompting if there's no ticket supplied.
@@ -577,12 +603,26 @@ Do it, monkey boy!"
   "Resolve an RT ticket without hesitation.
 
 Do it, monkey boy!"
-  (start-process "nomercy" "rt-resolve-without-mercy" "/home/hugh/bin/rt-resolve-without-mercy.sh" ticket))
+  (start-process "nomercy" "rt-resolve-without-mercy" "~/bin/rt-resolve-without-mercy.sh" ticket))
 
 (defun x-hugh-rt-get-already-existing-ticket-subject (ticket)
   "Get the subject from an already-existing ticket."
   (interactive "sTicket: ")
-  (insert (shell-command-to-string "/home/hugh/bin/rt-get-ticket-subjectline.sh" ticket)))
+  (insert (shell-command-to-string (format "~/bin/rt-get-ticket-subjectline.sh %s" ticket))))
+
+;; FIXME: This should be in org.
+;; FIXME: This is a duplicate of x-hugh-rt-get-already-existing-ticket-subject.
+(defun x-hugh-org-autofill-rt-entry (ticket)
+  "Autofill Org RT entry from an already-existing ticket."
+  (interactive "sTicket: ")
+  (insert (format "RT #%s -- %s" ticket (shell-command-to-string (format "~/bin/rt-get-ticket-subjectline.sh %s" ticket)))))
+
+(defun x-hugh-open-git-repo ()
+  "Open up a git repo."
+  (interactive)
+  (let ((dir (completing-read "File: " (directory-files "~/gh/" t))))
+    (dired dir)
+    (magit-status dir)))
 
 (defun x-hugh-die-outlook-die ()
   "Decode HTML mail when replying.  Not quite perfect, but close."
@@ -599,5 +639,32 @@ Do it, monkey boy!"
       (flush-lines (rx bol (zero-or-more blank) eol))
       (post-goto-signature)
       (post-quote-region beg (point)))))
+
+;; From http://stackoverflow.com/questions/23588549/emacs-copy-region-line-and-comment-at-the-same-time
+
+(defun x-hugh-copy-and-comment-region (beg end &optional arg)
+  "Duplicate the region and comment-out the copied text.
+See `comment-region' for behavior of a prefix arg."
+  (interactive "r\nP")
+  (copy-region-as-kill beg end)
+  (goto-char end)
+  (yank)
+  (comment-region beg end arg)
+  (forward-line))
+
+;; not yet working
+(defun x-hugh-copy-and-comment-line (beg end &optional arg)
+  "Duplicate the region and comment-out the copied text.
+See `comment-region' for behavior of a prefix arg."
+  (interactive "r\nP")
+  (let ((this-line-start line-beginning-position)
+        (this-line-end line-
+  (kill-ring-save (line-beginning-position)
+                  (line-beginning-position 2)
+  (comment-region arg)
+  (copy-region-as-kill beg end)
+  (goto-char end)
+  (yank)
+  (forward-line))))))
 
 (provide 'x-hugh-functions)
