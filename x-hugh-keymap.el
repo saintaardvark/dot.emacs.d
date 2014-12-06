@@ -35,7 +35,7 @@
 ;; helm-do-grep is better.
 (global-set-key "\C-cif"	'helm-do-grep)
 (global-set-key "\C-cig"	'x-hugh-open-git-repo)
-(global-set-key "\C-cir"	'x-hugh-open-chibi-account-file)
+(global-set-key "\C-cir"	'x-hugh-open-password-file)
 (global-set-key "\C-cis"	'x-hugh-reload-dot-emacs)
 
 ;; I'm gonna declare C-cw the official prefix of Workgroups.  But!
