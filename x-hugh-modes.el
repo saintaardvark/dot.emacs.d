@@ -33,7 +33,11 @@
 (require 'filladapt	nil 'noerror)
 (require 'linum		nil 'noerror)
 (require 'midnight	nil 'noerror)
-(iswitchb-mode 1)
+(require 'markdown-mode	nil 'noerror)
+(add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
+;; (iswitchb-mode 1)
+(require 'helm-config   nil 'noerror)
+(helm-mode 1)
 
 ; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
@@ -63,15 +67,37 @@
 (require 'browse-kill-ring nil 'noerror)
 
 ;; Workgroups.
-;; FIXME: Move to modes/submodule
-;; (add-to-list 'load-path "~/src/workgroups.el/")
-;; (add-to-list 'load-path "~/.emacs.d/workgroups/")
 (require 'workgroups2)
+;; Can't move this to keymap; needed before workgroups-mode is loaded.
 (setq wg-prefix-key (kbd "C-c w"))
+(global-set-key (kbd "C-c w s") 'wg-save-session)
 (workgroups-mode 1)
-;(wg-load "~/.emacs.d/saved_workgroups")
+(wg-reload-session)
 
+(defun x-hugh-wg-show-workgroups ()
+  "Display workgroups."
+  (interactive)
+  (wg-fontified-message
+    (wg-workgroup-list-display)))
 
+(defadvice
+  wg-switch-to-workgroup-right (after x-hugh-advice-wgshow-workgroups)
+  "Display workgroups after switching."
+  (x-hugh-wg-show-workgroups))
+
+(defadvice
+  wg-switch-to-workgroup-at-index (after x-hugh-advice-wgshow-workgroups)
+  "Display workgroups after switching."
+  (x-hugh-wg-show-workgroups))
+
+(defadvice
+  wg-switch-to-workgroup-left (after x-hugh-advice-wgshow-workgroups)
+  "Display workgroups after switching."
+  (x-hugh-wg-show-workgroups))
+
+(ad-activate 'wg-switch-to-workgroup-right)
+(ad-activate 'wg-switch-to-workgroup-left)
+(ad-activate 'wg-switch-to-workgroup-at-index)
 ;;
 ;; Apache mode.
 ;;
@@ -139,24 +165,16 @@
 (add-hook 'kill-buffer-hook 'kill-associated-diff-buf)
 
 
-(setq w3m-p (executable-find "w3m"))
-(if w3m-p
-    (progn
-      (add-to-list 'load-path "~/.emacs.d/w3m")
-      (require 'w3m nil 'noerror)
-      (setq browse-url-browser-function 'w3m-browse-url)))
+;; (setq w3m-p (executable-find "w3m"))
+;; (if w3m-p
+;;     (require 'w3m-load) nil 'noerror)
 
-;; FIXME: Move to modes.
-(setq load-path (cons "~/.emacs.d/twittering-mode" load-path))
-(require 'twittering-mode)
 
 ;; RT Liberation
 
-;; RT Liberation
-
-(add-to-list 'load-path "/home/hugh/.emacs.d/rt-liberation/")
+(add-to-list 'load-path "~/.emacs.d/rt-liberation/")
 (require 'rt-liberation nil 'noerror)
-(require 'rt-liberation-gnus nil 'no-error)
+(require 'rt-liberation-gnus nil 'noerror)
 (setq rt-liber-rt-binary "/usr/bin/rt")
 (setq rt-liber-rt-version "3.8.11")
 (setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
@@ -182,26 +200,34 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
     (if (region-active-p)
 	(boxquote-region (region-beginning) (region-end))
       (boxquote-yank))
-    (next-line)
+    (forward-line)
     ;; boxquote-points gives you the first point of the boxquote
     ;; formatting, and the last line of the stuff being quoted.  We
     ;; have to add six to get the *end* of the boxquote formatting.
     (indent-region (car (boxquote-points)) (+ 6 (cdr (boxquote-points))))))
 
-;; Diminish mode: silence the modeline.
-(require 'diminish)
-(diminish 'abbrev-mode)
-;; (diminish 'projectile-mode)
-;; (diminish 'eldoc-mode)
-(diminish 'magit-auto-revert-mode)
-;; (diminish 'flyspell-mode (string 32 #x2708))
-(diminish 'auto-fill-function (string 32 #xa7))
-(diminish 'isearch-mode (string 32 #x279c))
-(setq-default mode-line-format
-	      '(:eval mode-line-buffer-identification
-		"   " :eval mode-line-position
-		"  " mode-line-modes
-		mode-line-misc-info))
+;; Sigh...it's fun, but it takes up a lot of real estate.
+;; ;; Because it's fun.
+;; (require 'nyan-mode)
+;; ;; And now turn it on.
+;; (nyan-mode)
 
+;; Flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
+;; Smart-mode line
+(require 'smart-mode-line)
+(sml/setup)
+
+;; Try creating my own mode for .cfg files.
+;; What I want right now: handiness of commenting in Nagios config files, but no
+;; complaints from flycheck about syntax errors.
+;; More generally, there's probably a Nagios mode I should be using...
+(define-derived-mode x-hugh-cfg-mode sh-mode "My Cfg mode"
+  "A mode for Cfg files."
+  (sh-set-shell "bash"))
+(add-to-list 'auto-mode-alist '("\\.cfg\\'" . x-hugh-cfg-mode))
+
+(require 'yasnippet nil 'noerror)
 (provide 'x-hugh-modes)
+;;; x-hugh-modes ends here
