@@ -223,8 +223,8 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Smart-mode line
-(require 'smart-mode-line)
-(sml/setup)
+;; (require 'smart-mode-line)
+;; (sml/setup)
 
 ;; Try creating my own mode for .cfg files.
 ;; What I want right now: handiness of commenting in Nagios config files, but no
