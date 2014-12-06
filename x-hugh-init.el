@@ -6,6 +6,8 @@
 	   (default-directory my-lisp-dir))
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
+;; FIXME: Need to figure out a better way to handle different Cask locations.
+;; FIXME: Do the same with git.
 (require 'cask "/home/aardvark/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
