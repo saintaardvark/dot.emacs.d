@@ -388,7 +388,8 @@ Returns nil if no differences found, 't otherwise."
   (find-file (concat "/home/aardvark/blog/input/" (format-time-string "%Y-%m") "/" filename ".mdwn"))
   (insert (format "Title: %s\n" title))
   (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
-  (insert (format "Tags: \n\n")))
+  (insert (format "Tags: \n\n"))
+  (wc-goal-mode 1))
 
 (defun x-hugh-chronicle-update-datestamp ()
   "Update the timestamp on a blog post."
