@@ -39,7 +39,8 @@
  '(org-agenda-files (quote ("~/orgmode/" "~/orgmode/lisa/")))
  '(org-default-notes-file "~/orgmode/TODO.org")
  '(org-log-into-drawer t)
- '(org-modules
+ ;; Is this the problem?
+ ;; '(org-modules
  '(ns-command-modifier nil)
  '(org-agenda-files (quote ("~/org/")))
  '(org-agenda-log-mode-items (quote (clock)))
@@ -50,7 +51,7 @@
  '(org-agenda-start-with-log-mode t)
  '(org-capture-templates
    (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-habit org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m)))
+    (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-habit org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m)
     (("R" "Autofill RT ticket" entry
       (file "~/org/all.org")
       "** TODO [#A] %?")
@@ -65,7 +66,7 @@
       "** Q from %^{Who} re: %^{Subject}")
      ("i" "Random Item" entry
       (file "~/org/all.org")
-      "** %^{What}"))))
+      "** %^{What}"))
  '(org-clock-continuously t)
  '(org-clock-into-drawer t)
  '(org-default-notes-file "~/org/TODO.org")
@@ -95,7 +96,7 @@
  '(w3m-use-cookies t)
  '(wg-morph-on nil)
  '(win-switch-idle-time 1.25)
- '(x-select-enable-clipboard t))
+ '(x-select-enable-clipboard t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
