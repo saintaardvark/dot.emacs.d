@@ -14,17 +14,13 @@
  '(compilation-scroll-output (quote first-error))
  '(cperl-indent-level 8)
  '(current-language-environment "English")
- '(custom-safe-themes
-   (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
+ '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
  '(delete-selection-mode nil nil (delsel))
  '(dired-dwim-target t)
  '(dired-recursive-deletes (quote top))
  '(erc-hide-list (quote ("JOIN" "PART" "QUIT")))
  '(erc-nick "SaintAardvark")
- '(eshell-visual-commands
-   (quote
-    ("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
+ '(eshell-visual-commands (quote ("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
  '(explicit-shell-file-name "/bin/bash")
  '(find-grep-options "-qi")
  '(global-flycheck-mode t nil (flycheck))
@@ -35,68 +31,18 @@
  '(magit-git-executable "/usr/bin/git")
  '(magit-use-overlays nil)
  '(midnight-mode t nil (midnight))
- '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-agenda-files (quote ("~/orgmode/" "~/orgmode/lisa/")))
- '(org-default-notes-file "~/orgmode/TODO.org")
- '(org-log-into-drawer t)
- ;; Is this the problem?
- ;; '(org-modules
  '(ns-command-modifier nil)
- '(org-agenda-files (quote ("~/org/")))
+ '(org-agenda-columns-add-appointments-to-effort-sum t)
+ '(org-agenda-files (quote ("~/orgmode")))
  '(org-agenda-log-mode-items (quote (clock)))
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span (quote day))
  '(org-agenda-start-with-clockreport-mode t)
  '(org-agenda-start-with-follow-mode t)
  '(org-agenda-start-with-log-mode t)
- '(org-capture-templates
-   (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-habit org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m)
-    (("R" "Autofill RT ticket" entry
-      (file "~/org/all.org")
-      "** TODO [#A] %?")
-     ("r" "RT Ticket" entry
-      (file "~/org/all.org")
-      "** TODO RT #%^{Number} -- %^{Subject}")
-     ("t" "TODO" entry
-      (file "~/org/all.org")
-      "** TODO %^{TODO}")
-     ("q" "Question" entry
-      (file "~/org/all.org")
-      "** Q from %^{Who} re: %^{Subject}")
-     ("i" "Random Item" entry
-      (file "~/org/all.org")
-      "** %^{What}"))
- '(org-clock-continuously t)
- '(org-clock-into-drawer t)
- '(org-default-notes-file "~/org/TODO.org")
- '(org-default-priority 65)
- '(org-log-done (quote time))
- '(org-stuck-projects
-   (quote
-    ("+PROJECT/-MAYBE-DONE"
-     ("TODO" "NBIJ" "Waiting" "NEXT" "NEXTACTION")
-     nil "")))
- '(perl-indent-level 8)
- '(post-fixed-signature-source "~/.signature")
- '(post-should-prompt-for-attachment (quote Never))
- '(require-final-newline t)
- '(safe-local-variable-values (quote ((mangle-whitespace . t) (rm-trailing-spaces . t))))
- '(scroll-bar-mode -1)
- '(send-mail-function (quote sendmail-send-it))
- '(setq c-basic-offset)
- '(shell-file-name "/bin/bash")
- '(show-paren-mode 1)
- '(spell-command "ispell")
- '(split-window-preferred-function nil)
- '(standard-indent 8)
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(uniquify-min-dir-content 2)
- '(vc-follow-symlinks nil)
- '(w3m-use-cookies t)
- '(wg-morph-on nil)
- '(win-switch-idle-time 1.25)
- '(x-select-enable-clipboard t))))
+ '(org-capture-templates (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-habit org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m) (("R" "Autofill RT ticket" entry (file "~/org/all.org") "** TODO [#A] %?") ("r" "RT Ticket" entry (file "~/org/all.org") "** TODO RT #%^{Number} -- %^{Subject}") ("t" "TODO" entry (file "~/org/all.org") "** TODO %^{TODO}") ("q" "Question" entry (file "~/org/all.org") "** Q from %^{Who} re: %^{Subject}") ("i" "Random Item" entry (file "~/org/all.org") "** %^{What}")) (quote (org-clock-continuously t)) (quote (org-clock-into-drawer t)) (quote (org-default-notes-file "~/org/TODO.org")) (quote (org-default-priority 65)) (quote (org-log-done (quote time))) (quote (org-stuck-projects (quote ("+PROJECT/-MAYBE-DONE" ("TODO" "NBIJ" "Waiting" "NEXT" "NEXTACTION") nil "")))) (quote (perl-indent-level 8)) (quote (post-fixed-signature-source "~/.signature")) (quote (post-should-prompt-for-attachment (quote Never))) (quote (require-final-newline t)) (quote (safe-local-variable-values (quote ((mangle-whitespace . t) (rm-trailing-spaces . t))))) (quote (scroll-bar-mode -1)) (quote (send-mail-function (quote sendmail-send-it))) (quote (setq c-basic-offset)) (quote (shell-file-name "/bin/bash")) (quote (show-paren-mode 1)) (quote (spell-command "ispell")) (quote (split-window-preferred-function nil)) (quote (standard-indent 8)) (quote (uniquify-buffer-name-style (quote post-forward) nil (uniquify))) (quote (uniquify-min-dir-content 2)) (quote (vc-follow-symlinks nil)) (quote (w3m-use-cookies t)) (quote (wg-morph-on nil)) (quote (win-switch-idle-time 1.25)) (quote (x-select-enable-clipboard t))))
+ '(org-default-notes-file "~/orgmode/TODO.org")
+ '(org-log-into-drawer t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
