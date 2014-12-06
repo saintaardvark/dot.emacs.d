@@ -6,7 +6,7 @@
 	   (default-directory my-lisp-dir))
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
-(require 'cask "/home/aardvark/src/cask/cask.el")
+(require 'cask "/home/aardvark/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 ;; Is this redundant?
