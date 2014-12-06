@@ -5,10 +5,12 @@
 ;; (win-switch-setup-keys-ijkl "\C-xo")
 
 ;; Helm mode
-(global-set-key (kbd "M-x")     'helm-M-x)
-(global-set-key (kbd "M-y")     'helm-show-kill-ring)
-(global-set-key (kbd "C-x b")   'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; moved to x-hugh-modes
+;; (global-set-key (kbd "M-x")     'helm-M-x)
+;; (global-set-key (kbd "M-y")     'helm-show-kill-ring)
+;; (global-set-key (kbd "C-x b")   'helm-mini)
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+
 
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)

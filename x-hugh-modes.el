@@ -36,8 +36,15 @@
 (require 'markdown-mode	nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 ;; (iswitchb-mode 1)
-(require 'helm-config   nil 'noerror)
-(helm-mode 1)
+(when (not (string= system-name "herobrine.saintaardvarkthecarpeted.com"))
+  (progn
+    (require 'helm-config nil 'noerror)
+    (helm-mode 1)
+    (global-set-key (kbd "M-x")     'helm-M-x)
+    (global-set-key (kbd "M-y")     'helm-show-kill-ring)
+    (global-set-key (kbd "C-x b")   'helm-mini)
+    (global-set-key (kbd "C-x C-f") 'helm-find-files)))
+
 
 ; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
