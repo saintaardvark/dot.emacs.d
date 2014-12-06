@@ -58,7 +58,7 @@
 (depends-on "use-package")
 (depends-on "vagrant")
 (depends-on "vagrant-tramp")
-(depends-on "wc-mode")
+(depends-on "wc-goal-mode")
 (depends-on "web-mode")
 (depends-on "workgroups2")
 (depends-on "yaml-mode")
