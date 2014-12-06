@@ -389,6 +389,7 @@ Returns nil if no differences found, 't otherwise."
   (insert (format "Title: %s\n" title))
   (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
   (insert (format "Tags: \n\n"))
+  (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t)
   (wc-goal-mode 1))
 
 (defun x-hugh-chronicle-update-datestamp ()
