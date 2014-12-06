@@ -32,7 +32,7 @@
  '(helm-ff-newfile-prompt-p nil)
  '(ispell-program-name "/usr/local/bin/ispell")
  '(iswitchb-prompt-newbuffer nil)
- '(magit-git-executable "/usr/local/bin/git")
+ '(magit-git-executable "/usr/bin/git")
  '(magit-use-overlays nil)
  '(midnight-mode t nil (midnight))
  '(org-agenda-columns-add-appointments-to-effort-sum t)
