@@ -76,7 +76,7 @@ If arg provided, do NOT clock in.
 "
  (interactive "P")
  (save-excursion
-   (set-buffer (find-file-noselect "/home/hugh/chibi/all.org"))
+   (set-buffer (find-file-noselect "~/chibi/all.org"))
    (goto-char (point-min))
    (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
        (message "Already in org!")
@@ -102,7 +102,7 @@ If POINT is nil then called on (point).  If called with arg, check in as well."
     (setq subject (cdr (assoc "Subject" ticket)))
     (setq id (rt-liber-browser-ticket-id-at-point))
     (save-excursion
-      (set-buffer (find-file-noselect "/home/hugh/chibi/all.org"))
+      (set-buffer (find-file-noselect "~/chibi/all.org"))
       (goto-char (point-min))
       (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
 	  (message "Already in org!")
@@ -139,7 +139,7 @@ Depends on regular expressions, which of course puts me in a state of sin."
 (defun x-hugh-open-org-file-for-rt-ticket ()
   "A Small but Useful(tm) function to open the notes file for a ticket."
   (interactive)
-  (find-file (format "/home/hugh/git/rt_%s/notes.org" (x-hugh-clocked-into-rt-ticket-number-only))))
+  (find-file (format "~/git/rt_%s/notes.org" (x-hugh-clocked-into-rt-ticket-number-only))))
 
 (defun x-hugh-insert-rt-ticket-commit-comment ()
   "A Small but Useful(tm) function to insert a comment referencing an RT ticket.
@@ -162,7 +162,7 @@ Can be called from Mutt as well."
   "Generic way to schedule an RT ticket for today.  Optional arg sets prio to A."
   (interactive "P")
  (save-excursion
-   (set-buffer (find-file-noselect "/home/hugh/chibi/all.org"))
+   (set-buffer (find-file-noselect "~/chibi/all.org"))
    (goto-char (point-min))
    (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
        (progn
@@ -195,14 +195,14 @@ Can be called from Mutt as well."
  (when (and (fboundp 'daemonp) (daemonp))
   (add-hook 'org-mode-hook 'org-column-view-uses-fixed-width-face))
 
-;; (org-babel-do-load-languages
-;;  'org-babel-load-languages
-;;   '( (perl . t)
-;;      (ruby . t)
-;;      (sh . t)
-;;      (python . t)
-;;      (emacs-lisp . t)
-;;    ))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+  '( (perl . t)
+     (ruby . t)
+     (sh . t)
+     (python . t)
+     (emacs-lisp . t)
+   ))
 
 (defun x-hugh-resolve-rt-ticket-after-org-rt-done ()
   "Resolve an RT ticket after the org entry is marked done.
@@ -218,7 +218,7 @@ ticket number that's in x-hugh-clocked, which FIXME."
   (when (string-equal org-state "DONE")
     ; x-hugh-clocked-into-rt-ticket-number-only -- not quite, but close.
     (when (looking-at ".*RT #\\([0-9]+\\)")
-      (message "FIXME: I'm gonna try to close this ticket!")
+      (message "I'm gonna try to close this ticket!")
 	(x-hugh-rt-resolve-without-mercy-noninteractive (format "%s" (match-string 1 org-clock-current-task))))))
 
 (add-hook 'org-after-todo-state-change-hook 'x-hugh-resolve-rt-ticket-after-org-rt-done)
@@ -237,7 +237,10 @@ ticket number that's in x-hugh-clocked, which FIXME."
   "Clock in with starting time of right now, no matter what org-clock-continuously says."
   (interactive)
   (let ((org-clock-continuously nil))
-    (org-clock-in)))
+    ;; if buffer Agenda, then org-agenda-clock-in.
+    (if (string= (buffer-name) "*Org Agenda*")
+	(org-agenda-clock-in)
+      (org-clock-in))))
 
 (defun x-hugh-org-daily-report ()
   "ZOMG shoulda done this long ago!  FIXME: Not done yet; some
@@ -272,5 +275,26 @@ Hugh
       (forward-line 1)
       (delete-region beg (point)))))
 
+(defun x-hugh-org-yearly-report ()
+  "Yearly report.  FIXME: Not done yet."
+  (interactive)
+  (let ((org-time-clocksum-format "%d:%02d"))
+    (org-clock-report)
+    (search-forward ":scope file")
+    (backward-kill-word 1)
+    (insert-string "agenda")
+    (insert-string " :block 2014 :narrow 60!")
+    (org-dblock-update)))
+
+
+(defun x-hugh-org-new-day-in-notes ()
+  "Start a new day in a notes file."
+  (interactive)
+  (goto-char (point-max))
+  (org-insert-heading)
+  (let ((current-prefix-arg '(16)))
+    (call-interactively 'org-time-stamp-inactive))
+  (align-newline-and-indent)
+  (insert "- "))
 
 (provide 'x-hugh-org)
