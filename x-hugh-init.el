@@ -11,6 +11,7 @@
 (require 'cask "/home/aardvark/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
+(pallet-mode)
 ;; Is this redundant?
 (setq load-path  (cons (expand-file-name "~/.emacs.d/") load-path))
 
