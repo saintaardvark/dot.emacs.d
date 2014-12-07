@@ -6,6 +6,7 @@
 (depends-on "cask")
 (depends-on "company")
 (depends-on "dash")
+(depends-on "debbugs")
 (depends-on "diminish")
 (depends-on "dockerfile-mode")
 (depends-on "drag-stuff")
