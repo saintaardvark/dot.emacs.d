@@ -22,7 +22,7 @@
 (setq inhibit-splash-screen t)
 
 (if window-system
-      (set-default-font "Inconsolata-14")
+      (set-default-font "Inconsolata-12")
   ())
 
 (defun x-hugh-set-font-smaller ()
