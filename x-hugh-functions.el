@@ -19,11 +19,15 @@
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (replace-regexp "Saint Aardvark the Carpeted" "Hugh Brown")
+    (while (re-search-forward "Saint Aardvark the Carpeted" nil t)
+      (replace-match "Hugh Brown" nil nil))
     (goto-char (point-min))
-    (replace-regexp "disturbed my sleep to write" "wrote")
+    (while (re-search-forward "disturbed my sleep to write" nil t)
+      (replace-match "wrote" nil nil))
     (goto-char (point-min))
-    (replace-regexp "Because the plural of Anecdote is Myth" "")))
+    (flush-lines"Because the plural of Anecdote is Myth" nil t)))
+
+    ;; (replace-regexp "Because the plural of Anecdote is Myth" "")))
 (defun x-hugh-edit-dot-bashrc (arg)
   "Edit .bashrc_local, or (with arg) .bashrc."
   (interactive "P")
