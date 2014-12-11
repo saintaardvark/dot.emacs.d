@@ -56,7 +56,7 @@
 (global-set-key "\C-cpv"	'x-hugh-wiki-verbatim-quote)
 
 ; Markdown mode
-; (define-key markdown-mode-map (kbd "\C-cwl") 'x-hugh-markdown-footnote)
+(define-key markdown-mode-map (kbd "\C-cwl") 'x-hugh-markdown-footnote)
 
 ;; I'm gonna declare C-co the offical prefix of my org stuff.
 (global-set-key "\C-cod"		'x-hugh-org-new-day-in-notes)
