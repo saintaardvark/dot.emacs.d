@@ -192,7 +192,6 @@
 				      ("X-Ethics" . "Use GNU"))
       rt-liber-gnus-signature       "Thanks,Hugh")
 
-(setq user-mail-address "hbrown@chibi.ubc.ca")
 
 ;; Cfengine mode comes w/Emacs 24.
 (add-to-list 'auto-mode-alist '("\\.cf\\'" . cfengine3-mode))
