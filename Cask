@@ -55,6 +55,7 @@
 (depends-on "smartparens")
 (depends-on "smex")
 (depends-on "solarized-theme")
+(depends-on "ssh")
 (depends-on "twittering-mode")
 (depends-on "use-package")
 (depends-on "vagrant")
