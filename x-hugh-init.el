@@ -18,7 +18,6 @@
 (require 'x-hugh-packages)
 (require 'x-hugh-modes)
 (require 'x-hugh-functions)
-(require 'x-hugh-appearance)
 (require 'x-hugh-confluence)
 (require 'x-hugh-org)
 (require 'x-hugh-cfengine)
@@ -26,6 +25,7 @@
 (require 'x-hugh-reference)
 (require 'x-hugh-modes)
 (require 'x-hugh-keymap)
+(require 'x-hugh-appearance)
 ;; Any startup things (server-start), etc.
 (require 'x-hugh-finally)
 
