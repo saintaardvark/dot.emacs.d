@@ -41,6 +41,7 @@
 (depends-on "nyan-mode")
 (depends-on "package-build")
 (depends-on "pallet")
+(depends-on "php-mode")
 (depends-on "pivotal-tracker")
 (depends-on "pkg-info")
 (depends-on "popwin")
