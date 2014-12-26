@@ -674,4 +674,8 @@ See `comment-region' for behavior of a prefix arg."
   (yank)
   (forward-line))))))
 
+(defun x-hugh-ssh-mode-hook ()
+  "Hook for ssh-mode."
+  (ssh-directory-tracking-mode t))
+
 (provide 'x-hugh-functions)
