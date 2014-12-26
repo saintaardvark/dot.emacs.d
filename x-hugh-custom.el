@@ -35,6 +35,7 @@
  '(magit-git-executable "/usr/bin/git")
  '(magit-use-overlays nil)
  '(midnight-mode t nil (midnight))
+ '(mpc-host "192.168.23.254")
  '(ns-command-modifier nil)
  '(org-agenda-columns-add-appointments-to-effort-sum t)
  '(org-agenda-files (quote ("~/orgmode")))
