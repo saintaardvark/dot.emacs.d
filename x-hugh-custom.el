@@ -47,14 +47,11 @@
  '(org-agenda-start-with-log-mode t)
  '(org-capture-templates
    (quote
-    (("R" "Autofill RT ticket" entry
-      (file "~/orgmode/todo.org")
-      "** TODO [#A] %?")
-     ("e" "Emacs" entry
+    (("e" "Emacs" entry
       (file "~/orgmode/emacs.org")
       "** TODO RT #%^{Number} -- %^{Subject}")
      ("t" "TODO" entry
-      (file "~/orgmode/todo.org")
+      (file "~/orgmode/TODO.org")
       "** TODO %^{TODO}")
      ("q" "Question" entry
       (file "~/orgmode/TODO.org")
@@ -66,7 +63,7 @@
  '(org-clock-into-drawer t)
  '(org-default-notes-file "~/orgmode/TODO.org")
  '(org-default-priority 65)
- '(org-habit-show-all-today t)
+ ;; '(org-habit-show-all-today t)
  '(org-log-done (quote time))
  '(org-log-into-drawer t)
  '(org-modules
