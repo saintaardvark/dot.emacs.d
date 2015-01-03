@@ -49,7 +49,7 @@
    (quote
     (("e" "Emacs" entry
       (file "~/orgmode/emacs.org")
-      "** TODO RT #%^{Number} -- %^{Subject}")
+      "** TODO %^{TODO}")
      ("t" "TODO" entry
       (file "~/orgmode/TODO.org")
       "** TODO %^{TODO}")
