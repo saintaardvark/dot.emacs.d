@@ -1,4 +1,3 @@
-(source "melpa" "http://melpa.milkbox.net/packages/")
 (source gnu)
 (source melpa)
 
@@ -68,6 +67,7 @@
 (depends-on "vagrant-tramp")
 (depends-on "wanderlust")
 (depends-on "wc-goal-mode")
+(depends-on "wc-mode")
 (depends-on "web-mode")
 (depends-on "workgroups2")
 (depends-on "yaml-mode")

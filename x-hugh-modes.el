@@ -27,7 +27,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(require 'erc		nil 'noerror)
+;; (require 'erc		nil 'noerror)
 (require 'uniquify	nil 'noerror)
 (require 'xclip		nil 'noerror)
 (require 'filladapt	nil 'noerror)
