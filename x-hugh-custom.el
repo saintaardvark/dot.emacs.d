@@ -3,6 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(Man-notify-method (quote bully))
  '(backup-directory-alist (quote (("." . "~/.emacs.d/backups/"))))
  '(battery-mode-line-format "[Battery time: %t]")
  '(c-basic-offset 8)
