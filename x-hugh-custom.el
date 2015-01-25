@@ -64,7 +64,6 @@
  '(org-clock-into-drawer t)
  '(org-default-notes-file "~/orgmode/TODO.org")
  '(org-default-priority 65)
- ;; '(org-habit-show-all-today t)
  '(org-log-done (quote time))
  '(org-log-into-drawer t)
  '(org-modules
