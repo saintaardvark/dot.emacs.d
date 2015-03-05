@@ -36,7 +36,7 @@
 (require 'markdown-mode	nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 ;; (iswitchb-mode 1)
-(when (not (string= system-name "herobrine.saintaardvarkthecarpeted.com"))
+(when (not (string= system-name "zombie.saintaardvarkthecarpeted.com"))
   (progn
     (require 'helm-config nil 'noerror)
     (helm-mode 1)
