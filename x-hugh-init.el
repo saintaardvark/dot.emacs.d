@@ -20,13 +20,19 @@
 
 ;; Is this redundant?
 (setq load-path  (cons (expand-file-name "~/.emacs.d/") load-path))
-;; Try moving x-hugh-settings first; trying to get x-hugh-custom.el,
-;; which is loaded in there, loaded first -- which'll let the theme
-;; loading in x-hugh-custom, as it's in the Cask directory.
-(require 'x-hugh-settings)
-(require 'x-hugh-packages)
-(require 'x-hugh-text)
-(require 'x-hugh-modes)
+
+;; Custom file first.
+(setq custom-file "~/.emacs.d/x-hugh-custom.el")
+(load custom-file 'noerror)
+
+;; Add melpa
+(package-initialize)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+;; And now everything else
+
+(require 'x-hugh-random)
 (require 'x-hugh-functions)
 (require 'x-hugh-appearance)
 ;; (require 'x-hugh-confluence)
@@ -34,8 +40,15 @@
 ;; (require 'x-hugh-cfengine)
 (require 'x-hugh-helm)
 (require 'x-hugh-reference)
+(require 'x-hugh-modes)
+(require 'x-hugh-hydra)
+
+;; Keymaps come last.  Put a comment in other files about what
+;; keymappings are set, but put the actual mapping in here.
 (require 'x-hugh-keymap)
 ;; Any startup things (server-start), etc.
 (require 'x-hugh-finally)
 
 (provide 'x-hugh-init)
+
+;;; x-hugh-init ends here
