@@ -23,7 +23,7 @@
 
 (if window-system
     (progn
-      (set-default-font "Inconsolata-14")
+      (set-default-font "Inconsolata-12")
       (scroll-bar-mode -1))
   ())
 
