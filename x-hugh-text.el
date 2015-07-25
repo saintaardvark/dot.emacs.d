@@ -29,5 +29,5 @@ Single Capitals as you type."
 
 (add-hook 'text-mode-hook #'dubcaps-mode)
 
-(provide x-hugh-text)
+(provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
