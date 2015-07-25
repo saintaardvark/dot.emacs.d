@@ -17,6 +17,10 @@
 (global-set-key "\C-\M-z"	'x-hugh-delete-to-sig)
 (global-set-key "\C-c\C-r"	'x-hugh-show-rt-tickets-2)
 (global-set-key "\C-c\C-s"	'sudo-edit-current-file)
+
+;; Try out cbm-cycle
+(global-set-key (kbd "C-'") #'cbm-cycle)
+
 ;; (global-set-key "\C-cw"		'x-hugh-wordcount)
 
 ;; Official key prefixes:

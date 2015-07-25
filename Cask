@@ -5,6 +5,7 @@
 (depends-on "bind-key")
 (depends-on "boxquote")
 (depends-on "cask")
+(depends-on "cbm")
 (depends-on "company")
 (depends-on "dash")
 (depends-on "debbugs")
