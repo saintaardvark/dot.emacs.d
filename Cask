@@ -1,6 +1,7 @@
 (source gnu)
 (source melpa)
 
+(depends-on "ace-window")
 (depends-on "async")
 (depends-on "avy")
 (depends-on "avy-zap")
