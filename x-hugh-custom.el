@@ -86,7 +86,6 @@
  '(setq c-basic-offset)
  '(show-paren-mode 1)
  '(spell-command "ispell")
- '(split-window-preferred-function nil)
  '(standard-indent 8)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(uniquify-min-dir-content 2)
