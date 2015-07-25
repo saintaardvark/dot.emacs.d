@@ -1,4 +1,8 @@
-;; x-hugh-appearance.el
+;; x-hugh-appearance.el --- appearances are everything
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Emacs appearance
 (setq column-number-mode t
@@ -33,4 +37,6 @@
   (set-default-font "Inconsolata-12"))
 ;; (require 'color-theme nil 'noerror)
 ;; (load-theme "solarized-dark" t)
+
 (provide 'x-hugh-appearance)
+;;; x-hugh-appearance ends here.
