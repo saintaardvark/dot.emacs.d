@@ -4,14 +4,6 @@
 ;; (global-set-key "\C-xo" 'win-switch-dispatch)
 ;; (win-switch-setup-keys-ijkl "\C-xo")
 
-;; Helm mode
-;; moved to x-hugh-modes
-;; (global-set-key (kbd "M-x")     'helm-M-x)
-;; (global-set-key (kbd "M-y")     'helm-show-kill-ring)
-;; (global-set-key (kbd "C-x b")   'helm-mini)
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-
-
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)
 (global-set-key "\C-cb"		'x-hugh-chronicle-new-blog-entry)
@@ -27,9 +19,25 @@
 (global-set-key "\C-c\C-s"	'sudo-edit-current-file)
 ;; (global-set-key "\C-cw"		'x-hugh-wordcount)
 
+;; Official key prefixes:
+;; C-c e: lisp stuff
+;; C-c i: random file stuff.
+;; C-c j: Puppet
+;; C-c o: org
+;; C-c p: wiki/blog
+;; C-c u: random
+;; C-c v: vagrant
+;; C-c w: workgroups.
+;; C-c 3: CFEngine
+
+;; C-c e: lisp stuff.
+
+(global-set-key "\C-ced"	'edebug-defun)
+
 ;; I'm gonna declare C-ci the official prefix of my random file stuff.
 
 (global-set-key "\C-cib"	'x-hugh-edit-dot-bashrc)
+(global-set-key "\C-cid"	'x-hugh-die-outlook-die)
 (global-set-key "\C-cie"	'x-hugh-edit-dot-emacs)
 ;; (global-set-key "\C-cif"	'x-hugh-figl)
 ;; helm-do-grep is better.
@@ -80,9 +88,6 @@
 ;; And I'm gonna declare C-c3 the official prefix of my Cf3 stuff.
 (global-set-key "\C-c3f"		'x-hugh-cf3-insert-file-template)
 (global-set-key "\C-c3o"	        'x-hugh-open-cfengine-files)
-
-;; C-cu is the official prefix of random things.
-(global-set-key "\C-cud"		'x-hugh-die-outlook-die)
 
 ; God, I hate what this does when using Emacs in X
 (global-unset-key "\C-z")

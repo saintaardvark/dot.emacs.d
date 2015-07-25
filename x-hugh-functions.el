@@ -1,11 +1,12 @@
 ;; My random functions.
 
 (defun x-hugh-reload-dot-emacs ()
+  "Reload .emacs."
   (interactive)
   (load-file "~/.emacs"))
 
-;; Thanks, alezost from #emacs! http://paste.debian.net/111217
-;; TODO: Look at using ido-completing-read.
+;; FIXME: Look at initial-input arg for completing-read in order to
+;; populate the initial file to x-hugh-something.
 (defun x-hugh-edit-dot-emacs ()
   "Edit .emacs.d/x-hugh-* files."
   (interactive)
@@ -73,10 +74,10 @@ idiom for working on region or current word."
     ;; now, pos1 and pos2 are the starting and ending positions of the
     ;; current word, or current text selection if exist.
     (goto-char (- pos1 1))
-    (insert-string (format "\n%s" tag))
+    (insert (format "\n%s" tag))
     ; go to pos2 + 1 char past + 12 chars (length of "\n<verbatim> string)
     (goto-char (+ pos2 taglength))
-    (insert-string (format "\n%s\n" tag))
+    (insert (format "\n%s\n" tag))
     (if (eq pos1 pos2)
 	(goto-char (- (point) (+ 1 taglength))))))
 
@@ -100,7 +101,7 @@ idiom for working on region or current word."
 	 (attachment-url (format "https://noc.chibi.ubc.ca/wiki/attachments/%s/%s" page-name attachment-file)))
     (make-directory local-attachments-dir 1)
     (copy-file filename local-attachments-dir 1)
-    (insert-string (format "[[%s|%s]]" attachment-file attachment-url))))
+    (insert (format "[[%s|%s]]" attachment-file attachment-url))))
 
 (defun x-hugh-email-rt (&optional arg ticket)
   "A Small but Useful(tm) function to email RT about a particular ticket. Universal argument to make it Bcc."
@@ -110,9 +111,9 @@ idiom for working on region or current word."
     (if arg
 	(search-forward "Bcc:")
       (search-forward "To:"))
-    (insert-string " rtc")
+    (insert " rtc")
     (search-forward "Subject:")
-    (insert-string (format " [rt.chibi.ubc.ca #%d] " ticket))))
+    (insert (format " [rt.chibi.ubc.ca #%d] " ticket))))
 
 (defun x-hugh-new-rt-email ()
   "A Small but Useful(tm) function to send an email to RT for a new ticket."
@@ -120,7 +121,7 @@ idiom for working on region or current word."
   (save-excursion
     (goto-char (point-min))
     (search-forward "To:")
-    (insert-string " help@chibi.ubc.ca")))
+    (insert " help@chibi.ubc.ca")))
 
 (defun x-hugh-email-rt-dwim (&optional arg)
   "A Small but Useful(tm) function to email RT about a particular ticket. Universal argument to send to rt instead of rt-comment.
@@ -136,12 +137,12 @@ idiom for working on region or current word."
     (if (search-forward-regexp "\\w" (line-end-position) t)
 	(progn
 	  (search-forward "Bcc:")
-	  (insert-string (format " %s" sendto)))
-      (insert-string  (format " %s" sendto)))
+	  (insert (format " %s" sendto)))
+      (insert (format " %s" sendto)))
     (search-forward "Subject:")
     (if (search-forward "[rt.chibi.ubc.ca #" (line-end-position) t)
 	()
-      (insert-string
+      (insert
        (format " [rt.chibi.ubc.ca #%s] "
 	       (read-string "Ticket: " nil nil (format "%s" (x-hugh-clocked-into-rt-ticket-number-only))))))))
 
@@ -153,10 +154,10 @@ idiom for working on region or current word."
 (defun x-hugh-insert-headers ()
   (interactive)
   (save-excursion
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (let
 	((beg (point)))
-      (insert-string "-*-shell-script-*-")
+      (insert "-*-shell-script-*-")
       (forward-line 1) (comment-region beg (point)))
     (vc-insert-headers)))
 
@@ -216,8 +217,7 @@ It works, but it's also a learning exercise."
     ;; This works, but it would be better to use a temporary buffer here.
     (shell-command-on-region beg end "wc -w")
     (message "%s words"
-	     (save-excursion
-	       (set-buffer "*Shell Command Output*")
+	     (with-current-buffer "*Shell Command Output*"
 	       (let ((beg (point-min))
 		     (end (- (point-max) 1)))
 		 (buffer-substring beg end))))))
@@ -241,8 +241,7 @@ See https://dgl.cx/2008/10/wikipedia-summary-dns for details.
 "
   (interactive "sWikipedia: ")
   (message (format "%s.wp.dg.cx" query))
-    (save-excursion
-      (set-buffer (dig-invoke (format "%s.wp.dg.cx" query) "txt" "+short"))
+    (with-current-buffer (dig-invoke (format "%s.wp.dg.cx" query) "txt" "+short")
       (message "%s: %s" query (let ((beg (point-min))
 				    (end (- (point-max) 1)))
 				(buffer-substring beg end)))))
@@ -320,7 +319,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
 (defun replace-region-command-output()
   "Replace the current region with the output of running a command upon it."
   (interactive)
-  (let ((command (read-input "Command to execute: ")))
+  (let ((command (read-string "Command to execute: ")))
     (if (> (length command) 1)
         (shell-command-on-region (region-beginning) (region-end) command t t)
       (message "No command.  Ignoring"))))
@@ -441,8 +440,7 @@ If POINT is nil then called on (point).  If called with arg, check in as well."
   (let ((ticket (get-text-property point 'rt-ticket)))
     (setq subject (cdr (assoc "Subject" ticket)))
     (setq id (rt-liber-browser-ticket-id-at-point))
-    (save-excursion
-      (set-buffer "all.org")
+    (with-current-buffer "all.org"
       (goto-char (point-min))
       (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
 	  (message "Already in org!")
@@ -483,11 +481,11 @@ I can never remember how to do this."
 
 (defun x-hugh-insert-wiki-rt-link (ticket)
   (interactive "nTicket: ")
-  (insert-string (format "[[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]" ticket ticket)))
+  (insert (format "[[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]" ticket ticket)))
 
 (defun x-hugh-insert-wiki-rt-link-as-detailed-in (ticket)
   (interactive "nTicket: ")
-  (insert-string (format "As detailed in [[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]," ticket ticket)))
+  (insert (format "As detailed in [[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]," ticket ticket)))
 
 (defun x-hugh-blog-entry (title)
   "A Small but Useful(tm) function to make a new blog entry in Markdown format."
@@ -496,12 +494,12 @@ I can never remember how to do this."
       (wg-switch-to-index-1)
     (error nil))
   (delete-other-windows)
-  (find-file   (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
-  (end-of-buffer)
+  (find-file (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
+  (goto-char (point-max))
   (insert (format "\n\n## %s" title))
   (insert "\n\n\n\n-- main.hugh ")
   (x-hugh-insert-date)
-  (previous-line 2))
+  (forward-line -2))
 
 (defun x-hugh-open-blog-page ()
   "A Small but Useful(tm) function to open this month's blog page."
@@ -510,9 +508,9 @@ I can never remember how to do this."
       (wg-switch-to-index-1)
     (error nil))
   (delete-other-windows)
-  (find-file   (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
-  (end-of-buffer)
-  (previous-line 2))
+  (find-file (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
+  (goto-char (point-max))
+  (forward-line -2))
 
 (defun x-hugh-align-cf3-promise (beg end)
   "Align a Cf3 promise on '=>'.  FIXME: Not working yet"
@@ -535,24 +533,24 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
     (save-excursion
       (if (> (- last-line current-line) 1)
           ()
-        (insert-string "\n"))
+        (insert "\n"))
       (goto-char (point-max))
       (if (search-backward-regexp (rx bol "[") (point-min) t)
           ())
       (forward-line)
       (if (looking-at (rx bol))
           ()
-        (insert-string "\n")
+        (insert "\n")
         (forward-line))
-      (insert-string (format "[%d]: %s" link-number link)))
+      (insert (format "[%d]: %s" link-number link)))
     (if (region-active-p)
         (progn
-          (setq pos1 (region-beginning) pos2 (1+ (region-end)))
+          (setq pos1 (region-beginning) pos2 (region-end))
           (goto-char pos1)
-          (insert-string "[")
+          (insert "[")
           (goto-char pos2)
-          (insert-string (format "][%d]" link-number)))
-      (insert-string (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
+          (insert (format "][%d]" link-number)))
+      (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
 
 (defun x-hugh-get-next-link-number ()
   "Figure out the number for the next link."
@@ -660,19 +658,32 @@ See `comment-region' for behavior of a prefix arg."
   (forward-line))
 
 ;; not yet working
-(defun x-hugh-copy-and-comment-line (beg end &optional arg)
-  "Duplicate the region and comment-out the copied text.
-See `comment-region' for behavior of a prefix arg."
-  (interactive "r\nP")
-  (let ((this-line-start line-beginning-position)
-        (this-line-end line-
-  (kill-ring-save (line-beginning-position)
-                  (line-beginning-position 2)
-  (comment-region arg)
-  (copy-region-as-kill beg end)
-  (goto-char end)
-  (yank)
-  (forward-line))))))
+(defun x-hugh-copy-and-comment-line ()
+  "Comment current line, and insert uncommented copy below.
+
+FIXME: Need to figure out how to put point at right column."
+  (interactive)
+  (save-excursion
+    (let ((beg (line-beginning-position))
+          (end (line-end-position)))
+      (kill-ring-save beg end)
+      (comment-region beg end)
+      (move-beginning-of-line 2)
+      (yank)))
+  (forward-line))
+
+;; stoleon from http://emacswiki.org/emacs/TransposeWindows
+(defun x-hugh-transpose-windows (arg)
+  "Transpose the buffers shown in two windows."
+  (interactive "p")
+  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
+    (while (/= arg 0)
+      (let ((this-win (window-buffer))
+            (next-win (window-buffer (funcall selector))))
+        (set-window-buffer (selected-window) next-win)
+        (set-window-buffer (funcall selector) this-win)
+        (select-window (funcall selector)))
+      (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
 (defun x-hugh-ssh-mode-hook ()
   "Hook for ssh-mode."

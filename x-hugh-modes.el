@@ -27,7 +27,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-;; (require 'erc		nil 'noerror)
+(require 'erc		nil 'noerror)
 (require 'uniquify	nil 'noerror)
 (require 'xclip		nil 'noerror)
 (require 'filladapt	nil 'noerror)
@@ -36,15 +36,6 @@
 (require 'markdown-mode	nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 ;; (iswitchb-mode 1)
-(when (not (string= system-name "zombie.saintaardvarkthecarpeted.com"))
-  (progn
-    (require 'helm-config nil 'noerror)
-    (helm-mode 1)
-    ;; (global-set-key (kbd "M-x")     'helm-M-x)
-    (global-set-key (kbd "M-y")     'helm-show-kill-ring)
-    (global-set-key (kbd "C-x b")   'helm-mini)
-    (global-set-key (kbd "C-x C-f") 'helm-find-files)))
-
 
 ; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
@@ -60,6 +51,7 @@
 (setq load-path  (cons (expand-file-name "~/.emacs.d/git-modes/") load-path))
 (require 'git-commit-mode nil 'noerror)
 (setq load-path  (cons (expand-file-name "~/.emacs.d/magit/") load-path))
+(setq magit-last-seen-setup-instructions "1.4.0")
 (require 'magit nil 'noerror)
 
 (require 'markdown-mode nil 'noerror)
@@ -235,5 +227,15 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 (add-to-list 'auto-mode-alist '("\\.cfg\\'" . x-hugh-cfg-mode))
 
 (require 'yasnippet nil 'noerror)
+
+;; For ANSI colourization in compilation buffers.
+;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode/20788581#20788581
+(ignore-errors
+  (require 'ansi-color)
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
+
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here
