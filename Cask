@@ -2,6 +2,8 @@
 (source melpa)
 
 (depends-on "async")
+(depends-on "avy")
+(depends-on "avy-zap")
 (depends-on "bind-key")
 (depends-on "boxquote")
 (depends-on "cask")

@@ -104,7 +104,7 @@
 (global-set-key "\M-z" 'x-hugh-zap)
 
 ;; Goto-line, dammit!
-(global-set-key "\M-g" 'goto-line)
+(global-set-key "\M-g" 'avy-goto-line)
 (global-set-key "\C-\M-q" 'auto-fill-mode)
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
