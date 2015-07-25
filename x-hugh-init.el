@@ -22,6 +22,7 @@
 (require 'x-hugh-org)
 (require 'x-hugh-cfengine)
 (require 'x-hugh-settings)
+(require 'x-hugh-helm)
 (require 'x-hugh-reference)
 (require 'x-hugh-modes)
 (require 'x-hugh-keymap)
