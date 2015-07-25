@@ -34,6 +34,7 @@
 (depends-on "helm-git-grep")
 (depends-on "helm-swoop")
 (depends-on "htmlize")
+(depends-on "hydra")
 (depends-on "idle-highlight-mode")
 (depends-on "json-mode")
 (depends-on "json-reformat")

@@ -32,23 +32,21 @@
 ;; C-c u: random
 ;; C-c v: vagrant
 ;; C-c w: workgroups.
+;; C-c y: window (hydra)
 ;; C-c 3: CFEngine
 
 ;; C-c e: lisp stuff.
 
 (global-set-key "\C-ced"	'edebug-defun)
 
-;; I'm gonna declare C-ci the official prefix of my random file stuff.
+;; Personal files
 
-(global-set-key "\C-cib"	'x-hugh-edit-dot-bashrc)
-(global-set-key "\C-cid"	'x-hugh-die-outlook-die)
-(global-set-key "\C-cie"	'x-hugh-edit-dot-emacs)
-;; (global-set-key "\C-cif"	'x-hugh-figl)
-;; helm-do-grep is better.
-(global-set-key "\C-cif"	'helm-do-grep)
-(global-set-key "\C-cig"	'x-hugh-open-git-repo)
-(global-set-key "\C-cir"	'x-hugh-open-password-file)
-(global-set-key "\C-cis"	'x-hugh-reload-dot-emacs)
+(global-set-key (kbd "C-c i") 'hydra-personal-files/body)
+
+;; Puppet
+
+(global-set-key (kbd "C-c j") 'hydra-puppet/body)
+
 
 ;; I'm gonna declare C-cw the official prefix of Workgroups.  But!
 ;; This needs to be set before workgroups is loaded -- so it's
@@ -92,6 +90,9 @@
 ;; And I'm gonna declare C-c3 the official prefix of my Cf3 stuff.
 (global-set-key "\C-c3f"		'x-hugh-cf3-insert-file-template)
 (global-set-key "\C-c3o"	        'x-hugh-open-cfengine-files)
+
+
+(global-set-key (kbd "C-c y") 'hydra-window/body)
 
 ; God, I hate what this does when using Emacs in X
 (global-unset-key "\C-z")
