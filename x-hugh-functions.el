@@ -689,4 +689,9 @@ FIXME: Need to figure out how to put point at right column."
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
 
+(defun x-hugh-open-password-file ()
+  (interactive)
+  (find-file "~/passwords.gpg"))
+
+
 (provide 'x-hugh-functions)

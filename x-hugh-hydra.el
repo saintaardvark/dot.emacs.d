@@ -71,7 +71,7 @@ _s_jc maps file
   ("e" x-hugh-edit-dot-emacs  ".emacs")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
-  ("r" x-hugh-open-chibi-account-file "Open password file")
+  ("r" x-hugh-open-password-file "Open password file")
   ("s" x-hugh-reload-dot-emacs "Reload .emacs"))
 
 (provide 'x-hugh-hydra)
