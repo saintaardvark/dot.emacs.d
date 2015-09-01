@@ -693,7 +693,9 @@ FIXME: Need to figure out how to put point at right column."
   (interactive)
   (find-file "~/passwords.gpg"))
 
+;; FIXME: Should be using indirect buffer here (is that the right term?
 (defun x-hugh-add-to-venus (url title)
+  "Add a URL to planet.ini."
   (interactive "sURL: \nsTitle: ")
   (find-file "/home/aardvark/venus/planet.ini")
   (goto-char (point-max))
