@@ -62,6 +62,10 @@ _s_jc maps file
   ("b" ido-switch-buffer "buf")
   ("m" headlong-bookmark-jump "bmk")
   ("-" balance-windows "balance")
+  (">" end-of-buffer "end-of-buffer")
+  ("<" beginning-of-buffer "beg-of-buffer")
+  ("/" isearch-forward "search-forward" :color blue)
+  ("\\" isearch-backward "search-backward" :color blue)
   ("q" nil "cancel"))
 
 (defhydra hydra-personal-files (:exit t)
