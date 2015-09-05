@@ -725,5 +725,18 @@ FIXME: Need to figure out how to put point at right column."
   (interactive)
   (message "Wrong!"))
 
+;; FIXME: Should be using indirect buffer here (is that the right term?
+(defun x-hugh-add-to-venus (url title)
+  "Add a URL to planet.ini."
+  (interactive "sURL: \nsTitle: ")
+  (find-file "/home/aardvark/venus/planet.ini")
+  (goto-char (point-max))
+  (insert (format "\n[%s]\nname = %s\n" url title))
+  (save-buffer)
+  (x-hugh-git-commit-and-push-without-mercy)
+  (kill-buffer))
+
+
+
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
