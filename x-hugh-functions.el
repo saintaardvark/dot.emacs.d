@@ -1,4 +1,8 @@
-;; My random functions.
+;;; x-hugh-functions --- My random functions
+
+;;; Commentary:
+
+;;; Code:
 
 (defun x-hugh-reload-dot-emacs ()
   "Reload .emacs."
@@ -695,3 +699,4 @@ FIXME: Need to figure out how to put point at right column."
 
 
 (provide 'x-hugh-functions)
+;;; x-hugh-functions ends here
