@@ -1,3 +1,4 @@
+(source "melpa" "http://melpa.milkbox.net/packages/")
 (source gnu)
 (source melpa)
 
