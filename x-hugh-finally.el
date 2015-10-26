@@ -13,8 +13,10 @@
 (workgroups-mode 1)
 ;; start in home directory instead of root
 (cd "~")
-;; Lastly, like fortune:
-(totd)
+(erc :server "irc.freenode.net")
+;
+; Lastly, like fortune:
+;(totd)
 
 
 (provide 'x-hugh-finally)
