@@ -44,7 +44,7 @@
 (require 'x-hugh-modes)
 (require 'x-hugh-settings)
 (require 'x-hugh-hydra)
-
+(require 'x-hugh-erc)
 ;; Keymaps come last.  Put a comment in other files about what
 ;; keymappings are set, but put the actual mapping in here.
 (require 'x-hugh-keymap)

@@ -734,7 +734,7 @@ FIXME: Need to figure out how to put point at right column."
   (insert (format "\n[%s]\nname = %s\n" url title))
   (save-buffer)
   (x-hugh-git-commit-and-push-without-mercy)
-  (kill-buffer))
+  (close-buffer))
 
 
 
