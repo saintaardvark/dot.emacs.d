@@ -48,7 +48,7 @@ _s_jc maps file
          (split-window-right)
          (windmove-right))
    "vert")
-  ("x" (lambda ()
+  ("x" (glambda ()
          (interactive)
          (split-window-below)
          (windmove-down))
@@ -70,6 +70,10 @@ _s_jc maps file
 
 (defhydra hydra-personal-files (:exit t)
   "personal files"
+  ("a" (lambda ()
+	 (interactive)
+	 (find-file "/home/aardvark/saintaardvarkthecarpeted.com/astronomy.mdwn"))
+	 "astronomy page")
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("e" x-hugh-edit-dot-emacs  ".emacs")
@@ -77,6 +81,7 @@ _s_jc maps file
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("r" x-hugh-open-password-file "Open password file")
   ("s" x-hugh-reload-dot-emacs "Reload .emacs"))
+
 
 (provide 'x-hugh-hydra)
 ;;; x-hugh-hydra.el ends here
