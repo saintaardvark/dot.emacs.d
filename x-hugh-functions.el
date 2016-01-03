@@ -701,7 +701,7 @@ FIXME: Need to figure out how to put point at right column."
   "Toggle nagging about key navigation."
   (interactive)
   (if (not (boundp 'x-hugh-nag-about-keys-flag))
-      ;; Our first time through.  
+      ;; Our first time through.
       (setq x-hugh-nag-about-keys-flag 0))
   (if (eq x-hugh-nag-about-keys-flag 0)
       (progn
@@ -734,7 +734,7 @@ FIXME: Need to figure out how to put point at right column."
   (insert (format "\n[%s]\nname = %s\n" url title))
   (save-buffer)
   (x-hugh-git-commit-and-push-without-mercy)
-  (close-buffer))
+  (kill-buffer))
 
 
 
