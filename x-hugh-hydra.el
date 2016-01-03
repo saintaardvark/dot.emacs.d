@@ -48,7 +48,7 @@ _s_jc maps file
          (split-window-right)
          (windmove-right))
    "vert")
-  ("x" (glambda ()
+  ("x" (lambda ()
          (interactive)
          (split-window-below)
          (windmove-down))
