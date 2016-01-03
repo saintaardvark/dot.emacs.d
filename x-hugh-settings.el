@@ -29,6 +29,9 @@
 (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
 (add-hook 'diff-mode 'font-lock-mode)
 
+;; Turn on abbrevs for post mode
+(add-hook 'post-mode '(lambda () (abbrev-mode 1)))
+
 ;; To set shell-script mode by default
 (add-to-list 'auto-mode-alist (cons "\\.muttrc$" 'shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.cfg\\'" . shell-script-mode))

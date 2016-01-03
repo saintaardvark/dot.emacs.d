@@ -49,6 +49,7 @@
 ;; Keymaps come last.  Put a comment in other files about what
 ;; keymappings are set, but put the actual mapping in here.
 (require 'x-hugh-keymap)
+(require 'x-hugh-settings)
 ;; Any startup things (server-start), etc.
 (require 'x-hugh-finally)
 
