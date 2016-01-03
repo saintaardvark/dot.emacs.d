@@ -387,41 +387,6 @@ Returns nil if no differences found, 't otherwise."
 ; I never use this.
 ; (global-set-key "\C-cf" 'doom-run-text-autoformat-on-region)
 
-(defun x-hugh-chronicle-new-blog-entry (title)
-  "A Small but Useful(tm) function to make a new blog entry in Chronicle."
-  (interactive "sTitle: ")
-  (setq filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title)))
-  (message filename)
-  (find-file (concat "/home/aardvark/blog/input/" (format-time-string "%Y-%m") "/" filename ".mdwn"))
-  (insert (format "Title: %s\n" title))
-  (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
-  (insert (format "Tags: \n\n"))
-  (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t)
-  (wc-goal-mode 1))
-
-(defun x-hugh-chronicle-update-datestamp ()
-  "Update the timestamp on a blog post."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (search-forward-regexp (rx bol "Date: "))
-    (kill-line)
-    (insert (format "%s" (format-time-string "%a %b %d %R:%S %Z %Y")))))
-
-(defun x-hugh-chronicle-list-tags ()
-  "A Small but Useful9tm) function to list the tags available for Chronicle."
-  (interactive)
-  (with-output-to-temp-buffer "*Blog tags*"
-    (with-current-buffer "*Blog tags*"
-      (insert-directory "/home/aardvark/blog/output/tags" "-CF"))))
-
-(defun x-hugh-chronicle-add-tag ()
-  (interactive)
-;; This turns out to be surprisingly simple
-  (insert
-   (completing-read "Tag: "
-		    (directory-files "/home/aardvark/blog/output/tags"))))
-
 (defun x-hugh-boxquote-yank-and-indent ()
   "My attempt to combine boxquote-yank and indent.
 The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly to run it twice, but it was simple."
@@ -701,7 +666,7 @@ FIXME: Need to figure out how to put point at right column."
   "Toggle nagging about key navigation."
   (interactive)
   (if (not (boundp 'x-hugh-nag-about-keys-flag))
-      ;; Our first time through.  
+      ;; Our first time through.
       (setq x-hugh-nag-about-keys-flag 0))
   (if (eq x-hugh-nag-about-keys-flag 0)
       (progn

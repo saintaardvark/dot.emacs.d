@@ -35,6 +35,7 @@
 
 (require 'x-hugh-random)
 (require 'x-hugh-functions)
+(require 'x-hugh-blog)
 (require 'x-hugh-appearance)
 ;; (require 'x-hugh-confluence)
 (require 'x-hugh-org)
