@@ -53,6 +53,32 @@
    (completing-read "Tag: "
 		    (directory-files "/home/aardvark/blog/output/tags"))))
 
+(defun x-hugh-list-phonepix ()
+  "List phonepix at /mnt."
+  (interactive)
+  (split-window-right)
+  (other-window 1)
+  (image-dired "/mnt/phonepix")
+  (other-window 1))
+
+(defun x-hugh-image-dired-phonepix-to-blog ()
+  "Convert marked image files to suitably small blogpix."
+  (interactive)
+  (save-window-excursion
+    ;; Could do this with tramp, but this is simpler to start with.
+    (dired-do-async-shell-command "/home/aardvark/bin/mogrify_for_blog.sh" nil (dired-get-marked-files))))
+;; image-dired-original-file-name
+
+(defun x-hugh-image-dired-phonepix-to-blog-2 ()
+  "Convert marked image files to suitably small blogpix."
+  (interactive)
+  (save-window-excursion
+    ;; Could do this with tramp, but this is simpler to start with.
+    (async-shell-command (format "/home/aardvark/bin/mogrify_for_blog.sh %s" (image-dired-original-file-name)))
+    (other-window 0)
+    ()
+))
+
 (provide 'x-hugh-blog)
 
 ;;; x-hugh-blog ends here
