@@ -112,6 +112,8 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
 (defun x-hugh-list-phonepix ()
   "List phonepix at /mnt."
   (interactive)
+  (setq x-hugh-blog-saved-window-configuration
+        (current-window-configuration))
   (split-window-right)
   (other-window 1)
   (image-dired "/mnt/phonepix")
