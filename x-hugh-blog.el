@@ -19,7 +19,6 @@
 (defun x-hugh-jekyll-new-blog-entry (title)
   "A Small but Useful(tm) function to make a new blog entry in Jekyll."
   (interactive "sTitle: ")
-    (get-buffer-create "*Blog entry*")
   (let ((filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title))))
     (message filename)
     (find-file (concat "/home/aardvark/jekyll-blog/_posts/" (format-time-string "%Y-%m-%d-") filename ".md")) ;
