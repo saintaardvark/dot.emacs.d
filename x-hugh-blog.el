@@ -75,7 +75,7 @@
   (save-window-excursion
     ;; Could do this with tramp, but this is simpler to start with.
     (async-shell-command (format "/home/aardvark/bin/mogrify_for_blog.sh %s" (image-dired-original-file-name)))
-    (other-window 0)
+    (other-window 1)
     ()
 ))
 
