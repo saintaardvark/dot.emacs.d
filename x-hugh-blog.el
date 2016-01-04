@@ -115,9 +115,9 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
   (setq x-hugh-blog-saved-window-configuration
         (current-window-configuration))
   (split-window-right)
-  (other-window 1)
-  (image-dired "/mnt/phonepix")
-  (other-window 1))
+  (save-excursion
+    (other-window 1)
+    (image-dired "/mnt/phonepix")))
 
 (defun x-hugh-image-dired-phonepix-to-blog ()
   "Convert marked image files to suitably small blogpix."
