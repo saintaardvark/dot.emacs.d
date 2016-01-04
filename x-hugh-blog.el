@@ -119,6 +119,16 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
     (other-window 1)
     (image-dired "/mnt/phonepix")))
 
+(defun x-hugh-list-phonepix-2 ()
+  "List phonepix at /mnt, take 2."
+  (interactive)
+  (dired "/mnt/phonepix")
+  (dired-mark-files-regexp (image-file-name-regexp))
+  (let ((files (dired-get-marked-files)))
+    (progn
+      (image-dired-display-thumbs)
+      (other-window 1)
+      (bury-buffer))))
 
 (defun x-hugh-image-dired-phonepix-to-blog ()
   "Convert marked image files to suitably small blogpix."
