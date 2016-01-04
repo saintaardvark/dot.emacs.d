@@ -119,15 +119,8 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
     (other-window 1)
     (image-dired "/mnt/phonepix")))
 
-(defun x-hugh-image-dired-phonepix-to-blog ()
-  "Convert marked image files to suitably small blogpix."
-  (interactive)
-  (save-window-excursion
-    ;; Could do this with tramp, but this is simpler to start with.
-    (dired-do-async-shell-command "/home/aardvark/bin/mogrify_for_blog.sh" nil (dired-get-marked-files))))
-;; image-dired-original-file-name
 
-(defun x-hugh-image-dired-phonepix-to-blog-2 ()
+(defun x-hugh-image-dired-phonepix-to-blog ()
   "Convert marked image files to suitably small blogpix."
   (interactive)
   (save-window-excursion
