@@ -94,6 +94,47 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
               (eval 0)))
         (eval 0)))))
 
+(defun x-hugh-markdown-footnote-noninteractive (link imgplease)
+  "Refactored, non-interactive version of x-hugh-markdown-footnote."
+  )
+
+(defun x-hugh-add-markdown-footnote-at-end-of-page (link)
+  "Refactored, non-interactive function to add footnote for LINK."
+  (let ((current-line (line-number-at-pos))
+        (last-line (line-number-at-pos (point-max))))
+    (save-excursion
+      (if (> (- last-line current-line) 1)
+          ()
+        (insert "\n"))
+      (goto-char (point-max))
+      (if (search-backward-regexp (rx bol "[") (point-min) t)
+          ())
+      (forward-line)
+      (if (looking-at (rx bol))
+          ()
+        (insert "\n")
+        (forward-line))
+      (insert (format "[%d]: %s" (x-hugh-get-next-link-number) link))))))
+
+(defun x-hugh-markdown-footnote-refactored (&optional imgplease)
+  "Refactored version."
+  (interactive "p")
+  (let ((first-prefix
+         (if (equal imgplease 1)
+             (setq first-prefix "[")
+           (setq first-prefix "![")))
+        (link (read-string "Link: ")))
+    (x-hugh-add-markdown-footnote-at-end-of-page link)
+    (if (region-active-p)
+        (progn
+          (setq pos1 (region-beginning) pos2 (region-end))
+          (goto-char pos1)
+          (insert "[")
+          (goto-char pos2)
+          (forward-char)
+          (insert (format "][%d]" link-number)))
+      (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
+
 (defun x-hugh-chronicle-list-tags ()
   "A Small but Useful9tm) function to list the tags available for Chronicle."
   (interactive)
