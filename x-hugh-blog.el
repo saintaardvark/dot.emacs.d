@@ -136,9 +136,10 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
   (save-window-excursion
     ;; Could do this with tramp, but this is simpler to start with.
     (let (img (image-dired-original-file-name))
-      (async-shell-command (format "/home/aardvark/bin/mogrify_for_blog.sh %s" img))
-      (other-window 1)
-      (insert (format "https://saintaardvarkthecarpeted.com/images/%s" img)))))
+      (save-excursion
+        (other-window 1)
+        (insert (format "https://saintaardvarkthecarpeted.com/images/%s" img)))
+      (async-shell-command (format "/home/aardvark/bin/mogrify_for_blog.sh %s" img)))))
 
 (provide 'x-hugh-blog)
 
