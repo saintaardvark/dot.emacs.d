@@ -43,17 +43,14 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
   (let ((current-line (line-number-at-pos))
         (last-line (line-number-at-pos (point-max))))
     (save-excursion
-      (if (> (- last-line current-line) 1)
-          ()
+      (when (< (- last-line current-line) 1)
         (insert "\n"))
       (goto-char (point-max))
-      (if (search-backward-regexp (rx bol "[") (point-min) t)
-          ())
       (forward-line)
-      (if (looking-at (rx bol))
-          ()
-        (insert "\n")
-        (forward-line))
+      (if (not (looking-at (rx bol)))
+          (progn
+            (insert "\n")
+            (forward-line)))
       (insert (format "[%d]: %s" link-number link)))))
 
 (defun x-hugh-rf-get-next-link-number ()
