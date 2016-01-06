@@ -12,22 +12,23 @@
 Uses numbers for links. Linkify the region if region active. Prefix means make it an image."
   (interactive "p")
   (let ((link (read-string "Link: "))
-        (link-number (x-hugh-rf-get-next-link-number))
-        (first-prefix
-         (if (equal imgplease 1)
-             (setq first-prefix "[")
-           (setq first-prefix "!["))))
+        (link-number (x-hugh-rf-get-next-link-number)))
     (x-hugh-rf-markdown-add-link-at-end-of-buffer link link-number)
     (if (region-active-p)
-        (x-hugh-rf-markdown-add-markdown-link-text link-number "" first-prefix)
-      (x-hugh-rf-markdown-add-markdown-link-text link-number (read-string "Description: ") first-prefix))))
+        (x-hugh-rf-markdown-add-markdown-link-text link-number "" imgplease)
+      (x-hugh-rf-markdown-add-markdown-link-text link-number (read-string "Description: ") imgplease))))
 
-(defun x-hugh-rf-markdown-add-markdown-link-text (link-number &optional description first-prefix)
+(defun x-hugh-rf-markdown-add-markdown-link-text (link-number &optional description imgplease)
   "Refactor: Add markdown link in body to LINK, LINK-NUMBER, description DESCRIPTION using FIRST-PREFIX."
   (if (region-active-p)
       (x-hugh-rf-markdown-surround-region)
-    (insert (format "%s%s]" first-prefix description)))
-  (insert (format "[%d]" link-number)))
+    ;; else insert description, maybe image.
+    ;; FIXME: This doesn't account for the case where we want to
+    ;; turn a region into an image link.
+    (if (not (equal imgplease nil))
+        (insert "!"))
+    (insert (format "[%s]" description)))
+  (insert (format "[%s]" link-number)))
 
 (defun x-hugh-rf-markdown-surround-region ()
   "Surround region with square brackets."
