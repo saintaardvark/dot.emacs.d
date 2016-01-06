@@ -25,17 +25,18 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
 (defun x-hugh-rf-markdown-add-markdown-link-text (link-number &optional description first-prefix)
   "Refactor: Add markdown link in body to LINK, LINK-NUMBER, description DESCRIPTION using FIRST-PREFIX."
   (if (region-active-p)
-      (progn
-        (let ((pos1 (region-beginning))
-              (pos2 (+ (region-end) 1)))
-          (goto-char pos1)
-          (insert "[")
-          (goto-char pos2)
-          (insert "]")))
+      (x-hugh-rf-markdown-surround-region)
     (insert (format "%s%s]" first-prefix description)))
   (insert (format "[%d]" link-number)))
 
-(defun x-hugh-rf-markdown-surround-region ())
+(defun x-hugh-rf-markdown-surround-region ()
+  "Surround region with square brackets."
+  (let ((pos1 (region-beginning))
+        (pos2 (+ (region-end) 1)))
+    (goto-char pos1)
+    (insert "[")
+    (goto-char pos2)
+    (insert "]")))
 
 (defun x-hugh-rf-markdown-add-link-at-end-of-buffer (link link-number)
   "Refactor: add link to LINK at end of buffer using LINK-NUMBER."
