@@ -27,7 +27,7 @@
     (insert (format "date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
     (insert (format "tags:\n---\n\n"))))
                                         ; (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t)
-  (wc-goal-mode 1))
+(wc-goal-mode 1)
 
 (defun x-hugh-jekyll-update-datestamp ()
   "Update the timestamp on a blog post."
@@ -101,7 +101,8 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
 (defun x-hugh-add-markdown-footnote-at-end-of-page (link)
   "Refactored, non-interactive function to add footnote for LINK."
   (let ((current-line (line-number-at-pos))
-        (last-line (line-number-at-pos (point-max))))
+        (last-line (line-number-at-pos (point-max)))
+        (link-number (x-hugh-get-next-link-number)))
     (save-excursion
       (if (> (- last-line current-line) 1)
           ()
@@ -114,7 +115,8 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
           ()
         (insert "\n")
         (forward-line))
-      (insert (format "[%d]: %s" (x-hugh-get-next-link-number) link))))))
+      (insert (format "[%d]: %s" link-number link)))
+    link-number))
 
 (defun x-hugh-markdown-footnote-refactored (&optional imgplease)
   "Refactored version."
@@ -123,8 +125,8 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
          (if (equal imgplease 1)
              (setq first-prefix "[")
            (setq first-prefix "![")))
-        (link (read-string "Link: ")))
-    (x-hugh-add-markdown-footnote-at-end-of-page link)
+        (link (read-string "Link: "))
+        (link-number (x-hugh-add-markdown-footnote-at-end-of-page link))
     (if (region-active-p)
         (progn
           (setq pos1 (region-beginning) pos2 (region-end))
@@ -133,7 +135,7 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
           (goto-char pos2)
           (forward-char)
           (insert (format "][%d]" link-number)))
-      (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number)))))
+      (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number))))))
 
 (defun x-hugh-chronicle-list-tags ()
   "A Small but Useful9tm) function to list the tags available for Chronicle."
