@@ -52,18 +52,18 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
     (goto-char (point-max))
     (beginning-of-line)
     (if (looking-at (rx "[" (group (one-or-more digit)) "]:")
-        (progn
-          (message (match-string 1))
-          (eval (+ 1 (string-to-number (match-string 1)))))
+                    (progn
+                      (message (match-string 1))
+                      (eval (+ 1 (string-to-number (match-string 1)))))
                                         ; else:
-      (if (search-backward-regexp (rx bol "[") (point-min) t)
-          (progn
-            (if (looking-at (rx "[" (group (one-or-more digit)) "]:"))
-                (progn
-                  (message (match-string 1))
-                  (eval (+ 1 (string-to-number (match-string 1)))))
-              (eval 0)))
-        (eval 0))))))
+                    (if (search-backward-regexp (rx bol "[") (point-min) t)
+                        (progn
+                          (if (looking-at (rx "[" (group (one-or-more digit)) "]:"))
+                              (progn
+                                (message (match-string 1))
+                                (eval (+ 1 (string-to-number (match-string 1)))))
+                            (eval 0)))
+                      (eval 0))))))
 
 (defun x-hugh-rf-markdown-surround-region ()
   "Surround region with square brackets."
