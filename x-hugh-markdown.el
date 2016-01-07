@@ -51,14 +51,14 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
   (save-excursion
     (goto-char (point-max))
     (beginning-of-line)
-    (if (looking-at "\\[\\([0-9]+\\)]:")
+    (if (looking-at (rx "[" (group (one-or-more digit)) "]:")
         (progn
           (message (match-string 1))
           (eval (+ 1 (string-to-number (match-string 1)))))
                                         ; else:
       (if (search-backward-regexp (rx bol "[") (point-min) t)
           (progn
-            (if (looking-at "^\\[\\([0-9]+\\)]:")
+            (if (looking-at (rx "[" (group (one-or-more digit)) "]:"))
                 (progn
                   (message (match-string 1))
                   (eval (+ 1 (string-to-number (match-string 1)))))
