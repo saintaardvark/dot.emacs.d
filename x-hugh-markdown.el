@@ -63,7 +63,8 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
                   (message (match-string 1))
                   (eval (+ 1 (string-to-number (match-string 1)))))
               (eval 0)))
-        (eval 0)))))
+        (eval 0))))))
+
 (defun x-hugh-rf-markdown-surround-region ()
   "Surround region with square brackets."
   (let ((pos1 (region-beginning))
