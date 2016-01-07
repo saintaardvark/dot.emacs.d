@@ -30,15 +30,6 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
     (insert (format "[%s]" description)))
   (insert (format "[%s]" link-number)))
 
-(defun x-hugh-rf-markdown-surround-region ()
-  "Surround region with square brackets."
-  (let ((pos1 (region-beginning))
-        (pos2 (+ (region-end) 1)))
-    (goto-char pos1)
-    (insert "[")
-    (goto-char pos2)
-    (insert "]")))
-
 (defun x-hugh-rf-markdown-add-link-at-end-of-buffer (link link-number)
   "Refactor: add link to LINK at end of buffer using LINK-NUMBER."
   (let ((current-line (line-number-at-pos))
@@ -73,6 +64,14 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
                   (eval (+ 1 (string-to-number (match-string 1)))))
               (eval 0)))
         (eval 0)))))
+(defun x-hugh-rf-markdown-surround-region ()
+  "Surround region with square brackets."
+  (let ((pos1 (region-beginning))
+        (pos2 (+ (region-end) 1)))
+    (goto-char pos1)
+    (insert "[")
+    (goto-char pos2)
+    (insert "]")))
 
 (provide 'x-hugh-markdown)
 ;;; x-hugh-markdown.el ends here
