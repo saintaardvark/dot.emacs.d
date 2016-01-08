@@ -25,7 +25,7 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
     ;; else insert description, maybe image.
     ;; FIXME: This doesn't account for the case where we want to
     ;; turn a region into an image link.
-    (if (not (equal imgplease nil))
+    (if (not (equal imgplease 4))
         (insert "!"))
     (insert (format "[%s]" description)))
   (insert (format "[%s]" link-number)))
