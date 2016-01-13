@@ -13,13 +13,13 @@
 (workgroups-mode 1)
 ;; start in home directory instead of root
 (cd "~")
-;(totd)
 
 ;; As in x-hugh-erc.el: I've moved to Weechat, but I'll keep this here
 ;; for reference.
 ;; (erc :server "irc.freenode.net")
 
 ; Lastly, like fortune:
+(totd)
 
 (provide 'x-hugh-finally)
 
