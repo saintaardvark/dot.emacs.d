@@ -297,4 +297,12 @@ Hugh
   (align-newline-and-indent)
   (insert "- "))
 
+(defun x-hugh-org-publish-books-org()
+  "Publish books.org as HTML on website."
+  (interactive)
+  (save-excursion
+    (find-file "/home/aardvark/orgmode/books.org")
+    (org-html-export-as-html)
+    (write-region nil nil "/home:/home/aardvark/public_html/random/books.html")))
+
 (provide 'x-hugh-org)

@@ -237,5 +237,8 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
+(if (require 'smartparens nil 'noerror)
+    (smartparens-global-mode 1))
+
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here
