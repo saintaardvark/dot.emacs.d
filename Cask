@@ -38,7 +38,6 @@
 (depends-on "google-this")
 (depends-on "helm")
 (depends-on "helm-core")
-(depends-on "helm-gist")
 (depends-on "helm-git")
 (depends-on "helm-git-files")
 (depends-on "helm-git-grep")
