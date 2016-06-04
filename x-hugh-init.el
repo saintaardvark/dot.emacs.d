@@ -49,6 +49,7 @@
 ;; keymappings are set, but put the actual mapping in here.
 (require 'x-hugh-keymap)
 (require 'x-hugh-settings)
+(require 'x-hugh-projectile)
 ;; Any startup things (server-start), etc.
 (require 'x-hugh-finally)
 
