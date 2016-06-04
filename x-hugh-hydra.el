@@ -81,7 +81,8 @@ _s_jc maps file
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
   ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")
-  ("s" x-hugh-reload-dot-emacs "Reload .emacs"))
+  ("s" x-hugh-reload-dot-emacs "Reload .emacs")
+  ("t" x-hugh-company-coming))
 
 (provide 'x-hugh-hydra)
 ;;; x-hugh-hydra.el ends here
