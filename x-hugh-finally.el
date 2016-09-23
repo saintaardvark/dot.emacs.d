@@ -1,4 +1,9 @@
-;; Startup
+;;; x-hugh-finally.el --- last thing before starting
+
+;;; Commentary:
+;;; Finally!
+
+;;; Code:
 
 (quietly-read-abbrev-file)
 (server-start)

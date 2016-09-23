@@ -1,5 +1,9 @@
-;; Modes/requires.
+;; x-hugh-modes --- Modes/requires.
+
+;;; Commentary:
 ;; Required packages and their settings.
+
+;;; Code:
 
 ;; Use post for Mutt.
 (require 'post nil 'noerror)

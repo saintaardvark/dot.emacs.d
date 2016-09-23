@@ -1,6 +1,7 @@
 ;;; x-hugh-functions --- My random functions
 
 ;;; Commentary:
+;;; Might as well put them some place...
 
 ;;; Code:
 

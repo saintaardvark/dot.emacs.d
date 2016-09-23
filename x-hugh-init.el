@@ -1,3 +1,9 @@
+;; x-hugh-init --- start here!
+
+;;; Commentary:
+
+;;; Code:
+
 ;; Do this so that we can add directories to .emacs.d and have them load.
 ;; For example:  with this stanza, we can do (require 'w3m-load), which is
 ;; at ~/.emacs/w3m/w3m-load.el.

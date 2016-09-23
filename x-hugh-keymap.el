@@ -1,9 +1,17 @@
+;;; x-hugh-keymap -- keymappings
+
+;;; Commentary:
+
+;;; Code:
+
 ;; Keymaps
 
 ;; Win-switch
 ;; (global-set-key "\C-xo" 'win-switch-dispatch)
 ;; (win-switch-setup-keys-ijkl "\C-xo")
 
+;; Indent whole buffer
+(global-set-key "\C-\\"          'x-hugh-indent-buffer)
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)
 (global-set-key "\C-cb"		'x-hugh-jekyll-new-blog-entry)
