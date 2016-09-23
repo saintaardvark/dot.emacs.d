@@ -10,7 +10,7 @@
 ;; Chrome extension
 ;; (require 'edit-server)
 ;; (edit-server-start)
-(setq default-major-mode 'text-mode)
+(setq major-mode 'text-mode)
 ;; (wg-load "~/.emacs_workgroups")
 (if window-system
       (scroll-bar-mode -1)
