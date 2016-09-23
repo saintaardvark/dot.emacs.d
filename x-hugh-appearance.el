@@ -35,8 +35,16 @@
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
   (set-default-font "Inconsolata-12"))
+(defun x-hugh-set-font-larger ()
+  "Set font to 16 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
+  (interactive)
+  (set-default-font "Inconsolata-18"))
 ;; (require 'color-theme nil 'noerror)
 ;; (load-theme "solarized-dark" t)
+
+;; Just make it larger...I always do this at startup anyhow.
+
+(x-hugh-set-font-larger)
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here.
