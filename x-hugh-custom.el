@@ -87,7 +87,7 @@
       "** Q from %^{Who} re: %^{Subject}")
      ("i" "Random Item" entry
       (file "~/orgmode/TODO.org")
-      "** %^{What}"))))
+      "** %^{What}")))))
  '(org-clock-continuously t)
  '(org-clock-into-drawer t)
  '(org-default-notes-file "~/orgmode/TODO.org")
@@ -134,6 +134,7 @@
  '(w3m-use-cookies t)
  '(wg-morph-on nil)
  '(win-switch-idle-time 1.25))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
