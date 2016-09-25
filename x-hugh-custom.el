@@ -76,7 +76,7 @@
      ("r" "RT Ticket" entry
       (file "~/orgmode/all.org")
       "** TODO RT #%^{Number} -- %^{Subject}")
-    (("e" "Emacs" entry
+    ("e" "Emacs" entry
       (file "~/orgmode/emacs.org")
       "** TODO %^{TODO}")
      ("t" "TODO" entry
@@ -87,7 +87,7 @@
       "** Q from %^{Who} re: %^{Subject}")
      ("i" "Random Item" entry
       (file "~/orgmode/TODO.org")
-      "** %^{What}")))))
+      "** %^{What}"))))
  '(org-clock-continuously t)
  '(org-clock-into-drawer t)
  '(org-default-notes-file "~/orgmode/TODO.org")
