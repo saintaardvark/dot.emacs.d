@@ -66,8 +66,8 @@
 (defun fontify-frame-screen-res-high-enough-p ()
   "Function to decide if the screen resolution is high enough."
   (or
-   (> (frame-pixel-height) 2000)
-   (> (frame-pixel-width) 2000)))
+   (> (frame-pixel-height) 1900)
+   (> (frame-pixel-width) 1900)))
 
 (defun fontify-frame-screen-tiny-laptop-p ()
   "Function to decide if the screen resolution is that of a tiny laptop."
