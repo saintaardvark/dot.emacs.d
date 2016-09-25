@@ -3,9 +3,6 @@
 ;;; Commentary:
 ;;; I really should sort all this out better.
 
-;; First, set custom file.
-;; http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/
-
 ;;; Code:
 
 ;; Random settings.
