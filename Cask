@@ -20,6 +20,7 @@
 (depends-on "diminish")
 (depends-on "dockerfile-mode")
 (depends-on "drag-stuff")
+(depends-on "elpy")
 (depends-on "epl")
 (depends-on "exec-path-from-shell")
 (depends-on "expand-region")
