@@ -15,7 +15,6 @@
 (if window-system
       (scroll-bar-mode -1)
   ())
-(workgroups-mode 1)
 ;; start in home directory instead of root
 (cd "~")
 ;; Lastly, like fortune:
