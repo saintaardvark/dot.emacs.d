@@ -13,8 +13,7 @@
   (insert (format "Title: %s\n" title))
   (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
   (insert (format "Tags: \n\n"))
-  (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t)
-  (wc-goal-mode 1))
+  (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t))
 
 (defun x-hugh-jekyll-new-blog-entry (title)
   "A Small but Useful(tm) function to make a new blog entry in Jekyll."
@@ -27,8 +26,6 @@
     (insert (format "date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
     (insert (format "tags:\n---\n\n"))))
                                         ; (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t)
-(wc-goal-mode 1)
-
 (defun x-hugh-jekyll-update-datestamp ()
   "Update the timestamp on a blog post."
   (interactive)
