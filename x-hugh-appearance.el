@@ -71,15 +71,11 @@
    (> (frame-pixel-height) 2000)
    (> (frame-pixel-width) 2000)))
 
-;;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
+;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
 (fontify-frame)
 
-;;; Only in Emacs 24.4 (currently available as a pretest)
-; see http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/
-(add-hook 'focus-in-hook fontify-frame)
-
-;;; For older Emacs versions - instead of changing on focus, this will change when a frame is created
-;(push 'fontify-frame after-make-frame-functions)
+;; Only if Emacs >= 24.4
+(add-hook 'focus-in-hook 'fontify-frame)
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here.
