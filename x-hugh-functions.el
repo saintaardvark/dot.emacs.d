@@ -39,13 +39,6 @@ If arg is given, open in other window."
     (goto-char (point-min))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
-(defun x-hugh-edit-dot-bashrc (arg)
-  "Edit .bashrc_local, or (with arg) .bashrc."
-  (interactive "P")
-  (if arg
-      (find-file (file-truename "~/.bashrc"))
-    (find-file (file-truename"~/.bashrc_local"))))
-
 (defun x-hugh-zap (arg char)
   "Wrapper around zap-to-char so does *not* including character."
   (interactive (list (prefix-numeric-value current-prefix-arg)
@@ -113,48 +106,6 @@ idiom for working on region or current word."
     (copy-file filename local-attachments-dir 1)
     (insert (format "[[%s|%s]]" attachment-file attachment-url))))
 
-(defun x-hugh-email-rt (&optional arg ticket)
-  "A Small but Useful(tm) function to email RT about a particular ticket. Universal argument to make it Bcc."
-  (interactive "P\nnTicket: ")
-  (save-excursion
-    (goto-char (point-min))
-    (if arg
-	(search-forward "Bcc:")
-      (search-forward "To:"))
-    (insert " rtc")
-    (search-forward "Subject:")
-    (insert (format " [rt.chibi.ubc.ca #%d] " ticket))))
-
-(defun x-hugh-new-rt-email ()
-  "A Small but Useful(tm) function to send an email to RT for a new ticket."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (search-forward "To:")
-    (insert " help@chibi.ubc.ca")))
-
-(defun x-hugh-email-rt-dwim (&optional arg)
-  "A Small but Useful(tm) function to email RT about a particular ticket. Universal argument to send to rt instead of rt-comment.
-
-  Will do its best to figure out the ticket number on its own, and prompt if needed; and will send a Bcc: if it looks like there's already a To: address."
-  (interactive "P\n")
-  (if arg
-      (setq sendto "rt")
-    (setq sendto "rtc"))
-  (save-excursion
-    (goto-char (point-min))
-    (search-forward "To:")
-    (if (search-forward-regexp "\\w" (line-end-position) t)
-	(progn
-	  (search-forward "Bcc:")
-	  (insert (format " %s" sendto)))
-      (insert (format " %s" sendto)))
-    (search-forward "Subject:")
-    (if (search-forward "[rt.chibi.ubc.ca #" (line-end-position) t)
-	()
-      (insert
-       (format " [rt.chibi.ubc.ca #%s] "
-	       (read-string "Ticket: " nil nil (format "%s" (x-hugh-clocked-into-rt-ticket-number-only))))))))
 
 ; Not ideal, but a good start.
 ; TODO:
@@ -177,31 +128,6 @@ idiom for working on region or current word."
 ;; Gah, this is awful
 (fset 'x-hugh-yank-and-uncomment-region
    [?\C-y ?\C-x ?\C-x ?\M-x ?u ?n ?c ?o ?m ?m ?e ?n ?t ?- ?r ?e tab return ?\C-x ?\C-x])
-
-(defun x-hugh-show-rt-tickets-queue (searchqueue)
-  "Show list of tickets owned by me and status open or new."
-  (interactive "sQueue: ")
-  (rt-liber-browse-query
-   (rt-liber-compile-query
-    (and (queue searchqueue)
-	 (not (status "resolved"))))))
-
-(defun x-hugh-show-rt-tickets ()
-  "Show list of tickets owned by me and status open or new."
-  (interactive)
-  (rt-liber-browse-query
-   (rt-liber-compile-query
-    (and (owner "hugh")
-	 (or (status "open")
-	     (status "new"))))))
-
-(defun x-hugh-show-rt-tickets-2 ()
-  "Show list of tickets, status open or new, owned by anyone."
-  (interactive)
-  (rt-liber-browse-query
-   (rt-liber-compile-query
-    (or (status "open")
-	(status "new")))))
 
 (defun x-hugh-insert-date ()
   (interactive)
@@ -383,32 +309,6 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
     (next-line)
     (indent-region (car (boxquote-points)) (cdr (boxquote-points)))))
 
-;; Some RT/Org stuff I'm working on
-(defun x-hugh-ticket-into-org (&optional point)
-  "A Small but Useful(tm) function to insert an RT ticket into Org.
-
-If POINT is nil then called on (point).  If called with arg, check in as well."
-  (interactive "P")
-  (when (not point)
-    (setq point (point)))
-  ;; (let ((id (rt-liber-browser-ticket-id-at-point)))
-  (setq point (point))
-  (let ((ticket (get-text-property point 'rt-ticket)))
-    (setq subject (cdr (assoc "Subject" ticket)))
-    (setq id (rt-liber-browser-ticket-id-at-point))
-    (with-current-buffer "all.org"
-      (goto-char (point-min))
-      (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
-	  (message "Already in org!")
-	(progn
-	  (goto-char (point-max))
-	  (if (bolp)
-	      ()
-	    (insert "\n"))
-	  (insert (format "** RT #%s -- %s\n" id subject))))
-      (if arg
-	  (org-clock-in)))))
-
 (defun x-hugh-unixify-buffer ()
   "Convert from whatever (ie, DOS) to unix-undecided.
 
@@ -417,111 +317,12 @@ I can never remember how to do this."
   (set-buffer-file-coding-system 'undecided-unix)
   (save-buffer))
 
-(defun x-hugh-get-rt-ticket-subject ()
-  "Get RT ticket subject."
-  (interactive)
-  (setq point (point))
-  (let ((subject (cdr (assoc "Subject" (get-text-property point 'rt-ticket)))))
-    (message "RT #666 -- %s" subject)))
-
-(defun x-hugh-get-text-properties ()
-  "List text properties."
-  (interactive)
-  (setq point (point))
-  (message "%s" (text-properties-at point)))
-
-(defun x-hugh-set-appearance ()
-  "Reload x-hugh-appearance.el."
-  (interactive)
-  (load-file "~/.emacs.d/x-hugh-appearance.el"))
-
-(defun x-hugh-insert-wiki-rt-link (ticket)
-  (interactive "nTicket: ")
-  (insert (format "[[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]" ticket ticket)))
-
-(defun x-hugh-insert-wiki-rt-link-as-detailed-in (ticket)
-  (interactive "nTicket: ")
-  (insert (format "As detailed in [[RT #%d|http://rt.chibi.ubc.ca/Ticket/Display.html?id=%d]]," ticket ticket)))
-
-(defun x-hugh-blog-entry (title)
-  "A Small but Useful(tm) function to make a new blog entry in Markdown format."
-  (interactive "sTitle: ")
-  (condition-case nil
-      (wg-switch-to-index-1)
-    (error nil))
-  (delete-other-windows)
-  (find-file (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
-  (goto-char (point-max))
-  (insert (format "\n\n## %s" title))
-  (insert "\n\n\n\n-- main.hugh ")
-  (x-hugh-insert-date)
-  (forward-line -2))
-
-(defun x-hugh-open-blog-page ()
-  "A Small but Useful(tm) function to open this month's blog page."
-  (interactive)
-  (condition-case nil
-      (wg-switch-to-index-1)
-    (error nil))
-  (delete-other-windows)
-  (find-file (format-time-string "~/SysadminWiki/blog/%B%Y.mdwn"))
-  (goto-char (point-max))
-  (forward-line -2))
-
-(defun x-hugh-align-cf3-promise (beg end)
-  "Align a Cf3 promise on '=>'.  FIXME: Not working yet"
-  (interactive "r")
-  (align-regexp beg end "=\\>"))
-
-(defun hlu-make-script-executable ()
-  "If file starts with a shebang, make `buffer-file-name' executable.
-
-Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
-  (save-excursion
-    (save-restriction
-      (widen)
-      (goto-char (point-min))
-      (when (and (looking-at "^#!")
-                 (not (file-executable-p buffer-file-name)))
-	(set-file-modes buffer-file-name
-			(logior (file-modes buffer-file-name) #o100))
-	(message (concat "Made " buffer-file-name " executable"))))))
-
-(add-hook 'after-save-hook 'hlu-make-script-executable)
-
 (defun x-hugh-git-commit-and-push-without-mercy ()
   "Commit all outstanding and push without hesitation. Meant to be called from within a file buffer.
 
 Do it, monkey boy!"
   (interactive)
   (start-process "nomercy" "git-commit-and-push-without-mercy" "~/bin/git-commit-and-push-without-mercy.sh" (concat "-r" (buffer-file-name))))
-
-(defun x-hugh-rt-resolve-without-mercy-interactive (ticket)
-  "Resolve an RT ticket without hesitation.
-
-Do it, monkey boy!"
-  (interactive "sTicket: ")
-  (start-process "nomercy" "rt-resolve-without-mercy" "~/bin/rt-resolve-without-mercy.sh" ticket))
-
-;; FIXME: Too stupid right now to figure out how to do the right
-;; thing: only prompting if there's no ticket supplied.
-(defun x-hugh-rt-resolve-without-mercy-noninteractive (ticket)
-  "Resolve an RT ticket without hesitation.
-
-Do it, monkey boy!"
-  (start-process "nomercy" "rt-resolve-without-mercy" "~/bin/rt-resolve-without-mercy.sh" ticket))
-
-(defun x-hugh-rt-get-already-existing-ticket-subject (ticket)
-  "Get the subject from an already-existing ticket."
-  (interactive "sTicket: ")
-  (insert (shell-command-to-string (format "~/bin/rt-get-ticket-subjectline.sh %s" ticket))))
-
-;; FIXME: This should be in org.
-;; FIXME: This is a duplicate of x-hugh-rt-get-already-existing-ticket-subject.
-(defun x-hugh-org-autofill-rt-entry (ticket)
-  "Autofill Org RT entry from an already-existing ticket."
-  (interactive "sTicket: ")
-  (insert (format "RT #%s -- %s" ticket (shell-command-to-string (format "~/bin/rt-get-ticket-subjectline.sh %s" ticket)))))
 
 (defun x-hugh-open-git-repo ()
   "Open up a git repo."

@@ -6,8 +6,11 @@
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"
-  ("g" text-scale-increase "in")
-  ("l" text-scale-decrease "out"))
+  ("g" (enlarge-font 1) "in")
+  ("l" (enlarge-font -1) "out")
+  ("0" (text-scale-set 0) "reset")
+  ("j" winner-undo "winner-undo")
+  ("k" winner-redo "winner-redo"))
 
 (defhydra hydra-apropos (:color blue
                          :hint nil)
@@ -77,12 +80,21 @@ _s_jc maps file
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("e" x-hugh-edit-dot-emacs  ".emacs")
+  ("f" x-hugh-figl  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
+  ("l" (find-file "~/org/log_2016.org") "Open logfilel")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
   ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")
-  ("s" x-hugh-reload-dot-emacs "Reload .emacs")
+  ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("t" x-hugh-company-coming))
 
+(defhydra hydra-puppet-chef (:exit t)
+  "Cheffing Puppet"
+  ("f" (x-hugh-copy-puppet-to-chef "file") "file")
+  ("l" (x-hugh-copy-puppet-to-chef "link") "link")
+  ("p" (x-hugh-copy-puppet-to-chef "package") "package"))
+
+;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 (provide 'x-hugh-hydra)
 ;;; x-hugh-hydra.el ends here

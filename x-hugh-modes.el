@@ -28,6 +28,8 @@
 
 ;; Load ssh.
 (require 'ssh nil 'noerror)
+
+;; Shell script stuff
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
@@ -39,6 +41,7 @@
 (require 'midnight	nil 'noerror)
 (require 'markdown-mode	nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mdwn\\'" . markdown-mode))
 ;; (iswitchb-mode 1)
 
 ; Not sure how handy this is going to be...
@@ -46,61 +49,29 @@
            "Map COMMAND over lines matching REGEX."
            t)
 
-;; Magit ROX.
-;; We need cl-lib if less than 24.  This check taken from post.el.
-(if (< (string-to-number (substring (emacs-version)
-				    (string-match "[0-9]+\.[0-9]"
-						  (emacs-version) 5))) 24)
-    (load-file "~/.emacs.d/cl-lib-0.3.el"))
-(setq load-path  (cons (expand-file-name "~/.emacs.d/git-modes/") load-path))
-(require 'git-commit-mode nil 'noerror)
-(setq load-path  (cons (expand-file-name "~/.emacs.d/magit/") load-path))
-(setq magit-last-seen-setup-instructions "1.4.0")
-(require 'magit nil 'noerror)
-
-(require 'markdown-mode nil 'noerror)
-
-;(add-hook 'twiki-org-load-hook (longlines-mode))
-
 ;; Perl
 (require 'perldoc nil 'noerror)
 (defalias 'perl-mode 'cperl-mode)
 (require 'perltidy nil 'noerror)
+;; 8 spaces for tab, the way God intended
+;;(setq perl-indent-level 8)
+
+;; Text mode
+(add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
+(add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
+
+;; Diff mode
+(add-hook 'diff-mode 'font-lock-mode)
+
 
 (require 'browse-kill-ring nil 'noerror)
 
-;; Workgroups.
-(require 'workgroups2)
-;; Can't move this to keymap; needed before workgroups-mode is loaded.
-(setq wg-prefix-key (kbd "C-c w"))
-(global-set-key (kbd "C-c w s") 'wg-save-session)
-(workgroups-mode 1)
-(wg-reload-session)
 
-(defun x-hugh-wg-show-workgroups ()
-  "Display workgroups."
-  (interactive)
-  (wg-fontified-message
-    (wg-workgroup-list-display)))
+;; Turn on abbrevs for post mode
+(add-hook 'post-mode '(lambda () (abbrev-mode 1)))
 
-(defadvice
-  wg-switch-to-workgroup-right (after x-hugh-advice-wgshow-workgroups)
-  "Display workgroups after switching."
-  (x-hugh-wg-show-workgroups))
 
-(defadvice
-  wg-switch-to-workgroup-at-index (after x-hugh-advice-wgshow-workgroups)
-  "Display workgroups after switching."
-  (x-hugh-wg-show-workgroups))
-
-(defadvice
-  wg-switch-to-workgroup-left (after x-hugh-advice-wgshow-workgroups)
-  "Display workgroups after switching."
-  (x-hugh-wg-show-workgroups))
-
-(ad-activate 'wg-switch-to-workgroup-right)
-(ad-activate 'wg-switch-to-workgroup-left)
-(ad-activate 'wg-switch-to-workgroup-at-index)
 ;;
 ;; Apache mode.
 ;;
@@ -112,53 +83,11 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-;;
-;; LongLines mode: http://www.emacswiki.org/emacs-en/LongLines.
-;; Note: Replaced by visual-line-mode
-;; (https://github.com/djcb/mu/issues/116). Not sure how the hook will
-;; work.
-;;
-
 ;; (autoload 'longlines-mode "longlines" "LongLines Mode." t)
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
-;; (eval-after-load "longlines"
-;;   '(progn
-;;      (defvar longlines-mode-was-active nil)
-;;      (make-variable-buffer-local 'longlines-mode-was-active)
-
-;;      (defun longlines-suspend ()
-;;        (if longlines-mode
-;;            (progn
-;;              (setq longlines-mode-was-active t)
-;;              (longlines-mode 0))))
-
-;;      (defun longlines-restore ()
-;;        (if longlines-mode-was-active
-;;            (progn
-;;              (setq longlines-mode-was-active nil)
-;;              (longlines-mode 1))))
-
-;;      ;; longlines doesn't play well with ediff, so suspend it during diffs
-;;      (defadvice ediff-make-temp-file (before make-temp-file-suspend-ll
-;;                                              activate compile preactivate)
-;;        "Suspend longlines when running ediff."
-;;        (with-current-buffer (ad-get-arg 0)
-;;          (longlines-suspend)))
-
-
-;;      (add-hook 'ediff-cleanup-hook
-;;                '(lambda ()
-;;                   (dolist (tmp-buf (list ediff-buffer-A
-;;                                          ediff-buffer-B
-;;                                          ediff-buffer-C))
-;;                     (if (buffer-live-p tmp-buf)
-;;                         (with-current-buffer tmp-buf
-;;                           (longlines-restore))))))))
-
-
-;; tidy up diffs when closing the file
 (defun kill-associated-diff-buf ()
+  "Tidy up diffs when closing the file."
   (let ((buf (get-buffer (concat "*Assoc file diff: "
                              (buffer-name)
                              "*"))))
@@ -241,8 +170,27 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
-(if (require 'smartparens nil 'noerror)
-    (smartparens-global-mode 1))
+
+(add-hook 'ruby-mode-hook 'whitespace-cleanup-mode)
+
+(winner-mode 1)
+
+;; smartparens
+(add-hook 'emacs-lisp-mode-hook #'smartparens-mode)
+(add-hook 'json-mode-hook #'smartparens-mode)
+(add-hook 'ruby-mode-hook #'smartparens-mode)
+(add-hook 'python-mode-hook #'smartparens-mode)
+(add-hook 'shell-mode-hook #'smartparens-mode)
+(add-hook 'yaml-mode-hook #'smartparens-mode)
+(add-hook 'toml-mode-hook #'smartparens-mode)
+(add-hook 'go-mode-hook #'smartparens-mode)
+
+;; Go
+(add-hook 'go-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook 'gofmt-before-save)
+            (setq tab-width 4)
+            (setq indent-tabs-mode 1)))
 
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here

@@ -1,6 +1,5 @@
 ;;; x-hugh-markdown --- My functions for markdown
 
-
 ;;; Commentary:
 ;;; Might as well put them some place...
 

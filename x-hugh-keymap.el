@@ -12,6 +12,7 @@
 
 ;; Indent whole buffer
 (global-set-key "\C-\\"          'x-hugh-indent-buffer)
+
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)
 (global-set-key "\C-cb"		'x-hugh-jekyll-new-blog-entry)
@@ -26,8 +27,14 @@
 (global-set-key "\C-c\C-r"	'x-hugh-show-rt-tickets-2)
 (global-set-key "\C-c\C-s"	'sudo-edit-current-file)
 
-;; Try out cbm-cycle
-(global-set-key (kbd "C-'") #'cbm-cycle)
+;; Try out cbm-cycle...nope, I never use it.
+;; (global-set-key (kbd "C-'") #'cbm-cycle)
+(global-set-key (kbd "C-'") #'sp-rewrap-sexp)
+;; Trying out avy-mode
+(global-set-key (kbd "C-;") #'avy-goto-char)
+;; Trying out smex
+;; Disabling; may be interfering with helm
+;; (global-set-key (kbd "M-x") #'smex)
 
 ;; (global-set-key "\C-cw"		'x-hugh-wordcount)
 
@@ -43,17 +50,18 @@
 ;; C-c y: window (hydra)
 ;; C-c 3: CFEngine
 
+;; Chef
+(global-set-key (kbd "C-c c") 'hydra-chef/body)
 ;; C-c e: lisp stuff.
-
-(global-set-key "\C-ced"	'edebug-defun)
-
+(global-set-key "\C-ce"	'hydra-elisp/body)
 ;; Personal files
-
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
-
 ;; Puppet
-
 (global-set-key (kbd "C-c j") 'hydra-puppet/body)
+;; Git
+(global-set-key (kbd "C-c u")'hydra-git/body)
+;; Oh, this is handy
+(global-set-key (kbd "C-c '") 'ruby-toggle-string-quotes)
 
 
 ;; I'm gonna declare C-cw the official prefix of Workgroups.  But!
@@ -66,7 +74,6 @@
 (global-set-key "\C-cpa"	'x-hugh-wiki-attach-file-to-wiki-page)
 (global-set-key "\C-cpb"	'x-hugh-blog-entry)
 (global-set-key "\C-cpc"	'x-hugh-open-blog-page)
-(global-set-key "\C-cpf"	'doom-run-text-autoformat-on-region)
 (global-set-key "\C-cpg"	'x-hugh-git-commit-and-push-without-mercy)
 (global-set-key "\C-cpr"	'x-hugh-insert-wiki-rt-link)
 (global-set-key "\C-cpt"	'x-hugh-insert-wiki-rt-link-as-detailed-in)
@@ -101,6 +108,7 @@
 
 
 (global-set-key (kbd "C-c y") 'hydra-window/body)
+(global-set-key (kbd "C-c z") 'hydra-zoom/body)
 
 ; God, I hate what this does when using Emacs in X
 (global-unset-key "\C-z")

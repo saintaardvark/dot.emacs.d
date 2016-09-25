@@ -23,8 +23,6 @@
 (when (executable-find spell-command)
   (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1))))
 
-
-
 (add-hook 'comint-output-filter-functions
           'comint-watch-for-password-prompt)
 
@@ -32,13 +30,17 @@
 (setq select-active-regions t) ;  active region sets primary X11 selection
 (global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
 
-;; Ibuffer
+;; (exec-path-from-shell-copy-env "GEM_HOME")
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-
-(exec-path-from-shell-copy-env "GEM_HOME")
-
+;; Save all tempfiles in $TMPDIR/emacs$UID/
+;; See https://www.emacswiki.org/emacs/AutoSave
+(defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
+(setq backup-directory-alist
+      `((".*" . ,emacs-tmp-dir)))
+(setq auto-save-file-name-transforms
+      `((".*" ,emacs-tmp-dir t)))
+(setq auto-save-list-file-prefix
+      emacs-tmp-dir)
 
 (provide 'x-hugh-random)
 
