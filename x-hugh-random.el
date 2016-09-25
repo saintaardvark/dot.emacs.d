@@ -42,6 +42,8 @@
 (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
+(setq epg-gpg-program (executable-find "gpg"))
+
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random ends here
