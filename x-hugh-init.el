@@ -65,6 +65,7 @@
 (require 'x-hugh-yasnippet)
 (require 'x-hugh-magit)
 (require 'x-hugh-python)
+(require 'x-hugh-golang)
 (require 'cfg)
 
 ;; Hydra comes before keymap.
