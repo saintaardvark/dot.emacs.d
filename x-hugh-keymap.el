@@ -10,6 +10,9 @@
 ;; (global-set-key "\C-xo" 'win-switch-dispatch)
 ;; (win-switch-setup-keys-ijkl "\C-xo")
 
+;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
+(global-set-key (kbd "C-x k") 'jcs-kill-a-buffer)
+
 ;; Indent whole buffer
 (global-set-key "\C-\\"          'x-hugh-indent-buffer)
 
