@@ -55,16 +55,24 @@
   "Adjust font size based on screen resolution.  Takes optional argument FRAME."
   (interactive)
   (let ((target (or frame (window-frame))))
-    (if window-system
-        (if (fontify-frame-screen-res-high-enough-p)
-            (set-frame-parameter target 'font "Inconsolata-16")
-          (set-frame-parameter target 'font "Inconsolata-18")))))
+    (set-frame-parameter target 'font (fontify-frame-appropriate-font))))
+
+(defun fontify-frame-appropriate-font ()
+  "Return the appropriate font for displays."
+  (cond ((fontify-frame-screen-res-high-enough-p) "Inconsolata-16")
+        ((fontify-frame-screen-tiny-laptop-p) "Inconsolata-12")))
 
 (defun fontify-frame-screen-res-high-enough-p ()
   "Function to decide if the screen resolution is high enough."
   (or
    (> (frame-pixel-height) 2000)
    (> (frame-pixel-width) 2000)))
+
+(defun fontify-frame-screen-tiny-laptop-p ()
+  "Function to decide if the screen resolution is that of a tiny laptop."
+  (or
+   (< (frame-pixel-height) 800)
+   (< (frame-pixel-width) 1400)))
 
 ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
 (fontify-frame)
