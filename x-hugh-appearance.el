@@ -17,11 +17,6 @@
 ;; Begone!
 (setq inhibit-splash-screen t)
 
-(defun x-hugh-am-i-at-work-p ()
-  "Simple function meant to return 'yes' or 'no'."
-  (interactive)
-  "yes")
-
 (defun x-hugh-default-font ()
   "Set default font depending on where I am."
   (if (x-hugh-am-i-at-work-p)
