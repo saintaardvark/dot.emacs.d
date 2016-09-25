@@ -52,7 +52,7 @@
 ;; From https://gist.github.com/MatthewDarling/8c232b1780126275c3b4
 ;; Based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
 (defun fontify-frame (&optional frame)
-  "Adjust font size based on screen resolution. Takes optional argument FRAME."
+  "Adjust font size based on screen resolution.  Takes optional argument FRAME."
   (interactive)
   (let ((target (or frame (window-frame))))
     (if window-system
@@ -73,4 +73,4 @@
 (add-hook 'focus-in-hook 'fontify-frame)
 
 (provide 'x-hugh-appearance)
-;;; x-hugh-appearance ends here.
+;;; x-hugh-appearance ends here
