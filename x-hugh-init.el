@@ -37,6 +37,17 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
+;; Simple functiion to determine if I'm at work.
+(defun x-hugh-am-i-at-work-p ()
+  "Simple function meant to return 'yes' or 'no'."
+  (interactive)
+  "yes")
+
+(if (file-exists-p "/usr/local/bin")
+    (push "/usr/local/bin" exec-path))
+(if (file-exists-p "~/bin")
+    (push "~/bin" exec-path))
+
 ;; And now everything else
 
 (require 'x-hugh-random)
