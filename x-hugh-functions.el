@@ -1,4 +1,4 @@
-;;; x-hugh-functions --- My random functions
+;;; x-hugh-functions --- My functions
 
 ;;; Commentary:
 ;;; Might as well put them some place...
@@ -12,13 +12,19 @@
 
 ;; FIXME: Look at initial-input arg for completing-read in order to
 ;; populate the initial file to x-hugh-something.
-(defun x-hugh-edit-dot-emacs ()
-  "Edit .emacs.d/x-hugh-* files."
-  (interactive)
-  (let ((path (expand-file-name "~/.emacs.d/")))
-    (find-file (completing-read "File: "
-                                (directory-files path t "x-hugh-")
-                                nil nil (concat path "x-hugh-")))))
+(defun x-hugh-edit-dot-emacs (arg)
+  "Edit .emacs.d/x-hugh-* files.
+
+If arg is given, open in other window."
+  (interactive "P")
+  (let ((path (file-truename "~/.emacs.d/")))
+    (if (eq arg 'nil)
+        (find-file (completing-read "File: "
+                                    (directory-files path t "x-hugh-")
+                                    nil nil (concat path "x-hugh-")))
+      (find-file-other-window (completing-read "File: "
+                                               (directory-files path t "x-hugh-")
+                                               nil nil (concat path "x-hugh-"))))))
 
 (defun x-hugh-company-coming ()
   "Clean up email."
@@ -31,15 +37,14 @@
     (while (re-search-forward "disturbed my sleep to write" nil t)
       (replace-match "wrote" nil nil))
     (goto-char (point-min))
-    (flush-lines"Because the plural of Anecdote is Myth" nil t)))
+    (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
-    ;; (replace-regexp "Because the plural of Anecdote is Myth" "")))
 (defun x-hugh-edit-dot-bashrc (arg)
   "Edit .bashrc_local, or (with arg) .bashrc."
   (interactive "P")
   (if arg
-      (find-file "~/.bashrc")
-    (find-file "~/.bashrc_local")))
+      (find-file (file-truename "~/.bashrc"))
+    (find-file (file-truename"~/.bashrc_local"))))
 
 (defun x-hugh-zap (arg char)
   "Wrapper around zap-to-char so does *not* including character."
@@ -54,10 +59,10 @@
 
 Rewritten as defun."
   (interactive)
-    (let ((beg (point)))
-      (save-excursion
-	(post-goto-signature)
-	(kill-region beg (point)))))
+  (let ((beg (point)))
+    (save-excursion
+      (post-goto-signature)
+      (kill-region beg (point)))))
 
 (defun x-hugh-tag-quote-dwim (tag)
   "DWIM to insert/surround thing-at-point/region with <tag> pair.
@@ -236,25 +241,6 @@ See https://dgl.cx/2008/10/wikipedia-summary-dns for details."
     (message (format "%s.wp.dg.cx" query))
     (dig (format "%s.wp.dg.cx" query) "txt" "+short")))
 
-(defun x-hugh-wikipedia-over-dns-improved (query)
-  "A Small but Useful(tm) function to query Wikipedia over DNS.
-
-Improved a bit: we grab the contents of the output buffer and use
-it as input for message.  FIXME:  Still need to kill the buffer.
-
-See https://dgl.cx/2008/10/wikipedia-summary-dns for details.
-"
-  (interactive "sWikipedia: ")
-  (message (format "%s.wp.dg.cx" query))
-    (with-current-buffer (dig-invoke (format "%s.wp.dg.cx" query) "txt" "+short")
-      (message "%s: %s" query (let ((beg (point-min))
-				    (end (- (point-max) 1)))
-				(buffer-substring beg end)))))
-
-(defun x-hugh-hello-world ()
-  (interactive)
-  (message "Hello, world!"))
-
 ;; FIXME: Set password file as var somewhere.
 (defun x-hugh-open-password-file ()
   (interactive)
@@ -385,7 +371,7 @@ Returns nil if no differences found, 't otherwise."
 	  fill-column)) )
     (shell-command-on-region start end command nil t "*error*")
     ))
-; I never use this.
+b; I never use this.
 ; (global-set-key "\C-cf" 'doom-run-text-autoformat-on-region)
 
 (defun x-hugh-boxquote-yank-and-indent ()
@@ -496,7 +482,7 @@ Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
       (widen)
       (goto-char (point-min))
       (when (and (looking-at "^#!")
-		  (not (file-executable-p buffer-file-name)))
+                 (not (file-executable-p buffer-file-name)))
 	(set-file-modes buffer-file-name
 			(logior (file-modes buffer-file-name) #o100))
 	(message (concat "Made " buffer-file-name " executable"))))))
@@ -587,6 +573,17 @@ FIXME: Need to figure out how to put point at right column."
       (yank)))
   (forward-line))
 
+(defun x-hugh-copy-line-to-next-line ()
+  "Comment current line to next line."
+  (interactive)
+  (save-excursion
+    (let ((beg (line-beginning-position))
+          (end (line-end-position)))
+      (kill-ring-save beg end)
+      (move-beginning-of-line 2)
+      (yank)))
+  (forward-line))
+
 ;; stoleon from http://emacswiki.org/emacs/TransposeWindows
 (defun x-hugh-transpose-windows (arg)
   "Transpose the buffers shown in two windows."
@@ -600,6 +597,15 @@ FIXME: Need to figure out how to put point at right column."
         (select-window (funcall selector)))
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
+;; Awesome.  From https://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs --
+;; bury *scratch* buffer instead of kill it
+
+(defadvice kill-buffer (around kill-buffer-around-advice activate)
+  (let ((buffer-to-kill (ad-get-arg 0)))
+    (if (equal buffer-to-kill "*scratch*")
+        (bury-buffer)
+      ad-do-it)))
+
 (defun x-hugh-ssh-mode-hook ()
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
@@ -607,6 +613,11 @@ FIXME: Need to figure out how to put point at right column."
 (defun x-hugh-open-password-file ()
   (interactive)
   (find-file "~/passwords.gpg"))
+
+(defun x-hugh-opendns-open-github-repo-url (project)
+  "Open GH page for current repo in browser."
+  (interactive "sProject: ")
+  (browse-url (format "https://github.office.opendns.com/%s" project)))
 
 (defun x-hugh-toggle-nag-about-keys ()
   "Toggle nagging about key navigation."
@@ -634,7 +645,66 @@ FIXME: Need to figure out how to put point at right column."
 (defun x-hugh-nag-about-keys ()
   "Nag about keys."
   (interactive)
+  (sleep-for 0 (% (random) 2000))
   (message "Wrong!"))
+
+;;; http://apple.stackexchange.com/questions/85222/configure-emacs-to-cut-and-copy-text-to-mac-os-x-clipboard/127082#127082
+(defun pbpaste ()
+  (interactive)
+  (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
+
+;; From http://stackoverflow.com/questions/5925485/emacs-lisp-macro-stepper.  WOW.
+(defun macroexpand-point (sexp)
+  (interactive (list (sexp-at-point)))
+  (with-output-to-temp-buffer "*el-macroexpansion*"
+    (pp (macroexpand sexp)))
+  (with-current-buffer "*el-macroexpansion*" (emacs-lisp-mode)))
+
+;; Stolen from http://emacsredux.com/blog/2013/03/28/indent-defun/
+(defun indent-defun ()
+  "Indent the current defun."
+  (interactive)
+  (save-excursion
+    (mark-defun)
+    (indent-region (region-beginning) (region-end))))
+;; Stolen from http://emacsredux.com/blog/2013/03/28/indent-defun/
+
+(defun x-hugh-indent-buffer ()
+  "Indent the whole buffer."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(defun x-hugh-single-quotify ()
+  "Change all double quotes in region to single quotes."
+  (interactive)
+  (if (region-active-p)
+      ))
+
+(defun x-hugh-rubocop-disable (cop)
+  "Add comment to disable a Rubocop complaint."
+  (save-excursion
+    (move-beginning-of-line nil)
+    (insert (concat "# rubocop:disable " cop))))
+
+(defun x-hugh-rubucop-disable-linelength ()
+    "Disable Rubocop linelength complaint."
+  (interactive)
+  (x-hugh-rubocop-disable "LineLength"))
+
+;; Let's see if there's a way to get Emacs to save files with a remote signal.
+;; Use case: call from TK before running, so we don't get "Can't find these files" error.
+;; See help for save-some-buffers.
+;; emacsclient -e '(save-buffers-kill-emacs t)'
+
+(defun x-hugh-chef-node-runner ()
+  "Change chef run to one where attrs can be specified."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (search-forward "let(:chef_run)")
+    (let ((beg point))
+      )
+    (goto-char (beginning-of-line))))
 
 ;; FIXME: Should be using indirect buffer here (is that the right term?
 (defun x-hugh-add-to-venus (url title)
@@ -646,8 +716,6 @@ FIXME: Need to figure out how to put point at right column."
   (save-buffer)
   (x-hugh-git-commit-and-push-without-mercy)
   (kill-buffer))
-
-
 
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
