@@ -15,7 +15,7 @@
 (defun x-hugh-edit-dot-emacs (arg)
   "Edit .emacs.d/x-hugh-* files.
 
-If arg is given, open in other window."
+If ARG is given, open in other window."
   (interactive "P")
   (let ((path (file-truename "~/.emacs.d/")))
     (if (eq arg 'nil)
@@ -297,7 +297,7 @@ Returns nil if no differences found, 't otherwise."
 	  fill-column)) )
     (shell-command-on-region start end command nil t "*error*")
     ))
-b; I never use this.
+; I never use this.
 ; (global-set-key "\C-cf" 'doom-run-text-autoformat-on-region)
 
 (defun x-hugh-boxquote-yank-and-indent ()
