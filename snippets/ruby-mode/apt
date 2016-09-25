@@ -1,0 +1,8 @@
+#name : include_recipe apt::default
+#key : aptdefault
+#group : general
+# --
+case node['platform']
+when 'debian', 'ubuntu'
+  include_recipe 'apt::default'
+end

@@ -1,0 +1,9 @@
+#name : case node['platform']
+#key : caseplat
+#group : general
+# --
+case node['platform']
+when 'debian'
+when 'ubuntu'
+$0
+end

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: chefspec-attributes
+# key: chefspec
+# --
+
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new do |node|
+        node.set[described_recipe]['attribute'] = foo
+      end.converge(described_recipe)
+    end

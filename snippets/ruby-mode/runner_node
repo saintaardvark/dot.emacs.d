@@ -1,0 +1,9 @@
+#name : runner do |node|
+#key : runner_node
+#group : general
+# --
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new do |node|
+        $0
+      end.converge(described_recipe)
+    end

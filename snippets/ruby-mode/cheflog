@@ -1,0 +1,5 @@
+#name : Chef::Log.warn
+#key : cheflog
+#group : general
+# --
+Chef::Log.warn('')

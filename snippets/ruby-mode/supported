@@ -1,0 +1,23 @@
+#name : Chefspec supported platforms
+#key : supported
+#group : general
+# --
+supported_platforms = [
+  { 'debian' => ['8.4'] },
+  { 'ubuntu' => ['14.04'] }
+]
+
+describe 'odns_docker::repo' do
+  supported_platforms.each do |platforms|
+    platforms.each do |name, versions|
+      versions.each do |version|
+        context "On #{name} #{version}" do
+          let(:chef_run) do
+            runner = ChefSpec::SoloRunner.new(platform: name, version: version)
+            runner.converge(described_recipe)
+          end
+        end
+      end
+    end
+  end
+end
