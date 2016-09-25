@@ -61,11 +61,15 @@
   (interactive)
   (let ((target (or frame (window-frame))))
     (if window-system
-        (if (or
-             (> (frame-pixel-height) 2000)
-             (> (frame-pixel-width) 2000))
+        (if (fontify-frame-screen-res-high-enough-p)
             (set-frame-parameter target 'font "Inconsolata-16")
-          (set-frame-parameter target 'font "Inconsolata-14")))))
+          (set-frame-parameter target 'font "Inconsolata-18")))))
+
+(defun fontify-frame-screen-res-high-enough-p ()
+  "Function to decide if the screen resolution is high enough."
+  (or
+   (> (frame-pixel-height) 2000)
+   (> (frame-pixel-width) 2000)))
 
 ;;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
 (fontify-frame)
