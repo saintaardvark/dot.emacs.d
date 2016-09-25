@@ -18,7 +18,6 @@
 
 ;; Check for ispell stuff.
 (setq spell-command "ispell")
-;; (ispell-program-name "/usr/local/bin/ispell")
 
 (when (executable-find spell-command)
   (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1))))
