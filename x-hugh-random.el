@@ -43,6 +43,16 @@
 
 (setq epg-gpg-program (executable-find "gpg"))
 
+;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
+(defun jcs-kill-a-buffer (askp)
+  (interactive "P")
+  (if askp
+      (kill-buffer (funcall completing-read-function
+                            "Kill buffer: "
+                            (mapcar #'buffer-name (buffer-list))))
+    (kill-this-buffer)))
+
+
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random ends here
