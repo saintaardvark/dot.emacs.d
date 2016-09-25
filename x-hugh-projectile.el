@@ -4,7 +4,6 @@
 
 ;;; Code:
 
-
 ;; (add-hook 'chef-mode-hook 'projectile-mode)
 (projectile-global-mode)
 
