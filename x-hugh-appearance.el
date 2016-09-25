@@ -54,5 +54,28 @@
   (interactive)
   (load-file "~/.emacs.d/x-hugh-appearance.el"))
 
+;; From https://gist.github.com/MatthewDarling/8c232b1780126275c3b4
+;; Based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
+(defun fontify-frame (&optional frame)
+  "Adjust font size based on screen resolution. Takes optional argument FRAME."
+  (interactive)
+  (let ((target (or frame (window-frame))))
+    (if window-system
+        (if (or
+             (> (frame-pixel-height) 2000)
+             (> (frame-pixel-width) 2000))
+            (set-frame-parameter target 'font "Inconsolata-16")
+          (set-frame-parameter target 'font "Inconsolata-14")))))
+
+;;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
+(fontify-frame)
+
+;;; Only in Emacs 24.4 (currently available as a pretest)
+; see http://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/
+(add-hook 'focus-in-hook fontify-frame)
+
+;;; For older Emacs versions - instead of changing on focus, this will change when a frame is created
+;(push 'fontify-frame after-make-frame-functions)
+
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here.
