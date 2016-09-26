@@ -17,6 +17,8 @@
 ;; ;; (require 'magit nil 'noerror)
 
 (require 'magit)
+;; Waiting on https://github.com/vermiculus/magithub/issues/25 to be resolved.
+;; (require 'magithub)
 ;; (require 'magit-gh-pulls)
 ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
