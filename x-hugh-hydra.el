@@ -82,7 +82,7 @@ _s_jc maps file
   ("e" x-hugh-edit-dot-emacs  ".emacs")
   ("f" x-hugh-figl  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
-  ("l" (find-file "~/org/log_2016.org") "Open logfilel")
+  ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
   ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")

@@ -27,7 +27,7 @@
  '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
  '(delete-selection-mode nil)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
@@ -76,7 +76,7 @@
      ("r" "RT Ticket" entry
       (file "~/orgmode/all.org")
       "** TODO RT #%^{Number} -- %^{Subject}")
-    ("e" "Emacs" entry
+     ("e" "Emacs" entry
       (file "~/orgmode/emacs.org")
       "** TODO %^{TODO}")
      ("t" "TODO" entry
@@ -104,7 +104,7 @@
      nil "")))
  '(package-selected-packages
    (quote
-    (highlight-indent-guides magithub elpy indent-guide go-mode go-projectile toml-mode crosshairs yafolding persp-projectile golden-ratio terraform-mode helm-projectile frame-cmds jammer zone-nyan zone-rainbow yasnippet yaml-mode whitespace-cleanup-mode web-mode wc-mode vagrant-tramp vagrant use-package twittering-mode transpose-frame test-kitchen solarized-theme smex smartparens smart-mode-line smart-forward ruby-refactor ruby-hash-syntax ruby-guard py-autopep8 puppet-mode projectile prodigy popwin pivotal-tracker persp-mode pallet nyan-mode multiple-cursors markdown-mode+ marcopolo magit-gh-pulls json-mode jenkins-watch jenkins idle-highlight-mode hydra htmlize highlight-thing highlight-tail highlight-indentation highlight-current-line helm google-this gist flymake-puppet flycheck-cask flx-ido fixmee exec-path-from-shell drag-stuff dockerfile-mode docker-tramp docker diffview counsel company chef-mode cbm buttercup butler buffer-flip boxquote avy-zap aggressive-indent ace-window)))
+    (go-autocomplete go-eldoc golint powerline sml-mode highlight-indent-guides magithub elpy indent-guide go-mode go-projectile toml-mode crosshairs yafolding persp-projectile golden-ratio terraform-mode helm-projectile frame-cmds jammer zone-nyan zone-rainbow yasnippet yaml-mode whitespace-cleanup-mode web-mode wc-mode vagrant-tramp vagrant use-package twittering-mode transpose-frame test-kitchen solarized-theme smex smartparens smart-mode-line smart-forward ruby-refactor ruby-hash-syntax ruby-guard py-autopep8 puppet-mode projectile prodigy popwin pivotal-tracker persp-mode pallet nyan-mode multiple-cursors markdown-mode+ marcopolo magit-gh-pulls json-mode jenkins-watch jenkins idle-highlight-mode hydra htmlize highlight-thing highlight-tail highlight-indentation highlight-current-line helm google-this gist flymake-puppet flycheck-cask flx-ido fixmee exec-path-from-shell drag-stuff dockerfile-mode docker-tramp docker diffview counsel company chef-mode cbm buttercup butler buffer-flip boxquote avy-zap aggressive-indent ace-window)))
  '(perl-indent-level 8)
  '(post-email-address "aardvark@saintaardvarkthecarpeted.com")
  '(post-should-prompt-for-attachment (quote Never))
@@ -124,8 +124,8 @@
  '(send-mail-function (quote sendmail-send-it))
  '(setq c-basic-offset)
  '(show-paren-mode 1)
- '(spell-command "ispell" t)
  '(sp-navigate-close-if-unbalanced t)
+ '(spell-command "ispell" t)
  '(standard-indent 8)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(uniquify-min-dir-content 2)

@@ -60,20 +60,20 @@
 (defun fontify-frame-appropriate-font ()
   "Return the appropriate font for displays."
   (interactive)
-  (cond ((fontify-frame-screen-res-high-enough-p) "Inconsolata-16")
+  (cond ((fontify-frame-screen-res-high-enough-p) "Inconsolata-18")
         ((fontify-frame-screen-tiny-laptop-p) "Inconsolata-12")))
 
 (defun fontify-frame-screen-res-high-enough-p ()
   "Function to decide if the screen resolution is high enough."
   (or
-   (> (frame-pixel-height) 1900)
-   (> (frame-pixel-width) 1900)))
+   (> (display-pixel-height) 1900)
+   (> (display-pixel-width) 1900)))
 
 (defun fontify-frame-screen-tiny-laptop-p ()
   "Function to decide if the screen resolution is that of a tiny laptop."
   (or
-   (< (frame-pixel-height) 800)
-   (< (frame-pixel-width) 1400)))
+   (< (display-pixel-height) 800)
+   (< (display-pixel-width) 1400)))
 
 ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
 (fontify-frame)
