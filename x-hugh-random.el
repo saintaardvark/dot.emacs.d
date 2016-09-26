@@ -8,7 +8,7 @@
 ;; Random settings.
 
 (put 'narrow-to-region 'disabled nil)
-(fset 'yes-or-no-p 'y-or-n-p)            ; enable one letter y/n answers to yes/no
+(fset 'yes-or-no-p 'y-or-n-p) ; enable one letter y/n answers to yes/no
 
 ;; Sigh...causing too many problems with git repo
 ;; (add-hook 'write-file-hooks 'delete-trailing-whitespace)
