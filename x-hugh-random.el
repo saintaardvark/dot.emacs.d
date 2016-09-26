@@ -42,6 +42,7 @@
 
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (defun jcs-kill-a-buffer (askp)
+  "Just kill this damn buffer! If ASKP provided, ask which buffer to kill."
   (interactive "P")
   (if askp
       (kill-buffer (funcall completing-read-function
