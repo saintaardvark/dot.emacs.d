@@ -12,14 +12,10 @@
 ;; (edit-server-start)
 (setq major-mode 'text-mode)
 ;; (wg-load "~/.emacs_workgroups")
-(if window-system
-      (scroll-bar-mode -1)
-  ())
+
 ;; start in home directory instead of root
 (cd "~")
 
-;; Start maximized
-(maximize-frame)
 ;; Lastly, like fortune:
 (totd)
 
