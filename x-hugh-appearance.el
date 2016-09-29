@@ -75,11 +75,14 @@
    (< (display-pixel-height) 800)
    (< (display-pixel-width) 1400)))
 
-;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
-(fontify-frame)
-
 ;; Only if Emacs >= 24.4
-(add-hook 'focus-in-hook 'fontify-frame)
+(if window-system
+    (progn
+      (scroll-bar-mode -1)
+      ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
+      (fontify-frame)
+      (add-hook 'focus-in-hook 'fontify-frame)
+      (maximize-frame)))
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here

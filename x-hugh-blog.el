@@ -20,7 +20,7 @@
   (interactive "sTitle: ")
   (let ((filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title))))
     (message filename)
-    (find-file (concat "/home/aardvark/jekyll-blog/_posts/" (format-time-string "%Y-%m-%d-") filename ".md")) ;
+    (find-file (concat "/home/aardvark/blog/_posts/" (format-time-string "%Y-%m-%d-") filename ".md")) ;
     (insert "---")
     (insert (format "\ntitle: %s\n" title))
     (insert (format "date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
