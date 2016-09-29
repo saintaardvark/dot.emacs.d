@@ -11,7 +11,6 @@
 ;; (require 'edit-server)
 ;; (edit-server-start)
 (setq major-mode 'text-mode)
-;; (wg-load "~/.emacs_workgroups")
 
 ;; start in home directory instead of root
 (cd "~")
