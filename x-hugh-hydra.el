@@ -79,7 +79,7 @@ _s_jc maps file
 	 "astronomy page")
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
-  ("e" x-hugh-edit-dot-emacs  ".emacs")
+  ("e" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
   ("f" x-hugh-figl  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")

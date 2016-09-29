@@ -17,6 +17,9 @@
   ())
 ;; start in home directory instead of root
 (cd "~")
+
+;; Start maximized
+(maximize-frame)
 ;; Lastly, like fortune:
 (totd)
 

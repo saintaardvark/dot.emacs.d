@@ -8,7 +8,7 @@
 ;; Random settings.
 
 (put 'narrow-to-region 'disabled nil)
-(fset 'yes-or-no-p 'y-or-n-p)            ; enable one letter y/n answers to yes/no
+(fset 'yes-or-no-p 'y-or-n-p) ; enable one letter y/n answers to yes/no
 
 ;; Sigh...causing too many problems with git repo
 ;; (add-hook 'write-file-hooks 'delete-trailing-whitespace)
@@ -22,7 +22,7 @@
 (add-hook 'comint-output-filter-functions
           'comint-watch-for-password-prompt)
 
-; From http://www.emacswiki.org/emacs/CopyAndPaste
+;; From http://www.emacswiki.org/emacs/CopyAndPaste
 (setq select-active-regions t) ;  active region sets primary X11 selection
 (global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
 
@@ -42,6 +42,7 @@
 
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (defun jcs-kill-a-buffer (askp)
+  "Just kill this damn buffer! If ASKP provided, ask which buffer to kill."
   (interactive "P")
   (if askp
       (kill-buffer (funcall completing-read-function
@@ -49,6 +50,12 @@
                             (mapcar #'buffer-name (buffer-list))))
     (kill-this-buffer)))
 
+(defun x-hugh-pull-dotfiles-and-restart ()
+  "Do a `git pull` in ~/.emacs.d, then restart."
+  (interactive)
+  (let ((default-directory "~/.emacs.d/"))
+    (shell-command-to-string "git pull"))
+  (save-buffers-kill-terminal))
 
 (provide 'x-hugh-random)
 
