@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(exec-path-from-shell-copy-env "GOPATH")
+
 (go-eldoc-setup)
 
 (defun go-mode-setup ()
