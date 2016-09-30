@@ -26,8 +26,6 @@
 (setq select-active-regions t) ;  active region sets primary X11 selection
 (global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
 
-;; (exec-path-from-shell-copy-env "GEM_HOME")
-
 ;; Save all tempfiles in $TMPDIR/emacs$UID/
 ;; See https://www.emacswiki.org/emacs/AutoSave
 (defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
