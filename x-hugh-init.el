@@ -52,21 +52,26 @@
 
 (require 'x-hugh-random)
 (require 'x-hugh-functions)
-(require 'x-hugh-shell)
 (require 'x-hugh-blog)
 (require 'x-hugh-appearance)
 ;; (require 'x-hugh-confluence)
 (require 'x-hugh-org)
 ;; (require 'x-hugh-cfengine)
 (require 'x-hugh-helm)
-(require 'x-hugh-projectile)
 (require 'x-hugh-reference)
 (require 'x-hugh-modes)
 (require 'x-hugh-yasnippet)
-(require 'x-hugh-magit)
-(require 'x-hugh-python)
 (require 'x-hugh-text)
+
+;; Devel
+(require 'x-hugh-magit)
+(require 'x-hugh-projectile)
+
+;; Languages
 (require 'x-hugh-golang)
+(require 'x-hugh-python)
+(require 'x-hugh-shell)
+(require 'x-hugh-ruby)
 (require 'cfg)
 
 ;; Hydra comes before keymap.
