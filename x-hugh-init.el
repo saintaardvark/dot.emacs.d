@@ -69,6 +69,7 @@
 ;; Devel
 (require 'x-hugh-magit)
 (require 'x-hugh-projectile)
+(require 'x-hugh-company)
 
 ;; Languages
 (require 'x-hugh-golang)
