@@ -19,9 +19,6 @@
 (add-hook 'go-mode-hook 'go-mode-setup)
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 
-(provide 'x-hugh-golang)
-
-
 
 (provide 'x-hugh-golang)
 ;;; x-hugh-golang ends here
