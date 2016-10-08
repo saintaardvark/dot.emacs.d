@@ -43,6 +43,9 @@
   (interactive)
   "yes")
 
+;; Actually, a lot simpler if we just do this:
+(exec-path-from-shell-copy-env "PATH")
+
 (if (file-exists-p "/usr/local/bin")
     (push "/usr/local/bin" exec-path))
 (if (file-exists-p "~/bin")
