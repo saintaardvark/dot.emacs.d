@@ -187,12 +187,5 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 (add-hook 'toml-mode-hook #'smartparens-mode)
 (add-hook 'go-mode-hook #'smartparens-mode)
 
-;; Go
-(add-hook 'go-mode-hook
-          (lambda ()
-            (add-hook 'before-save-hook 'gofmt-before-save)
-            (setq tab-width 4)
-            (setq indent-tabs-mode 1)))
-
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here
