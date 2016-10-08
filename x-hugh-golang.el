@@ -10,15 +10,17 @@
 
 (defun go-mode-setup ()
   "Wrapper for a bunch of Golang settings."
-  (setq compile-command "go build -v && go test -v && go vet && golint && errcheck")
-  (go-eldoc-setup)
-  (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
-  (local-set-key (kbd "M-.") 'godef-jump))
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (set (make-local-variable 'company-backends) '(company-go))
+  (setq compile-command "go build -v && go test -v && go vet && golint && errcheck")
+  (setq gofmt-command "goimports")
+  (setq indent-tabs-mode 1)
+  (setq tab-width 4))
 
-(add-hook 'go-mode-hook 'go-mode-setup)
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 
+(add-hook 'go-mode-hook 'go-mode-setup)
 
 (provide 'x-hugh-golang)
 ;;; x-hugh-golang ends here
