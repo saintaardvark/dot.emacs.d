@@ -1,4 +1,4 @@
-;;; x-hugh-go --- stuff related to go editing
+;;; x-hugh-golang --- stuff related to go editing
 
 ;;; Commentary:
 
@@ -23,5 +23,5 @@
 
 
 
-(provide 'x-hugh-go)
-;;; x-hugh-go.el ends here.
+(provide 'x-hugh-golang)
+;;; x-hugh-golang ends here
