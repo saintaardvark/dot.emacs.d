@@ -30,16 +30,9 @@
 (global-set-key "\C-c\C-r"	'x-hugh-show-rt-tickets-2)
 (global-set-key "\C-c\C-s"	'sudo-edit-current-file)
 
-;; Try out cbm-cycle...nope, I never use it.
-;; (global-set-key (kbd "C-'") #'cbm-cycle)
 (global-set-key (kbd "C-'") #'sp-rewrap-sexp)
 ;; Trying out avy-mode
 (global-set-key (kbd "C-;") #'avy-goto-char)
-;; Trying out smex
-;; Disabling; may be interfering with helm
-;; (global-set-key (kbd "M-x") #'smex)
-
-;; (global-set-key "\C-cw"		'x-hugh-wordcount)
 
 ;; Official key prefixes:
 ;; C-c e: lisp stuff
