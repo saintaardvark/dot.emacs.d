@@ -7,6 +7,17 @@
 
 (exec-path-from-shell-copy-env "GEM_HOME")
 
+(defun x-hugh-rubocop-disable (cop)
+  "Add comment to disable a Rubocop complaint."
+  (save-excursion
+    (move-beginning-of-line nil)
+    (insert (concat "# rubocop:disable " cop))))
+
+(defun x-hugh-rubucop-disable-linelength ()
+    "Disable Rubocop linelength complaint."
+  (interactive)
+  (x-hugh-rubocop-disable "LineLength"))
+
 (provide 'x-hugh-ruby)
 ;;; x-hugh-ruby ends here
 

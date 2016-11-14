@@ -399,17 +399,6 @@ FIXME: Need to figure out how to put point at right column."
   (if (region-active-p)
       ))
 
-(defun x-hugh-rubocop-disable (cop)
-  "Add comment to disable a Rubocop complaint."
-  (save-excursion
-    (move-beginning-of-line nil)
-    (insert (concat "# rubocop:disable " cop))))
-
-(defun x-hugh-rubucop-disable-linelength ()
-    "Disable Rubocop linelength complaint."
-  (interactive)
-  (x-hugh-rubocop-disable "LineLength"))
-
 ;; Let's see if there's a way to get Emacs to save files with a remote signal.
 ;; Use case: call from TK before running, so we don't get "Can't find these files" error.
 ;; See help for save-some-buffers.
