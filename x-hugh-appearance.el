@@ -17,18 +17,6 @@
 ;; Begone!
 (setq inhibit-splash-screen t)
 
-(defun x-hugh-default-font ()
-  "Set default font depending on where I am."
-  (if (x-hugh-am-i-at-work-p)
-      "Inconsolata-14"
-    "Inconsolata-12"))
-
-(if window-system
-    (progn
-      (set-frame-font (x-hugh-default-font))
-      (scroll-bar-mode -1))
-  ())
-
 (defun x-hugh-set-font-smaller ()
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)

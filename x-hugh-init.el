@@ -37,19 +37,12 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;; Simple functiion to determine if I'm at work.
-(defun x-hugh-am-i-at-work-p ()
-  "Simple function meant to return 'yes' or 'no'."
-  (interactive)
-  "yes")
-
-;; Actually, a lot simpler if we just do this:
-(exec-path-from-shell-copy-env "PATH")
-
+;; Set up path
 (if (file-exists-p "/usr/local/bin")
     (push "/usr/local/bin" exec-path))
 (if (file-exists-p "~/bin")
     (push "~/bin" exec-path))
+(exec-path-from-shell-copy-env "PATH")
 
 ;; And now everything else
 
