@@ -70,7 +70,7 @@
 (global-set-key "\C-cpa"	'x-hugh-wiki-attach-file-to-wiki-page)
 (global-set-key "\C-cpb"	'x-hugh-blog-entry)
 (global-set-key "\C-cpc"	'x-hugh-open-blog-page)
-(global-set-key "\C-cpg"	'x-hugh-git-commit-and-push-without-mercy)
+(global-set-key "\C-cpg"	'x-hugh-gh-git-commit-and-push-without-mercy)
 (global-set-key "\C-cpr"	'x-hugh-insert-wiki-rt-link)
 (global-set-key "\C-cpt"	'x-hugh-insert-wiki-rt-link-as-detailed-in)
 (global-set-key "\C-cpq"	'x-hugh-wiki-blockquote-quote)

@@ -236,13 +236,6 @@ I can never remember how to do this."
   (set-buffer-file-coding-system 'undecided-unix)
   (save-buffer))
 
-(defun x-hugh-git-commit-and-push-without-mercy ()
-  "Commit all outstanding and push without hesitation. Meant to be called from within a file buffer.
-
-Do it, monkey boy!"
-  (interactive)
-  (start-process "nomercy" "git-commit-and-push-without-mercy" "~/bin/git-commit-and-push-without-mercy.sh" (concat "-r" (buffer-file-name))))
-
 (defun x-hugh-die-outlook-die ()
   "Decode HTML mail when replying.  Not quite perfect, but close."
   (interactive)
