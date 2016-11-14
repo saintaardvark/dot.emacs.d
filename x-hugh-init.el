@@ -63,6 +63,7 @@
 (require 'x-hugh-magit)
 (require 'x-hugh-projectile)
 (require 'x-hugh-company)
+(require 'x-hugh-gh)
 
 ;; Languages
 (require 'x-hugh-golang)

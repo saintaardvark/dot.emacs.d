@@ -258,13 +258,6 @@ Do it, monkey boy!"
   (interactive)
   (start-process "nomercy" "git-commit-and-push-without-mercy" "~/bin/git-commit-and-push-without-mercy.sh" (concat "-r" (buffer-file-name))))
 
-(defun x-hugh-open-git-repo ()
-  "Open up a git repo."
-  (interactive)
-  (let ((dir (completing-read "File: " (directory-files "~/gh/" t))))
-    (dired dir)
-    (magit-status dir)))
-
 (defun x-hugh-die-outlook-die ()
   "Decode HTML mail when replying.  Not quite perfect, but close."
   (interactive)
@@ -344,11 +337,6 @@ FIXME: Need to figure out how to put point at right column."
 (defun x-hugh-ssh-mode-hook ()
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
-
-(defun x-hugh-opendns-open-github-repo-url (project)
-  "Open GH page for current repo in browser."
-  (interactive "sProject: ")
-  (browse-url (format "https://github.office.opendns.com/%s" project)))
 
 (defun x-hugh-toggle-nag-about-keys ()
   "Toggle nagging about key navigation."
