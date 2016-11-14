@@ -57,7 +57,7 @@
  '(magit-save-repository-buffers (quote dontask))
  '(magit-use-overlays nil)
  '(midnight-mode t)
- '(mouse-yank-at-point nil)
+ '(mouse-yank-at-point t)
  '(ns-command-modifier nil)
  '(org-agenda-columns-add-appointments-to-effort-sum t)
  '(org-agenda-files (quote ("~/orgmode")))
