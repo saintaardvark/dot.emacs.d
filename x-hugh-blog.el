@@ -4,17 +4,6 @@
 
 ;;; Code:
 
-(defun x-hugh-chronicle-new-blog-entry (title)
-  "A Small but Useful(tm) function to make a new blog entry in Chronicle."
-  (interactive "sTitle: ")
-  (setq filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title)))
-  (message filename)
-  (find-file (concat "/home/aardvark/blog/input/" (format-time-string "%Y-%m") "/" filename ".mdwn"))
-  (insert (format "Title: %s\n" title))
-  (insert (format "Date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
-  (insert (format "Tags: \n\n"))
-  (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t))
-
 (defun x-hugh-jekyll-new-blog-entry (title)
   "A Small but Useful(tm) function to make a new blog entry in Jekyll."
   (interactive "sTitle: ")
@@ -133,13 +122,6 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
           (forward-char)
           (insert (format "][%d]" link-number)))
       (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number))))))
-
-(defun x-hugh-chronicle-list-tags ()
-  "A Small but Useful9tm) function to list the tags available for Chronicle."
-  (interactive)
-  (with-output-to-temp-buffer "*Blog tags*"
-    (with-current-buffer "*Blog tags*"
-      (insert-directory "/home/aardvark/blog/output/tags" "-CF"))))
 
 (defun x-hugh-chronicle-add-tag ()
   "Add a tag to a chronicle blog post."
