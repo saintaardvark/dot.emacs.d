@@ -57,21 +57,6 @@ Rewritten as defun."
       (post-goto-signature)
       (kill-region beg (point)))))
 
-; Not ideal, but a good start.
-; TODO:
-;	Insert appropriate mode header.
-;	Account for shebang.
-;	Don't duplicate already-existing headers.
-(defun x-hugh-insert-headers ()
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let
-	((beg (point)))
-      (insert "-*-shell-script-*-")
-      (forward-line 1) (comment-region beg (point)))
-    (vc-insert-headers)))
-
 (defun x-hugh-insert-date ()
   (interactive)
   (insert (format-time-string "%b %d, %Y")))
@@ -392,12 +377,6 @@ FIXME: Need to figure out how to put point at right column."
   "Indent the whole buffer."
   (interactive)
   (indent-region (point-min) (point-max)))
-
-(defun x-hugh-single-quotify ()
-  "Change all double quotes in region to single quotes."
-  (interactive)
-  (if (region-active-p)
-      ))
 
 ;; Let's see if there's a way to get Emacs to save files with a remote signal.
 ;; Use case: call from TK before running, so we don't get "Can't find these files" error.
