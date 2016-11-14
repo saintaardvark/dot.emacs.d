@@ -57,56 +57,6 @@ Rewritten as defun."
       (post-goto-signature)
       (kill-region beg (point)))))
 
-(defun x-hugh-tag-quote-dwim (tag)
-  "DWIM to insert/surround thing-at-point/region with <tag> pair.
-
-Needs tag as argument. Meant to be called from interactive defuns
-with the required tag.  Rewritten as defun using Xah Lee's
-idiom for working on region or current word."
-  (let ((pos1 'nil)
-	(pos2 'nil)
-	(bds 'nil)
-	(taglength (+ 1 (length tag))))
-    (if (region-active-p)
-	(setq pos1 (region-beginning) pos2 (region-end))
-      (progn
-	(setq bds (bounds-of-thing-at-point 'symbol))
-	(setq pos1 (car bds) pos2 (cdr bds))
-	(if (eq bds nil)
-	    (setq pos1 (point) pos2 (point)))))
-    ;; now, pos1 and pos2 are the starting and ending positions of the
-    ;; current word, or current text selection if exist.
-    (goto-char (- pos1 1))
-    (insert (format "\n%s" tag))
-    ; go to pos2 + 1 char past + 12 chars (length of "\n<verbatim> string)
-    (goto-char (+ pos2 taglength))
-    (insert (format "\n%s\n" tag))
-    (if (eq pos1 pos2)
-	(goto-char (- (point) (+ 1 taglength))))))
-
-(defun x-hugh-wiki-verbatim-quote ()
-  "Quote region/thing-at-point with verbatim tags, or just insert a pair."
-  (interactive)
-  (x-hugh-tag-quote-dwim "<verbatim>"))
-
-(defun x-hugh-wiki-blockquote-quote ()
-  "Quote region/thing-at-point with blockquote tags, or just insert a pair."
-  (interactive)
-  (x-hugh-tag-quote-dwim "<blockquote>"))
-
-(defun x-hugh-wiki-attach-file-to-wiki-page (filename)
-  "This is my way of doing things."
-  (interactive "fAttach file: ")
-  ;; doubled slash, but this makes it clear
-  (let* ((page-name (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
-	 (local-attachments-dir (format "%s/attachments/%s" (file-name-directory (buffer-file-name)) page-name))
-	 (attachment-file (file-name-nondirectory filename))
-	 (attachment-url (format "https://noc.chibi.ubc.ca/wiki/attachments/%s/%s" page-name attachment-file)))
-    (make-directory local-attachments-dir 1)
-    (copy-file filename local-attachments-dir 1)
-    (insert (format "[[%s|%s]]" attachment-file attachment-url))))
-
-
 ; Not ideal, but a good start.
 ; TODO:
 ;	Insert appropriate mode header.
@@ -121,13 +71,6 @@ idiom for working on region or current word."
       (insert "-*-shell-script-*-")
       (forward-line 1) (comment-region beg (point)))
     (vc-insert-headers)))
-
-(fset 'x-hugh-paragraph-ptag-enclose
-   "<p>\C-[}\C-b</p>")
-
-;; Gah, this is awful
-(fset 'x-hugh-yank-and-uncomment-region
-   [?\C-y ?\C-x ?\C-x ?\M-x ?u ?n ?c ?o ?m ?m ?e ?n ?t ?- ?r ?e tab return ?\C-x ?\C-x])
 
 (defun x-hugh-insert-date ()
   (interactive)
@@ -157,15 +100,6 @@ It works, but it's also a learning exercise."
 	       (let ((beg (point-min))
 		     (end (- (point-max) 1)))
 		 (buffer-substring beg end))))))
-
-(defun x-hugh-wikipedia-over-dns (query)
-  "A Small but Useful(tm) function to query Wikipedia over DNS.
-
-See https://dgl.cx/2008/10/wikipedia-summary-dns for details."
-  (interactive "sWikipedia: ")
-  (let ((query (read-from-minibuffer "Wikipedia: " )))
-    (message (format "%s.wp.dg.cx" query))
-    (dig (format "%s.wp.dg.cx" query) "txt" "+short")))
 
 ;; FIXME: Set password file as var somewhere.
 (defun x-hugh-open-password-file ()
@@ -410,10 +344,6 @@ FIXME: Need to figure out how to put point at right column."
 (defun x-hugh-ssh-mode-hook ()
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
-
-(defun x-hugh-open-password-file ()
-  (interactive)
-  (find-file "~/passwords.gpg"))
 
 (defun x-hugh-opendns-open-github-repo-url (project)
   "Open GH page for current repo in browser."

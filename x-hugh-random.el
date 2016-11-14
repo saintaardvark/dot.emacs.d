@@ -48,13 +48,6 @@
                             (mapcar #'buffer-name (buffer-list))))
     (kill-this-buffer)))
 
-(defun x-hugh-pull-dotfiles-and-restart ()
-  "Do a `git pull` in ~/.emacs.d, then restart."
-  (interactive)
-  (let ((default-directory "~/.emacs.d/"))
-    (shell-command-to-string "git pull"))
-  (save-buffers-kill-terminal))
-
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random ends here
