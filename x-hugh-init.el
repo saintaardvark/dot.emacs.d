@@ -64,6 +64,7 @@
 (require 'x-hugh-projectile)
 (require 'x-hugh-company)
 (require 'x-hugh-gh)
+(require 'x-hugh-smartparens)
 
 ;; Languages
 (require 'x-hugh-golang)
