@@ -351,6 +351,9 @@ FIXME: Need to figure out how to put point at right column."
   (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
 
 ;; From http://stackoverflow.com/questions/5925485/emacs-lisp-macro-stepper.  WOW.
+;; FIXME: Move this to x-hugh-elisp.
+;; FIXME: Have this be a smaller buffer - just big enough to hold the expansion
+;; FIXME: Have "q" in this buffer kill it
 (defun macroexpand-point (sexp)
   (interactive (list (sexp-at-point)))
   (with-output-to-temp-buffer "*el-macroexpansion*"
