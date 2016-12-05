@@ -52,8 +52,8 @@
 (global-set-key "\C-ce"	'hydra-elisp/body)
 ;; Personal files
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
-;; Puppet
-(global-set-key (kbd "C-c j") 'hydra-puppet/body)
+;; Copying
+(global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 ;; Git
 (global-set-key (kbd "C-c u")'hydra-git/body)
 ;; Oh, this is handy
