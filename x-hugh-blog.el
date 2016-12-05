@@ -4,12 +4,26 @@
 
 ;;; Code:
 
+(defgroup x-hugh-blog nil
+  "Settings for working with git."
+  :group 'tools)
+
+(defcustom x-hugh-blog/repo-path "~/jekyll-blog"
+  "Path to where the blog repo is kept."
+  :type 'string
+  :group 'x-hugh-blog)
+
+(defcustom x-hugh-blog/post-dir "_posts"
+  "Directory within the blog repo where new posts are put."
+  :type 'string
+  :group 'x-hugh-blog)
+
 (defun x-hugh-jekyll-new-blog-entry (title)
   "A Small but Useful(tm) function to make a new blog entry in Jekyll."
   (interactive "sTitle: ")
   (let ((filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title))))
     (message filename)
-    (find-file (concat "/home/aardvark/blog/_posts/" (format-time-string "%Y-%m-%d-") filename ".md")) ;
+    (find-file (concat x-hugh-blog/repo-path "/" x-hugh-blog/post-dir (format-time-string "%Y-%m-%d-") filename ".md")) ;
     (insert "---")
     (insert (format "\ntitle: %s\n" title))
     (insert (format "date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
