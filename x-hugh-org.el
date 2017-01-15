@@ -303,6 +303,7 @@ Hugh
   (save-excursion
     (find-file "/home/aardvark/orgmode/books.org")
     (org-html-export-as-html)
-    (write-region nil nil "/home:/home/aardvark/public_html/random/books.html")))
+    (write-region nil nil "/l2:/home/aardvark/public_html/random/books.html")
+    (kill-buffer)))
 
 (provide 'x-hugh-org)
