@@ -397,5 +397,10 @@ FIXME: Need to figure out how to put point at right column."
   (x-hugh-git-commit-and-push-without-mercy)
   (kill-buffer))
 
+;; http://emacs.stackexchange.com/a/10080
+(defun crontab-e ()
+    (interactive)
+    (with-editor-async-shell-command "crontab -e"))
+
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
