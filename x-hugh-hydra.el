@@ -91,6 +91,11 @@ _s_jc maps file
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("t" (find-file "~/orgmode/TODO.org") "TODO"))
 
+(defhydra hydra-copy-lines (:exit t)
+  "Shortcuts for copying lines/regions."
+  ("c" x-hugh-copy-and-comment-region "Copy and comment region")
+  ("l" x-hugh-copy-and-comment-line "Copy and comment line"))
+
 (defhydra hydra-puppet-chef (:exit t)
   "Cheffing Puppet"
   ("f" (x-hugh-copy-puppet-to-chef "file") "file")
