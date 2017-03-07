@@ -103,7 +103,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
           (dired-get-marked-files))))
 
 (defun x-hugh-dired-do-shred ()
-  "Run shred on marked files. This will erase them."
+  "Run shred on marked files.  This will erase them."
   (interactive)
   (yes-or-no-p "Do you REALLY want to shred these files forever? ")
   (save-window-excursion
@@ -115,6 +115,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
 ;;; not being used.
 
 (defun totd ()
+  "Display tip o' the day."
   (interactive)
   (with-output-to-temp-buffer "*Tip of the day*"
     (let* ((commands (loop for s being the symbols
