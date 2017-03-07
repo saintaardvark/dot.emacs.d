@@ -59,10 +59,6 @@ Rewritten as defun."
       (post-goto-signature)
       (kill-region beg (point)))))
 
-(defun x-hugh-insert-date ()
-  (interactive)
-  (insert (format-time-string "%b %d, %Y")))
-
 ;;; It's clumsy, I'm sure, but it works!
 (defun x-hugh-wordcount ()
   "A Small but Useful(tm) function to count the words in the buffer.
