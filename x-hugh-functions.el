@@ -84,22 +84,6 @@ It works, but it's also a learning exercise."
 		     (end (- (point-max) 1)))
 		 (buffer-substring beg end))))))
 
-;; FIXME: Set password file as var somewhere.
-(defun x-hugh-open-password-file ()
-  (interactive)
-  (find-file "~/passwords.gpg"))
-
-(defun x-hugh-open-password-file-maybe-matching-string (&optional arg)
-  "Open the password file. If arg, only list lines matching string."
-  (interactive "p")
-  (save-excursion
-    (find-file "~/passwords.gpg")
-    (when (arg)
-	(progn
-	  (list-matching-lines
-	   (read-from-minibuffer "String to look for (case-insensitive): "))
-	  (kill-buffer (get-file-buffer "~/passwords.gpg"))))))
-
 (defun x-hugh-figl (regex)
   "A Small but Useful(tm) shortcut for find-grep-dired, like my figl alias."
   (interactive "sRegex: ")

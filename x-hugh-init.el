@@ -58,6 +58,7 @@
 (require 'x-hugh-modes)
 (require 'x-hugh-yasnippet)
 (require 'x-hugh-text)
+(require 'x-hugh-passwords)
 
 ;; Devel
 (require 'x-hugh-magit)
