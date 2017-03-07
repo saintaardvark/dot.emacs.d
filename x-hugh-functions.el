@@ -40,7 +40,9 @@ If ARG is given, open in other window."
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
 (defun x-hugh-zap (arg char)
-  "Wrapper around zap-to-char so does *not* including character."
+  "Kill up to, but *not* including, ARGth occurrence of CHAR.
+
+Wrapper around 'zap-to-char' so does *not* including character."
   (interactive (list (prefix-numeric-value current-prefix-arg)
 		     (read-char "Zap to char: " t)))
   (zap-to-char arg char)
