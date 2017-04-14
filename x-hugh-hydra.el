@@ -78,6 +78,7 @@ _s_jc maps file
 	 (find-file "/home/aardvark/saintaardvarkthecarpeted.com/astronomy.mdwn"))
 	 "astronomy page")
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
+  ("c" x-hugh-company-coming "Company coming!")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("E" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
   ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
@@ -88,7 +89,7 @@ _s_jc maps file
   ("o" (dired "/backup/music/ogg") "Music")
   ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
-  ("t" x-hugh-company-coming))
+  ("t" (find-file "~/orgmode/TODO.org") "TODO"))
 
 (defhydra hydra-copy-lines (:exit t)
   "Shortcuts for copying lines/regions."
