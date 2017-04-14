@@ -4,6 +4,7 @@
 
 (depends-on "ace-window")
 (depends-on "aggressive-indent")
+(depends-on "arduino-mode")
 (depends-on "async")
 (depends-on "avy")
 (depends-on "avy-zap")
