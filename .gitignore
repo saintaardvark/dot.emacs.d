@@ -5,3 +5,6 @@
 /tramp
 /games/tetris-scores
 /url
+/session*
+/backups
+/eshell
