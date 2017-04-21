@@ -4,7 +4,8 @@
 
 ;;; Code:
 
-
+;; FIXME: This should be made more generic:
+;; (x-hugh-add-hook-to-modes "smartparens" ("this" "that" "the other" ...))
 (defmacro x-hugh-sp-add-hook-to-modes (modes)
   "Ensure that smart-parens mode is added to each of (MODES) mode-hook."
   (dolist (mode modes)
