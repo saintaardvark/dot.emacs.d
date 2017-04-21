@@ -14,9 +14,11 @@
 (x-hugh-sp-add-hook-to-modes ("emacs-lisp"
                               "go"
                               "json"
+                              "markdown"
                               "ruby"
                               "python"
                               "shell"
+                              "terraform"
                               "toml"
                               "yaml"))
 
