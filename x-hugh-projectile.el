@@ -32,5 +32,18 @@
 
 (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
 
+;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
+(setq projectile-switch-project-action
+      #'projectile-commander)
+
+;; Ermergerd:
+;; `projectile-mode' Minor Mode Bindings Starting With C-c p x:
+;; key             binding
+;; ---             -------
+
+;; C-c p x e       projectile-run-eshell
+;; C-c p x s       projectile-run-shell
+;; C-c p x t       projectile-run-term
+
 (provide 'x-hugh-projectile)
 ;;; x-hugh-projectile ends here
