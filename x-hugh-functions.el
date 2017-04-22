@@ -40,7 +40,9 @@ If ARG is given, open in other window."
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
 (defun x-hugh-zap (arg char)
-  "Wrapper around zap-to-char so does *not* including character."
+  "Kill up to, but *not* including, ARGth occurrence of CHAR.
+
+Wrapper around 'zap-to-char' so does *not* including character."
   (interactive (list (prefix-numeric-value current-prefix-arg)
 		     (read-char "Zap to char: " t)))
   (zap-to-char arg char)
@@ -56,10 +58,6 @@ Rewritten as defun."
     (save-excursion
       (post-goto-signature)
       (kill-region beg (point)))))
-
-(defun x-hugh-insert-date ()
-  (interactive)
-  (insert (format-time-string "%b %d, %Y")))
 
 ;;; It's clumsy, I'm sure, but it works!
 (defun x-hugh-wordcount ()
@@ -86,22 +84,6 @@ It works, but it's also a learning exercise."
 		     (end (- (point-max) 1)))
 		 (buffer-substring beg end))))))
 
-;; FIXME: Set password file as var somewhere.
-(defun x-hugh-open-password-file ()
-  (interactive)
-  (find-file "~/passwords.gpg"))
-
-(defun x-hugh-open-password-file-maybe-matching-string (&optional arg)
-  "Open the password file. If arg, only list lines matching string."
-  (interactive "p")
-  (save-excursion
-    (find-file "~/passwords.gpg")
-    (when (arg)
-	(progn
-	  (list-matching-lines
-	   (read-from-minibuffer "String to look for (case-insensitive): "))
-	  (kill-buffer (get-file-buffer "~/passwords.gpg"))))))
-
 (defun x-hugh-figl (regex)
   "A Small but Useful(tm) shortcut for find-grep-dired, like my figl alias."
   (interactive "sRegex: ")
@@ -121,7 +103,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
           (dired-get-marked-files))))
 
 (defun x-hugh-dired-do-shred ()
-  "Run shred on marked files. This will erase them."
+  "Run shred on marked files.  This will erase them."
   (interactive)
   (yes-or-no-p "Do you REALLY want to shred these files forever? ")
   (save-window-excursion
@@ -133,6 +115,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
 ;;; not being used.
 
 (defun totd ()
+  "Display tip o' the day."
   (interactive)
   (with-output-to-temp-buffer "*Tip of the day*"
     (let* ((commands (loop for s being the symbols
@@ -351,6 +334,9 @@ FIXME: Need to figure out how to put point at right column."
   (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
 
 ;; From http://stackoverflow.com/questions/5925485/emacs-lisp-macro-stepper.  WOW.
+;; FIXME: Move this to x-hugh-elisp.
+;; FIXME: Have this be a smaller buffer - just big enough to hold the expansion
+;; FIXME: Have "q" in this buffer kill it
 (defun macroexpand-point (sexp)
   (interactive (list (sexp-at-point)))
   (with-output-to-temp-buffer "*el-macroexpansion*"

@@ -177,16 +177,5 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 
 (winner-mode 1)
 
-;; smartparens
-(add-hook 'emacs-lisp-mode-hook #'smartparens-mode)
-(add-hook 'json-mode-hook #'smartparens-mode)
-(add-hook 'ruby-mode-hook #'smartparens-mode)
-(add-hook 'python-mode-hook #'smartparens-mode)
-(add-hook 'shell-mode-hook #'smartparens-mode)
-(add-hook 'yaml-mode-hook #'smartparens-mode)
-(add-hook 'toml-mode-hook #'smartparens-mode)
-(add-hook 'go-mode-hook #'smartparens-mode)
-(add-hook 'arduino-mode-hook #'smartparens-mode)
-
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here
