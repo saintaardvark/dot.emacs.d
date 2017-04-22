@@ -58,12 +58,14 @@
 (require 'x-hugh-modes)
 (require 'x-hugh-yasnippet)
 (require 'x-hugh-text)
+(require 'x-hugh-passwords)
 
 ;; Devel
 (require 'x-hugh-magit)
 (require 'x-hugh-projectile)
 (require 'x-hugh-company)
 (require 'x-hugh-gh)
+(require 'x-hugh-smartparens)
 
 ;; Languages
 (require 'x-hugh-golang)
