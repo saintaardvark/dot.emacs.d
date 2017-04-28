@@ -14,6 +14,7 @@
 
 (x-hugh-sp-add-hook-to-modes ("emacs-lisp"
                               "go"
+                              "jinja2"
                               "json"
                               "markdown"
                               "ruby"
