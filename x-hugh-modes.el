@@ -96,11 +96,6 @@
 (add-hook 'kill-buffer-hook 'kill-associated-diff-buf)
 
 
-;; (setq w3m-p (executable-find "w3m"))
-;; (if w3m-p
-;;     (require 'w3m-load) nil 'noerror)
-
-
 ;; RT Liberation
 
 ;; (add-to-list 'load-path "~/.emacs.d/rt-liberation/")
@@ -115,10 +110,6 @@
 ;;       rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
 ;; 				      ("X-Ethics" . "Use GNU"))
 ;;       rt-liber-gnus-signature       "Thanks,Hugh")
-
-
-;; Cfengine mode comes w/Emacs 24.
-(add-to-list 'auto-mode-alist '("\\.cf\\'" . cfengine3-mode))
 
 (require 'boxquote)
 (defun x-hugh-boxquote-yank-and-indent ()
@@ -148,15 +139,6 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 ;; Smart-mode line
 ;; (require 'smart-mode-line)
 ;; (sml/setup)
-
-;; Try creating my own mode for .cfg files.
-;; What I want right now: handiness of commenting in Nagios config files, but no
-;; complaints from flycheck about syntax errors.
-;; More generally, there's probably a Nagios mode I should be using...
-(define-derived-mode x-hugh-cfg-mode sh-mode "My Cfg mode"
-  "A mode for Cfg files."
-  (sh-set-shell "bash"))
-(add-to-list 'auto-mode-alist '("\\.cfg\\'" . x-hugh-cfg-mode))
 
 (require 'yasnippet nil 'noerror)
 
