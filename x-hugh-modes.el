@@ -17,10 +17,11 @@
 ;; which is seriously fucking with my use of Mutt and having an Emacs
 ;; daemon hanging around all the time.  This is new behaviour as of
 ;; 24.2; not sure what is different.  This is ugly but it works.
-
 (fset 'post-finish 'server-edit)
 
 (add-to-list 'auto-mode-alist '("mutt.*$" . post-mode))
+(add-hook 'post-mode '(lambda () (abbrev-mode 1)))
+
 
 ;; Use scp for tramp.
 (require 'tramp nil 'noerror)
@@ -39,10 +40,12 @@
 (require 'filladapt	nil 'noerror)
 (require 'linum		nil 'noerror)
 (require 'midnight	nil 'noerror)
+
+;; Markdown 
 (require 'markdown-mode	nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdwn\\'" . markdown-mode))
-;; (iswitchb-mode 1)
+
 
 ; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
@@ -67,11 +70,6 @@
 
 (require 'browse-kill-ring nil 'noerror)
 
-
-;; Turn on abbrevs for post mode
-(add-hook 'post-mode '(lambda () (abbrev-mode 1)))
-
-
 ;;
 ;; Apache mode.
 ;;
@@ -83,7 +81,8 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-;; (autoload 'longlines-mode "longlines" "LongLines Mode." t)
+
+;; Longlines mode
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
 (defun kill-associated-diff-buf ()
@@ -175,8 +174,10 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 
 (setq flycheck-ruby-rubocop-executable (executable-find "rubocop"))
 
+;; Man, I always forget about winner-mode...
 (winner-mode 1)
 
+;; jinja
 (add-to-list 'auto-mode-alist '("\\.j2\\'"   . jinja2-mode))
 
 ;; Noice!
