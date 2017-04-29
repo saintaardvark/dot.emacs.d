@@ -169,11 +169,6 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
-;; Ruby
-(add-hook 'ruby-mode-hook 'whitespace-cleanup-mode)
-
-(setq flycheck-ruby-rubocop-executable (executable-find "rubocop"))
-
 ;; Man, I always forget about winner-mode...
 (winner-mode 1)
 

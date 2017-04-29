@@ -18,6 +18,10 @@
   (interactive)
   (x-hugh-rubocop-disable "LineLength"))
 
+(add-hook 'ruby-mode-hook 'whitespace-cleanup-mode)
+
+(setq flycheck-ruby-rubocop-executable (executable-find "rubocop"))
+
 (provide 'x-hugh-ruby)
 ;;; x-hugh-ruby ends here
 
