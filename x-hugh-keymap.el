@@ -16,6 +16,9 @@
 ;; Indent whole buffer
 (global-set-key "\C-\\"         'x-hugh-indent-buffer)
 
+;; Use ibuffer mode by default
+(global-set-key "\C-x\C-b"      'ibuffer)
+
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)
 (global-set-key "\C-cb"		'x-hugh-jekyll-new-blog-entry)
