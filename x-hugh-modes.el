@@ -103,18 +103,18 @@
 
 ;; RT Liberation
 
-(add-to-list 'load-path "~/.emacs.d/rt-liberation/")
-(require 'rt-liberation nil 'noerror)
-(require 'rt-liberation-gnus nil 'noerror)
-(setq rt-liber-rt-binary "/usr/bin/rt")
-(setq rt-liber-rt-version "3.8.11")
-(setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
-      rt-liber-gnus-address         "rt@chibi.ubc.ca"
-      rt-liber-gnus-subject-name    "rt.chibi.ubc.ca"
-      rt-liber-user-name	    "hugh"
-      rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
-				      ("X-Ethics" . "Use GNU"))
-      rt-liber-gnus-signature       "Thanks,Hugh")
+;; (add-to-list 'load-path "~/.emacs.d/rt-liberation/")
+;; (require 'rt-liberation nil 'noerror)
+;; (require 'rt-liberation-gnus nil 'noerror)
+;; (setq rt-liber-rt-binary "/usr/bin/rt")
+;; (setq rt-liber-rt-version "3.8.11")
+;; (setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
+;;       rt-liber-gnus-address         "rt@chibi.ubc.ca"
+;;       rt-liber-gnus-subject-name    "rt.chibi.ubc.ca"
+;;       rt-liber-user-name	    "hugh"
+;;       rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
+;; 				      ("X-Ethics" . "Use GNU"))
+;;       rt-liber-gnus-signature       "Thanks,Hugh")
 
 
 ;; Cfengine mode comes w/Emacs 24.
