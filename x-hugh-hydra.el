@@ -113,6 +113,14 @@ _s_jc maps file
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo"))
 
+(defhydra hydra-text (:color blue :hint nil)
+  "
+Text:
+_'_: toggle quotes
+_s_: delete-trailing-whitespace
+"
+  ("'" ruby-toggle-string-quotes)
+  ("s" delete-trailing-whitespace))
 
 (defhydra hydra-puppet-chef (:exit t)
   "Cheffing Puppet"
