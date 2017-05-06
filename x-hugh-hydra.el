@@ -53,7 +53,7 @@ _v_ariable       _u_ser-option
   ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
-  ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")
+  ("r" (find-file "~/passwords.gpg") "Search password file")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("t" (find-file "~/orgmode/TODO.org") "TODO"))
 
