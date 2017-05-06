@@ -4,13 +4,6 @@
 
 ;;; Code:
 
-(defhydra hydra-zoom (global-map "<f2>")
-  "zoom"
-  ("g" (enlarge-font 1) "in")
-  ("l" (enlarge-font -1) "out")
-  ("0" (text-scale-set 0) "reset")
-  ("j" winner-undo "winner-undo")
-  ("k" winner-redo "winner-redo"))
 ;; ONE MENU TO RULE THEM ALL
 (defhydra hydra-menu (:exit t)
   "menu"
@@ -39,6 +32,31 @@ _v_ariable       _u_ser-option
   ("l" apropos-library)
   ("u" apropos-user-option)
   ("e" apropos-value))
+
+(defhydra hydra-personal-files (:exit t)
+  "personal files"
+  ("a" (lambda ()
+	 (interactive)
+	 (find-file "/home/aardvark/saintaardvarkthecarpeted.com/astronomy.mdwn"))
+	 "astronomy page")
+  ("b" x-hugh-edit-dot-bashrc ".bashrc")
+  ("c" x-hugh-company-coming "Company coming!")
+  ("d" x-hugh-die-outlook-die "die, Outlook, die")
+  ("E" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
+  ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
+  ("f" x-hugh-figl  "figl")
+  ("g" x-hugh-open-git-repo "Open git repo")
+  ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
+  ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
+  ("o" (dired "/backup/music/ogg") "Music")
+  ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")
+  ("s" (find-file "~/.ssh/config") "Open .ssh/config")
+  ("t" (find-file "~/orgmode/TODO.org") "TODO"))
+
+(defhydra hydra-copy-lines (:exit t)
+  "Shortcuts for copying lines/regions."
+  ("c" x-hugh-copy-and-comment-region "Copy and comment region")
+  ("l" x-hugh-copy-and-comment-line "Copy and comment line"))
 
 (defhydra hydra-puppet (:color blue
                         :hint nil)
@@ -84,30 +102,14 @@ _s_jc maps file
   ("\\" isearch-backward "search-backward" :color blue)
   ("q" nil "cancel"))
 
-(defhydra hydra-personal-files (:exit t)
-  "personal files"
-  ("a" (lambda ()
-	 (interactive)
-	 (find-file "/home/aardvark/saintaardvarkthecarpeted.com/astronomy.mdwn"))
-	 "astronomy page")
-  ("b" x-hugh-edit-dot-bashrc ".bashrc")
-  ("c" x-hugh-company-coming "Company coming!")
-  ("d" x-hugh-die-outlook-die "die, Outlook, die")
-  ("E" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
-  ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
-  ("f" x-hugh-figl  "figl")
-  ("g" x-hugh-open-git-repo "Open git repo")
-  ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
-  ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
-  ("o" (dired "/backup/music/ogg") "Music")
-  ("r" x-hugh-open-password-file-maybe-matching-string "Search password file")
-  ("s" (find-file "~/.ssh/config") "Open .ssh/config")
-  ("t" (find-file "~/orgmode/TODO.org") "TODO"))
+(defhydra hydra-zoom (global-map "<f2>")
+  "zoom"
+  ("g" (enlarge-font 1) "in")
+  ("l" (enlarge-font -1) "out")
+  ("0" (text-scale-set 0) "reset")
+  ("j" winner-undo "winner-undo")
+  ("k" winner-redo "winner-redo"))
 
-(defhydra hydra-copy-lines (:exit t)
-  "Shortcuts for copying lines/regions."
-  ("c" x-hugh-copy-and-comment-region "Copy and comment region")
-  ("l" x-hugh-copy-and-comment-line "Copy and comment line"))
 
 (defhydra hydra-puppet-chef (:exit t)
   "Cheffing Puppet"
