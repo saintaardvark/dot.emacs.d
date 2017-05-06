@@ -11,6 +11,19 @@
   ("0" (text-scale-set 0) "reset")
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo"))
+;; ONE MENU TO RULE THEM ALL
+(defhydra hydra-menu (:exit t)
+  "menu"
+  ("a" hydra-apropos/body "apropos")
+  ("e" hydra-elisp/body "elisp")
+  ("i" hydra-personal-files/body "personal files")
+  ("j" hydra-copy-lines/body "copy lines")
+  ("n" hydra-goto/body "navigate")
+  ("p" hydra-puppet/body "puppet")
+  ("y" hydra-window/body "window")
+  ("z" hydra-zoom/body "zoom")
+  ("'" hydra-text/body "text")
+)
 
 (defhydra hydra-apropos (:color blue
                          :hint nil)
