@@ -64,47 +64,39 @@
 (global-set-key (kbd "C-c '") 'hydra-text/body)
 
 
-;; I'm gonna declare C-cw the official prefix of Workgroups.  But!
-;; This needs to be set before workgroups is loaded -- so it's
-;; actually in x-hugh-modes, and I mention it here for reference.
-;; (setq wg-prefix-key (kbd "C-c w"))
+;; These can be turned into Hydra if needed.
 
-;; which means I need to find another prefix for wiki stuff...let's go with C-cp
-
-(global-set-key "\C-cpa"	'x-hugh-wiki-attach-file-to-wiki-page)
-(global-set-key "\C-cpb"	'x-hugh-blog-entry)
-(global-set-key "\C-cpc"	'x-hugh-open-blog-page)
-(global-set-key "\C-cpg"	'x-hugh-gh-git-commit-and-push-without-mercy)
-(global-set-key "\C-cpr"	'x-hugh-insert-wiki-rt-link)
-(global-set-key "\C-cpt"	'x-hugh-insert-wiki-rt-link-as-detailed-in)
-(global-set-key "\C-cpq"	'x-hugh-wiki-blockquote-quote)
-(global-set-key "\C-cpv"	'x-hugh-wiki-verbatim-quote)
+;; (global-set-key "\C-cpa"	'x-hugh-wiki-attach-file-to-wiki-page)
+;; (global-set-key "\C-cpb"	'x-hugh-blog-entry)
+;; (global-set-key "\C-cpc"	'x-hugh-open-blog-page)
+;; (global-set-key "\C-cpg"	'x-hugh-gh-git-commit-and-push-without-mercy)
+;; (global-set-key "\C-cpr"	'x-hugh-insert-wiki-rt-link)
+;; (global-set-key "\C-cpt"	'x-hugh-insert-wiki-rt-link-as-detailed-in)
+;; (global-set-key "\C-cpq"	'x-hugh-wiki-blockquote-quote)
+;; (global-set-key "\C-cpv"	'x-hugh-wiki-verbatim-quote)
 
 ; Markdown mode
 (define-key markdown-mode-map (kbd "\C-cwl") 'x-hugh-markdown-footnote)
 
 ;; I'm gonna declare C-co the offical prefix of my org stuff.
-(global-set-key "\C-cod"		'x-hugh-org-new-day-in-notes)
-(global-set-key "\C-cof"		'x-hugh-open-org-file-for-rt-ticket)
-(global-set-key "\C-com"		'x-hugh-mail-buffer-to-rt)
-(global-set-key "\C-con"		'x-hugh-org-clock-in-starting-now-dammit)
-(global-set-key "\C-cop"		'x-hugh-insert-rt-ticket-into-org)
-(global-set-key "\C-coR"		'x-hugh-org-autofill-rt-entry)
-(global-set-key "\C-cos"		'x-hugh-insert-rt-ticket-commit-comment)
-(global-set-key "\C-cot"		'x-hugh-insert-rt-ticket-into-org-from-rt-email)
-(global-set-key "\C-coy"		'x-hugh-boxquote-yank-and-indent)
+;; (global-set-key "\C-cod"		'x-hugh-org-new-day-in-notes)
+;; (global-set-key "\C-cof"		'x-hugh-open-org-file-for-rt-ticket)
+;; (global-set-key "\C-com"		'x-hugh-mail-buffer-to-rt)
+;; (global-set-key "\C-con"		'x-hugh-org-clock-in-starting-now-dammit)
+;; (global-set-key "\C-cop"		'x-hugh-insert-rt-ticket-into-org)
+;; (global-set-key "\C-coR"		'x-hugh-org-autofill-rt-entry)
+;; (global-set-key "\C-cos"		'x-hugh-insert-rt-ticket-commit-comment)
+;; (global-set-key "\C-cot"		'x-hugh-insert-rt-ticket-into-org-from-rt-email)
+;; (global-set-key "\C-coy"		'x-hugh-boxquote-yank-and-indent)
 
-;; C-cv official prefix of vagrant.
-(global-set-key "\C-cvd"                'vagrant-destroy)
-(global-set-key "\C-cve"                'vagrant-edit)
-(global-set-key "\C-cvu"                'vagrant-up)
-(global-set-key "\C-cvp"                'vagrant-provision)
-(global-set-key "\C-cvs"                'vagrant-ssh)
-(global-set-key "\C-cvt"                'vagrant-tramp-term)
+;; Vagrant
+;; (global-set-key "\C-cvd"                'vagrant-destroy)
+;; (global-set-key "\C-cve"                'vagrant-edit)
+;; (global-set-key "\C-cvu"                'vagrant-up)
+;; (global-set-key "\C-cvp"                'vagrant-provision)
+;; (global-set-key "\C-cvs"                'vagrant-ssh)
+;; (global-set-key "\C-cvt"                'vagrant-tramp-term)
 
-;; And I'm gonna declare C-c3 the official prefix of my Cf3 stuff.
-(global-set-key "\C-c3f"		'x-hugh-cf3-insert-file-template)
-(global-set-key "\C-c3o"	        'x-hugh-open-cfengine-files)
 
 
 ; God, I hate what this does when using Emacs in X
