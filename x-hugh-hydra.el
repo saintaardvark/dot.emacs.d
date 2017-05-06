@@ -165,9 +165,11 @@ _s_jc maps file
   "
 Text:
 _'_: toggle quotes
+_b_: boxquote yank/indent
 _s_: delete-trailing-whitespace
 "
   ("'" ruby-toggle-string-quotes)
+  ("b" x-hugh-boxquote-yank-and-indent)
   ("s" delete-trailing-whitespace))
 
 ;; https://github.com/abo-abo/hydra/wiki/Emacs
