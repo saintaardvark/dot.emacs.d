@@ -18,8 +18,7 @@
   ("'" hydra-text/body "text")
 )
 
-(defhydra hydra-apropos (:color blue
-                         :hint nil)
+(defhydra hydra-apropos (:color blue :hint nil)
   "
 _a_propos        _c_ommand
 _d_ocumentation  _l_ibrary
@@ -58,8 +57,7 @@ _v_ariable       _u_ser-option
   ("c" x-hugh-copy-and-comment-region "Copy and comment region")
   ("l" x-hugh-copy-and-comment-line "Copy and comment line"))
 
-(defhydra hydra-puppet (:color blue
-                        :hint nil)
+(defhydra hydra-puppet (:color blue :hint nil)
   "
 _a_ccesscontrol
 _m_aps dired
