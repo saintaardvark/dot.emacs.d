@@ -7,12 +7,13 @@
 ;; (add-hook 'chef-mode-hook 'projectile-mode)
 (projectile-global-mode)
 
-(projectile-register-project-type
- 'chef
- '("Berksfile")           ; marker files
- "bundle exec rails server"             ; compile command
- "chef exec rspec"                      ; test command
- "kitchen test")                        ; run command
+;; (projectile-register-project-type
+;;  'chef
+;;  '("Berksfile")           ; marker files
+;;  "bundle exec rails server"             ; compile command
+;;  "chef exec rspec"                      ; test command
+;;  "kitchen test")
+                                        ; run command
 
 ;; Copy-pasta...there must be a better way to do this.
 
