@@ -170,11 +170,6 @@ _s_: delete-trailing-whitespace
   ("'" ruby-toggle-string-quotes)
   ("s" delete-trailing-whitespace))
 
-(defhydra hydra-puppet-chef (:exit t)
-  "Cheffing Puppet"
-  ("f" (x-hugh-copy-puppet-to-chef "file") "file")
-  ("l" (x-hugh-copy-puppet-to-chef "link") "link")
-  ("p" (x-hugh-copy-puppet-to-chef "package") "package"))
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 (provide 'x-hugh-hydra)
