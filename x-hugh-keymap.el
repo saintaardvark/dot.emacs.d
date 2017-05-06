@@ -24,7 +24,7 @@
 (global-set-key "\C-cb"		'x-hugh-jekyll-new-blog-entry)
 (global-set-key "\C-ck"		'compile)
 (global-set-key "\C-cm"		'magit-status)
-(global-set-key "\C-cn"		'notmuch-search)
+;; (global-set-key "\C-cn"		'notmuch-search)
 
 (global-set-key "\C-cs"		'x-hugh-email-rt-dwim)
 (global-set-key "\C-ct"		'x-hugh-new-rt-email)
@@ -49,18 +49,19 @@
 ;; C-c y: window (hydra)
 ;; C-c 3: CFEngine
 
-;; Chef
-(global-set-key (kbd "C-c c") 'hydra-chef/body)
-;; C-c e: lisp stuff.
-(global-set-key "\C-ce"	'hydra-elisp/body)
-;; Personal files
+;; Global menu
+(global-set-key (kbd "C-c h") 'hydra-menu/body)
+
+;; Now all the rest in alphabetical order
+(global-set-key (kbd "C-c a") 'hydra-apropos/body)
+(global-set-key (kbd "C-c e") 'hydra-elisp/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
-;; Copying
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
-;; Git
-(global-set-key (kbd "C-c u")'hydra-git/body)
-;; Oh, this is handy
-(global-set-key (kbd "C-c '") 'ruby-toggle-string-quotes)
+(global-set-key (kbd "C-c n") 'hydra-goto/body)
+(global-set-key (kbd "C-c p") 'hydra-puppet/body)
+(global-set-key (kbd "C-c y") 'hydra-window/body)
+(global-set-key (kbd "C-c z") 'hydra-zoom/body)
+(global-set-key (kbd "C-c '") 'hydra-text/body)
 
 
 ;; I'm gonna declare C-cw the official prefix of Workgroups.  But!
@@ -106,9 +107,6 @@
 (global-set-key "\C-c3o"	        'x-hugh-open-cfengine-files)
 
 
-(global-set-key (kbd "C-c y") 'hydra-window/body)
-(global-set-key (kbd "C-c z") 'hydra-zoom/body)
-
 ; God, I hate what this does when using Emacs in X
 (global-unset-key "\C-z")
 
@@ -148,6 +146,11 @@
 ;; Garr, I hate what these do.
 ;; (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
 ;; (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
+
+;; Going to try Steve Yegge's suggestion.
+;; https://www.reddit.com/r/emacs/comments/2z3yxe/invoke_mx_without_the_alt_key/
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
 
 (provide 'x-hugh-keymap)
 ;;; x-hugh-keymap ends here
