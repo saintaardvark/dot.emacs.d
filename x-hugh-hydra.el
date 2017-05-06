@@ -32,6 +32,11 @@ _v_ariable       _u_ser-option
   ("u" apropos-user-option)
   ("e" apropos-value))
 
+(defhydra hydra-elisp (:exit t)
+  "elisp"
+  ("e" eval-defun "eval-defun")
+)
+
 (defhydra hydra-personal-files (:exit t)
   "personal files"
   ("a" (lambda ()
