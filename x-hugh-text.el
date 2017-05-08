@@ -29,5 +29,18 @@ Single Capitals as you type."
 
 (add-hook 'text-mode-hook #'dubcaps-mode)
 
+;; https://www.reddit.com/r/emacs/comments/69w9wg/can_we_do_this_in_emacs/dh9vra8/
+(defun align-values (start end)
+  "Vertically aligns region based on lengths of the first value of each line.
+Example output:
+
+    foo        bar
+    foofoo     bar
+    foofoofoo  bar"
+  (interactive "r")
+  (align-regexp start end
+                "\\S-+\\(\\s-+\\)"
+                1 1 nil))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
