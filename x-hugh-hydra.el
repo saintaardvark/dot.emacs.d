@@ -13,6 +13,7 @@
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
   ("p" hydra-puppet/body "puppet")
+  ("v" hydra-vinz/body "Vinz")
   ("y" hydra-window/body "window")
   ("z" hydra-zoom/body "zoom")
   ("'" hydra-text/body "text")
@@ -173,6 +174,16 @@ _s_: delete-trailing-whitespace
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent)
   ("s" delete-trailing-whitespace))
+
+(defhydra hydra-vinz (:exit t)
+  "Vinz navigation"
+  ("a" (dired "~/go/src/github.office.opendns.com/security/VinzAPI") "VinzAPI")
+  ("c" (dired "~/go/src/github.office.opendns.com/security/VinzCommon") "VinzCommon")
+  ("f" (dired "~/go/src/github.office.opendns.com/security/VinzFlyway") "VinzFlyway")
+  ("l" (dired "~/go/src/github.office.opendns.com/security/lego") "lego")
+  ("s" (dired "~/go/src/github.office.opendns.com/security/soa") "soa")
+  ("v" (dired "~/go/src/github.office.opendns.com/security/VinzVault") "VinzVault")
+  ("w" (dired "~/go/src/github.office.opendns.com/security/VinzWorker") "VinzWorker"))
 
 ;; https://github.com/abo-abo/hydra/wiki/Emacs
 ;; Really not sure how I feel about this....
