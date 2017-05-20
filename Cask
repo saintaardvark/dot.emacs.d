@@ -20,6 +20,7 @@
 (depends-on "cask")
 (depends-on "cbm")
 (depends-on "chef-mode")
+(depends-on "coffee-mode")
 (depends-on "col-highlight")
 (depends-on "company")
 (depends-on "company-go")
