@@ -20,6 +20,8 @@
  '(clean-buffer-list-delay-general 1)
  '(clean-buffer-list-kill-never-buffer-names (quote ("*scratch*" "*Messages*" "*server*" ".\\*\\.org$")))
  '(coffee-tab-width 2)
+ '(comint-password-prompt-regexp
+   "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|Repeat\\|SUDO\\|UNIX\\|\\[sudo]\\|enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|login\\|new\\|old\\) +\\)\\(?:\\(?:adgangskode\\|contrase\\(?:\\(?:ny\\|ñ\\)a\\)\\|geslo\\|h\\(?:\\(?:as \\|esl\\)o\\)\\|iphasiwedi\\|jelszó\\|l\\(?:ozinka\\|ösenord\\)\\|m\\(?:ot de passe\\| t kh u\\)\\|pa\\(?:rola\\|s\\(?:ahitza\\|s\\(?: phrase\\|code\\|ord\\|phrase\\|wor[dt]\\)\\|vorto\\)\\)\\|s\\(?:alasana\\|enha\\|lapta odis\\)\\|wachtwoord\\|       \\|      \\|    \\|         \\|         \\|       \\|         \\|         \\|      \\|       \\|             \\|          \\|         \\|       \\|           \\|       \\|            \\|     \\| [  ]\\|  \\)\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: for [^:  ]+\\)?[:  ]\\s *\\'")
  '(comment-auto-fill-only-comments t)
  '(compilation-scroll-output (quote first-error))
  '(cperl-indent-level 8)
