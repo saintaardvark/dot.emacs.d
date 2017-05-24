@@ -35,6 +35,7 @@ _v_ariable       _u_ser-option
 
 (defhydra hydra-elisp (:exit t)
   "elisp"
+  ("d" edebug-defun "edebug-defun")
   ("e" eval-defun "eval-defun")
 )
 
