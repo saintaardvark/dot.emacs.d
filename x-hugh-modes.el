@@ -157,6 +157,9 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 ;; jinja
 (add-to-list 'auto-mode-alist '("\\.j2\\'" . jinja2-mode))
 
+;; Jenkinsfile
+(add-to-list 'auto-mode-alist '("Jenkinsfile\\'" . groovy-mode))
+
 ;; Noice!
 ;; https://emacs.stackexchange.com/questions/202/close-all-dired-buffers
 (setq-default ibuffer-saved-filter-groups
