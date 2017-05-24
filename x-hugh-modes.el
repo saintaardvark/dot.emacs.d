@@ -155,7 +155,7 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
 (winner-mode 1)
 
 ;; jinja
-(add-to-list 'auto-mode-alist '("\\.j2\\'"   . jinja2-mode))
+(add-to-list 'auto-mode-alist '("\\.j2\\'" . jinja2-mode))
 
 ;; Noice!
 ;; https://emacs.stackexchange.com/questions/202/close-all-dired-buffers
