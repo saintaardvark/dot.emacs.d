@@ -69,7 +69,6 @@
       (scroll-bar-mode -1)
       ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
       (fontify-frame)
-      (add-hook 'focus-in-hook 'fontify-frame)
       (maximize-frame)))
 
 (provide 'x-hugh-appearance)
