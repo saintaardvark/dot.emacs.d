@@ -159,7 +159,7 @@ _s_jc maps file
   "zoom"
   ("g" (enlarge-font 1) "in")
   ("l" (enlarge-font -1) "out")
-  ("0" (text-scale-set 0) "reset")
+  ("0" (progn (x-hugh-set-font-larger) (maximize-frame)) "reset")
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo"))
 
