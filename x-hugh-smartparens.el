@@ -15,7 +15,8 @@
     (let ((hooksymbol (intern (concat mode "-mode-hook"))))
       (add-hook hooksymbol #'smartparens-mode))))
 
-(x-hugh-sp-add-hook-to-modes ("emacs-lisp"
+(x-hugh-sp-add-hook-to-modes ("bats"
+                              "emacs-lisp"
                               "go"
                               "groovy"
                               "jinja2"
