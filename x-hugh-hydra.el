@@ -170,11 +170,13 @@ _'_: toggle quotes
 _a_: align values
 _b_: boxquote yank/indent
 _s_: delete-trailing-whitespace
+_`_: triple-backquote for markdown
 "
   ("'" ruby-toggle-string-quotes)
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent)
-  ("s" delete-trailing-whitespace))
+  ("s" delete-trailing-whitespace)
+  ("`" markdown-insert-gfm-code-block))
 
 (defhydra hydra-vinz (:exit t)
   "Vinz navigation"
