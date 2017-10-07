@@ -118,6 +118,8 @@
 (depends-on "py-autopep8")
 (depends-on "pyvenv")
 (depends-on "request")
+(depends-on "restclient")
+(depends-on "restclient-test")
 (depends-on "rich-minority")
 (depends-on "ruby-guard")
 (depends-on "ruby-hash-syntax")
