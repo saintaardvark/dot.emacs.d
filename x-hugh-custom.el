@@ -21,7 +21,7 @@
  '(clean-buffer-list-kill-never-buffer-names (quote ("*scratch*" "*Messages*" "*server*" ".\\*\\.org$")))
  '(coffee-tab-width 2)
  '(comint-password-prompt-regexp
-   "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|Repeat\\|SUDO\\|UNIX\\|\\[sudo]\\|enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|login\\|new\\|old\\) +\\)\\(?:\\(?:adgangskode\\|contrase\\(?:\\(?:ny\\|ñ\\)a\\)\\|geslo\\|h\\(?:\\(?:as \\|esl\\)o\\)\\|iphasiwedi\\|jelszó\\|l\\(?:ozinka\\|ösenord\\)\\|m\\(?:ot de passe\\| t kh u\\)\\|pa\\(?:rola\\|s\\(?:ahitza\\|s\\(?: phrase\\|code\\|ord\\|phrase\\|wor[dt]\\)\\|vorto\\)\\)\\|s\\(?:alasana\\|enha\\|lapta odis\\)\\|wachtwoord\\|       \\|      \\|    \\|         \\|         \\|       \\|         \\|         \\|      \\|       \\|             \\|          \\|         \\|       \\|           \\|       \\|            \\|     \\| [  ]\\|  \\)\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: for [^:  ]+\\)?[:  ]\\s *\\'")
+   "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|Repeat\\|SUDO\\|UNIX\\|\\[sudo]\\|enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|login\\|new\\|old\\) +\\)\\(?:\\(?:adgangskode\\|contrase\\(?:\\(?:ny\\|Ã±\\)a\\)\\|geslo\\|h\\(?:\\(?:as \\|esl\\)o\\)\\|iphasiwedi\\|jelszÃ³\\|l\\(?:ozinka\\|Ã¶senord\\)\\|m\\(?:ot de passe\\| t kh u\\)\\|pa\\(?:rola\\|s\\(?:ahitza\\|s\\(?: phrase\\|code\\|ord\\|phrase\\|wor[dt]\\)\\|vorto\\)\\)\\|s\\(?:alasana\\|enha\\|lapta odis\\)\\|wachtwoord\\|       \\|      \\|    \\|         \\|         \\|       \\|         \\|         \\|      \\|       \\|             \\|          \\|         \\|       \\|           \\|       \\|            \\|     \\| [  ]\\|  \\)\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: for [^:  ]+\\)?[:  ]\\s *\\'")
  '(comment-auto-fill-only-comments t)
  '(compilation-scroll-output (quote first-error))
  '(cperl-indent-level 8)
@@ -56,6 +56,8 @@
  '(iswitchb-prompt-newbuffer nil)
  '(js-indent-level 2)
  '(kill-read-only-ok t)
+ '(magit-clone-set-remote\.pushDefault t)
+ '(magit-commit-show-diff t)
  '(magit-save-repository-buffers (quote dontask))
  '(magit-use-overlays nil)
  '(midnight-mode t)
@@ -107,7 +109,7 @@
      nil "")))
  '(package-selected-packages
    (quote
-    (coffee-mode bats-mode groovy-mode arduino-mode jinja2-mode apiwrap helm-commandlinefu helm-company company-go go-autocomplete go-eldoc golint powerline sml-mode highlight-indent-guides magithub elpy indent-guide go-mode go-projectile toml-mode crosshairs yafolding persp-projectile golden-ratio terraform-mode helm-projectile frame-cmds jammer zone-nyan zone-rainbow yasnippet yaml-mode whitespace-cleanup-mode web-mode wc-mode vagrant-tramp vagrant use-package twittering-mode transpose-frame test-kitchen solarized-theme smex smartparens smart-mode-line smart-forward ruby-refactor ruby-hash-syntax ruby-guard py-autopep8 puppet-mode projectile prodigy popwin pivotal-tracker persp-mode pallet nyan-mode multiple-cursors markdown-mode+ marcopolo magit-gh-pulls json-mode jenkins-watch jenkins idle-highlight-mode hydra htmlize highlight-thing highlight-tail highlight-indentation highlight-current-line helm google-this gist flymake-puppet flycheck-cask flx-ido fixmee exec-path-from-shell drag-stuff dockerfile-mode docker-tramp docker diffview counsel company chef-mode cbm buttercup butler buffer-flip boxquote avy-zap aggressive-indent ace-window)))
+    (restclient restclient-test coffee-mode bats-mode groovy-mode arduino-mode jinja2-mode apiwrap helm-commandlinefu helm-company company-go go-autocomplete go-eldoc golint powerline sml-mode highlight-indent-guides magithub elpy indent-guide go-mode go-projectile toml-mode crosshairs yafolding persp-projectile golden-ratio terraform-mode helm-projectile frame-cmds jammer zone-nyan zone-rainbow yasnippet yaml-mode whitespace-cleanup-mode web-mode wc-mode vagrant-tramp vagrant use-package twittering-mode transpose-frame test-kitchen solarized-theme smex smartparens smart-mode-line smart-forward ruby-refactor ruby-hash-syntax ruby-guard py-autopep8 puppet-mode projectile prodigy popwin pivotal-tracker persp-mode pallet nyan-mode multiple-cursors markdown-mode+ marcopolo magit-gh-pulls json-mode jenkins-watch jenkins idle-highlight-mode hydra htmlize highlight-thing highlight-tail highlight-indentation highlight-current-line helm google-this gist flymake-puppet flycheck-cask flx-ido fixmee exec-path-from-shell drag-stuff dockerfile-mode docker-tramp docker diffview counsel company chef-mode cbm buttercup butler buffer-flip boxquote avy-zap aggressive-indent ace-window)))
  '(perl-indent-level 8)
  '(post-email-address "aardvark@saintaardvarkthecarpeted.com")
  '(post-should-prompt-for-attachment (quote Never))
@@ -143,6 +145,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(fixmee-notice-face ((t (:background "gray88" :foreground "dark red" :underline nil :slant italic :weight bold))))
  '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
  '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t))))
  '(org-level-1 ((t (:inherit nil :foreground "#cb4b16" :height 1.3))))
