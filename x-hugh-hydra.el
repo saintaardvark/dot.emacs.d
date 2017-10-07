@@ -169,11 +169,13 @@ Text:
 _'_: toggle quotes
 _a_: align values
 _b_: boxquote yank/indent
+_f_: figl
 _s_: delete-trailing-whitespace
 "
   ("'" ruby-toggle-string-quotes)
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent)
+  ("f" find-grep-dired)
   ("s" delete-trailing-whitespace))
 
 (defhydra hydra-vinz (:exit t)
