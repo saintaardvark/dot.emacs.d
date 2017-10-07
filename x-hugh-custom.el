@@ -73,7 +73,11 @@
  '(org-agenda-start-with-log-mode t)
  '(org-capture-templates
    (quote
-    (("R" "Autofill RT ticket" entry
+    (
+     ("s" "SatNOGS" entry
+      (file "~/satnogs/notes/notes.org")
+      "** TODO [#A] %?")
+     ("R" "Autofill RT ticket" entry
       (file "~/orgmode/all.org")
       "** TODO [#A] %?")
      ("r" "RT Ticket" entry
