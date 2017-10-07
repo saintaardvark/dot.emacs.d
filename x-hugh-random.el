@@ -48,6 +48,11 @@
                             (mapcar #'buffer-name (buffer-list))))
     (kill-this-buffer)))
 
+;; Chrome extension for editing stuff in Emacs
+  (when (require 'edit-server nil t)
+    (setq edit-server-new-frame nil)
+    (edit-server-start))
+
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random ends here
