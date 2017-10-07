@@ -63,6 +63,13 @@
 (global-set-key (kbd "C-c z") 'hydra-zoom/body)
 (global-set-key (kbd "C-c '") 'hydra-text/body)
 
+;; For some reason, markdown mode grabs this binding.  I *REALLY* want
+;; it back.  I don't know why this isn't working.
+(require 'markdown-mode)
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (define-key markdown-mode-map "\C-c '"
+              'hydra-text/body)))
 
 ;; These can be turned into Hydra if needed.
 
