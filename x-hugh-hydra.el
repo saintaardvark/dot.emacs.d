@@ -188,24 +188,6 @@ _`_: triple-backquote for markdown
   ("v" (dired "~/go/src/github.office.opendns.com/security/VinzVault") "VinzVault")
   ("w" (dired "~/go/src/github.office.opendns.com/security/VinzWorker") "VinzWorker"))
 
-;; https://github.com/abo-abo/hydra/wiki/Emacs
-;; Really not sure how I feel about this....
-(global-set-key
- (kbd "C-n")
- (defhydra hydra-move
-   (:body-pre (next-line))
-   "move"
-   ("n" next-line)
-   ("p" previous-line)
-   ("f" forward-char)
-   ("b" backward-char)
-   ("a" beginning-of-line)
-   ("e" move-end-of-line)
-   ("v" scroll-up-command)
-   ;; Converting M-v to V here by analogy.
-   ("V" scroll-down-command)
-   ("l" recenter-top-bottom)))
-
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 (provide 'x-hugh-hydra)
 ;;; x-hugh-hydra.el ends here
