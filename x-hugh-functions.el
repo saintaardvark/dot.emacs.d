@@ -305,28 +305,29 @@ FIXME: Need to figure out how to put point at right column."
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
 
-(defun x-hugh-toggle-nag-about-keys ()
-  "Toggle nagging about key navigation."
-  (interactive)
-  (if (not (boundp 'x-hugh-nag-about-keys-flag))
-      ;; Our first time through.
-      (setq x-hugh-nag-about-keys-flag 0))
-  (if (eq x-hugh-nag-about-keys-flag 0)
-      (progn
-	(message "I haven't been nagging. That's about to change!")
-	(setq x-hugh-nag-about-keys-flag 1)
-	(global-set-key "\C-n" 'x-hugh-nag-about-keys)
-	(global-set-key "\C-p" 'x-hugh-nag-about-keys)
-	(global-set-key "\C-f" 'x-hugh-nag-about-keys)
-	(global-set-key "\C-b" 'x-hugh-nag-about-keys)
-	(global-set-key "\C-xo" 'x-hugh-nag-about-keys))
-    (message "I will totally stop nagging now.")
-    (setq x-hugh-nag-about-keys-flag 0)
-    (global-set-key "\C-n" 'next-line)
-    (global-set-key "\C-p" 'previous-line)
-    (global-set-key "\C-f" 'forward-char)
-    (global-set-key "\C-b" 'backward-char)
-    (global-set-key "\C-xo" 'other-window)))
+;; To be replaced with annoying-arrows-mode
+;; (defun x-hugh-toggle-nag-about-keys ()
+;;   "Toggle nagging about key navigation."
+;;   (interactive)
+;;   (if (not (boundp 'x-hugh-nag-about-keys-flag))
+;;       ;; Our first time through.
+;;       (setq x-hugh-nag-about-keys-flag 0))
+;;   (if (eq x-hugh-nag-about-keys-flag 0)
+;;       (progn
+;; 	(message "I haven't been nagging. That's about to change!")
+;; 	(setq x-hugh-nag-about-keys-flag 1)
+;; 	(global-set-key "\C-n" 'x-hugh-nag-about-keys)
+;; 	(global-set-key "\C-p" 'x-hugh-nag-about-keys)
+;; 	(global-set-key "\C-f" 'x-hugh-nag-about-keys)
+;; 	(global-set-key "\C-b" 'x-hugh-nag-about-keys)
+;; 	(global-set-key "\C-xo" 'x-hugh-nag-about-keys))
+;;     (message "I will totally stop nagging now.")
+;;     (setq x-hugh-nag-about-keys-flag 0)
+;;     (global-set-key "\C-n" 'next-line)
+;;     (global-set-key "\C-p" 'previous-line)
+;;     (global-set-key "\C-f" 'forward-char)
+;;     (global-set-key "\C-b" 'backward-char)
+;;     (global-set-key "\C-xo" 'other-window)))
 
 (defun x-hugh-nag-about-keys ()
   "Nag about keys."
