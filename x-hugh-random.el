@@ -53,6 +53,16 @@
     (setq edit-server-new-frame nil)
     (edit-server-start))
 
+(defun kill-associated-diff-buf ()
+  "Tidy up diffs when closing the file."
+  (let ((buf (get-buffer (concat "*Assoc file diff: "
+                             (buffer-name)
+                             "*"))))
+    (when (bufferp buf)
+      (kill-buffer buf))))
+
+(add-hook 'kill-buffer-hook 'kill-associated-diff-buf)
+
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random ends here
