@@ -188,20 +188,6 @@ Returns nil if no differences found, 't otherwise."
           (when (file-exists-p tempfile)
             (delete-file tempfile)))))))
 
-; Use Perl's Text::Autoformat module; select the text first.
-
-(defun doom-run-text-autoformat-on-region (start end)
-  "Format the region using Text::Autoformat."
-  (interactive "r")
-  (let ((command
-	 (format
-	  "perl -MText::Autoformat -e'autoformat {right=> %d, all=>1}'"
-	  fill-column)) )
-    (shell-command-on-region start end command nil t "*error*")
-    ))
-; I never use this.
-; (global-set-key "\C-cf" 'doom-run-text-autoformat-on-region)
-
 (defun x-hugh-boxquote-yank-and-indent ()
   "My attempt to combine boxquote-yank and indent.
 
