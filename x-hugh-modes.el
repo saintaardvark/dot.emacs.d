@@ -86,6 +86,10 @@
 (require 'nyan-mode)
 (nyan-mode)
 
+;; I'm gonna break this habit if it kills me
+(require 'annoying-arrows-mode)
+(global-annoying-arrows-mode)
+
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
