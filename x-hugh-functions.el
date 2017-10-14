@@ -90,7 +90,7 @@ It works, but it's also a learning exercise."
   (find-grep-dired "." regex))
 
 (defun mrc-dired-do-command (command)
-  "Run COMMAND on marked files. Any files not already open will be opened.
+  "Run COMMAND on marked files.  Any files not already open will be opened.
 After this command has been run, any buffers it's modified will remain
 open and unsaved.
 From
@@ -337,6 +337,7 @@ FIXME: Need to figure out how to put point at right column."
 
 ;;; http://apple.stackexchange.com/questions/85222/configure-emacs-to-cut-and-copy-text-to-mac-os-x-clipboard/127082#127082
 (defun pbpaste ()
+  "Emacs wrapper for pbpaste."
   (interactive)
   (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
 
@@ -345,6 +346,7 @@ FIXME: Need to figure out how to put point at right column."
 ;; FIXME: Have this be a smaller buffer - just big enough to hold the expansion
 ;; FIXME: Have "q" in this buffer kill it
 (defun macroexpand-point (sexp)
+  "Expand SEXP at point.  Wonderful for debugging."
   (interactive (list (sexp-at-point)))
   (with-output-to-temp-buffer "*el-macroexpansion*"
     (pp (macroexpand sexp)))
@@ -381,7 +383,7 @@ FIXME: Need to figure out how to put point at right column."
 
 ;; FIXME: Should be using indirect buffer here (is that the right term?
 (defun x-hugh-add-to-venus (url title)
-  "Add a URL to planet.ini."
+  "Add a URL with TITLE to planet.ini."
   (interactive "sURL: \nsTitle: ")
   (find-file "/home/aardvark/venus/planet.ini")
   (goto-char (point-max))
@@ -394,6 +396,7 @@ FIXME: Need to figure out how to put point at right column."
 (defun crontab-e ()
     (interactive)
     (with-editor-async-shell-command "crontab -e"))
+  "Edit crontab within Emacs."
 
 (defun x-hugh-generate-password ()
   "Generate a new password and insert at point."
