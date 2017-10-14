@@ -380,15 +380,16 @@ FIXME: Need to figure out how to put point at right column."
 
 ;; http://emacs.stackexchange.com/a/10080
 (defun crontab-e ()
-    (interactive)
-    (with-editor-async-shell-command "crontab -e"))
   "Edit crontab within Emacs."
+  (interactive)
+  (with-editor-async-shell-command "crontab -e"))
 
 (defun x-hugh-generate-password ()
   "Generate a new password and insert at point."
   (interactive)
-  (insert-string (replace-regexp-in-string "\n\\'" ""
-                            (shell-command-to-string "pwgen 12 1"))))
+  (insert (replace-regexp-in-string "\n\\'" ""
+                                    (shell-command-to-string "pwgen 12 1"))))
+
 
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
