@@ -13,10 +13,10 @@
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
   ("p" hydra-puppet/body "puppet")
+  ("t" hydra-text/body "text")
   ("v" hydra-vinz/body "Vinz")
   ("y" hydra-window/body "window")
   ("z" hydra-zoom/body "zoom")
-  ("'" hydra-text/body "text")
 )
 
 (defhydra hydra-apropos (:color blue :hint nil)
