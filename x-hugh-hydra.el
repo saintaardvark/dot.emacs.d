@@ -178,34 +178,10 @@ _s_: delete-trailing-whitespace
   ("f" find-grep-dired)
   ("s" delete-trailing-whitespace))
 
-(defhydra hydra-vinz (:exit t)
-  "Vinz navigation"
-  ("a" (dired "~/go/src/github.office.opendns.com/security/VinzAPI") "VinzAPI")
-  ("c" (dired "~/go/src/github.office.opendns.com/security/VinzCommon") "VinzCommon")
-  ("f" (dired "~/go/src/github.office.opendns.com/security/VinzFlyway") "VinzFlyway")
-  ("l" (dired "~/go/src/github.office.opendns.com/security/lego") "lego")
-  ("s" (dired "~/go/src/github.office.opendns.com/security/soa") "soa")
-  ("v" (dired "~/go/src/github.office.opendns.com/security/VinzVault") "VinzVault")
-  ("w" (dired "~/go/src/github.office.opendns.com/security/VinzWorker") "VinzWorker"))
-
-;; https://github.com/abo-abo/hydra/wiki/Emacs
-;; Really not sure how I feel about this....
-(global-set-key
- (kbd "C-n")
- (defhydra hydra-move
-   (:body-pre (next-line))
-   "move"
-   ("n" next-line)
-   ("p" previous-line)
-   ("f" forward-char)
-   ("b" backward-char)
-   ("a" beginning-of-line)
-   ("e" move-end-of-line)
-   ("v" scroll-up-command)
-   ;; Converting M-v to V here by analogy.
-   ("V" scroll-down-command)
-   ("l" recenter-top-bottom)))
-
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
+
+;; Load x-hugh-hydra-local.el if present
+(require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
+
 (provide 'x-hugh-hydra)
 ;;; x-hugh-hydra.el ends here
