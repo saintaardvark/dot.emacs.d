@@ -34,7 +34,6 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(require 'erc		nil 'noerror)
 (require 'uniquify	nil 'noerror)
 (require 'xclip		nil 'noerror)
 (require 'filladapt	nil 'noerror)
@@ -87,20 +86,6 @@
 
 
 
-;; RT Liberation
-
-;; (add-to-list 'load-path "~/.emacs.d/rt-liberation/")
-;; (require 'rt-liberation nil 'noerror)
-;; (require 'rt-liberation-gnus nil 'noerror)
-;; (setq rt-liber-rt-binary "/usr/bin/rt")
-;; (setq rt-liber-rt-version "3.8.11")
-;; (setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
-;;       rt-liber-gnus-address         "rt@chibi.ubc.ca"
-;;       rt-liber-gnus-subject-name    "rt.chibi.ubc.ca"
-;;       rt-liber-user-name	    "hugh"
-;;       rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
-;; 				      ("X-Ethics" . "Use GNU"))
-;;       rt-liber-gnus-signature       "Thanks,Hugh")
 
 (require 'boxquote)
 ;; Sigh...it's fun, but it takes up a lot of real estate.
@@ -111,10 +96,6 @@
 
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; Smart-mode line
-;; (require 'smart-mode-line)
-;; (sml/setup)
 
 (require 'yasnippet nil 'noerror)
 
