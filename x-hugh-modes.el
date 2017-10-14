@@ -112,21 +112,6 @@
 ;;       rt-liber-gnus-signature       "Thanks,Hugh")
 
 (require 'boxquote)
-(defun x-hugh-boxquote-yank-and-indent ()
-  "My attempt to combine boxquote-yank and indent.
-
-The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly to run it twice, but it was simple."
-  (interactive)
-  (save-excursion
-    (if (region-active-p)
-	(boxquote-region (region-beginning) (region-end))
-      (boxquote-yank))
-    (forward-line)
-    ;; boxquote-points gives you the first point of the boxquote
-    ;; formatting, and the last line of the stuff being quoted.  We
-    ;; have to add six to get the *end* of the boxquote formatting.
-    (indent-region (car (boxquote-points)) (+ 6 (cdr (boxquote-points))))))
-
 ;; Sigh...it's fun, but it takes up a lot of real estate.
 ;; ;; Because it's fun.
 ;; (require 'nyan-mode)

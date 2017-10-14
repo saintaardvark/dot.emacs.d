@@ -204,12 +204,18 @@ Returns nil if no differences found, 't otherwise."
 
 (defun x-hugh-boxquote-yank-and-indent ()
   "My attempt to combine boxquote-yank and indent.
+
 The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly to run it twice, but it was simple."
   (interactive)
   (save-excursion
-    (boxquote-yank)
-    (next-line)
-    (indent-region (car (boxquote-points)) (cdr (boxquote-points)))))
+    (if (region-active-p)
+	(boxquote-region (region-beginning) (region-end))
+      (boxquote-yank))
+    (forward-line)
+    ;; boxquote-points gives you the first point of the boxquote
+    ;; formatting, and the last line of the stuff being quoted.  We
+    ;; have to add six to get the *end* of the boxquote formatting.
+    (indent-region (car (boxquote-points)) (+ 6 (cdr (boxquote-points))))))
 
 (defun x-hugh-unixify-buffer ()
   "Convert from whatever (ie, DOS) to unix-undecided.
