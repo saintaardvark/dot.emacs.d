@@ -163,20 +163,13 @@ _s_jc maps file
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo"))
 
-(defhydra hydra-text (:color blue :hint nil)
-  "
-Text:
-_'_: toggle quotes
-_a_: align values
-_b_: boxquote yank/indent
-_f_: figl
-_s_: delete-trailing-whitespace
-"
-  ("'" ruby-toggle-string-quotes)
+(defhydra hydra-text (:color blue)
+  ("'" ruby-toggle-string-quotes "Toggle single/double quotes")
   ("a" align-values "align regions")
-  ("b" x-hugh-boxquote-yank-and-indent)
-  ("f" find-grep-dired)
-  ("s" delete-trailing-whitespace))
+  ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
+  ("f" find-grep-dired "figl")
+  ("r" replace-region-command-output "Replace region with shell command")
+  ("s" delete-trailing-whitespace "Delete trailing whitespace"))
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 
