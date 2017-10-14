@@ -23,7 +23,7 @@
   (interactive "sTitle: ")
   (let ((filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title))))
     (message filename)
-    (find-file (concat x-hugh-blog/repo-path "/" x-hugh-blog/post-dir (format-time-string "%Y-%m-%d-") filename ".md")) ;
+    (find-file (concat x-hugh-blog/repo-path "/" x-hugh-blog/post-dir "/" (format-time-string "%Y-%m-%d-") filename ".md")) ;
     (insert "---")
     (insert (format "\ntitle: %s\n" title))
     (insert (format "date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
