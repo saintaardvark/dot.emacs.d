@@ -8,3 +8,5 @@
 /session*
 /backups
 /eshell
+/%backup%~
+/bookmarks
