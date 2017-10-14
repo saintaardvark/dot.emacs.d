@@ -22,7 +22,6 @@
 (add-to-list 'auto-mode-alist '("mutt.*$" . post-mode))
 (add-hook 'post-mode '(lambda () (abbrev-mode 1)))
 
-
 ;; Use scp for tramp.
 (require 'tramp nil 'noerror)
 (setq tramp-default-method "scp")
@@ -34,12 +33,12 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(require 'uniquify	nil 'noerror)
-(require 'xclip		nil 'noerror)
-(require 'filladapt	nil 'noerror)
+(require 'boxquote      nil 'noerror)
+(require 'filladapt     nil 'noerror)
 (require 'linum         nil 'noerror)
 (require 'midnight      nil 'noerror)
-(require 'boxquote      nil 'noerror)
+(require 'uniquify      nil 'noerror)
+(require 'xclip         nil 'noerror)
 
 ;; Markdown
 (require 'markdown-mode nil 'noerror)
@@ -83,7 +82,7 @@
 ;; Longlines mode
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
-;; ;; Because it's fun.
+;; Because it's fun.
 (require 'nyan-mode)
 (nyan-mode)
 
