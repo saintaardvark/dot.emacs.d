@@ -39,6 +39,7 @@
 (require 'filladapt	nil 'noerror)
 (require 'linum         nil 'noerror)
 (require 'midnight      nil 'noerror)
+(require 'boxquote      nil 'noerror)
 
 ;; Markdown
 (require 'markdown-mode nil 'noerror)
@@ -82,12 +83,9 @@
 ;; Longlines mode
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
-(require 'boxquote)
-;; Sigh...it's fun, but it takes up a lot of real estate.
 ;; ;; Because it's fun.
-;; (require 'nyan-mode)
-;; ;; And now turn it on.
-;; (nyan-mode)
+(require 'nyan-mode)
+(nyan-mode)
 
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
