@@ -37,11 +37,11 @@
 (require 'uniquify	nil 'noerror)
 (require 'xclip		nil 'noerror)
 (require 'filladapt	nil 'noerror)
-(require 'linum		nil 'noerror)
-(require 'midnight	nil 'noerror)
+(require 'linum         nil 'noerror)
+(require 'midnight      nil 'noerror)
 
-;; Markdown 
-(require 'markdown-mode	nil 'noerror)
+;; Markdown
+(require 'markdown-mode nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdwn\\'" . markdown-mode))
 
@@ -66,7 +66,6 @@
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
 
-
 (require 'browse-kill-ring nil 'noerror)
 
 ;;
@@ -80,12 +79,8 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-
 ;; Longlines mode
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
-
-
-
 
 (require 'boxquote)
 ;; Sigh...it's fun, but it takes up a lot of real estate.
