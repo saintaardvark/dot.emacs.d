@@ -15,7 +15,8 @@
     (let ((hooksymbol (intern (concat mode "-mode-hook"))))
       (add-hook hooksymbol #'smartparens-mode))))
 
-(x-hugh-sp-add-hook-to-modes ("bats"
+(x-hugh-sp-add-hook-to-modes ("arduino"
+                              "bats"
                               "emacs-lisp"
                               "go"
                               "groovy"

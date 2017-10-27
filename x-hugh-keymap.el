@@ -26,8 +26,6 @@
 (global-set-key "\C-cm"		'magit-status)
 ;; (global-set-key "\C-cn"		'notmuch-search)
 
-(global-set-key "\C-cs"		'x-hugh-email-rt-dwim)
-(global-set-key "\C-ct"		'x-hugh-new-rt-email)
 (global-set-key "\C-cx"		'x-hugh-set-appearance)
 (global-set-key "\C-\M-z"	'x-hugh-delete-to-sig)
 (global-set-key "\C-c\C-r"	'x-hugh-show-rt-tickets-2)
@@ -59,9 +57,10 @@
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 (global-set-key (kbd "C-c n") 'hydra-goto/body)
 (global-set-key (kbd "C-c p") 'hydra-puppet/body)
+(global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c y") 'hydra-window/body)
 (global-set-key (kbd "C-c z") 'hydra-zoom/body)
-(global-set-key (kbd "C-c '") 'hydra-text/body)
+
 
 ;; For some reason, markdown mode grabs this binding.  I *REALLY* want
 ;; it back.  I don't know why this isn't working.

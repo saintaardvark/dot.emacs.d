@@ -13,10 +13,10 @@
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
   ("p" hydra-puppet/body "puppet")
+  ("t" hydra-text/body "text")
   ("v" hydra-vinz/body "Vinz")
   ("y" hydra-window/body "window")
   ("z" hydra-zoom/body "zoom")
-  ("'" hydra-text/body "text")
 )
 
 (defhydra hydra-apropos (:color blue :hint nil)
@@ -163,31 +163,18 @@ _s_jc maps file
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo"))
 
-(defhydra hydra-text (:color blue :hint nil)
-  "
-Text:
-_'_: toggle quotes
-_a_: align values
-_b_: boxquote yank/indent
-_s_: delete-trailing-whitespace
-_`_: triple-backquote for markdown
-"
-  ("'" ruby-toggle-string-quotes)
+(defhydra hydra-text (:color blue)
+  ("'" ruby-toggle-string-quotes "Toggle single/double quotes")
   ("a" align-values "align regions")
-  ("b" x-hugh-boxquote-yank-and-indent)
-  ("s" delete-trailing-whitespace)
-  ("`" markdown-insert-gfm-code-block))
-
-(defhydra hydra-vinz (:exit t)
-  "Vinz navigation"
-  ("a" (dired "~/go/src/github.office.opendns.com/security/VinzAPI") "VinzAPI")
-  ("c" (dired "~/go/src/github.office.opendns.com/security/VinzCommon") "VinzCommon")
-  ("f" (dired "~/go/src/github.office.opendns.com/security/VinzFlyway") "VinzFlyway")
-  ("l" (dired "~/go/src/github.office.opendns.com/security/lego") "lego")
-  ("s" (dired "~/go/src/github.office.opendns.com/security/soa") "soa")
-  ("v" (dired "~/go/src/github.office.opendns.com/security/VinzVault") "VinzVault")
-  ("w" (dired "~/go/src/github.office.opendns.com/security/VinzWorker") "VinzWorker"))
+  ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
+  ("f" find-grep-dired "figl")
+  ("r" replace-region-command-output "Replace region with shell command")
+  ("s" delete-trailing-whitespace "Delete trailing whitespace"))
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
+
+;; Load x-hugh-hydra-local.el if present
+(require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
+
 (provide 'x-hugh-hydra)
 ;;; x-hugh-hydra.el ends here

@@ -22,7 +22,6 @@
 (add-to-list 'auto-mode-alist '("mutt.*$" . post-mode))
 (add-hook 'post-mode '(lambda () (abbrev-mode 1)))
 
-
 ;; Use scp for tramp.
 (require 'tramp nil 'noerror)
 (setq tramp-default-method "scp")
@@ -34,15 +33,15 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(require 'erc		nil 'noerror)
-(require 'uniquify	nil 'noerror)
-(require 'xclip		nil 'noerror)
-(require 'filladapt	nil 'noerror)
-(require 'linum		nil 'noerror)
-(require 'midnight	nil 'noerror)
+(require 'boxquote      nil 'noerror)
+(require 'filladapt     nil 'noerror)
+(require 'linum         nil 'noerror)
+(require 'midnight      nil 'noerror)
+(require 'uniquify      nil 'noerror)
+(require 'xclip         nil 'noerror)
 
-;; Markdown 
-(require 'markdown-mode	nil 'noerror)
+;; Markdown
+(require 'markdown-mode nil 'noerror)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdwn\\'" . markdown-mode))
 
@@ -67,7 +66,6 @@
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
 
-
 (require 'browse-kill-ring nil 'noerror)
 
 ;;
@@ -81,64 +79,19 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-
 ;; Longlines mode
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
-(defun kill-associated-diff-buf ()
-  "Tidy up diffs when closing the file."
-  (let ((buf (get-buffer (concat "*Assoc file diff: "
-                             (buffer-name)
-                             "*"))))
-    (when (bufferp buf)
-      (kill-buffer buf))))
+;; Because it's fun.
+(require 'nyan-mode)
+(nyan-mode)
 
-(add-hook 'kill-buffer-hook 'kill-associated-diff-buf)
-
-
-;; RT Liberation
-
-;; (add-to-list 'load-path "~/.emacs.d/rt-liberation/")
-;; (require 'rt-liberation nil 'noerror)
-;; (require 'rt-liberation-gnus nil 'noerror)
-;; (setq rt-liber-rt-binary "/usr/bin/rt")
-;; (setq rt-liber-rt-version "3.8.11")
-;; (setq rt-liber-gnus-comment-address "rt-comment@rt.chibi.ubc.ca"
-;;       rt-liber-gnus-address         "rt@chibi.ubc.ca"
-;;       rt-liber-gnus-subject-name    "rt.chibi.ubc.ca"
-;;       rt-liber-user-name	    "hugh"
-;;       rt-liber-gnus-answer-headers  '(("Gcc" . "nnml:Send-Mail")
-;; 				      ("X-Ethics" . "Use GNU"))
-;;       rt-liber-gnus-signature       "Thanks,Hugh")
-
-(require 'boxquote)
-(defun x-hugh-boxquote-yank-and-indent ()
-  "My attempt to combine boxquote-yank and indent.
-
-The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly to run it twice, but it was simple."
-  (interactive)
-  (save-excursion
-    (if (region-active-p)
-	(boxquote-region (region-beginning) (region-end))
-      (boxquote-yank))
-    (forward-line)
-    ;; boxquote-points gives you the first point of the boxquote
-    ;; formatting, and the last line of the stuff being quoted.  We
-    ;; have to add six to get the *end* of the boxquote formatting.
-    (indent-region (car (boxquote-points)) (+ 6 (cdr (boxquote-points))))))
-
-;; Sigh...it's fun, but it takes up a lot of real estate.
-;; ;; Because it's fun.
-;; (require 'nyan-mode)
-;; ;; And now turn it on.
-;; (nyan-mode)
+;; I'm gonna break this habit if it kills me
+(require 'annoying-arrows-mode)
+(global-annoying-arrows-mode)
 
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; Smart-mode line
-;; (require 'smart-mode-line)
-;; (sml/setup)
 
 (require 'yasnippet nil 'noerror)
 
