@@ -48,8 +48,15 @@
 (defun fontify-frame-appropriate-font ()
   "Return the appropriate font for displays."
   (interactive)
-  (cond ((fontify-frame-screen-res-high-enough-p) "Inconsolata-14")
+  (cond ((fontify-frame-screen-res-retina-p) "Inconsolata-18")
+        ((fontify-frame-screen-res-high-enough-p) "Inconsolata-14")
         ((fontify-frame-screen-tiny-laptop-p) "Inconsolata-12")))
+
+(defun fontify-frame-screen-res-retina-p ()
+  "Detect retina display."
+  (and
+   (>= (display-pixel-height) 1200)
+   (>= (display-pixel-width) 1920)))
 
 (defun fontify-frame-screen-res-high-enough-p ()
   "Function to decide if the screen resolution is high enough."
