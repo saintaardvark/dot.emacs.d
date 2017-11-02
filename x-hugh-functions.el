@@ -32,17 +32,8 @@ If ARG is given, open in other window."
 
 It works, but it's also a learning exercise."
   (interactive)
-  ;; (save-excursion
-  ;;   ((mark-whole-buffer)
-  ;;    (shell-command-on-region "wc -w"))))
   (let ((beg (point-min))
 	(end (point-max)))
-    ;; This just prints the exit code; not what I weant
-    ;;  (message "%d words" (shell-command-on-region beg end "wc -w"))
-    ;;
-    ;; This puts the output into *Shell Command Output*, also not what I want
-    ;;  (shell-command-on-region beg end "wc -w"))
-    ;;
     ;; This works, but it would be better to use a temporary buffer here.
     (shell-command-on-region beg end "wc -w")
     (message "%s words"
@@ -52,7 +43,9 @@ It works, but it's also a learning exercise."
 		 (buffer-substring beg end))))))
 
 (defun x-hugh-figl (regex)
-  "A Small but Useful(tm) shortcut for find-grep-dired, like my figl alias."
+  "Run `find-grep-dired` with REGEX as input.
+
+ Like my figl alias."
   (interactive "sRegex: ")
   (find-grep-dired "." regex))
 
@@ -257,30 +250,6 @@ FIXME: Need to figure out how to put point at right column."
 (defun x-hugh-ssh-mode-hook ()
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
-
-;; To be replaced with annoying-arrows-mode
-;; (defun x-hugh-toggle-nag-about-keys ()
-;;   "Toggle nagging about key navigation."
-;;   (interactive)
-;;   (if (not (boundp 'x-hugh-nag-about-keys-flag))
-;;       ;; Our first time through.
-;;       (setq x-hugh-nag-about-keys-flag 0))
-;;   (if (eq x-hugh-nag-about-keys-flag 0)
-;;       (progn
-;; 	(message "I haven't been nagging. That's about to change!")
-;; 	(setq x-hugh-nag-about-keys-flag 1)
-;; 	(global-set-key "\C-n" 'x-hugh-nag-about-keys)
-;; 	(global-set-key "\C-p" 'x-hugh-nag-about-keys)
-;; 	(global-set-key "\C-f" 'x-hugh-nag-about-keys)
-;; 	(global-set-key "\C-b" 'x-hugh-nag-about-keys)
-;; 	(global-set-key "\C-xo" 'x-hugh-nag-about-keys))
-;;     (message "I will totally stop nagging now.")
-;;     (setq x-hugh-nag-about-keys-flag 0)
-;;     (global-set-key "\C-n" 'next-line)
-;;     (global-set-key "\C-p" 'previous-line)
-;;     (global-set-key "\C-f" 'forward-char)
-;;     (global-set-key "\C-b" 'backward-char)
-;;     (global-set-key "\C-xo" 'other-window)))
 
 (defun x-hugh-nag-about-keys ()
   "Nag about keys."
