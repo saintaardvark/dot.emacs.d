@@ -56,6 +56,7 @@
  '(iswitchb-prompt-newbuffer nil)
  '(js-indent-level 2)
  '(kill-read-only-ok t)
+ '(magit-commit-arguments (quote ("--signoff")))
  '(magit-save-repository-buffers (quote dontask))
  '(magit-use-overlays nil)
  '(midnight-mode t)
