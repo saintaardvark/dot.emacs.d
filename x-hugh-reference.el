@@ -1,3 +1,8 @@
+;;; x-hugh-reference --- reference material
+
+;;; Commentary:
+;;; How we got here
+
 ;; Reference material.
 
 ;; From Xah Lee's Emacs Lisp Idioms page
