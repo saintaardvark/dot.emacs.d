@@ -1,7 +1,7 @@
 ;;; x-hugh-reference --- reference material
 
 ;;; Commentary:
-;;; How we got here
+;;; Code that can be used as reference or templates
 
 ;; Reference material.
 
