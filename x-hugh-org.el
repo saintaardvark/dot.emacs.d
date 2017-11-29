@@ -1,11 +1,13 @@
-;; x-hugh-03-org.el
+;; x-hugh-03-org -- org settings
+
+;;; Commentary:
+;;; I (heart) org-mode.
+
+;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode settings.
 
-; My goddamn path to org
-;(setq load-path  (cons (expand-file-name "~/.emacs.d/org") load-path))
-;lo(require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
