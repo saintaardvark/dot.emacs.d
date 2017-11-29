@@ -75,7 +75,9 @@
  '(org-agenda-start-with-log-mode t)
  '(org-capture-templates
    (quote
-    (("s" "SatNOGS" entry
+    (("l" "Log" item
+      (file+datetree (x-hugh-get-current-log-file)))
+     ("s" "SatNOGS" entry
       (file "~/satnogs/notes/notes.org")
       "** TODO [#A] %?")
      ("R" "Autofill RT ticket" entry

@@ -16,6 +16,12 @@
 (add-hook 'org-after-todo-state-change-hook
 	  'x-hugh-org-schedule-todo-item)
 
+(defun x-hugh-get-current-log-file()
+  "Return the name of the current orgmode log file."
+  (interactive)
+  ;; FIXME: Placeholder.
+  ;; FIXME: Have fixmee-mode turned on by default.
+  "/Users/hubrown/orgmode/log_2017.org")
 (defun x-hugh-org-schedule-todo-item ()
   "Prompt for date to actually do something marked TODO."
   (when (string= org-state "TODO")
