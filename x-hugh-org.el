@@ -314,4 +314,16 @@ Hugh
     (write-region nil nil "/l2:/home/aardvark/public_html/random/books.html")
     (kill-buffer)))
 
+(defun x-hugh-org-export-password-file()
+  "Export the password file in HTML to /dev/shm."
+  (interactive)
+  (save-excursion
+    (org-html-export-as-html)
+    (write-region nil nil "/dev/shm/passwords.html")
+    ;; Optionally: could do something like:
+    ;; (let (printer-name "ML-1750")
+    ;;   (print-buffer))
+    ;; Note: not yet working.
+    (kill-buffer)))
+
 (provide 'x-hugh-org)

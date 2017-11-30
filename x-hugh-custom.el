@@ -58,6 +58,7 @@
  '(kill-read-only-ok t)
  '(magit-clone-set-remote\.pushDefault t)
  '(magit-commit-show-diff t)
+ '(magit-commit-arguments (quote ("--signoff")))
  '(magit-save-repository-buffers (quote dontask))
  '(magit-use-overlays nil)
  '(midnight-mode t)
