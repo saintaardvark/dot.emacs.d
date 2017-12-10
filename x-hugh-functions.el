@@ -327,5 +327,10 @@ FIXME: Need to figure out how to put point at right column."
                                     (shell-command-to-string "pwgen 12 1"))))
 
 
+;; FIXME:
+;; x-hugh-copy-and-insert-line that uses avy-goto-line for selection
+;; goddamnn well override flyspell with M-;
+;; avy-goto-line better binding, like with C-; -- keep away from the M-g claw
+
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
