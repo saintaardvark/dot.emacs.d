@@ -19,19 +19,14 @@
   ("z" hydra-zoom/body "zoom")
 )
 
-(defhydra hydra-apropos (:color blue :hint nil)
-  "
-_a_propos        _c_ommand
-_d_ocumentation  _l_ibrary
-_v_ariable       _u_ser-option
-^ ^          valu_e_"
-  ("a" apropos)
-  ("d" apropos-documentation)
-  ("v" apropos-variable)
-  ("c" apropos-command)
-  ("l" apropos-library)
-  ("u" apropos-user-option)
-  ("e" apropos-value))
+(defhydra hydra-apropos (:exit t )
+  ("a" apropos "apropos")
+  ("d" apropos-documentation "documentation")
+  ("v" apropos-variable "variable")
+  ("c" apropos-command "command")
+  ("l" apropos-library "library")
+  ("u" apropos-user-option "option")
+  ("e" apropos-value "value"))
 
 (defhydra hydra-elisp (:exit t)
   "elisp"
