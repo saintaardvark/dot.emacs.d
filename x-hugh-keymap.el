@@ -38,6 +38,7 @@
 ;; Official key prefixes:
 ;; C-c .  flycheck
 ;; C-c e: lisp stuff
+;; C-c g: golang stuff
 ;; C-c i: random file stuff.
 ;; C-c j: Puppet
 ;; C-c o: org
@@ -54,6 +55,7 @@
 ;; Now all the rest in alphabetical order
 (global-set-key (kbd "C-c a") 'hydra-apropos/body)
 (global-set-key (kbd "C-c e") 'hydra-elisp/body)
+(global-set-key (kbd "C-c g") 'hydra-golang/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 (global-set-key (kbd "C-c n") 'hydra-goto/body)

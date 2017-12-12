@@ -161,6 +161,10 @@ _n_: Navigate           _._: mark position _/_: jump to mark
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 
+(defhydra hydra-golang ()
+  "golang"
+  ("d" x-hugh-golang-insert-log-debug "debug"))
+
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
 

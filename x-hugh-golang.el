@@ -20,6 +20,12 @@
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 
+(defun x-hugh-golang-insert-log-debug()
+  "Insert log.Printf(\"[DEBUG])"
+  (interactive)
+  (insert "log.Printf(\"[DEBUG] \")")
+  (backward-char 2))
+
 (add-hook 'go-mode-hook 'go-mode-setup)
 
 (provide 'x-hugh-golang)
