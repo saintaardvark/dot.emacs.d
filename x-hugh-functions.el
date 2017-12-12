@@ -241,7 +241,6 @@ FIXME: Need to figure out how to put point at right column."
 
 ;; Awesome.  From https://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs --
 ;; bury *scratch* buffer instead of kill it
-
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
   (let ((buffer-to-kill (ad-get-arg 0)))
     (if (equal buffer-to-kill "*scratch*")
@@ -327,6 +326,12 @@ FIXME: Need to figure out how to put point at right column."
   (insert (replace-regexp-in-string "\n\\'" ""
                                     (shell-command-to-string "pwgen 12 1"))))
 
+
+;; FIXME:
+;; x-hugh-copy-and-insert-line that uses avy-goto-line for selection
+;; -- hah, that's avy-copy-line
+;; avy-goto-line better binding, like with C-; -- keep away from the M-g claw
+;; -- maybe C-[ ?
 
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
