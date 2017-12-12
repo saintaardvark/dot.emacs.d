@@ -107,17 +107,11 @@ _n_: Navigate           _._: mark position _/_: jump to mark
   ("R" helm-recentf)
   ("n" hydra-navigate/body))
 
-(defhydra hydra-puppet (:color blue :hint nil)
-  "
-_a_ccesscontrol
-_m_aps dired
-m_o_nitoring
-_s_jc maps file
-"
-  ("a" (dired "~/gh/Puppet/accesscontrol/manifests"))
-  ("m" (dired "~/gh/Puppet/puppet-core/external_node/maps"))
-  ("o" (dired "~/gh/Puppet/puppet-core/monitoring/manifests"))
-  ("s" (find-file "~/gh/Puppet/puppet-core/external_node/maps/sjc.opendns.com")))
+(defhydra hydra-puppet ()
+  ("a" (dired "~/gh/Puppet/accesscontrol/manifests") "accesscontrol")
+  ("m" (dired "~/gh/Puppet/puppet-core/external_node/maps") "maps")
+  ("o" (dired "~/gh/Puppet/puppet-core/monitoring/manifests") "monitoring")
+  ("s" (find-file "~/gh/Puppet/puppet-core/external_node/maps/sjc.opendns.com")) "sjc map")
 
 (defhydra hydra-window (:color amaranth)
   "window"
