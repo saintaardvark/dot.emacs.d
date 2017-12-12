@@ -8,6 +8,7 @@
 
 (go-eldoc-setup)
 
+;; FIXME: Figure out how to get goimports running here
 (defun go-mode-setup ()
   "Wrapper for a bunch of Golang settings."
   (add-hook 'before-save-hook 'gofmt-before-save)
