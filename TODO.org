@@ -1,0 +1,2 @@
+* Steal C-' back from org-cycle-agenda-files
+  - This should be bound to navi-click-cmd instead
