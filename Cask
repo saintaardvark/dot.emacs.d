@@ -26,6 +26,8 @@
 (depends-on "col-highlight")
 (depends-on "company")
 (depends-on "company-go")
+(depends-on "company-quickhelp")
+(depends-on "company-restclient")
 (depends-on "counsel")
 (depends-on "crosshairs")
 (depends-on "dash")
