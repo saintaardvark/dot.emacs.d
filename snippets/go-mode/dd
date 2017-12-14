@@ -2,5 +2,5 @@
 # name: debug fmt.Printf
 # key: dd
 # --
-fmt.Printf("%+v\n", $1) // output for debug
+fmt.Printf("[DEBUG] %+v\n", $1) // output for debug
 $0

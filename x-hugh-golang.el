@@ -13,6 +13,7 @@
   "Wrapper for a bunch of Golang settings."
   (add-hook 'before-save-hook 'gofmt-before-save)
   (local-set-key (kbd "M-.") 'godef-jump)
+  (company-mode)
   (set (make-local-variable 'company-backends) '(company-go))
   (setq compile-command "go build -v && go test -v && go vet && golint && errcheck")
   (setq indent-tabs-mode 1)
