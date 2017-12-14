@@ -71,18 +71,19 @@ Goto:
 ^Char^              ^Word^                ^org^                    ^search^
 ^^^^^^^^---------------------------------------------------------------------------
 _c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-occur
-_C_: 2 chars        _W_: some word        _a_: heading in agenda   _p_: helm-swiper
+_2_: 2 chars        _W_: some word        _a_: heading in agenda   _p_: helm-swiper
 _L_: char in line   _s_: subword by char  _q_: swoop org buffers   _f_: search forward
 ^  ^                _S_: some subword     ^ ^                      _b_: search backward
 -----------------------------------------------------------------------------------
-_B_: helm-buffers       _g_: avy-goto-line
+_B_: helm-buffers       _g_: avy-goto-line  _C_: avy-copy-line
 _m_: helm-mini          _i_: ace-window
 _R_: helm-recentf
+_x_: helm-M-x
 
 _n_: Navigate           _._: mark position _/_: jump to mark
 "
   ("c" avy-goto-char)
-  ("C" avy-goto-char-2)
+  ("2" avy-goto-char-2)
   ("L" avy-goto-char-in-line)
   ("w" avy-goto-word-1)
   ;; jump to beginning of some word
@@ -94,10 +95,12 @@ _n_: Navigate           _._: mark position _/_: jump to mark
 
   ("g" avy-goto-line)
   ("i" ace-window)
+  ("C" avy-copy-line)
 
   ("h" helm-org-headlines)
   ("a" helm-org-agenda-files-headings)
   ("q" helm-multi-swoop-org)
+  ("x" helm-M-x)
 
   ("o" helm-occur)
   ("p" swiper-helm)
