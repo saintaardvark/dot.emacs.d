@@ -67,10 +67,10 @@ Goto:
 ^^^^^^^^---------------------------------------------------------------------------
 _c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-occur
 _2_: 2 chars        _W_: some word        _a_: heading in agenda   _p_: helm-swiper
-_L_: char in line                         _q_: swoop org buffers   _f_: search forward
-^  ^                                      ^ ^                      _b_: search backward
+_L_: char in line                       _q_: swoop org buffers   _f_: search forward
+^  ^                                    ^ ^                      _b_: search backward
 -----------------------------------------------------------------------------------
-_B_: helm-buffers       _g_: avy-goto-line  _C_: avy-copy-line
+_B_: helm-buffers       _g_: avy-goto-line  _C_: avy-copy-line  _y_: show snippets
 _m_: helm-mini          _i_: ace-window
 _R_: helm-recentf
 _x_: helm-M-x
@@ -105,6 +105,7 @@ _n_: Navigate           _._: mark position _/_: jump to mark
   ("B" helm-buffers-list)
   ("m" helm-mini)
   ("R" helm-recentf)
+  ("y" yas-describe-tables)
   ("n" hydra-navigate/body))
 
 (defhydra hydra-puppet ()
