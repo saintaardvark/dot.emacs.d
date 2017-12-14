@@ -57,7 +57,6 @@
 (require 'x-hugh-helm)
 (require 'x-hugh-reference)
 (require 'x-hugh-modes)
-(require 'x-hugh-yasnippet)
 (require 'x-hugh-text)
 (require 'x-hugh-passwords)
 
@@ -65,6 +64,7 @@
 (require 'x-hugh-magit)
 (require 'x-hugh-projectile)
 (require 'x-hugh-company)
+(require 'x-hugh-yasnippet)
 (require 'x-hugh-gh)
 (require 'x-hugh-smartparens)
 
