@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: error fmt.Printf
+# key: de
+# --
+fmt.Printf("[ERROR] %+v\n", $1) // output for debug
+$0

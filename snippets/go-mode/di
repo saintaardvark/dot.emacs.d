@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: info fmt.Printf
+# key: di
+# --
+fmt.Printf("[INFO] %+v\n", $1) // output for debug
+$0
