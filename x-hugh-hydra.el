@@ -19,19 +19,14 @@
   ("z" hydra-zoom/body "zoom")
 )
 
-(defhydra hydra-apropos (:color blue :hint nil)
-  "
-_a_propos        _c_ommand
-_d_ocumentation  _l_ibrary
-_v_ariable       _u_ser-option
-^ ^          valu_e_"
-  ("a" apropos)
-  ("d" apropos-documentation)
-  ("v" apropos-variable)
-  ("c" apropos-command)
-  ("l" apropos-library)
-  ("u" apropos-user-option)
-  ("e" apropos-value))
+(defhydra hydra-apropos (:exit t )
+  ("a" apropos "apropos")
+  ("d" apropos-documentation "documentation")
+  ("v" apropos-variable "variable")
+  ("c" apropos-command "command")
+  ("l" apropos-library "library")
+  ("u" apropos-user-option "option")
+  ("e" apropos-value "value"))
 
 (defhydra hydra-elisp (:exit t)
   "elisp"
@@ -115,17 +110,11 @@ _n_: Navigate           _._: mark position _/_: jump to mark
   ("R" helm-recentf)
   ("n" hydra-navigate/body))
 
-(defhydra hydra-puppet (:color blue :hint nil)
-  "
-_a_ccesscontrol
-_m_aps dired
-m_o_nitoring
-_s_jc maps file
-"
-  ("a" (dired "~/gh/Puppet/accesscontrol/manifests"))
-  ("m" (dired "~/gh/Puppet/puppet-core/external_node/maps"))
-  ("o" (dired "~/gh/Puppet/puppet-core/monitoring/manifests"))
-  ("s" (find-file "~/gh/Puppet/puppet-core/external_node/maps/sjc.opendns.com")))
+(defhydra hydra-puppet ()
+  ("a" (dired "~/gh/Puppet/accesscontrol/manifests") "accesscontrol")
+  ("m" (dired "~/gh/Puppet/puppet-core/external_node/maps") "maps")
+  ("o" (dired "~/gh/Puppet/puppet-core/monitoring/manifests") "monitoring")
+  ("s" (find-file "~/gh/Puppet/puppet-core/external_node/maps/sjc.opendns.com")) "sjc map")
 
 (defhydra hydra-window (:color amaranth)
   "window"
@@ -143,12 +132,11 @@ _s_jc maps file
          (split-window-below)
          (windmove-down))
    "horz")
-  ("t" transpose-frame "'")
-  ("o" delete-other-windows "one" :color blue)
+  ("t" transpose-frame "rotate frame")
+  ("o"  ace-maximize-window "ace-one" :color blue)
   ("a" ace-window "ace")
   ("s" ace-swap-window "swap")
   ("d" ace-delete-window "del")
-  ("i" ace-maximize-window "ace-one" :color blue)
   ("b" ido-switch-buffer "buf")
   ("m" headlong-bookmark-jump "bmk")
   ("-" balance-windows "balance")
@@ -175,6 +163,10 @@ _s_jc maps file
   ("s" delete-trailing-whitespace "Delete trailing whitespace"))
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
+
+(defhydra hydra-golang ()
+  "golang"
+  ("d" x-hugh-golang-insert-log-debug "debug"))
 
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
