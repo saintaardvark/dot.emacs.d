@@ -31,9 +31,17 @@
 (global-set-key "\C-c\C-r"	'x-hugh-show-rt-tickets-2)
 (global-set-key "\C-c\C-s"	'sudo-edit-current-file)
 
-(global-set-key (kbd "C-'") #'sp-rewrap-sexp)
+;; Using this a lot less than I thought I would.
+;; (global-set-key (kbd "C-'") #'sp-rewrap-sexp)
+
+;; Turns out that the hydra-goto is really a good idea.  Going to
+;; steal C-; for that, but keep C-' for navi.
+(global-set-key (kbd "C-'") 'navi-call-navigation-method)
+(global-set-key (kbd "C-M-'") 'navi-rotate-method)
+
 ;; Trying out avy-mode
-(global-set-key (kbd "C-;") #'avy-goto-char)
+;; (global-set-key (kbd "C-;") #'avy-goto-char)
+(global-set-key (kbd "C-;") #'hydra-goto/body)
 
 ;; Official key prefixes:
 ;; C-c e: lisp stuff

@@ -47,6 +47,7 @@
 ;; And now everything else
 
 (require 'x-hugh-random)
+(require 'x-hugh-navi)
 (require 'x-hugh-functions)
 (require 'x-hugh-blog)
 (require 'x-hugh-appearance)
