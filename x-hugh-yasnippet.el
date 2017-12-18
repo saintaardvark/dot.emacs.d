@@ -10,20 +10,21 @@
   (if (file-exists-p snippetsdir)
     (yas-load-directory snippetsdir)))
 
+;; This is turning out to be pretty slow.
 ;; https://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
 ;; Add yasnippet support for all company backends
 ;; https://github.com/syl20bnr/spacemacs/pull/179
-(defvar company-mode/enable-yas t
-  "Enable yasnippet for all backends.")
+;; (defvar company-mode/enable-yas t
+;;   "Enable yasnippet for all backends.")
 
-(defun company-mode/backend-with-yas (backend)
-  "Define a company BACKEND for yasnippets."
-  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-      backend
-    (append (if (consp backend) backend (list backend))
-            '(:with company-yasnippet))))
+;; (defun company-mode/backend-with-yas (backend)
+;;   "Define a company BACKEND for yasnippets."
+;;   (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+;;       backend
+;;     (append (if (consp backend) backend (list backend))
+;;             '(:with company-yasnippet))))
 
-(setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+;; (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 
 ;; https://www.emacswiki.org/emacs/Yasnippet#toc4
 ;; not yet working.
