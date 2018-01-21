@@ -67,7 +67,7 @@
 (global-set-key (kbd "C-c g") 'hydra-golang/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
-(global-set-key (kbd "C-c n") 'hydra-goto/body)
+(global-set-key (kbd "C-c o") 'hydra-org/body)
 (global-set-key (kbd "C-c p") 'hydra-puppet/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c y") 'hydra-window/body)

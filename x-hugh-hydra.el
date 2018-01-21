@@ -28,6 +28,10 @@
   ("u" apropos-user-option "option")
   ("e" apropos-value "value"))
 
+(defhydra hydra-org (:exit t )
+  ("a" org-agenda "agenda")
+  ("c" org-capture "capture"))
+
 (defhydra hydra-elisp (:exit t)
   "elisp"
   ("d" edebug-defun "edebug-defun")
