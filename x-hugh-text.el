@@ -4,6 +4,14 @@
 
 ;;; Code:
 
+;; Text mode
+(require 'filladapt     nil 'noerror)
+
+(add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
+(add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
+;; (add-hook 'git-commit-mode '(lambda () (auto-fill-mode -1)))
+
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
 (defun dcaps-to-scaps ()

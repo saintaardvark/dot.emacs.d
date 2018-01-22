@@ -34,7 +34,6 @@
 
 ;; Random
 (require 'boxquote      nil 'noerror)
-(require 'filladapt     nil 'noerror)
 (require 'linum         nil 'noerror)
 (require 'midnight      nil 'noerror)
 (require 'uniquify      nil 'noerror)
@@ -57,11 +56,6 @@
 (require 'perltidy nil 'noerror)
 ;; 8 spaces for tab, the way God intended
 ;;(setq perl-indent-level 8)
-
-;; Text mode
-(add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
-(add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
-(add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
 
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
