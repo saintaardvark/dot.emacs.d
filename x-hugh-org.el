@@ -22,8 +22,9 @@
   "Return the name of the current orgmode log file."
   (interactive)
   ;; FIXME: Placeholder.
+  ;; FIXME: Calculate year
   ;; FIXME: Have fixmee-mode turned on by default.
-  "/Users/hubrown/orgmode/log_2017.org")
+  "/Users/hubrown/orgmode/log_2018.org")
 
 (defun x-hugh-org-schedule-todo-item ()
   "Prompt for date to actually do something marked TODO."
