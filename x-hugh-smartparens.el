@@ -26,6 +26,7 @@
                               "ruby"
                               "python"
                               "shell"
+                              "shell-script"
                               "terraform"
                               "toml"
                               "yaml"))
