@@ -49,7 +49,6 @@
 ;; C-c e: lisp stuff
 ;; C-c g: golang stuff
 ;; C-c i: random file stuff.
-;; C-c j: Puppet
 ;; C-c o: org
 ;; C-c p: wiki/blog
 ;; C-c u: random
@@ -67,8 +66,7 @@
 (global-set-key (kbd "C-c g") 'hydra-golang/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
-(global-set-key (kbd "C-c o") 'hydra-org/body)
-(global-set-key (kbd "C-c p") 'hydra-puppet/body)
+(global-set-key (kbd "C-c n") 'hydra-goto/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c y") 'hydra-window/body)
 (global-set-key (kbd "C-c z") 'hydra-zoom/body)

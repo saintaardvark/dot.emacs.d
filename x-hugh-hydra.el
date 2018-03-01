@@ -111,13 +111,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("m" helm-mini)
   ("R" helm-recentf)
   ("y" yas-describe-tables)
-  ("n" hydra-navigate/body))
-
-(defhydra hydra-puppet ()
-  ("a" (dired "~/gh/Puppet/accesscontrol/manifests") "accesscontrol")
-  ("m" (dired "~/gh/Puppet/puppet-core/external_node/maps") "maps")
-  ("o" (dired "~/gh/Puppet/puppet-core/monitoring/manifests") "monitoring")
-  ("s" (find-file "~/gh/Puppet/puppet-core/external_node/maps/sjc.opendns.com")) "sjc map")
+  ("'"  delete-trailing-whitespace "Delete trailing whitespace"))
 
 (defhydra hydra-window (:color amaranth)
   "window"
