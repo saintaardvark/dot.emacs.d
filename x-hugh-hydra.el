@@ -156,6 +156,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("f" ag "figl (actually ag, but who cares)")
+  ("i" indent-defun "indent-defun")
   ("r" replace-region-command-output "Replace region with shell command")
   ("s" delete-trailing-whitespace "Delete trailing whitespace"))
 
