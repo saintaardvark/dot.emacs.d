@@ -42,13 +42,6 @@ It works, but it's also a learning exercise."
 		     (end (- (point-max) 1)))
 		 (buffer-substring beg end))))))
 
-(defun x-hugh-figl (regex)
-  "Run `find-grep-dired` with REGEX as input.
-
- Like my figl alias."
-  (interactive "sRegex: ")
-  (find-grep-dired "." regex))
-
 (defun mrc-dired-do-command (command)
   "Run COMMAND on marked files.  Any files not already open will be opened.
 After this command has been run, any buffers it's modified will remain

@@ -49,7 +49,7 @@
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("E" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
   ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
-  ("f" x-hugh-figl  "figl")
+  ("f" ag  "figl (actually ag, but who cares)")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
@@ -155,7 +155,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("'" ruby-toggle-string-quotes "Toggle single/double quotes")
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
-  ("f" find-grep-dired "figl")
+  ("f" ag "figl (actually ag, but who cares)")
   ("r" replace-region-command-output "Replace region with shell command")
   ("s" delete-trailing-whitespace "Delete trailing whitespace"))
 
