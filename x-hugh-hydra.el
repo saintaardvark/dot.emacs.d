@@ -80,7 +80,7 @@ _m_: helm-mini          _i_: ace-window
 _R_: helm-recentf
 _x_: helm-M-x
 
-_n_: Navigate           _._: mark position _/_: jump to mark
+_'_: Delete trailing whitespace               _._: mark position _/_: jump to mark
 "
   ("c" avy-goto-char)
   ("2" avy-goto-char-2)
