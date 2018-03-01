@@ -40,7 +40,7 @@
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(elpy-modules
    (quote
-    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults)))
+    (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults)))
  '(erc-hide-list (quote ("JOIN" "PART" "QUIT")))
  '(erc-nick "SaintAardvark")
  '(erc-system-name "liddybox")
@@ -49,6 +49,7 @@
     ("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
  '(explicit-shell-file-name "/bin/bash")
  '(find-grep-options "-qi")
+ '(flycheck-flake8-maximum-line-length 9990)
  '(flycheck-keymap-prefix ".")
  '(flyspell-auto-correct-binding [67108904])
  '(git-commit-summary-max-length 90)
@@ -121,7 +122,7 @@
      nil "")))
  '(package-selected-packages
    (quote
-    (company-quickhelp company-restclient helm-swoop swiper-helm swiper restclient restclient-test annoying-arrows-mode gited coffee-mode bats-mode groovy-mode arduino-mode jinja2-mode apiwrap helm-commandlinefu helm-company company-go go-autocomplete go-eldoc golint powerline sml-mode highlight-indent-guides magithub elpy indent-guide go-mode go-projectile toml-mode crosshairs yafolding persp-projectile golden-ratio terraform-mode helm-projectile frame-cmds jammer zone-nyan zone-rainbow yasnippet yaml-mode whitespace-cleanup-mode web-mode wc-mode vagrant-tramp vagrant use-package twittering-mode transpose-frame test-kitchen solarized-theme smex smartparens smart-mode-line smart-forward ruby-refactor ruby-hash-syntax ruby-guard py-autopep8 puppet-mode projectile prodigy popwin pivotal-tracker persp-mode pallet nyan-mode multiple-cursors markdown-mode+ marcopolo magit-gh-pulls json-mode jenkins-watch jenkins idle-highlight-mode hydra htmlize highlight-thing highlight-tail highlight-indentation highlight-current-line helm google-this gist flymake-puppet flycheck-cask flx-ido fixmee exec-path-from-shell drag-stuff dockerfile-mode docker-tramp docker diffview counsel company chef-mode cbm buttercup butler buffer-flip boxquote avy-zap aggressive-indent ace-window)))
+    (ag company-quickhelp company-restclient helm-swoop swiper-helm swiper restclient restclient-test annoying-arrows-mode gited coffee-mode bats-mode groovy-mode arduino-mode jinja2-mode apiwrap helm-commandlinefu helm-company company-go go-autocomplete go-eldoc golint powerline sml-mode highlight-indent-guides magithub elpy indent-guide go-mode go-projectile toml-mode crosshairs yafolding persp-projectile golden-ratio terraform-mode helm-projectile frame-cmds jammer zone-nyan zone-rainbow yaml-mode whitespace-cleanup-mode web-mode wc-mode vagrant-tramp vagrant use-package twittering-mode transpose-frame test-kitchen solarized-theme smex smartparens smart-mode-line smart-forward ruby-refactor ruby-hash-syntax ruby-guard py-autopep8 puppet-mode projectile prodigy popwin pivotal-tracker persp-mode pallet nyan-mode multiple-cursors markdown-mode+ marcopolo magit-gh-pulls json-mode jenkins-watch jenkins idle-highlight-mode hydra htmlize highlight-thing highlight-tail highlight-indentation highlight-current-line helm google-this gist flymake-puppet flycheck-cask flx-ido fixmee exec-path-from-shell drag-stuff dockerfile-mode docker-tramp docker diffview counsel company chef-mode cbm buttercup butler buffer-flip boxquote avy-zap aggressive-indent ace-window)))
  '(perl-indent-level 8)
  '(post-email-address "aardvark@saintaardvarkthecarpeted.com")
  '(post-should-prompt-for-attachment (quote Never))

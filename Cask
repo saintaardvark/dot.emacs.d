@@ -3,6 +3,7 @@
 (source melpa)
 
 (depends-on "ace-window")
+(depends-on "ag")
 (depends-on "aggressive-indent")
 (depends-on "annoying-arrows-mode")
 (depends-on "apiwrap")
@@ -33,7 +34,6 @@
 (depends-on "dash")
 (depends-on "deferred")
 (depends-on "diffview")
-(depends-on "diminish")
 (depends-on "docker")
 (depends-on "docker-tramp")
 (depends-on "dockerfile-mode")
