@@ -24,6 +24,7 @@
   ;; FIXME: Placeholder.
   ;; FIXME: Have fixmee-mode turned on by default.
   "/Users/hubrown/orgmode/log_2017.org")
+
 (defun x-hugh-org-schedule-todo-item ()
   "Prompt for date to actually do something marked TODO."
   (when (string= org-state "TODO")
@@ -309,7 +310,9 @@ Hugh
   "Publish books.org as HTML on website."
   (interactive)
   (save-excursion
-    (find-file "/home/aardvark/orgmode/books.org")
+    ;; renamed to "books.org.txt" in order to keep entries from
+    ;; showing up in the agenda view.
+    (find-file "/home/aardvark/orgmode/books.org.txt")
     (org-html-export-as-html)
     (write-region nil nil "/l2:/home/aardvark/public_html/random/books.html")
     (kill-buffer)))
