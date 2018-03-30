@@ -63,6 +63,32 @@
 
 (add-hook 'kill-buffer-hook 'kill-associated-diff-buf)
 
+;; https://emacs.stackexchange.com/a/22538
+(defconst XINPUT-TOUCHPAD-ID "6") ; if using xinput, SET TO VALUE APPROPRIATE FOR YOUR DEVICE!
+(defconst XINPUT-DISABLE-TOUCHPAD (concat "xinput --disable " XINPUT-TOUCHPAD-ID))
+(defconst XINPUT-ENABLE-TOUCHPAD  (concat "xinput --enable " XINPUT-TOUCHPAD-ID))
+(defconst SYNCLIENT-DISABLE-TOUCHPAD "synclient TouchpadOff=1")
+(defconst SYNCLIENT-ENABLE-TOUCHPAD  "synclient TouchpadOff=0")
+
+;;; TEST YOUR DEVICE before you choose to use `synclient` (preferred) or `xinput`
+(defconst DISABLE-TOUCHPAD XINPUT-DISABLE-TOUCHPAD)
+(defconst ENABLE-TOUCHPAD  XINPUT-ENABLE-TOUCHPAD)
+
+(defun touchpad-off (&optional frame)
+  (interactive)
+  (shell-command DISABLE-TOUCHPAD))
+
+(defun touchpad-on (&optional frame)
+  (interactive)
+  (shell-command ENABLE-TOUCHPAD))
+
+(add-hook 'focus-in-hook #'touchpad-off)
+(add-hook 'focus-out-hook #'touchpad-on)
+(add-hook 'delete-frame-functions #'touchpad-on)
+
+;;; and don't forget to enable the touchpad when you exit Emacs:
+(add-hook 'kill-emacs-hook #'touchpad-on)
+
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random ends here
