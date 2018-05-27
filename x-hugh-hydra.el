@@ -151,9 +151,9 @@ _n_: Navigate           _._: mark position _/_: jump to mark
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"
-  ("g" (enlarge-font 1) "in")
-  ("l" (enlarge-font -1) "out")
-  ("0" (progn (x-hugh-set-font-larger) (maximize-frame)) "reset")
+  ("g" (text-scale-adjust 1) "in")
+  ("l" (text-scale-adjust -1) "out")
+  ("0" (progn (text-scale-adjust 0) (maximize-frame)) "reset")
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo"))
 
