@@ -83,8 +83,7 @@
  '(org-capture-templates
    (quote
     (("l" "Log" item
-      (file+datetree
-       (x-hugh-get-current-log-file)))
+      (file+olp+datetree "/Users/hubrown/orgmode/log_2018.org"))
      ("s" "SatNOGS" entry
       (file "~/satnogs/notes/notes.org")
       "** TODO [#A] %?")
