@@ -9,6 +9,7 @@
   "menu"
   ("a" hydra-apropos/body "apropos")
   ("e" hydra-elisp/body "elisp")
+  ("g" hydra-golang/body "go")
   ("i" hydra-personal-files/body "personal files")
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
@@ -17,7 +18,7 @@
   ("v" hydra-vinz/body "Vinz")
   ("y" hydra-window/body "window")
   ("z" hydra-zoom/body "zoom")
-)
+  )
 
 (defhydra hydra-apropos (:exit t )
   ("a" apropos "apropos")
@@ -36,14 +37,14 @@
   "elisp"
   ("d" edebug-defun "edebug-defun")
   ("e" eval-defun "eval-defun")
-)
+  )
 
 (defhydra hydra-personal-files (:exit t)
   "personal files"
   ("a" (lambda ()
 	 (interactive)
 	 (find-file "/home/aardvark/saintaardvarkthecarpeted.com/astronomy.mdwn"))
-	 "astronomy page")
+   "astronomy page")
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
   ("c" x-hugh-company-coming "Company coming!")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
@@ -164,7 +165,9 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 
 (defhydra hydra-golang ()
   "golang"
-  ("d" x-hugh-golang-insert-log-debug "debug"))
+  ("d" x-hugh-golang-insert-log-debug "debug")
+  ("o" (dired "~/go/src") "Browse ~/go/src")
+  ("s" (dired "/usr/local/go/src") "Browse GOROOT/src"))
 
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
