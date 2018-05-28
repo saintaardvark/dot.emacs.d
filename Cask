@@ -92,7 +92,6 @@
 (depends-on "json-mode")
 (depends-on "json-reformat")
 (depends-on "json-snatcher")
-(depends-on "key-chord")
 (depends-on "let-alist")
 (depends-on "list-utils")
 (depends-on "logito")
