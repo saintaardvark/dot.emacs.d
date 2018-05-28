@@ -8,6 +8,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode settings.
 
+(require 'org)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
@@ -31,19 +32,19 @@
   (when (string= org-state "TODO")
     (org-schedule 1)))
 
-(setq org-agenda-custom-commands
-      '(
-	("P" "Done last year" ((tags "CLOSED<=\"<2014-01-01>\"")))
-	("p" "My custom agenda"
-	 ((org-agenda-list nil nil 1)
-;;;	  (todo "TODO")
-	  (stuck "")
-	  (todo "Waiting"
-		((org-agenda-overriding-header "\Waiting:\n--------\n")))
-	  (todo "NBIJ"
-		((org-agenda-overriding-header "\Next beer in Jerusalem:\n-----------------------\n")))
-	  (search "TODO -{SCHEDULED}"
-		((org-agenda-overriding-header "Not scheduled:\n")))))))
+;; (setq org-agenda-custom-commands
+;;       '(
+;; 	("P" "Done last year" ((tags "CLOSED<=\"<2014-01-01>\"")))
+;; 	("p" "My custom agenda"
+;; 	 ((org-agenda-list nil nil 1)
+;; ;;;	  (todo "TODO")
+;; 	  (stuck "")
+;; 	  (todo "Waiting"
+;; 		((org-agenda-overriding-header "\Waiting:\n--------\n")))
+;; 	  (todo "NBIJ"
+;; 		((org-agenda-overriding-header "\Next beer in Jerusalem:\n-----------------------\n")))
+;; 	  (search "TODO -{SCHEDULED}"
+;; 		((org-agenda-overriding-header "Not scheduled:\n")))))))
 
 (defun x-hugh-find-rt-ticket-number-from-rt-email ()
   "Find a ticket number from rt-email.
@@ -205,14 +206,14 @@ Can be called from Mutt as well."
  (when (and (fboundp 'daemonp) (daemonp))
   (add-hook 'org-mode-hook 'org-column-view-uses-fixed-width-face))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
-  '( (perl . t)
-     (ruby . t)
-     (sh . t)
-     (python . t)
-     (emacs-lisp . t)
-   ))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;   '( (perl . t)
+;;      (ruby . t)
+;;      (sh . t)
+;;      (python . t)
+;;      (emacs-lisp . t)
+;;    ))
 
 (defun x-hugh-resolve-rt-ticket-after-org-rt-done ()
   "Resolve an RT ticket after the org entry is marked done.
