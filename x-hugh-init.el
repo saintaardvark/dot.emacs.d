@@ -78,8 +78,8 @@
 (require 'x-hugh-golang)
 (require 'x-hugh-python)
 (require 'x-hugh-shell)
-(require 'x-hugh-ruby)
-(require 'cfg)
+;; (require 'x-hugh-ruby)
+;; (require 'cfg)
 
 ;; Hydra comes before keymap.
 (require 'x-hugh-hydra)
