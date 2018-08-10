@@ -20,6 +20,7 @@
                               "emacs-lisp"
                               "go"
                               "groovy"
+                              "javascript"
                               "jinja2"
                               "json"
                               "markdown"
