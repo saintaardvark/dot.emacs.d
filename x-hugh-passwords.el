@@ -10,7 +10,7 @@
   "Settings for passwords.."
   :group 'tools)
 
-(defcustom x-hugh-passwords/password-file "~/passwords.gpg"
+(defcustom x-hugh-passwords/password-file "~/passwords.git/passwords.gpg"
   "Path to where your password file is kept."
   :type 'string
   :group 'x-hugh-passwords)
