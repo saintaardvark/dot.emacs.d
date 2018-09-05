@@ -56,7 +56,7 @@
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
   ("p" (x-hugh-git-commit-and-push-without-mercy) "Push w/o mercy")
-  ("r" (find-file "~/passwords.gpg") "Search password file")
+  ("r" (x-hugh-open-password-file) "Search password file")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("t" (find-file "~/orgmode/TODO.org") "TODO"))
 
