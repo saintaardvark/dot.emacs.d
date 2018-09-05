@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-;; FIXME: This should be made more generic:
-;; (x-hugh-add-hook-to-modes "smartparens" ("this" "that" "the other" ...))
-
 (require 'smartparens)
 
 (defmacro x-hugh-sp-add-hook-to-modes (modes)
@@ -15,6 +12,7 @@
     (let ((hooksymbol (intern (concat mode "-mode-hook"))))
       (add-hook hooksymbol #'smartparens-mode))))
 
+;; FIXME: Not working, at least for shell-mode :(
 (x-hugh-sp-add-hook-to-modes ("arduino"
                               "bats"
                               "emacs-lisp"
