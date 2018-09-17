@@ -319,8 +319,5 @@ FIXME: Need to figure out how to put point at right column."
   (insert (replace-regexp-in-string "\n\\'" ""
                                     (shell-command-to-string "pwgen 12 1"))))
 
-;; FIXME:
-;; goddamnn well override flyspell with M-;
-
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
