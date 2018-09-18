@@ -37,8 +37,13 @@
   (interactive)
   (load-file "~/.emacs.d/x-hugh-appearance.el"))
 
+
+;; FIXME: Refactor all this
+;; FIXME: This needs to be broken out into a package
+
 ;; From https://gist.github.com/MatthewDarling/8c232b1780126275c3b4
 ;; Based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
+
 (defun fontify-frame (target font)
   "Adjust font size based on screen resolution.  Takes argument target for frame and font."
   (interactive)
@@ -50,7 +55,38 @@
   (interactive)
   (let ((target (or frame (window-frame))))
     (fontify-frame target (fontify-frame-appropriate-font))))
+
+(defun x-hugh-appearance-get-font-size ()
+  "Return font size of x-hugh-appearance--font.
+
+Assumes font named like `Inconsolata-14`."
   (interactive)
+  ;; FIXME: Has to be a better way to do this
+  (string-to-number (car (cdr (split-string x-hugh-appearance--font "-")))))
+
+(defun x-hugh-appearance-get-larger-font-size ()
+  "Return string with current font, but size increased by one."
+  (interactive)
+  (let ((biggersize (+ 1 (x-hugh-appearance-get-font-size))))
+    (format "Inconsolata-%d" biggersize)))
+
+(defun x-hugh-appearance-get-smaller-font-size ()
+  "Return string with current font, but size increased by one."
+  (interactive)
+  (let ((biggersize (+ -1 (x-hugh-appearance-get-font-size))))
+    (format "Inconsolata-%d" biggersize)))
+
+(defun x-hugh-appearance-make-things-bigger ()
+  "Increase default font size by one."
+  (interactive)
+  (fontify-frame (window-frame) (x-hugh-appearance-get-larger-font-size))
+  (toggle-frame-maximized))
+
+(defun x-hugh-appearance-make-things-smaller ()
+  "Decrease default font size by one."
+  (interactive)
+  (fontify-frame (window-frame) (x-hugh-appearance-get-smaller-font-size))
+  (toggle-frame-maximized))
 
 (defun fontify-frame-appropriate-font ()
   "Return the appropriate font for displays."
