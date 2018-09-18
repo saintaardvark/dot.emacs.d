@@ -39,11 +39,18 @@
 
 ;; From https://gist.github.com/MatthewDarling/8c232b1780126275c3b4
 ;; Based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
-(defun fontify-frame (&optional frame)
-  "Adjust font size based on screen resolution.  Takes optional argument FRAME."
+(defun fontify-frame (target font)
+  "Adjust font size based on screen resolution.  Takes argument target for frame and font."
+  (interactive)
+  (setq x-hugh-appearance--font font)
+  (set-frame-parameter target 'font font))
+
+(defun fontify-frame-appropriately (&optional frame)
+  "Adjust font size to appropriate size.  Takes optional argument FRAME."
   (interactive)
   (let ((target (or frame (window-frame))))
-    (set-frame-parameter target 'font (fontify-frame-appropriate-font))))
+    (fontify-frame target (fontify-frame-appropriate-font))))
+  (interactive)
 
 (defun fontify-frame-appropriate-font ()
   "Return the appropriate font for displays."
@@ -75,7 +82,7 @@
     (progn
       (scroll-bar-mode -1)
       ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
-      (fontify-frame)
+      (fontify-frame-appropriately)
       ;; maximize-frame gone in 26
       ;; (maximize-frame)))
       (toggle-frame-maximized)))
