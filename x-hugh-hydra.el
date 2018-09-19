@@ -151,7 +151,10 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("0" (progn (text-scale-adjust 0) (maximize-frame)) "reset")
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo")
-  ("s" x-hugh-solarized-toggle "toggle solarized"))
+  ("s" x-hugh-solarized-toggle "toggle solarized")
+  ("z" x-hugh-appearance-make-things-bigger "zoom in all")
+  ("a" x-hugh-appearance-make-things-smaller "zoom out all")
+  ("x" toggle-frame-maximized "toggle max"))
 
 (defhydra hydra-text (:color blue)
   ("'" ruby-toggle-string-quotes "Toggle single/double quotes")
