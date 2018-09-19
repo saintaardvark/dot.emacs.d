@@ -5,7 +5,9 @@
 ;;; Code:
 
 ;; (add-hook 'chef-mode-hook 'projectile-mode)
-(projectile-global-mode)
+(projectile-mode)
+
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; (projectile-register-project-type
 ;;  'chef

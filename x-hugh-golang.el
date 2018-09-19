@@ -5,6 +5,7 @@
 ;;; Code:
 
 (exec-path-from-shell-copy-env "GOPATH")
+(exec-path-from-shell-copy-env "GOROOT")
 
 (go-eldoc-setup)
 

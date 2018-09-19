@@ -55,7 +55,7 @@
   ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
-  ("p" (x-hugh-git-commit-and-push-without-mercy) "Push w/o mercy")
+  ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")  ("p" (x-hugh-git-commit-and-push-without-mercy) "Push w/o mercy")
   ("r" (x-hugh-open-password-file) "Search password file")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("t" (find-file "~/orgmode/TODO.org") "TODO"))
@@ -158,6 +158,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("f" ag "figl (actually ag, but who cares)")
   ("i" indent-defun "indent-defun")
+  ("l" display-line-numbers-mode ("line numbers"))
   ("r" replace-region-command-output "Replace region with shell command")
   ("s" delete-trailing-whitespace "Delete trailing whitespace"))
 
