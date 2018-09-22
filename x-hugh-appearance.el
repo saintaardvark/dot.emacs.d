@@ -123,6 +123,24 @@ Assumes font named like `Inconsolata-14`."
       ;; (maximize-frame)))
       (toggle-frame-maximized)))
 
+(defun x-hugh-load-solarized (which)
+  "Load solarized-WHICH theme, where WHICH is light or dark."
+  (interactive)
+  ;;; FIXME: Not sure I understand what's going on with the intern here
+  ;;; Need to dig a bit more into load-theme
+  (load-theme (intern (format "solarized-%s" which))))
+
+;; Assumption: this code will be run at startup, when I have the dark
+;; theme loaded.
+(setq x-hugh-solarized--current "dark")
+
+(defun x-hugh-solarized-toggle ()
+  "Toggle whether solarized dark or light is loaded."
+  (interactive)
+  (if (string= x-hugh-solarized--current "dark")
+      (setq x-hugh-solarized--current "light")
+    (setq x-hugh-solarized--current "dark"))
+  (x-hugh-load-solarized x-hugh-solarized--current))
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here
