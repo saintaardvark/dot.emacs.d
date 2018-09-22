@@ -50,7 +50,7 @@
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("E" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
   ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
-  ("f" ag  "figl (actually ag, but who cares)")
+  ("f" ag  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
@@ -160,7 +160,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("i" indent-defun "indent-defun")
   ("l" display-line-numbers-mode ("line numbers"))
   ("r" replace-region-command-output "Replace region with shell command")
-  ("s" delete-trailing-whitespace "Delete trailing whitespace"))
+  ("s" delete-trailing-whitespace "Delete trailing whitespace")
+  ("v" view-lines-mode "view-lines-mode"))
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 
