@@ -38,6 +38,9 @@
 ;; steal C-; for that, but keep C-' for navi.
 ;; (global-set-key (kbd "C-'") 'navi-call-navigation-method)
 (global-set-key (kbd "C-'") 'navi-click-cmd)
+;; Need to override the org-mode binding like this
+;; https://superuser.com/questions/828713/how-to-override-a-keybinding-in-emacs-org-mode
+(define-key org-mode-map (kbd "C-'") nil)
 (global-set-key (kbd "C-M-'") 'navi-rotate-method)
 
 ;; Trying out avy-mode
