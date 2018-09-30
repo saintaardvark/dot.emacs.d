@@ -124,7 +124,7 @@
      nil "")))
  '(package-selected-packages
    (quote
-    (skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint magithub go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent)))
+    (wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint magithub go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent)))
  '(perl-indent-level 8)
  '(post-email-address "aardvark@saintaardvarkthecarpeted.com")
  '(post-should-prompt-for-attachment (quote Never))
