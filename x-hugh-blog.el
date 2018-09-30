@@ -38,6 +38,8 @@
     (kill-line)
     (insert (format "%s" (format-time-string "%a %b %d %R:%S %Z %Y")))))
 
+;; FIXME: This stuff duplicates what's in x-hugh-markdown.el. One of the two should be removed.
+;; FIXME: I don't have any keymappings for these?
 (defun x-hugh-markdown-footnote (&optional imgplease)
   "Add a footnote in Markdown mode at the *end* of the buffer.
 
