@@ -165,7 +165,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("l" display-line-numbers-mode ("line numbers"))
   ("r" replace-region-command-output "Replace region with shell command")
   ("s" delete-trailing-whitespace "Delete trailing whitespace")
-  ("v" view-lines-mode "view-lines-mode"))
+  ("v" visual-lines-mode "visual-lines-mode"))
 
 ;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
 
