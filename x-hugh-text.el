@@ -1,4 +1,4 @@
-o;;; x-hugh-text --- stuff related to text editing
+;;; x-hugh-text --- stuff related to text editing
 
 ;;; Commentary:
 
