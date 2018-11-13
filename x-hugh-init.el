@@ -22,8 +22,11 @@
 (require 'pallet)
 (pallet-mode t)
 
-;; (when (memq window-system '(mac ns))
-;;   (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+   :if (memq window-system '(mac ns))
+   :ensure t
+   :config
+   (exec-path-from-shell-initialize))
 
 ;; Is this redundant?
 (setq load-path  (cons (expand-file-name "~/.emacs.d/") load-path))
