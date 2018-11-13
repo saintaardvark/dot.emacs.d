@@ -14,6 +14,7 @@
 
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
+;; FIXME: Table of words to exclude. Example: GHz, VMs
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
