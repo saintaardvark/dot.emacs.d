@@ -17,18 +17,16 @@
 ;; ;; (require 'magit nil 'noerror)
 
 (use-package magit
-  :init
+  :config
   ;; From https://magit.vc/manual/magit/Performance.html#Performance
-  (setq magit-refresh-status-buffer nil))
+  (progn (setq magit-refresh-status-buffer nil)
+         (remove-hook 'server-switch-hook 'magit-commit-diff)
+         (setq vc-handled-backends nil)))
 
 ;; Turning this off -- refreshing CI status every time is very, very slow.
 ;; (require 'magithub)
 ;; (require 'magit-gh-pulls)
 ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-
-(remove-hook 'server-switch-hook 'magit-commit-diff)
-(setq vc-handled-backends nil)
-
 
 (provide 'x-hugh-magit)
 
