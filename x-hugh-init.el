@@ -36,9 +36,6 @@
    :config
    (exec-path-from-shell-initialize))
 
-;; Is this redundant?
-(setq load-path  (cons (expand-file-name "~/.emacs.d/") load-path))
-
 ;; Custom file first.
 (setq custom-file "~/.emacs.d/x-hugh-custom.el")
 (load custom-file 'noerror)
