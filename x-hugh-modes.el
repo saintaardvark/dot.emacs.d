@@ -24,44 +24,44 @@
   :mode '("mutt.*$" . post-mode))
 
 ;; Use scp for tramp.
-(require 'tramp nil 'noerror)
+(use-package tramp)
 (setq tramp-default-method "scp")
 
 ;; Load ssh.
-(require 'ssh nil 'noerror)
+(use-package ssh)
 
 ;; Shell script stuff
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(require 'boxquote      nil 'noerror)
-(require 'linum         nil 'noerror)
-(require 'midnight      nil 'noerror)
-(require 'uniquify      nil 'noerror)
-(require 'xclip         nil 'noerror)
+(use-package boxquote     )
+(use-package linum        )
+(use-package midnight     )
+(use-package uniquify     )
+(use-package xclip        )
 
 ;; Markdown
-(require 'markdown-mode nil 'noerror)
+(use-package markdown-mode)
 (add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdwn\\'" . markdown-mode))
 
 
-; Not sure how handy this is going to be...
+                                        ; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
-           "Map COMMAND over lines matching REGEX."
-           t)
+  "Map COMMAND over lines matching REGEX."
+  t)
 
 ;; Perl
-(require 'perldoc nil 'noerror)
+(use-package perldoc)
 (defalias 'perl-mode 'cperl-mode)
-(require 'perltidy nil 'noerror)
+(use-package perltidy)
 ;; 8 spaces for tab, the way God intended
 ;;(setq perl-indent-level 8)
 
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
 
-(require 'browse-kill-ring nil 'noerror)
+(use-package browse-kill-ring)
 
 ;;
 ;; Apache mode.
@@ -78,22 +78,22 @@
 (autoload 'visual-line-mode "visual-line" "Visual line mode." t)
 
 ;; Because it's fun.
-(require 'nyan-mode)
+(use-package nyan-mode)
 (nyan-mode)
 
 ;; I'm gonna break this habit if it kills me
-(require 'annoying-arrows-mode)
+(use-package annoying-arrows-mode)
 (global-annoying-arrows-mode)
 
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(require 'yasnippet nil 'noerror)
+(use-package yasnippet)
 
 ;; For ANSI colourization in compilation buffers.
 ;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode/20788581#20788581
 (ignore-errors
-  (require 'ansi-color)
+  (use-package ansi-color)
   (defun my-colorize-compilation-buffer ()
     (when (eq major-mode 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
