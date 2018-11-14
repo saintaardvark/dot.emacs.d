@@ -31,10 +31,10 @@
   (pallet-mode t))
 
 (use-package exec-path-from-shell
-   :if (memq window-system '(mac ns))
-   :ensure t
-   :config
-   (exec-path-from-shell-initialize))
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 ;; Custom file first.
 (setq custom-file "~/.emacs.d/x-hugh-custom.el")
