@@ -24,8 +24,9 @@
   :mode '("mutt.*$" . post-mode))
 
 ;; Use scp for tramp.
-(use-package tramp)
-(setq tramp-default-method "scp")
+(use-package tramp
+  :config
+  (setq tramp-default-method "scp"))
 
 ;; Load ssh.
 (use-package ssh)
