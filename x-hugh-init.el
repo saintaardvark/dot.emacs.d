@@ -20,8 +20,12 @@
 ;; But! I need to clone https://github.com/jodonnell/emacs/blob/master/auto-cask.el
 ;; (require 'auto-cask)
 ;; (auto-cask/setup "~/.emacs.d")
+
+;; Need to use require here -- after this, use-package is loaded.
+;; FIXME: Is there a way around this?
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
+
 (use-package pallet
   :config
   (pallet-mode t))
