@@ -35,11 +35,11 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(use-package boxquote     )
-(use-package linum        )
-(use-package midnight     )
-(use-package uniquify     )
-(use-package xclip        )
+(use-package boxquote)
+(use-package linum)
+(use-package midnight)
+(use-package uniquify)
+(use-package xclip)
 
 ;; Markdown
 (use-package markdown-mode)
