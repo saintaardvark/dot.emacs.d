@@ -60,42 +60,42 @@
 
 ;; And now everything else
 
-(require 'x-hugh-random)
-(require 'x-hugh-navi)
-(require 'x-hugh-functions)
-(require 'x-hugh-blog)
-(require 'x-hugh-appearance)
-;; (require 'x-hugh-confluence)
-(require 'x-hugh-org)
-;; (require 'x-hugh-cfengine)
-(require 'x-hugh-helm)
-(require 'x-hugh-reference)
-(require 'x-hugh-modes)
-(require 'x-hugh-text)
-(require 'x-hugh-passwords)
+(use-package x-hugh-random)
+(use-package x-hugh-navi)
+(use-package x-hugh-functions)
+(use-package x-hugh-blog)
+(use-package x-hugh-appearance)
+;; (use-package x-hugh-confluence)
+(use-package x-hugh-org)
+;; (use-package x-hugh-cfengine)
+(use-package x-hugh-helm)
+(use-package x-hugh-reference)
+(use-package x-hugh-modes)
+(use-package x-hugh-text)
+(use-package x-hugh-passwords)
 
 ;; Devel
-(require 'x-hugh-magit)
-(require 'x-hugh-projectile)
-(require 'x-hugh-company)
-(require 'x-hugh-yasnippet)
-(require 'x-hugh-gh)
-(require 'x-hugh-smartparens)
+(use-package x-hugh-magit)
+(use-package x-hugh-projectile)
+(use-package x-hugh-company)
+(use-package x-hugh-yasnippet)
+(use-package x-hugh-gh)
+(use-package x-hugh-smartparens)
 
 ;; Languages
-(require 'x-hugh-golang)
-(require 'x-hugh-python)
-(require 'x-hugh-shell)
-;; (require 'x-hugh-ruby)
-;; (require 'cfg)
+(use-package x-hugh-golang)
+(use-package x-hugh-python)
+(use-package x-hugh-shell)
+;; (use-package x-hugh-ruby)
+;; (use-package cfg)
 
 ;; Hydra comes before keymap.
-(require 'x-hugh-hydra)
+(use-package x-hugh-hydra)
 ;; Keymaps come last.  Put a comment in other files about what
 ;; keymappings are set, but put the actual mapping in here.
-(require 'x-hugh-keymap)
+(use-package x-hugh-keymap)
 ;; Any startup things (server-start), etc.
-(require 'x-hugh-finally)
+(use-package x-hugh-finally)
 
 (provide 'x-hugh-init)
 
