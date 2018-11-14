@@ -22,8 +22,9 @@
 ;; (auto-cask/setup "~/.emacs.d")
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
-(require 'pallet)
-(pallet-mode t)
+(use-package pallet
+  :config
+  (pallet-mode t))
 
 (use-package exec-path-from-shell
    :if (memq window-system '(mac ns))
