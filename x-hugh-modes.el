@@ -8,7 +8,6 @@
 ;; Use post for Mutt.
 (use-package post
   :config
-  (progn
   ;; Tell it manually to just use goddamn server-edit, not
   ;; save-buffers-kill-emacs.
 
@@ -20,8 +19,9 @@
   ;; daemon hanging around all the time.  This is new behaviour as of
   ;; 24.2; not sure what is different.  This is ugly but it works.
   (fset 'post-finish 'server-edit)
-  (add-hook 'post-mode '(lambda () (abbrev-mode 1))))
-  :mode ("mutt.*$" . post-mode))
+  :mode ("mutt.*$" . post-mode)
+  :hook (lambda () (abbrev-mode 1))
+  )
 
 ;; Use scp for tramp.
 (use-package tramp
