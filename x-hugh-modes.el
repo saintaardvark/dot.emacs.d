@@ -21,7 +21,7 @@
   ;; 24.2; not sure what is different.  This is ugly but it works.
   (fset 'post-finish 'server-edit)
   (add-hook 'post-mode '(lambda () (abbrev-mode 1))))
-  :mode '("mutt.*$" . post-mode))
+  :mode ("mutt.*$" . post-mode))
 
 ;; Use scp for tramp.
 (use-package tramp)
