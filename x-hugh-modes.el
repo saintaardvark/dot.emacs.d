@@ -24,8 +24,9 @@
   :mode '("mutt.*$" . post-mode))
 
 ;; Use scp for tramp.
-(use-package tramp)
-(setq tramp-default-method "scp")
+(use-package tramp
+  :config
+  (setq tramp-default-method "scp"))
 
 ;; Load ssh.
 (use-package ssh)
@@ -34,11 +35,11 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Random
-(use-package boxquote     )
-(use-package linum        )
-(use-package midnight     )
-(use-package uniquify     )
-(use-package xclip        )
+(use-package boxquote)
+(use-package linum)
+(use-package midnight)
+(use-package uniquify)
+(use-package xclip)
 
 ;; Markdown
 (use-package markdown-mode)
