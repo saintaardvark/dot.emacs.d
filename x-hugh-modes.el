@@ -98,12 +98,12 @@
 
 ;; For ANSI colourization in compilation buffers.
 ;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode/20788581#20788581
-(ignore-errors
-  (use-package ansi-color)
-  (defun my-colorize-compilation-buffer ()
+(defun my-colorize-compilation-buffer ()
     (when (eq major-mode 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
+;; FIXME: Pretty sure there's a better way to add hooks here...
+(use-package ansi-color
+  :custom (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
 ;; Man, I always forget about winner-mode...
 (winner-mode 1)
