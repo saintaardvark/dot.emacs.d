@@ -75,19 +75,24 @@
          ("sites-\\(available\\|enabled\\)/" . apache-mode)))
 
 ;; Longlines mode
-(autoload 'visual-line-mode "visual-line" "Visual line mode." t)
+(use-package visual-line-mode)
 
 ;; Because it's fun.
-
-(use-package nyan-mode)
-(nyan-mode)
+;; FIXME: do I need to enable using :config?
+(use-package nyan-mode
+  :config (nyan-mode))
 
 ;; I'm gonna break this habit if it kills me
-(use-package annoying-arrows-mode)
-(global-annoying-arrows-mode)
+(use-package annoying-arrows-mode
+  :config (global-annoying-arrows-mode))
 
 ;; Flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :config (add-hook 'after-init-hook #'global-flycheck-mode)
+  :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
+           (flycheck-flake8-maximum-line-length 9990)
+           (flycheck-idle-change-delay 2)
+           (flycheck-keymap-prefix ".")))
 
 (use-package yasnippet)
 
