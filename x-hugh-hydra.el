@@ -152,8 +152,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo")
   ("s" x-hugh-solarized-toggle "toggle solarized")
-  ("z" x-hugh-appearance-make-things-bigger "zoom in all")
-  ("a" x-hugh-appearance-make-things-smaller "zoom out all")
+  ("z" (set-face-attribute 'default (selected-frame) :height 200) "zoom in all")
+  ("a" (set-face-attribute 'default (selected-frame) :height 150) "zoom in all")
   ("x" toggle-frame-maximized "toggle max"))
 
 (defhydra hydra-text (:color blue)
