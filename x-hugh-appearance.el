@@ -21,6 +21,7 @@
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
   (set-frame-font "Inconsolata-12"))
+
 (defun x-hugh-set-font-larger ()
   "Set font to 16 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
