@@ -25,7 +25,7 @@
 (defun x-hugh-set-font-larger ()
   "Set font to 16 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-default-font "Inconsolata-18"))
+  (set-frame-font "Inconsolata-18"))
 ;; (require 'color-theme nil 'noerror)
 ;; (load-theme "solarized-dark" t)
 
