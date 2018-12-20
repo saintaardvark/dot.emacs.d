@@ -72,6 +72,8 @@
 (use-package x-hugh-reference)
 (use-package x-hugh-modes)
 (use-package x-hugh-text)
+(use-package x-hugh-markdown)
+
 (use-package x-hugh-passwords)
 
 ;; Devel
