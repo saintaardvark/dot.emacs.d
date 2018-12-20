@@ -61,56 +61,6 @@
  '(mouse-wheel-mode nil)
  '(mouse-yank-at-point t)
  '(ns-command-modifier nil)
- '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-agenda-files
-   (quote
-    ("/home/aardvark/orgmode/Development_for_Sysadmins.org" "/home/aardvark/orgmode/TODO.org" "/home/aardvark/orgmode/emacs.org" "/home/aardvark/orgmode/fitness.org" "/home/aardvark/orgmode/fun_projects.org" "/home/aardvark/orgmode/goaltracking.org" "/home/aardvark/orgmode/home.org" "/home/aardvark/orgmode/kitchen.org" "/home/aardvark/orgmode/kubernetes.org" "/home/aardvark/orgmode/radio.org" "/home/aardvark/orgmode/space.org" "/home/aardvark/orgmode/travel.org" "/home/aardvark/orgmode/vacation.org" "/home/aardvark/orgmode/satnogs/notes.org")))
- '(org-agenda-log-mode-items (quote (clock)))
- '(org-agenda-restore-windows-after-quit t)
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-span (quote day))
- '(org-agenda-start-with-clockreport-mode t)
- '(org-agenda-start-with-follow-mode t)
- '(org-agenda-start-with-log-mode t)
- '(org-capture-templates
-   (quote
-    (("l" "Log" item
-      (file+olp+datetree "/Users/hubrown/orgmode/log_2018.org"))
-     ("s" "SatNOGS" entry
-      (file "~/satnogs/notes/notes.org")
-      "** TODO [#A] %?")
-     ("R" "Autofill RT ticket" entry
-      (file "~/orgmode/all.org")
-      "** TODO [#A] %?")
-     ("r" "RT Ticket" entry
-      (file "~/orgmode/all.org")
-      "** TODO RT #%^{Number} -- %^{Subject}")
-     ("e" "Emacs" entry
-      (file "~/orgmode/emacs.org")
-      "** TODO %^{TODO}")
-     ("t" "TODO" entry
-      (file "~/orgmode/TODO.org")
-      "** TODO %^{TODO}")
-     ("q" "Question" entry
-      (file "~/orgmode/TODO.org")
-      "** Q from %^{Who} re: %^{Subject}")
-     ("i" "Random Item" entry
-      (file "~/orgmode/TODO.org")
-      "** %^{What}"))))
- '(org-clock-continuously t)
- '(org-clock-into-drawer t)
- '(org-default-notes-file "~/orgmode/TODO.org")
- '(org-default-priority 65)
- '(org-log-done (quote time))
- '(org-log-into-drawer t)
- '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
- '(org-stuck-projects
-   (quote
-    ("+PROJECT/-MAYBE-DONE"
-     ("TODO" "NBIJ" "Waiting" "NEXT" "NEXTACTION")
-     nil "")))
  '(package-selected-packages
    (quote
     (wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint magithub go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent)))
