@@ -1,4 +1,4 @@
-;; x-hugh-03-org -- org settings
+;; x-hugh-org -- org settings
 
 ;;; Commentary:
 ;;; I (heart) org-mode.
@@ -142,28 +142,28 @@ If argument provided, do NOT clock in.
   (interactive "P")
   (let ((id (x-hugh-find-rt-ticket-number-from-rt-email))
 	(subject (x-hugh-find-rt-ticket-subject-from-rt-email)))
-	(x-hugh-insert-rt-ticket-into-org-generic id subject arg)
-	    (org-clock-in)))
+    (x-hugh-insert-rt-ticket-into-org-generic id subject arg)
+    (org-clock-in)))
 
 (defun x-hugh-insert-rt-ticket-into-org-generic (id subject &optional arg)
   "Generic way of inserting an org entry for an RT ticket (if necessary).
 
 If arg provided, do NOT clock in.
 "
- (interactive "P")
- (save-excursion
-   (set-buffer (find-file-noselect "~/chibi/all.org"))
-   (goto-char (point-min))
-   (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
-       (message "Already in org!")
-     (progn
-       (goto-char (point-max))
-       (if (bolp)
-	   ()
-	 (insert "\n"))
-       (insert (format "** RT #%s --%s\n" id subject))))
-   (unless arg
-     (org-clock-in))))
+  (interactive "P")
+  (save-excursion
+    (set-buffer (find-file-noselect "~/chibi/all.org"))
+    (goto-char (point-min))
+    (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
+        (message "Already in org!")
+      (progn
+        (goto-char (point-max))
+        (if (bolp)
+	    ()
+	  (insert "\n"))
+        (insert (format "** RT #%s --%s\n" id subject))))
+    (unless arg
+      (org-clock-in))))
 
 (defun x-hugh-insert-rt-ticket-into-org (&optional point arg)
   "A Small but Useful(tm) function to insert an RT ticket into Org.
@@ -199,7 +199,7 @@ Depends on regular expressions, which of course puts me in a state of sin."
   (if (equal nil org-clock-current-task)
       ()
     (when (string-match "\\(RT #[0-9]+\\)" org-clock-current-task)
-     (eval (format "%s" (match-string 1 org-clock-current-task))))))
+      (eval (format "%s" (match-string 1 org-clock-current-task))))))
 
 (defun x-hugh-clocked-into-rt-ticket-number-only ()
   "A Small but Useful(tm) function to see if I'm clocked into an RT ticket.
@@ -232,19 +232,19 @@ Can be called from Mutt as well."
   (x-hugh-insert-rt-ticket-into-org-from-rt-email)
   (let ((id (x-hugh-find-rt-ticket-number-from-rt-email))
 	(subject (x-hugh-find-rt-ticket-subject-from-rt-email)))
-	(x-hugh-schedule-rt-ticket-for-today-generic id subject arg)))
+    (x-hugh-schedule-rt-ticket-for-today-generic id subject arg)))
 
 (defun x-hugh-schedule-rt-ticket-for-today-generic (id subject &optional arg)
   "Generic way to schedule an RT ticket for today.  Optional arg sets prio to A."
   (interactive "P")
- (save-excursion
-   (set-buffer (find-file-noselect "~/chibi/all.org"))
-   (goto-char (point-min))
-   (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
-       (progn
-	 (org-schedule 1 ".")))
-   (if arg
-       (org-priority-up))))
+  (save-excursion
+    (set-buffer (find-file-noselect "~/chibi/all.org"))
+    (goto-char (point-min))
+    (if (search-forward-regexp  (format "^\\*\\* .*RT #%s.*$" id) (point-max) t)
+        (progn
+	  (org-schedule 1 ".")))
+    (if arg
+        (org-priority-up))))
 
 
 ;; (defun x-hugh-mail-buffer-to-rt ()
@@ -260,15 +260,15 @@ Can be called from Mutt as well."
 ;;     (yank)))
 
 (defun org-column-view-uses-fixed-width-face ()
-;; copy from org-faces.el
-(when (fboundp 'set-face-attribute)
+  ;; copy from org-faces.el
+  (when (fboundp 'set-face-attribute)
     ;; Make sure that a fixed-width face is used when we have a column
     ;; table.
     (set-face-attribute 'org-column nil
                         :height (face-attribute 'default :height)
                         :family (face-attribute 'default :family))))
 
- (when (and (fboundp 'daemonp) (daemonp))
+(when (and (fboundp 'daemonp) (daemonp))
   (add-hook 'org-mode-hook 'org-column-view-uses-fixed-width-face))
 
 ;; (org-babel-do-load-languages
@@ -292,10 +292,10 @@ while not clocked into anything. So I duplicate the extraction of
 ticket number that's in x-hugh-clocked, which FIXME."
   (interactive)
   (when (string-equal org-state "DONE")
-    ; x-hugh-clocked-into-rt-ticket-number-only -- not quite, but close.
+                                        ; x-hugh-clocked-into-rt-ticket-number-only -- not quite, but close.
     (when (looking-at ".*RT #\\([0-9]+\\)")
       (message "I'm gonna try to close this ticket!")
-	(x-hugh-rt-resolve-without-mercy-noninteractive (format "%s" (match-string 1 org-clock-current-task))))))
+      (x-hugh-rt-resolve-without-mercy-noninteractive (format "%s" (match-string 1 org-clock-current-task))))))
 
 (add-hook 'org-after-todo-state-change-hook 'x-hugh-resolve-rt-ticket-after-org-rt-done)
 
@@ -303,11 +303,11 @@ ticket number that's in x-hugh-clocked, which FIXME."
 (setq org-fontify-done-headline t)
 (custom-set-faces
  '(org-done ((t (:foreground "PaleGreen"
-                 :weight normal
-                 :strike-through t))))
+                             :weight normal
+                             :strike-through t))))
  '(org-headline-done
-            ((((class color) (min-colors 16) (background dark))
-               (:foreground "LightSalmon" :strike-through t)))))
+   ((((class color) (min-colors 16) (background dark))
+     (:foreground "LightSalmon" :strike-through t)))))
 
 (defun x-hugh-org-clock-in-starting-now-dammit ()
   "Clock in with starting time of right now, no matter what org-clock-continuously says."
