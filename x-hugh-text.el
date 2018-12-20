@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;; Text mode
-(require 'filladapt     nil 'noerror)
+(use-package filladapt)
 
 (add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
 (add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
