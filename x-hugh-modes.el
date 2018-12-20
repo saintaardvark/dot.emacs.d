@@ -41,13 +41,6 @@
 (use-package uniquify)
 (use-package xclip)
 
-;; Markdown
-
-(use-package markdown-mode)
-(add-to-list 'auto-mode-alist '(".*md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.mdwn\\'" . markdown-mode))
-
-
 ;; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
   "Map COMMAND over lines matching REGEX."

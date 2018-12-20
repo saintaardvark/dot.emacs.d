@@ -5,6 +5,11 @@
 
 ;;; Code:
 
+
+(use-package markdown-mode
+  :mode ((".*md$" . markdown-mode)
+         ("\\.mdwn\\'" . markdown-mode)))
+
 (defun x-hugh-rf-markdown-footnote (&optional imgplease)
   "Add a footnote in Markdown mode at the *end* of the buffer.
 
