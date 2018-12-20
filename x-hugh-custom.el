@@ -40,9 +40,6 @@
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults)))
- '(erc-hide-list (quote ("JOIN" "PART" "QUIT")))
- '(erc-nick "SaintAardvark")
- '(erc-system-name "liddybox")
  '(eshell-visual-commands
    (quote
     ("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
