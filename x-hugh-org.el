@@ -74,11 +74,21 @@
             (quote
              ("+PROJECT/-MAYBE-DONE"
               ("TODO" "NBIJ" "Waiting" "NEXT" "NEXTACTION")
-              nil "")))))
               nil ""))))
   ;; Prevents org-mode grabbing C-'
   ;; https://superuser.com/questions/828713/how-to-override-a-keybinding-in-emacs-org-mode
-  :bind (:map org-mode-map ("C-'" . nil)))
+  :bind (:map org-mode-map ("C-'" . nil))
+  ;; FIXME: I think there should be a way to do this w/a single custom-face stanza
+  :custom-face (org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
+  :custom-face (org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t))))
+  :custom-face (org-level-1 ((t (:inherit nil :foreground "#cb4b16" :height 1.3))))
+  :custom-face (org-level-2 ((t (:inherit nil :foreground "#859900" :height 1.2))))
+  :custom-face (org-level-3 ((t (:inherit nil :foreground "#268bd2" :height 1.15))))
+  :custom-face (org-level-4 ((t (:inherit nil :foreground "#b58900" :height 1.1))))
+  :custom-face (org-level-5 ((t (:inherit nil :foreground "#2aa198"))))
+  :custom-face (org-level-6 ((t (:inherit nil :foreground "#859900"))))
+  :custom-face (org-level-7 ((t (:inherit nil :foreground "#dc322f"))))
+  :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2")))))
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
