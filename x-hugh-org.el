@@ -75,6 +75,10 @@
              ("+PROJECT/-MAYBE-DONE"
               ("TODO" "NBIJ" "Waiting" "NEXT" "NEXTACTION")
               nil "")))))
+              nil ""))))
+  ;; Prevents org-mode grabbing C-'
+  ;; https://superuser.com/questions/828713/how-to-override-a-keybinding-in-emacs-org-mode
+  :bind (:map org-mode-map ("C-'" . nil)))
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
