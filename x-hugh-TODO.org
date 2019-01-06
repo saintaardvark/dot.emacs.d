@@ -1,0 +1,2 @@
+* Use this snippet for python def
+  - https://emacs.stackexchange.com/questions/19422/library-for-automatically-inserting-python-docstring-in-google-style
