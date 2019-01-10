@@ -1,2 +1,12 @@
-* Steal C-' back from org-cycle-agenda-files
+* DONE Steal C-' back from org-cycle-agenda-files
+  CLOSED: [2019-01-10 Thu 08:04]
   - This should be bound to navi-click-cmd instead
+* TODO Error (use-package): Failed to parse package post: Wrong type argument: listp, abbrev-mode
+* TODO Error (use-package): Cannot load ssh
+* TODO Error (use-package): Cannot load perltidy
+* TODO Error (use-package): Cannot load visual-line-mode
+* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
+* TODO Warning (initialization): Your ‘load-path’ seems to contain
+  your ‘.emacs.d’ directory: ~/.emacs.d/
+  This is likely to cause problems...
+  Consider using a subdirectory instead, e.g.: /Users/hubrown/.emacs.d/lisp
