@@ -19,9 +19,7 @@
   ;; daemon hanging around all the time.  This is new behaviour as of
   ;; 24.2; not sure what is different.  This is ugly but it works.
   (fset 'post-finish 'server-edit)
-  :mode ("mutt.*$" . post-mode)
-  :hook abbrev-mode
-  )
+  :mode ("mutt.*$" . post-mode))
 
 ;; Use scp for tramp.
 (use-package tramp

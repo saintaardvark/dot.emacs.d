@@ -1,7 +1,8 @@
 * DONE Steal C-' back from org-cycle-agenda-files
   CLOSED: [2019-01-10 Thu 08:04]
   - This should be bound to navi-click-cmd instead
-* TODO Error (use-package): Failed to parse package post: Wrong type argument: listp, abbrev-mode
+* DONE Error (use-package): Failed to parse package post: Wrong type argument: listp, abbrev-mode
+  CLOSED: [2019-01-10 Thu 08:31]
 * TODO Error (use-package): Cannot load ssh
 * TODO Error (use-package): Cannot load perltidy
 * TODO Error (use-package): Cannot load visual-line-mode
