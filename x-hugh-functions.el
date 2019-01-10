@@ -310,5 +310,31 @@ FIXME: Need to figure out how to put point at right column."
   (insert (replace-regexp-in-string "\n\\'" ""
                                     (shell-command-to-string "pwgen 12 1"))))
 
+(defun x-hugh-surround-region-plus-newlines (beg end)
+  "Wrap a region in BEG and END characters, plus newlines on either side .
+
+If region looks like this:
+
+REGION
+
+and this is called:
+
+\(x-hugh-surround-region-plus-newlines \"```\" \"```\")
+
+then the result will be:
+
+```
+REGION
+```"
+  (save-excursion
+    (let ((pos1 (region-beginning))
+          (pos2 (region-end)))
+      (goto-char pos2)
+      (insert (format "\n%s" end))
+      (insert "\n")
+      (goto-char pos1)
+      (insert end)
+      (insert "\n"))))
+
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here

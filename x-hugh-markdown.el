@@ -87,7 +87,9 @@ If IMGPLEASE provided, make an image markdown link."
 
 Simple...but it works!"
   (interactive)
-  (insert "```\n\n```")
+  (if (region-active-p)
+      (x-hugh-surround-region-plus-newlines "```" "```")
+    (insert "```\n\n```"))
   (forward-line -1))
 
 (provide 'x-hugh-markdown)
