@@ -10,3 +10,7 @@
   your ‘.emacs.d’ directory: ~/.emacs.d/
   This is likely to cause problems...
   Consider using a subdirectory instead, e.g.: /Users/hubrown/.emacs.d/lisp
+* TODO Figure out how to turn on comment-auto-fill-only-comments again
+  - If turn this on globally, then it ends up borking auto-fill-mode
+    in Post-mode...but it's damn handy for nearly everything else
+
