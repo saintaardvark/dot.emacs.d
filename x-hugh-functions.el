@@ -287,16 +287,6 @@ FIXME: Need to figure out how to put point at right column."
 ;; See help for save-some-buffers.
 ;; emacsclient -e '(save-buffers-kill-emacs t)'
 
-(defun x-hugh-chef-node-runner ()
-  "Change chef run to one where attrs can be specified."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (search-forward "let(:chef_run)")
-    (let ((beg point))
-      )
-    (goto-char (beginning-of-line))))
-
 ;; FIXME: Should be using indirect buffer here (is that the right term?
 (defun x-hugh-add-to-venus (url title)
   "Add a URL with TITLE to planet.ini."
