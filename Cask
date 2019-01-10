@@ -99,7 +99,6 @@
 (depends-on "magit")
 (depends-on "magit-gh-pulls")
 (depends-on "magit-popup")
-(depends-on "magithub")
 (depends-on "marcopolo")
 (depends-on "markdown-mode")
 (depends-on "markdown-mode+")
