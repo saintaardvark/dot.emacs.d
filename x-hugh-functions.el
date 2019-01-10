@@ -101,7 +101,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
 
 (defun diff-buffer-with-associated-file ()
   "View the differences between BUFFER and its associated file.
-This requires the external program \"diff\" to be in your `exec-path'.
+This requires the external program \"diff\" to be in symbol `exec-path'.
 Returns nil if no differences found, 't otherwise."
   (interactive)
   (let ((buf-filename buffer-file-name)
@@ -183,7 +183,7 @@ I can never remember how to do this."
 ;; From http://stackoverflow.com/questions/23588549/emacs-copy-region-line-and-comment-at-the-same-time
 
 (defun x-hugh-copy-and-comment-region (beg end &optional arg)
-  "Duplicate the region and comment-out the copied text.
+  "Duplicate the region marked by BEG and END and comment-out the copied text.
 See `comment-region' for behavior of a prefix arg."
   (interactive "r\nP")
   (copy-region-as-kill beg end)
@@ -235,6 +235,7 @@ FIXME: Need to figure out how to put point at right column."
 ;; Awesome.  From https://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs --
 ;; bury *scratch* buffer instead of kill it
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
+  "Don't kill *scratch* buffer. Just don't."
   (let ((buffer-to-kill (ad-get-arg 0)))
     (if (equal buffer-to-kill "*scratch*")
         (bury-buffer)
