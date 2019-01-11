@@ -1,18 +1,27 @@
-;	$Id: post.el,v 1.10 2008/02/24 23:49:23 rreid Exp $
 ;; post.el --- Use (X?)Emacs(client) as an external editor for mail and news.
  
 ;;; Authors: Eric Kidd <eric.kidd@pobox.com>,
 ;;;          Dave Pearson <davep@davep.org>,
-;;;          Rob Reid <rreid@nrao.edu>,
+;;;          Rob Reid <barlennan@gmail.com>,
 ;;;          Roland Rosenfeld <roland@spinnaker.de>
 
-;; This is free software distributed under the GPL, yadda, yadda, yadda.
-;; It has no warranty. See the GNU General Public License for more
-;; information. Send us your feature requests and patches, and we'll try
-;; to integrate everything.
+;;; Copyright 1999, 2002, 2004, 2008, 2014 Eric Kidd, Dave Pearson, Rob Reid,
+;;; and Roland Rosenfeld.
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation, either version 3 of the License, or
+;;; (at your option) any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Maintainers: Rob Reid <rreid@nrao.edu> and
-;;;              Philip J. Hollenback <philiph@pobox.com>
+;;; Maintainers: Eric Dorland <eric@kuroneko.ca> and
+;;;              Rob Reid <barlennan@gmail.com>
 
 ;;; Keywords: mail
 
@@ -33,9 +42,7 @@
 ;; your sitewide default.el to (require 'post).
 ;;
 ;; You may find the latest version of this mode at
-;; http://www.cv.nrao.edu/~rreid/software/email/ or possibly
 ;; http://sourceforge.net/projects/post-mode/
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -59,16 +66,9 @@
 ;;;
 ;;; Revision History
 ;;;
-;;; $Log: post.el,v $
-;;; Revision 1.10  2008/02/24 23:49:23  rreid
-;;; *** empty log message ***
-;;;
-;;; Revision 1.9  2008/02/24 23:46:23  rreid
-;;; I really hate the way RCS/VC mucks around with the version number and log.
-;;; It's not as dwim as it thinks it is.
-;;;
-;;; Revision 1.8  2008/02/24 23:43:46  rreid
-;;; Updated email address.
+;;; Revision 2.51  2014/04/26 21:01:30  rreid
+;;; Adopted Stefan-W. Hahn's suggestion to replace next-line with forward-line
+;;; to work around a bug with some emacs versions, and updated my email address.
 ;;;
 ;;; Revision 2.402  2008/02/24 23:31:19  rreid
 ;;; Emacs 22 finally fixed (how-many) to return an int instead of a string,
@@ -291,7 +291,7 @@
   ;; The number of optional arguments for read-string seems to increase
   ;; sharply with (emacs-version).  Since old versions of emacs are a large
   ;; source of bug reports it might be worth writing (or looking for)
-  ;; (bug-report reid@astro.utoronto.ca) which emails me the result of
+  ;; (bug-report barlennan@gmail.com) which emails me the result of
   ;; (emacs-version) along with a user supplied description of the problem.
   ;; GNU Emacs 19.28.1 only has INITIAL-STRING as an optional argument.
   ;; 19.34.1 has (read-string PROMPT &optional INITIAL-INPUT HISTORY).  20.2.1
@@ -302,9 +302,9 @@
   (if (< (string-to-number (substring (emacs-version)
 				      (string-match "[0-9]+\.[0-9]"
 					 (emacs-version) 5))) 20)
-      (defmacro string-read (prompt) (` (read-string (, prompt))))
+      (defmacro string-read (prompt) `(read-string ,prompt))
       (defmacro string-read (prompt)
-	(` (read-string (, prompt) nil nil nil t))))
+	`(read-string ,prompt nil nil nil t)))
 
   ;; XEmacs gnuserv uses slightly different functions than the GNU Emacs
   ;; server, and some people are still wasting time and CPU cycles by starting
@@ -327,7 +327,7 @@
     (defmacro defgroup  (&rest rest) nil)
     (defmacro defcustom (symbol init docstring &rest rest)
       ; The "extra" braces and whitespace are for emacs < 19.29.
-      (` (defvar (, symbol) (, init) (, docstring))))
+      `(defvar ,symbol ,init ,docstring))
     (defmacro defface (&rest args) nil))
   (unless (fboundp 'buffer-substring-no-properties)
     (fset 'buffer-substring-no-properties 'buffer-substring)))
@@ -347,14 +347,14 @@ is very primitive), you can type \\[fill-paragraph] to rewrap the paragraph."
   :type 'boolean
   :group 'post)
 
-(defcustom post-mail-message "mutt-[a-z0-9]+-[0-9]+-[0-9]+.*\\'"
+(defcustom post-mail-message "\\(mutt\\(ng\\)?-[a-zA-Z0-9-.]+-[0-9]+-[0-9]+\\(-[a-fA-F0-9]+\\)?\\|mutt\\(ng\\)?[a-zA-Z0-9._-]\\{6\\}\\)\\'"
   "*Regular expression which matches your mailer's temporary files."
-  :type 'string
+  :type 'regexp
   :group 'post)
 
 (defcustom post-news-posting "\\.\\(followup\\|letter\\|article\\)$"
   "*Regular expression which matches your news reader's composition files."
-  :type 'string
+  :type 'regexp
   :group 'post)
 
 (defcustom post-backup-original nil
@@ -362,7 +362,7 @@ is very primitive), you can type \\[fill-paragraph] to rewrap the paragraph."
   :type 'boolean
   :group 'post)
 
-(defcustom post-signature-pattern "\\(--\\|Cheers,\\|\\)"
+(defcustom post-signature-pattern "\\(--\\|\\)"
   "*Pattern signifying the beginning of signatures.
 It should not contain trailing whitespace unless you know what you're doing."
   :type 'regexp
@@ -437,7 +437,7 @@ contains post-attachment-regexp."
 		 (const Always))
   :group 'post)
 
-(defcustom post-attachment-regexp "attach"
+(defcustom post-attachment-regexp "^[ \t\f]*[^>].*attach"
   "*This is what post looks for in the body if
 post-should-prompt-for-attachment is 'Smart'."
   :type 'regexp
@@ -465,6 +465,7 @@ post-should-prompt-for-attachment is 'Smart'."
 (defcustom post-quote-start "> "
   "Pattern which is added (or removed) at the beginning of the line by
 comment-region"
+  :type 'string
   :group 'post)
 
 (defcustom post-email-address-pattern
@@ -474,7 +475,7 @@ comment-region"
   :group 'post)
 
 (defcustom post-url-pattern
-  '("\\<\\(\\(https?\\|news\\|mailto\\|ftp\\|gopher\\):\\|\\(www\\|ftp\\)\\.\\)[-~A-Za-z0-9._/%$+?#]+[A-Za-z0-9/#]" "<URL:[^ ]+>")
+  '("\\<\\(\\(https?\\|news\\|mailto\\|ftp\\|gopher\\):\\|\\(www\\|ftp\\)\\.\\)[-~A-Za-z0-9._/%$+?#:;&=]+[A-Za-z0-9/#&=]" "<URL:[^ ]+>")
   "Pattern to detect URL addresses."
   :type '(repeat regexp)
   :group 'post)
@@ -490,8 +491,8 @@ comment-region"
   :group 'post)
 
 (defcustom post-emoticon-pattern '("[0O(<{}]?[;:8B|][.,]?[-+^*o0O][{<>/\|]?[][)>(<|/\P][)>]?"
-			"\\s [(<]?[][)>(<|/\][}<>|]?[-+^*oO0][,.]?[:8][0O>]?"
-			"\\s [;:][][P)\/(]" "\\s [][)(P\/][:;]"
+			"[(<]?[][)>(<|/\][}<>|]?[-+^*oO0][,.]?[:8][0O>]?"
+			"[;:][][P)\/(]" "\\s [][)(P\/][:;]"
 				   "<[Gg]>" "<[BbSs][Gg]>")
   "*List of regular expressions that define a emoticon."
   :type '(repeat regexp)
@@ -639,11 +640,16 @@ comment-region"
   :group 'post-faces)
 
 ; Note: some faces are added later!
+
+(defvar post-quoted-text-pattern
+  "^[ \t\f]*\\(>[ \t\f]*\\)\\([-a-zA-Z]*>[ \t\f]*\\)\\([-a-zA-Z]*>.*\\)$"
+  "Regexp for recognizing quoted text")
+
 (defvar post-font-lock-keywords
   `(("^\\([A-Z][-A-Za-z0-9.]+:\\)\\(.*\\)$"
      (1 'post-header-keyword-face)
      (2 'post-header-value-face))
-    ("^[ \t\f]*\\(>[ \t\f]*\\)\\([-a-zA-Z]*>[ \t\f]*\\)\\([-a-zA-Z]*>.*\\)$"
+    (,post-quoted-text-pattern
      (1 'post-quoted-text-face)
      (2 'post-double-quoted-text-face)
      (3 'post-multiply-quoted-text-face))
@@ -683,6 +689,14 @@ post-signature-text-face)
 (defvar post-has-attachment nil
  "Whether the message has an attachment.")
 
+(defvar post-ispell-skip-alist
+  `(("^[A-Z][-A-Za-z0-9]+:")
+	("^\\(To|Cc|Bcc|From|Reply-To\\): .*$")
+    (,post-url-pattern)
+    (,post-email-address-pattern)
+    (,post-quoted-text-pattern))
+  "What ispell should skip in buffer")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Interactive Commands
@@ -717,7 +731,7 @@ post-signature-text-face)
   (goto-char (point-min))
   ;; If the message has header, slide downward.
   (and header-mode (save-match-data (re-search-forward "^$" nil t))
-       (next-line 1)))
+       (forward-line)))
 
 (defun post-goto-signature ()
   "Go to the beginning of the message signature."
@@ -781,8 +795,7 @@ Argument END end of region."
   (interactive "r")
   (while (< start end)
     (goto-char start)
-    (insert "_")
-    (insert (char-to-string 8))
+    (insert "_" (char-to-string 8))
     (setq start (+ start 3))
     (setq end   (+ end   2))))
 
@@ -856,8 +869,7 @@ the signatures in `post-variable-signature-source' must be separated by
 		     (nth r marks-st) (nth r marks-end))))
 	(kill-buffer (current-buffer)))
       (goto-char (post-kill-signature))
-      (insert-string "-- \n")
-      (insert sig)
+      (insert "-- \n" sig)
       (if (file-readable-p post-fixed-signature-source)
 	  (insert-file-contents post-fixed-signature-source)
 	(insert "I really need a `post-fixed-signature-source'!\n")))))
@@ -893,8 +905,7 @@ the signatures in `post-variable-signature-source' must be separated by
     (let ((sig (buffer-substring-no-properties sig-start sig-end)))
       (switch-to-buffer post-select-signature-last-buffer)
       (goto-char (post-kill-signature))
-      (insert-string "-- \n")
-      (insert sig))
+      (insert "-- \n" sig))
     (if (file-readable-p post-fixed-signature-source)
 	(insert-file-contents post-fixed-signature-source))
     (post-select-signature-quit)))
@@ -908,7 +919,7 @@ the signatures in `post-variable-signature-source' must be separated by
   (list-directory (concat post-signature-directory
                           post-signature-wildcard) t)
   (pop-to-buffer "*Directory*")
-  (next-line 1)
+  (forward-line)
   (copy-to-buffer "*Post-Select-Signature*" (point) (point-max))
   (kill-buffer "*Directory*")
   (pop-to-buffer "*Post-Select-Signature*")
@@ -928,7 +939,7 @@ the signatures in `post-variable-signature-source' must be separated by
     (setq sig-to-load (buffer-substring-no-properties sig-start (point)))
     (switch-to-buffer post-select-signature-last-buffer)
     (goto-char (post-kill-signature))
-    (insert-string "-- \n")
+    (insert "-- \n")
     (insert-file (concat post-signature-directory sig-to-load))
     (message "Signature set to %s%s" post-signature-directory sig-to-load)
     (post-select-signature-quit)))
@@ -1029,6 +1040,28 @@ This way they can refer back to this buffer during a compose session."
   (copy-to-buffer (get-buffer-create "*Original*")
 		  (point-min) (point-max)))
 
+;;; Mostly stolen from flyspell.el, mail-mode-flyspell-verify
+(put 'post-mode 'flyspell-mode-predicate 'post-mode-flyspell-verify)
+(defun post-mode-flyspell-verify ()
+  "This function is used for `flyspell-generic-check-word-p' in Post mode."
+  (let ((in-headers
+		 (and (save-excursion (goto-char (point-min))
+							  (re-search-forward "^$" nil t))
+			  (< (point) (match-end 0))))
+		(in-signature (save-excursion
+						(re-search-backward (concat "^" post-signature-pattern
+                                                    "[ \t\f]*$") nil t))))
+	(cond (in-headers (and (save-excursion (beginning-of-line)
+										   (looking-at "^Subject:"))
+						   (> (point) (match-end 0))))
+		  (in-signature nil)
+		  (t (save-excursion (beginning-of-line)
+							 (not (looking-at
+								   (concat "[ \t\f]*" post-quote-start))))))))
+
+(defun post-quote-newline ()
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; The Heart of Darkness
@@ -1055,9 +1088,10 @@ When you finish editing this message, type \\[post-save-current-buffer-and-exit]
   (make-local-variable 'paragraph-start)
   (make-local-variable 'paragraph-separate)
   (setq paragraph-start
-	"\\([ \t\n\f]+[^ \t\n\f>]\\|[ \t\f>]*$\\)"
+	(concat "\\([ \t\n\f]+[^ \t\n\f>]\\|[ \t\f>]*$\\|.+:$\\|"
+	        post-signature-pattern " *$\\)")
 	paragraph-separate
-	"[ \t\f>]*$")
+	(concat "[ \t\f>]*$\\|.+:$\\|" post-signature-pattern " *$"))
 
   ;; XEmacs needs easy-menu-add, Emacs does not care
   (easy-menu-add post-mode-menu)
@@ -1069,6 +1103,10 @@ When you finish editing this message, type \\[post-save-current-buffer-and-exit]
   ;; Our temporary file lives in /tmp. Yuck! Compensate appropriately.
   (make-local-variable 'backup-inhibited)
   (setq backup-inhibited t)
+
+  ;; Skip certain patterns for ispell
+  ;(set (make-local-variable 'ispell-skip-region-alist)
+  ;		(append ispell-skip-region-alist post-ispell-skip-alist))
 
   (if (boundp 'font-lock-defaults)
       (make-local-variable 'font-lock-defaults))
@@ -1186,7 +1224,7 @@ Optional argument ARG ."
       (when (re-search-forward (concat "^\\($\\|" field ": \\)"))
 	(if (looking-at "^$")
 	    (progn
-	      (insert-string field ": \n")
+	      (insert field ": \n")
 	      (forward-char -1))
 	  (header-position-on-value))))))
 
@@ -1219,8 +1257,11 @@ Argument DESCRIPTION MIME description."
 	  (widen)
 	  (goto-char (point-min))
 	  (search-forward-regexp "^$")
-	  (insert-string (concat "Attach: " (file-truename file) " "
-				 description "\n"))
+	  (insert (concat "Attach: " (replace-regexp-in-string
+                                  " "
+                                  "\\\\ "
+                                  (file-truename file)) " "
+                      description "\n"))
 	  (message (concat "Attached '" file "'."))
 	  (setq post-has-attachment t))))))
 
@@ -1328,7 +1369,7 @@ Optional argument DEFAULT ."
     (cond ((post-find-header-line header)
 	   (beginning-of-line)
 	   (kill-line)
-	   (insert-string (concat header ": " value)))
+	   (insert header ": " value))
 	  (t
 	   (header-append-value header value))))
   (message "%s set to %s" header value))
@@ -1337,7 +1378,7 @@ Optional argument DEFAULT ."
   "Add a HEADER and set it's VALUE (if header exists, will add multiple headers)."
   (goto-char (point-min))
   (search-forward-regexp "^$" nil t)
-  (insert-string (concat header ": " value "\n")))
+  (insert header ": " value "\n"))
 
 ;;; Setup the mode map for the select-signature buffer.
 (if post-select-signature-mode-map nil

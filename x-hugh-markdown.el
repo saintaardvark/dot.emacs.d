@@ -23,7 +23,9 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
       (x-hugh-rf-markdown-add-markdown-link-text link-number (read-string "Description: ") imgplease))))
 
 (defun x-hugh-rf-markdown-add-markdown-link-text (link-number &optional description imgplease)
-  ;"Refactor: Add markdown link in body to LINK, LINK-NUMBER, description DESCRIPTION using FIRST-PREFIX."
+  "REFACTOR: Add markdown link in body to LINK, LINK-NUMBER, description DESCRIPTION using FIRST-PREFIX.
+
+If IMGPLEASE provided, make an image markdown link."
   (if (region-active-p)
       (x-hugh-rf-markdown-surround-region)
     ;; else insert description, maybe image.
@@ -78,12 +80,16 @@ Uses numbers for links. Linkify the region if region active. Prefix means make i
     (goto-char pos2)
     (insert "]")))
 
+;; FIXME: Does not work for wrapping region
+;; FIXME: Copy-pasta from blog code. Refactor into method for wrapping regions.
 (defun x-hugh-markdown-code-block ()
   "Insert markdown code block, ready to be filled in.
 
 Simple...but it works!"
   (interactive)
-  (insert "```\n\n```")
+  (if (region-active-p)
+      (x-hugh-surround-region-plus-newlines "```" "```")
+    (insert "```\n\n```"))
   (forward-line -1))
 
 (provide 'x-hugh-markdown)
