@@ -14,6 +14,8 @@
 (require 'highlight-indent-guides)
 (setq highlight-indent-guides-method 'character)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(use-package python
+  :custom (python-indent-guess-indent-offset t))
 
 (provide 'x-hugh-python)
 ;;; x-hugh-python ends here

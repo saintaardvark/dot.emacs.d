@@ -46,7 +46,6 @@
  '(perl-indent-level 8)
  '(post-email-address "aardvark@saintaardvarkthecarpeted.com")
  '(post-should-prompt-for-attachment 'Never)
- '(python-indent-guess-indent-offset t)
  '(require-final-newline t)
  '(safe-local-variable-values
    '((eval add-hook 'before-save-hook
