@@ -50,7 +50,10 @@
   :custom ((midnight-mode t)
            (clean-buffer-list-delay-general 1)
            (clean-buffer-list-kill-never-buffer-names (quote ("*scratch*" "*Messages*" "*server*" ".\\*\\.org$")))))
-(use-package uniquify)
+(use-package uniquify
+  :custom ((uniquify-buffer-name-style 'post-forward nil (uniquify))
+           (uniquify-min-dir-content 2)))
+
 (use-package xclip)
 
 ;; Not sure how handy this is going to be...

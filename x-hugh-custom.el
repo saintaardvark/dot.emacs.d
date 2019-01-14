@@ -61,8 +61,6 @@
  '(sp-navigate-close-if-unbalanced t)
  '(spell-command "ispell" t)
  '(standard-indent 8)
- '(uniquify-buffer-name-style 'post-forward nil (uniquify))
- '(uniquify-min-dir-content 2)
  '(user-mail-address "aardvark@saintaardvarkthecarpeted.com")
  '(vc-follow-symlinks nil)
  '(w3m-use-cookies t)
