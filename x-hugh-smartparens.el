@@ -18,6 +18,7 @@
   (indent-according-to-mode))
 
 (use-package smartparens
+  :custom (sp-navigate-close-if-unbalanced t)
   :config (progn (x-hugh-sp-add-hook-to-modes ("arduino"
                                                "bats"
                                                "emacs-lisp"
