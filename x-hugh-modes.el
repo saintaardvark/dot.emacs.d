@@ -16,6 +16,8 @@
 
 ;; Use post for Mutt.
 (use-package post
+  :custom ((post-email-address "aardvark@saintaardvarkthecarpeted.com")
+           (post-should-prompt-for-attachment 'Never))
   :config
   ;; Tell it manually to just use goddamn server-edit, not
   ;; save-buffers-kill-emacs.

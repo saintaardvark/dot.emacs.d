@@ -46,8 +46,6 @@
  '(package-selected-packages
    '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
  '(perl-indent-level 8)
- '(post-email-address "aardvark@saintaardvarkthecarpeted.com")
- '(post-should-prompt-for-attachment 'Never)
  '(require-final-newline t)
  '(safe-local-variable-values
    '((eval add-hook 'before-save-hook
