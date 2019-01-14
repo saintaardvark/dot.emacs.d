@@ -52,15 +52,15 @@
     (kill-this-buffer)))
 
 ;; Chrome extension for editing stuff in Emacs
-  (when (require 'edit-server nil t)
-    (setq edit-server-new-frame nil)
-    (edit-server-start))
+(when (require 'edit-server nil t)
+  (setq edit-server-new-frame nil)
+  (edit-server-start))
 
 (defun kill-associated-diff-buf ()
   "Tidy up diffs when closing the file."
-  (let ((buf (get-buffer (concat "*Assoc file diff: "
-                             (buffer-name)
-                             "*"))))
+  (let ((buf (get-buffer
+              (concat "*Assoc file diff: " (buffer-name)
+                      "*"))))
     (when (bufferp buf)
       (kill-buffer buf))))
 
