@@ -59,7 +59,6 @@
  '(send-mail-function 'sendmail-send-it)
  '(setq c-basic-offset)
  '(sp-navigate-close-if-unbalanced t)
- '(spell-command "ispell" t)
  '(standard-indent 8)
  '(user-mail-address "aardvark@saintaardvarkthecarpeted.com")
  '(vc-follow-symlinks nil)
