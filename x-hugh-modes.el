@@ -39,7 +39,6 @@
   :custom ((midnight-mode t)
            (clean-buffer-list-delay-general 1)
            (clean-buffer-list-kill-never-buffer-names (quote ("*scratch*" "*Messages*" "*server*" ".\\*\\.org$")))))
-
 (use-package uniquify)
 (use-package xclip)
 
