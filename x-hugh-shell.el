@@ -28,5 +28,10 @@ Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
 
 (add-hook 'after-save-hook 'hlu-make-script-executable)
 
+;; Specify that I want bash for inferior shells
+(use-package term
+  :config
+  (setq explicit-shell-file-name "/bin/bash"))
+
 (provide 'x-hugh-shell)
 ;;; x-hugh-shell ends here
