@@ -11,9 +11,10 @@
 ;; highlight-indentation is set as part of elpy-modules; that's in
 ;; x-hugh-custom.
 
-(require 'highlight-indent-guides)
-(setq highlight-indent-guides-method 'character)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(use-package highlight-indent-guides
+  :custom (highlight-indent-guides-method 'character)
+  :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+
 (use-package python
   :custom (python-indent-guess-indent-offset t))
 
