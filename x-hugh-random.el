@@ -78,10 +78,12 @@
 (defconst ENABLE-TOUCHPAD  XINPUT-ENABLE-TOUCHPAD)
 
 (defun touchpad-off (&optional frame)
+  "Simple command to disable the touchpad."
   (interactive)
   (shell-command DISABLE-TOUCHPAD))
 
 (defun touchpad-on (&optional frame)
+  "Simple command to enable the touchpad."
   (interactive)
   (shell-command ENABLE-TOUCHPAD))
 
