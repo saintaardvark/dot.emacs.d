@@ -135,5 +135,8 @@
 
 (add-hook 'ibuffer-mode-hook #'(ibuffer-switch-to-saved-filter-groups "Default"))
 
+(use-package paren
+  :config (setq show-paren-mode 1))
+
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here

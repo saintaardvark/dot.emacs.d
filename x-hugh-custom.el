@@ -58,7 +58,6 @@
  '(select-enable-clipboard t)
  '(send-mail-function 'sendmail-send-it)
  '(setq c-basic-offset)
- '(show-paren-mode 1)
  '(sp-navigate-close-if-unbalanced t)
  '(spell-command "ispell" t)
  '(standard-indent 8)
