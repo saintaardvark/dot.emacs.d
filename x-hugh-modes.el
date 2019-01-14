@@ -109,6 +109,13 @@
 ;; Jenkinsfile
 (add-to-list 'auto-mode-alist '("Jenkinsfile\\'" . groovy-mode))
 
+;; Dired
+(use-package dired
+  :config
+  (setq dired-dwim-target t)
+  (setq dired-recursive-copies 'always)
+  (setq ddired-recursive-deletes 'top))
+
 ;; Noice!
 ;; https://emacs.stackexchange.com/questions/202/close-all-dired-buffers
 (setq-default ibuffer-saved-filter-groups
