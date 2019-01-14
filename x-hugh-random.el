@@ -87,12 +87,13 @@
   (interactive)
   (shell-command ENABLE-TOUCHPAD))
 
-(add-hook 'focus-in-hook #'touchpad-off)
-(add-hook 'focus-out-hook #'touchpad-on)
-(add-hook 'delete-frame-functions #'touchpad-on)
-
-;;; and don't forget to enable the touchpad when you exit Emacs:
-(add-hook 'kill-emacs-hook #'touchpad-on)
+(when (executable-find "xinput")
+  (progn
+    (add-hook 'focus-in-hook #'touchpad-off)
+    (add-hook 'focus-out-hook #'touchpad-on)
+    (add-hook 'delete-frame-functions #'touchpad-on)
+    ;;; and don't forget to enable the touchpad when you exit Emacs:
+    (add-hook 'kill-emacs-hook #'touchpad-on)))
 
 (provide 'x-hugh-random)
 
