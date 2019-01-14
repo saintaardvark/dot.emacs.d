@@ -5,9 +5,8 @@
 
 ;;; Code:
 
-(elpy-enable)
-;; (elpy-use-ipython)
-
+(use-package elpy
+  :config (elpy-enable))
 ;; I like this better than highlight-indentation-mode.
 ;; highlight-indentation is set as part of elpy-modules; that's in
 ;; x-hugh-custom.

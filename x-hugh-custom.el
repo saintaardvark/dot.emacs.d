@@ -27,11 +27,8 @@
  '(ediff-merge-split-window-function 'split-window-horizontally)
  '(ediff-split-window-function 'split-window-horizontally)
  '(ediff-window-setup-function 'ediff-setup-windows-plain)
- '(elpy-modules
-   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults))
  '(eshell-visual-commands
    '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh"))
- '(explicit-shell-file-name "/bin/bash")
  '(find-grep-options "-qi")
  '(flyspell-auto-correct-binding [67108904])
  '(git-commit-summary-max-length 90)
@@ -41,7 +38,6 @@
  '(iswitchb-prompt-newbuffer nil)
  '(js-indent-level 2)
  '(kill-read-only-ok t)
- '(magithub-enabled-by-default nil)
  '(mouse-wheel-mode nil)
  '(mouse-yank-at-point t)
  '(ns-command-modifier nil)
