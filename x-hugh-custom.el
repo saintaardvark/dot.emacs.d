@@ -66,7 +66,6 @@
  '(user-mail-address "aardvark@saintaardvarkthecarpeted.com")
  '(vc-follow-symlinks nil)
  '(w3m-use-cookies t)
- '(wg-morph-on nil)
  '(win-switch-idle-time 1.25))
 
 (custom-set-faces
