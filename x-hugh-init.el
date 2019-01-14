@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-;; FIXME: Turn off customizatoins: https://www.reddit.com/r/emacs/comments/9rrhy8/emacsers_with_beautiful_initel_files_what_about/
-
-
 ;; Do this so that we can add directories to .emacs.d and have them load.
 ;; For example:  with this stanza, we can do (require 'w3m-load), which is
 ;; at ~/.emacs/w3m/w3m-load.el.
@@ -36,7 +33,15 @@
   :config
   (exec-path-from-shell-initialize))
 
-;; Custom file first.
+;; I'm moving away from custom vars, because it's a righteous pain to
+;; debug when something goes wrong.  For most things, custom vars can
+;; be put in use-package stanzas; for the rest, I'll put them here.
+;; For discussion and background, see:
+;; https://www.reddit.com/r/emacs/comments/9rrhy8/emacsers_with_beautiful_initel_files_what_about/
+
+(use-package x-hugh-random)
+
+;; Custom file next
 (setq custom-file "~/.emacs.d/x-hugh-custom.el")
 (load custom-file 'noerror)
 
@@ -60,7 +65,6 @@
 
 ;; And now everything else
 
-(use-package x-hugh-random)
 (use-package x-hugh-navi)
 (use-package x-hugh-functions)
 (use-package x-hugh-blog)
