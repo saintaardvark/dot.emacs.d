@@ -16,6 +16,9 @@
 ;; (setq magit-last-seen-setup-instructions "1.4.0")
 ;; ;; (require 'magit nil 'noerror)
 
+(use-package git-commit
+  :custom (git-commit-summary-max-length 90))
+
 (use-package magit
   :config
   ;; From https://magit.vc/manual/magit/Performance.html#Performance
