@@ -5,6 +5,15 @@
 
 ;;; Code:
 
+;; FIXME: Alphabetize the modes
+
+;; NOTE: Since I come here for examples for use-package...there *is* a
+;; custom section.  Example:
+
+;; (use-package highlight-indent-guides
+;;   :custom (highlight-indent-guides-method 'character)
+;;   :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+
 ;; Use post for Mutt.
 (use-package post
   :config
