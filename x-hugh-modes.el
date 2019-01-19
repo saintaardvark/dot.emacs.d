@@ -84,9 +84,6 @@
          ("access\\.conf\\'" . apache-mode)
          ("sites-\\(available\\|enabled\\)/" . apache-mode)))
 
-;; Longlines mode
-(use-package visual-line-mode)
-
 ;; Because it's fun.
 ;; FIXME: do I need to enable using :config?
 (use-package nyan-mode
