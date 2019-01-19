@@ -15,3 +15,4 @@
   - If turn this on globally, then it ends up borking auto-fill-mode
     in Post-mode...but it's damn handy for nearly everything else
 
+* TODO Add keyboard shortcut for delete-horizontal-space
