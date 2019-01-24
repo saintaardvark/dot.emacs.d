@@ -63,13 +63,6 @@
   "Map COMMAND over lines matching REGEX."
   t)
 
-;; Perl
-(use-package perldoc)
-(defalias 'perl-mode 'cperl-mode)
-(use-package perltidy)
-;; 8 spaces for tab, the way God intended
-;;(setq perl-indent-level 8)
-
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
 
