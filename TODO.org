@@ -3,9 +3,11 @@
   - This should be bound to navi-click-cmd instead
 * DONE Error (use-package): Failed to parse package post: Wrong type argument: listp, abbrev-mode
   CLOSED: [2019-01-10 Thu 08:31]
+* DONE Error (use-package): Cannot load perltidy
+  CLOSED: [2019-01-24 Thu 08:36]
+* DONE Error (use-package): Cannot load visual-line-mode
+  CLOSED: [2019-01-18 Fri 20:11]
 * TODO Error (use-package): Cannot load ssh
-* TODO Error (use-package): Cannot load perltidy
-* TODO Error (use-package): Cannot load visual-line-mode
 * TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
   your ‘.emacs.d’ directory: ~/.emacs.d/
@@ -14,5 +16,4 @@
 * TODO Figure out how to turn on comment-auto-fill-only-comments again
   - If turn this on globally, then it ends up borking auto-fill-mode
     in Post-mode...but it's damn handy for nearly everything else
-
 * TODO Add keyboard shortcut for delete-horizontal-space
