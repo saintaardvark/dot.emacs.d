@@ -245,12 +245,6 @@ FIXME: Need to figure out how to put point at right column."
   "Hook for ssh-mode."
   (ssh-directory-tracking-mode t))
 
-(defun x-hugh-nag-about-keys ()
-  "Nag about keys."
-  (interactive)
-  (sleep-for 0 (% (random) 2000))
-  (message "Wrong!"))
-
 ;;; http://apple.stackexchange.com/questions/85222/configure-emacs-to-cut-and-copy-text-to-mac-os-x-clipboard/127082#127082
 (defun pbpaste ()
   "Emacs wrapper for pbpaste."
