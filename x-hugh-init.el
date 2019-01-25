@@ -65,6 +65,7 @@
 
 ;; And now everything else
 
+(use-package x-hugh-mouse)
 (use-package x-hugh-navi)
 (use-package x-hugh-functions)
 (use-package x-hugh-blog)

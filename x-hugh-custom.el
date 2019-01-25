@@ -37,8 +37,6 @@
  '(iswitchb-prompt-newbuffer nil)
  '(js-indent-level 2)
  '(kill-read-only-ok t)
- '(mouse-wheel-mode nil)
- '(mouse-yank-at-point t)
  '(ns-command-modifier nil)
  '(package-selected-packages
    '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
