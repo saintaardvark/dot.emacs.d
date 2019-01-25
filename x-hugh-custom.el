@@ -12,10 +12,6 @@
  ;; If there is more than one, they won't work right.
  ;;
  ;; Only 57 lines to be migrated away!
- '(backup-directory-alist '(("." . "~/.emacs.d/backups/")))
- '(c-basic-offset 8)
- '(calendar-offset 0)
- '(case-fold-search t)
  '(cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef")
  '(compilation-scroll-output 'first-error)
  '(current-language-environment "English")

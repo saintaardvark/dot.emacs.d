@@ -7,28 +7,13 @@
 
 ;; Random settings.
 
-(put 'narrow-to-region 'disabled nil)
-(fset 'yes-or-no-p 'y-or-n-p) ; enable one letter y/n answers to yes/no
+;; FIXME: Organize a bit
+;; - setq in one region, alphebetized
 
-;; Sigh...causing too many problems with git repo
-;; (add-hook 'write-file-hooks 'delete-trailing-whitespace)
+;; Variables:
 
-;; Check for ispell stuff.
-(setq spell-command "ispell")
-
-(when (executable-find spell-command)
-  (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1))))
-
-(use-package comint
-  :custom (comint-password-prompt-regexp
-           "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|Repeat\\|SUDO\\|UNIX\\|Vault\\|\\[sudo]\\|enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|login\\|new\\|old\\) +\\)\\(?:\\(?:adgangskode\\|contrase\\(?:\\(?:ny\\|ñ\\)a\\)\\|geslo\\|h\\(?:\\(?:asł\\|esl\\)o\\)\\|iphasiwedi\\|jelszó\\|l\\(?:ozinka\\|ösenord\\)\\|m\\(?:ot de passe\\|ật khẩu\\)\\|pa\\(?:rola\\|s\\(?:ahitza\\|s\\(?: phrase\\|code\\|ord\\|phrase\\|wor[dt]\\)\\|vorto\\)\\)\\|s\\(?:alasana\\|enha\\|laptažodis\\)\\|wachtwoord\\|лозинка\\|пароль\\|ססמה\\|كلمة السر\\|गुप्तशब्द\\|शब्दकूट\\|গুপ্তশব্দ\\|পাসওয়ার্ড\\|ਪਾਸਵਰਡ\\|પાસવર્ડ\\|ପ୍ରବେଶ ସଙ୍କେତ\\|கடவுச்சொல்\\|సంకేతపదము\\|ಗುಪ್ತಪದ\\|അടയാളവാക്ക്\\|රහස්පදය\\|ពាក្យសម្ងាត់\\|パスワード\\|密[码碼]\\|암호\\)\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: for [^:：៖]+\\)?[:：៖]\\s *\\'")
-  :config (add-hook 'comint-output-filter-functions
-                    'comint-watch-for-password-prompt))
-
-;; From http://www.emacswiki.org/emacs/CopyAndPaste
-(setq select-active-regions t) ;  active region sets primary X11 selection
-(global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
-
+;; FIXME: Pick between these two backup schemes
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
 ;; Save all tempfiles in $TMPDIR/emacs$UID/
 ;; See https://www.emacswiki.org/emacs/AutoSave
 (defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
@@ -41,6 +26,32 @@
 
 (setq epg-gpg-program (executable-find "gpg"))
 
+
+(setq c-basic-offset 8)
+(setq calendar-offset 0)
+(setq case-fold-search t)
+;; Check for ispell stuff.
+(setq spell-command "ispell")
+;; From http://www.emacswiki.org/emacs/CopyAndPaste
+(setq select-active-regions t) ;  active region sets primary X11 selection
+
+(put 'narrow-to-region 'disabled nil)
+(fset 'yes-or-no-p 'y-or-n-p) ; enable one letter y/n answers to yes/no
+
+;; Sigh...causing too many problems with git repo
+;; (add-hook 'write-file-hooks 'delete-trailing-whitespace)
+
+(when (executable-find spell-command)
+  (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1))))
+
+(use-package comint
+  :custom (comint-password-prompt-regexp
+           "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|Repeat\\|SUDO\\|UNIX\\|Vault\\|\\[sudo]\\|enter\\(?: \\(?:\\(?:sam\\|th\\)e\\)\\)?\\|login\\|new\\|old\\) +\\)\\(?:\\(?:adgangskode\\|contrase\\(?:\\(?:ny\\|ñ\\)a\\)\\|geslo\\|h\\(?:\\(?:asł\\|esl\\)o\\)\\|iphasiwedi\\|jelszó\\|l\\(?:ozinka\\|ösenord\\)\\|m\\(?:ot de passe\\|ật khẩu\\)\\|pa\\(?:rola\\|s\\(?:ahitza\\|s\\(?: phrase\\|code\\|ord\\|phrase\\|wor[dt]\\)\\|vorto\\)\\)\\|s\\(?:alasana\\|enha\\|laptažodis\\)\\|wachtwoord\\|лозинка\\|пароль\\|ססמה\\|كلمة السر\\|गुप्तशब्द\\|शब्दकूट\\|গুপ্তশব্দ\\|পাসওয়ার্ড\\|ਪਾਸਵਰਡ\\|પાસવર્ડ\\|ପ୍ରବେଶ ସଙ୍କେତ\\|கடவுச்சொல்\\|సంకేతపదము\\|ಗುಪ್ತಪದ\\|അടയാളവാക്ക്\\|රහස්පදය\\|ពាក្យសម្ងាត់\\|パスワード\\|密[码碼]\\|암호\\)\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: for [^:：៖]+\\)?[:：៖]\\s *\\'")
+  :config (add-hook 'comint-output-filter-functions
+                    'comint-watch-for-password-prompt))
+
+(global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
+
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (defun jcs-kill-a-buffer (askp)
   "Just kill this damn buffer! If ASKP provided, ask which buffer to kill."
@@ -52,6 +63,7 @@
     (kill-this-buffer)))
 
 ;; Chrome extension for editing stuff in Emacs
+;; FIXME: Convert this to use-package
 (when (require 'edit-server nil t)
   (setq edit-server-new-frame nil)
   (edit-server-start))
