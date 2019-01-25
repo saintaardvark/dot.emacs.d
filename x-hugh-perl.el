@@ -9,7 +9,8 @@
 (use-package perldoc)
 (defalias 'perl-mode 'cperl-mode)
 ;; 8 spaces for tab, the way God intended
-;;(setq perl-indent-level 8)
+(setq nperl-indent-level 8)
+(setq cperl-indent-level 8)
 
 (provide 'x-hugh-perl)
 ;;; x-hugh-perl ends here

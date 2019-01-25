@@ -18,7 +18,6 @@
  '(case-fold-search t)
  '(cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef")
  '(compilation-scroll-output 'first-error)
- '(cperl-indent-level 8)
  '(current-language-environment "English")
  '(custom-enabled-themes '(solarized-dark))
  '(custom-safe-themes
