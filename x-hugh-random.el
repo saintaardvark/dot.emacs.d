@@ -24,14 +24,12 @@
 (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
-(setq epg-gpg-program (executable-find "gpg"))
-
-
+;; Now the rest in alphabetical order
 (setq c-basic-offset 8)
 (setq calendar-offset 0)
 (setq case-fold-search t)
 ;; Check for ispell stuff.
-(setq spell-command "ispell")
+(setq epg-gpg-program (executable-find "gpg"))
 ;; From http://www.emacswiki.org/emacs/CopyAndPaste
 (setq select-active-regions t) ;  active region sets primary X11 selection
 
