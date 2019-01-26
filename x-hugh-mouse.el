@@ -37,4 +37,5 @@
     ;;; and don't forget to enable the touchpad when you exit Emacs:
     (add-hook 'kill-emacs-hook #'touchpad-on)))
 
+(provide 'x-hugh-mouse)
 ;;; x-hugh-mouse ends here
