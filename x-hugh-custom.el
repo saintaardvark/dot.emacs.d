@@ -25,7 +25,6 @@
  '(eshell-visual-commands
    '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh"))
  '(find-grep-options "-qi")
- '(flyspell-auto-correct-binding [67108904])
  '(global-flycheck-mode nil)
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)

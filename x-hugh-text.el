@@ -7,14 +7,19 @@
 ;; Text mode
 (use-package filladapt)
 
+;; FIXME: Not even sure what keypress that flyspell binding actually maps to
+(use-package flyspell
+  :config (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
+  :custom (flyspell-auto-correct-binding [67108904]))
+
 (add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
 (add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
-(add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
+
 ;; (add-hook 'git-commit-mode '(lambda () (auto-fill-mode -1)))
 
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
-;; FIXME: Table of words to exclude. Example: GHz, VMs
+;; FIXME: Table of words to exclude. Example: GHz, VMs, IPs
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
