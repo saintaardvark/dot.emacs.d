@@ -29,8 +29,20 @@
 (setq calendar-offset 0)
 (setq case-fold-search t)
 (setq epg-gpg-program (executable-find "gpg"))
+(setq find-grep-options "-qi")
+(setq global-flycheck-mode nil)
+(setq global-font-lock-mode t)
+(setq indent-tabs-mode nil)
+(setq iswitchb-prompt-newbuffer nil)
+(setq kill-read-only-ok t)
+
+(setq js-indent-level 2)
 ;; From http://www.emacswiki.org/emacs/CopyAndPaste
 (setq select-active-regions t) ;  active region sets primary X11 selection
+(setq send-mail-function 'sendmail-send-it)
+(setq c-basic-offset 8)
+(setq standard-indent 8)
+(setq user-mail-address "aardvark@saintaardvarkthecarpeted.com")
 
 (put 'narrow-to-region 'disabled nil)
 (fset 'yes-or-no-p 'y-or-n-p) ; enable one letter y/n answers to yes/no
