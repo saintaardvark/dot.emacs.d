@@ -19,6 +19,7 @@
 (defconst DISABLE-TOUCHPAD XINPUT-DISABLE-TOUCHPAD)
 (defconst ENABLE-TOUCHPAD  XINPUT-ENABLE-TOUCHPAD)
 
+;; FIXME: These two take frame as an argument, but I don't think they do anything with them.
 (defun touchpad-off (&optional frame)
   "Simple command to disable the touchpad."
   (interactive)
@@ -29,6 +30,7 @@
   (interactive)
   (shell-command ENABLE-TOUCHPAD))
 
+;; FIXME: focus-in-hook/focus-out-hook are obsolete
 (when (executable-find "xinput")
   (progn
     (add-hook 'focus-in-hook #'touchpad-off)
