@@ -37,5 +37,8 @@
     ;;; and don't forget to enable the touchpad when you exit Emacs:
     (add-hook 'kill-emacs-hook #'touchpad-on)))
 
+;; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
+(global-set-key [mouse-2] 'mouse-yank-primary)
+
 (provide 'x-hugh-mouse)
 ;;; x-hugh-mouse ends here

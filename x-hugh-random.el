@@ -48,8 +48,6 @@
   :config (add-hook 'comint-output-filter-functions
                     'comint-watch-for-password-prompt))
 
-(global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
-
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (defun jcs-kill-a-buffer (askp)
   "Just kill this damn buffer! If ASKP provided, ask which buffer to kill."
