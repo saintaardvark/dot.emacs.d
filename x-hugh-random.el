@@ -28,7 +28,6 @@
 (setq c-basic-offset 8)
 (setq calendar-offset 0)
 (setq case-fold-search t)
-;; Check for ispell stuff.
 (setq epg-gpg-program (executable-find "gpg"))
 ;; From http://www.emacswiki.org/emacs/CopyAndPaste
 (setq select-active-regions t) ;  active region sets primary X11 selection
@@ -38,9 +37,6 @@
 
 ;; Sigh...causing too many problems with git repo
 ;; (add-hook 'write-file-hooks 'delete-trailing-whitespace)
-
-(when (executable-find spell-command)
-  (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1))))
 
 (use-package comint
   :custom (comint-password-prompt-regexp
