@@ -63,10 +63,9 @@
     (kill-this-buffer)))
 
 ;; Chrome extension for editing stuff in Emacs
-;; FIXME: Convert this to use-package
-(when (require 'edit-server nil t)
-  (setq edit-server-new-frame nil)
-  (edit-server-start))
+(use-package edit-server
+  :custom (edit-server-new-frame nil)
+  :config (edit-server-start))
 
 (defun kill-associated-diff-buf ()
   "Tidy up diffs when closing the file."

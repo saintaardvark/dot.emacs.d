@@ -7,9 +7,6 @@
 
 (quietly-read-abbrev-file)
 (server-start)
-;; Chrome extension
-;; (require 'edit-server)
-;; (edit-server-start)
 (setq major-mode 'text-mode)
 
 ;; start in home directory instead of root
