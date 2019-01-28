@@ -94,7 +94,9 @@
 (use-package x-hugh-python)
 (use-package x-hugh-shell)
 ;; (use-package x-hugh-ruby)
-;; (use-package cfg)
+
+;; (use-package cfg
+;;   :custom (cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef"))
 
 ;; Hydra comes before keymap.
 (use-package x-hugh-hydra)

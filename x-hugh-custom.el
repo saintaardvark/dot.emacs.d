@@ -12,7 +12,6 @@
  ;; If there is more than one, they won't work right.
  ;;
  ;; Only 57 lines to be migrated away!
- '(cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef")
  '(compilation-scroll-output 'first-error)
  '(current-language-environment "English")
  '(custom-enabled-themes '(solarized-dark))
