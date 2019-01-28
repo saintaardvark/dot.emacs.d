@@ -38,6 +38,8 @@
 (use-package compile
   :custom (compilation-scroll-output 'first-error))
 ;; FIXME: Think I can use custom here
+(use-package delsel
+  :custom (delete-selection-mode nil))
 (use-package dired
   :config
   (setq dired-dwim-target t)
