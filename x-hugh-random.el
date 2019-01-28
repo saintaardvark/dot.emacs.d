@@ -35,10 +35,19 @@
 (setq indent-tabs-mode nil)
 (setq iswitchb-prompt-newbuffer nil)
 (setq kill-read-only-ok t)
-
 (setq js-indent-level 2)
+(setq require-final-newline t)
+(setq safe-local-variable-values
+      '((eval add-hook 'before-save-hook
+              (lambda nil
+		(delete-trailing-whitespace)
+		nil))
+	(mangle-whitespace . t)
+	(rm-trailing-spaces . t)))
+
 ;; From http://www.emacswiki.org/emacs/CopyAndPaste
 (setq select-active-regions t) ;  active region sets primary X11 selection
+(setq select-enable-clipboard t)
 (setq send-mail-function 'sendmail-send-it)
 (setq c-basic-offset 8)
 (setq standard-indent 8)

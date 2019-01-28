@@ -23,16 +23,6 @@
  '(ns-command-modifier nil)
  '(package-selected-packages
    '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
- '(require-final-newline t)
- '(safe-local-variable-values
-   '((eval add-hook 'before-save-hook
-           (lambda nil
-             (delete-trailing-whitespace)
-             nil))
-     (mangle-whitespace . t)
-     (rm-trailing-spaces . t)))
- '(select-active-regions t)
- '(select-enable-clipboard t)
  '(vc-follow-symlinks nil)
  '(w3m-use-cookies t)
  '(win-switch-idle-time 1.25))
