@@ -35,6 +35,8 @@
          ("sites-\\(available\\|enabled\\)/" . apache-mode)))
 (use-package browse-kill-ring)
 (use-package boxquote)
+(use-package compile
+  :custom (compilation-scroll-output 'first-error))
 ;; FIXME: Think I can use custom here
 (use-package dired
   :config
