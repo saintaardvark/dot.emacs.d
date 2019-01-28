@@ -7,7 +7,8 @@
   CLOSED: [2019-01-24 Thu 08:36]
 * DONE Error (use-package): Cannot load visual-line-mode
   CLOSED: [2019-01-18 Fri 20:11]
-* TODO Error (use-package): Cannot load ssh
+* DONE Error (use-package): Cannot load ssh
+  CLOSED: [2019-01-28 Mon 08:13]
 * TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
   your ‘.emacs.d’ directory: ~/.emacs.d/
@@ -17,3 +18,5 @@
   - If turn this on globally, then it ends up borking auto-fill-mode
     in Post-mode...but it's damn handy for nearly everything else
 * TODO Add keyboard shortcut for delete-horizontal-space
+* TODO File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
+  - not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
