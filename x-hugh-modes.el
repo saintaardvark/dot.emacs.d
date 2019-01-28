@@ -37,14 +37,12 @@
 (use-package boxquote)
 (use-package compile
   :custom (compilation-scroll-output 'first-error))
-;; FIXME: Think I can use custom here
 (use-package delsel
   :custom (delete-selection-mode nil))
 (use-package dired
-  :config
-  (setq dired-dwim-target t)
-  (setq dired-recursive-copies 'always)
-  (setq ddired-recursive-deletes 'top))
+  :custom ((dired-dwim-target t)
+	   (dired-recursive-copies 'always)
+	   (dired-recursive-deletes 'top)))
 (use-package flycheck
   :config (add-hook 'after-init-hook #'global-flycheck-mode)
   :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
