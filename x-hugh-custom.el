@@ -23,9 +23,7 @@
  '(ns-command-modifier nil)
  '(package-selected-packages
    '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
- '(vc-follow-symlinks nil)
- '(w3m-use-cookies t)
- '(win-switch-idle-time 1.25))
+)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
