@@ -78,8 +78,7 @@
   ;; 24.2; not sure what is different.  This is ugly but it works.
                                         ; (fset 'post-finish 'server-edit)
   :mode ("mutt.*$" . post-mode)
-  :hook (abbrev-mode smartparens-mode)
-  )
+  :hook (abbrev-mode smartparens-mode))
 ;; Load ssh.
 ;; FIXME: Don't have this anymore :-(
 (use-package ssh)
