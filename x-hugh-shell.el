@@ -33,5 +33,9 @@ Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
   :config
   (setq explicit-shell-file-name "/bin/bash"))
 
+(use-package em-term
+  :custom (eshell-visual-commands
+	   '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
+
 (provide 'x-hugh-shell)
 ;;; x-hugh-shell ends here

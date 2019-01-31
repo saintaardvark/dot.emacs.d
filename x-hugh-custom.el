@@ -12,8 +12,6 @@
  ;; If there is more than one, they won't work right.
  ;;
  ;; Only 57 lines to be migrated away!
- '(eshell-visual-commands
-   '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh"))
  '(ns-command-modifier nil)
  '(package-selected-packages
    '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
