@@ -10,12 +10,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;
- ;; Only 57 lines to be migrated away!
  '(ns-command-modifier nil)
  '(package-selected-packages
-   '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
-)
+   '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
