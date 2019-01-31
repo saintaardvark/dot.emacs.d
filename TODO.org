@@ -20,3 +20,6 @@
 * TODO Add keyboard shortcut for delete-horizontal-space
 * TODO File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
   - not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
+* TODO Clear out custom file
+* TODO Set custom file to /dev/null or some such
+* TODO Figure out flashing matching parens script again
