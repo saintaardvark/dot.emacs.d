@@ -12,9 +12,6 @@
  ;; If there is more than one, they won't work right.
  ;;
  ;; Only 57 lines to be migrated away!
- '(ediff-merge-split-window-function 'split-window-horizontally)
- '(ediff-split-window-function 'split-window-horizontally)
- '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(eshell-visual-commands
    '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh"))
  '(ns-command-modifier nil)
