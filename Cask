@@ -124,6 +124,7 @@
 (depends-on "puppet-mode")
 (depends-on "py-autopep8")
 (depends-on "pyvenv")
+(depends-on "rainbow-delimiters")
 (depends-on "request")
 (depends-on "restclient")
 (depends-on "restclient-test")

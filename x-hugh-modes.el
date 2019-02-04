@@ -79,6 +79,23 @@
                                         ; (fset 'post-finish 'server-edit)
   :mode ("mutt.*$" . post-mode)
   :hook (abbrev-mode smartparens-mode))
+;; Without this particular form for :hook, I get this error:
+;; File mode specification error: (error Autoloading file /home/aardvark/.emacs.d/.cask/26.1/elpa/rainbow-delimiters-20170929.1132/rainbow-delimiters.elc failed to define function rainbow-delimiters)
+;;
+;; Explanation: You've implicitly told use-package to make an autoload
+;; declaration that the rainbow-delimiters library defines a function
+;; which is also named rainbow-delimiters (and to add that function to
+;; prog-mode-hook). Consequently when prog-mode-hook runs and calls
+;; the (autoloaded) function rainbow-delimiters, the autoloading
+;; mechanism duly loads the rainbow-delimiters library in order to get
+;; the real definition of that function -- and then finds that the
+;; stated function wasn't defined by that library after all, and
+;; complains.
+;;
+;; Quoted from https://www.reddit.com/r/emacs/comments/87atsm/issue_with_rainbowdelimiters_not_defining_the/
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 ;; Load ssh.
 (use-package ssh)
 
