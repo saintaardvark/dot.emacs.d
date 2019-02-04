@@ -77,8 +77,15 @@
   ;; daemon hanging around all the time.  This is new behaviour as of
   ;; 24.2; not sure what is different.  This is ugly but it works.
                                         ; (fset 'post-finish 'server-edit)
-  :mode ("mutt.*$" . post-mode)
-  :hook (abbrev-mode smartparens-mode))
+  :mode ("mutt.*$" . post-mode))
+;; FIXME: Not sure what I intended here -- I think to turn on abbrev
+;; and smartparens, but not sure.  In any case, uncommenting these
+;; gives this error:
+;; https://stackoverflow.com/questions/11807128/emacs-nesting-exceeds-max-lisp-eval-depth
+
+;; :hook ((abbrev-mode . post-mode))
+;;  (smartparens-mode . post-mode)))
+
 ;; Without this particular form for :hook, I get this error:
 ;; File mode specification error: (error Autoloading file /home/aardvark/.emacs.d/.cask/26.1/elpa/rainbow-delimiters-20170929.1132/rainbow-delimiters.elc failed to define function rainbow-delimiters)
 ;;
