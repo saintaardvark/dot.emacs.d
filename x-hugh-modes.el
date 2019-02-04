@@ -80,7 +80,6 @@
   :mode ("mutt.*$" . post-mode)
   :hook (abbrev-mode smartparens-mode))
 ;; Load ssh.
-;; FIXME: Don't have this anymore :-(
 (use-package ssh)
 
 ;; Use scp for tramp.
