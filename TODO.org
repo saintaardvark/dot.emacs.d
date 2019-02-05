@@ -22,5 +22,9 @@
   - not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
 * TODO Clear out custom file
 * TODO Set custom file to /dev/null or some such
-* TODO Figure out flashing matching parens script again
+* DONE Figure out flashing matching parens script again
+  CLOSED: [2019-02-05 Tue 06:22]
   - mic-paren
+* TODO Figure out why server keeps needing restart on home laptop
+  - Is this midnight mode?
+*
