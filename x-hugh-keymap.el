@@ -6,6 +6,12 @@
 
 ;; Keymaps
 
+;; Unbind M-x and use C-x C-m or C-c C-m instead.
+;; Thank you, Steve Yegge.
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
+(global-unset-key "\M-x")
+
 ;; Win-switch
 ;; (global-set-key "\C-xo" 'win-switch-dispatch)
 ;; (win-switch-setup-keys-ijkl "\C-xo")
@@ -156,10 +162,6 @@
 ;; (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
 ;; (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
-;; Going to try Steve Yegge's suggestion.
-;; https://www.reddit.com/r/emacs/comments/2z3yxe/invoke_mx_without_the_alt_key/
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
 
 (provide 'x-hugh-keymap)
 ;;; x-hugh-keymap ends here
