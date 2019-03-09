@@ -12,7 +12,6 @@
 ;; (global-set-key "\C-c\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-m" 'helm-M-x)
 (global-set-key "\C-c\C-m" 'helm-M-x)
-
 (global-unset-key "\M-x")
 
 ;; Win-switch
@@ -165,6 +164,9 @@
 ;; (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
 ;; (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Try to do away with M-x in favour of C-c C-m
 (provide 'x-hugh-keymap)
 ;;; x-hugh-keymap ends here
