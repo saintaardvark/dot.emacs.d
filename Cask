@@ -38,6 +38,7 @@
 (depends-on "docker-tramp")
 (depends-on "dockerfile-mode")
 (depends-on "drag-stuff")
+(depends-on "ein")
 (depends-on "elpy")
 (depends-on "epl")
 (depends-on "esxml")
