@@ -9,6 +9,12 @@
   CLOSED: [2019-01-18 Fri 20:11]
 * DONE Error (use-package): Cannot load ssh
   CLOSED: [2019-01-28 Mon 08:13]
+* TODO Why is grx being detected as make project instead of go?
+  - Problem: C-c p 4 t from main.go does not open main_test.go;
+    instead, says "projectile-find-implementation-or-test: No matching
+    test file found for project type ‘make’"
+  - [[file:.cask/26.1/elpa/projectile-20190126.1117/projectile.el::(projectile-register-project-type%20'go%20projectile-go-project-test-function][this function]] (er, custom var appears to show that it *should* be
+    detectable -- just not sure why it's not
 * TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
   your ‘.emacs.d’ directory: ~/.emacs.d/
