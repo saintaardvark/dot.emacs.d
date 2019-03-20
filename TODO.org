@@ -33,4 +33,6 @@
   - mic-paren
 * TODO Figure out why server keeps needing restart on home laptop
   - Is this midnight mode?
-*
+* TODO Stop helm from trying to autocomplete stuff at point
+  - I very rarely want to email someone if point at an email address
+  - ditto for hyperlink
