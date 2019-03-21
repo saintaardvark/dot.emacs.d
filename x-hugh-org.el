@@ -395,7 +395,7 @@ Hugh
     ;; showing up in the agenda view.
     (find-file "/home/aardvark/orgmode/books.org.txt")
     (org-html-export-as-html)
-    (write-region nil nil "/l2:/home/aardvark/public_html/random/books.html")
+    (write-region nil nil "/ssh:l2:/home/aardvark/public_html/random/books.html")
     (kill-buffer)))
 
 (defun x-hugh-org-export-password-file()
