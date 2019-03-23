@@ -17,6 +17,12 @@
   (forward-line -1)
   (indent-according-to-mode))
 
+;; NOTE: shell *scripting* mode is "sh-mode"; the docstring for
+;; shell-script-mode says "shell-script-mode is an alias for ‘sh-mode’
+;; in ‘sh-script.el’."  The thing to keep in mind is that the *hook*
+;; for this mode is "sh-mode-hook".  See x-hugh-smartparens.el for
+;; where that proper name is used to ensure that smartparens is turned
+;; on in this mode.
 (use-package smartparens
   :custom (sp-navigate-close-if-unbalanced t)
   :config (progn (x-hugh-sp-add-hook-to-modes ("arduino"
@@ -30,8 +36,8 @@
                                                "markdown"
                                                "ruby"
                                                "python"
+					       "sh"
                                                "shell"
-                                               "shell-script"
                                                "terraform"
                                                "toml"
                                                "yaml"))

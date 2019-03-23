@@ -114,6 +114,12 @@
 ;; Shell script stuff
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+
+;; NOTE: shell-script-mode is an alias for ‘sh-mode’ in
+;; ‘sh-script.el’; the hook is sh-mode-hook.  See
+;; x-hugh-smartparens.el for more detail,
+(add-to-list 'auto-mode-alist '("\\.sh" . shell-script-mode))
+
 (use-package uniquify
   :custom ((uniquify-buffer-name-style 'post-forward nil (uniquify))
            (uniquify-min-dir-content 2)))
