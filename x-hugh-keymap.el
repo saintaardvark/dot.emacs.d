@@ -59,12 +59,11 @@
 ;; C-c g: golang stuff
 ;; C-c i: random file stuff.
 ;; C-c o: org
-;; C-c p: wiki/blog
+;; C-c p: RESERVED FOR PROJECTILE
 ;; C-c u: random
 ;; C-c v: vagrant
 ;; C-c w: workgroups.
 ;; C-c y: window (hydra)
-;; C-c 3: CFEngine
 
 ;; Global menu
 (global-set-key (kbd "C-c h") 'hydra-menu/body)
