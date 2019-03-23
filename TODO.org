@@ -15,6 +15,8 @@
     test file found for project type ‘make’"
   - [[file:.cask/26.1/elpa/projectile-20190126.1117/projectile.el::(projectile-register-project-type%20'go%20projectile-go-project-test-function][this function]] (er, custom var appears to show that it *should* be
     detectable -- just not sure why it's not
+* DONE Change x-hugh-navi: C-' -> char, C-'' -> line
+  CLOSED: [2019-03-23 Sat 11:52]
 * TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
   your ‘.emacs.d’ directory: ~/.emacs.d/
