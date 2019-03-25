@@ -68,6 +68,7 @@
 (depends-on "golint")
 (depends-on "google-this")
 (depends-on "groovy-mode")
+(depends-on "gruvbox-theme")
 (depends-on "hcl-mode")
 (depends-on "helm")
 (depends-on "helm-commandlinefu")
