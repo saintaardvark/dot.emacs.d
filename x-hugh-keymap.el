@@ -8,8 +8,11 @@
 
 ;; Unbind M-x and use C-x C-m or C-c C-m instead.
 ;; Thank you, Steve Yegge.
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
+;; (global-set-key "\C-x\C-m" 'execute-extended-command)
+;; (global-set-key "\C-c\C-m" 'execute-extended-command)
+(global-set-key "\C-x\C-m" 'helm-M-x)
+(global-set-key "\C-c\C-m" 'helm-M-x)
+
 (global-unset-key "\M-x")
 
 ;; Win-switch
