@@ -154,8 +154,6 @@
 (depends-on "twittering-mode")
 (depends-on "ucs-utils")
 (depends-on "use-package")
-(depends-on "vagrant")
-(depends-on "vagrant-tramp")
 (depends-on "wc-mode")
 (depends-on "web-beautify")
 (depends-on "web-mode")
