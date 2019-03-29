@@ -20,17 +20,40 @@
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
 ;; FIXME: Table of words to exclude. Example: GHz, VMs, IPs
+;; (defun dcaps-to-scaps ()
+;;   "Convert word in DOuble CApitals to Single Capitals."
+;;   (interactive)
+;;   (and (= ?w (char-syntax (char-before)))
+;;        (save-excursion
+;;          (and (if (called-interactively-p)
+;;                   (skip-syntax-backward "w")
+;;                 (= -3 (skip-syntax-backward "w")))
+;;               (let (case-fold-search)
+;;                 (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
+;;               (capitalize-word 1)))))
+
+;; trying a refactor
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
   (and (= ?w (char-syntax (char-before)))
        (save-excursion
-         (and (if (called-interactively-p)
+         (and (if (called-interactively-p "any")
                   (skip-syntax-backward "w")
                 (= -3 (skip-syntax-backward "w")))
               (let (case-fold-search)
-                (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
-              (capitalize-word 1)))))
+		(and
+                 (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]")
+		 ;; This works -- but when I try to figure out
+		 ;; alternation, no luck (GHz|IPs|VMs)
+		 (not (looking-at "(GHz\\|IPs\\|VMs)"))))
+	      (capitalize-word 1)))))
+
+;; Test function for above
+;; (defun x-hugh-test()
+;;   (interactive)
+;;   (message (format "%s" (let (case-fold-search)
+;; 			      (looking-at "IPs\\|VMs\\|GHz")))))
 
 (define-minor-mode dubcaps-mode
   "Toggle `dubcaps-mode'.  Converts words in DOuble CApitals to
