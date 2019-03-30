@@ -25,7 +25,7 @@
   (interactive)
   (and (= ?w (char-syntax (char-before)))
        (save-excursion
-         (and (if (called-interactively-p)
+         (and (if (called-interactively-p "any")
                   (skip-syntax-backward "w")
                 (= -3 (skip-syntax-backward "w")))
               (let (case-fold-search)
