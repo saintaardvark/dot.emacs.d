@@ -19,7 +19,7 @@
 
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
-;; FIXME: Table of words to exclude. Example: GHz, VMs, IPs
+;; FIXME: Have better way of specifying words to exclude
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
@@ -29,8 +29,10 @@
                   (skip-syntax-backward "w")
                 (= -3 (skip-syntax-backward "w")))
               (let (case-fold-search)
-                (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
-              (capitalize-word 1)))))
+		(and
+                 (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]")
+		 (not (looking-at "GHz\\|IPs\\|VMs")))) ; no brackets for alternation!
+	      (capitalize-word 1)))))
 
 (define-minor-mode dubcaps-mode
   "Toggle `dubcaps-mode'.  Converts words in DOuble CApitals to
