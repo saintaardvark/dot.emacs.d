@@ -12,8 +12,10 @@
 ;; x-hugh-custom.
 
 (use-package highlight-indent-guides
-  :custom (highlight-indent-guides-method 'character)
-  :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+  :custom (highlight-indent-guides-method 'character))
+
+;; I'm not liking how this looks
+;; :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 (use-package python
   :custom (python-indent-guess-indent-offset t))
