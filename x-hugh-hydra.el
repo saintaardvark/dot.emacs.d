@@ -13,12 +13,11 @@
   ("i" hydra-personal-files/body "personal files")
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
-  ("p" hydra-puppet/body "puppet")
   ("t" hydra-text/body "text")
   ("v" hydra-vinz/body "Vinz")
-  ("y" hydra-window/body "window")
-  ("z" hydra-zoom/body "zoom")
-  )
+  ("w" hydra-window/body "window")
+  ("y" hydra-python/body "python")
+  ("z" hydra-zoom/body "zoom"))
 
 (defhydra hydra-apropos (:exit t )
   ("a" apropos "apropos")
@@ -176,6 +175,10 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("d" x-hugh-golang-insert-log-debug "debug")
   ("o" (dired "~/go/src") "Browse ~/go/src")
   ("s" (dired "/usr/local/go/src") "Browse GOROOT/src"))
+
+(defhydra hydra-python (:exit t)
+  "python"
+  ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight"))
 
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
