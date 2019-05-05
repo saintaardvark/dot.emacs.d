@@ -38,3 +38,9 @@
 * TODO Stop helm from trying to autocomplete stuff at point
   - I very rarely want to email someone if point at an email address
   - ditto for hyperlink
+* TODO Nyan cat images missing from home emacs [MAX_EMERG]
+* TODO gruvbox theme does not work
+  Get this error when loading at home: "Symbol’s value as variable is
+  void": neo-banner-face poss from
+  https://github.com/jaypei/emacs-neotree? which doesn't look like it
+
