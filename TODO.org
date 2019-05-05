@@ -43,4 +43,6 @@
   Get this error when loading at home: "Symbol’s value as variable is
   void": neo-banner-face poss from
   https://github.com/jaypei/emacs-neotree? which doesn't look like it
-
+* TODO Add visual-lines-mode to hydra if not there already
+* TODO Add longlines-mode alias for visual-lines-mode
+   I can never remember the new name...
