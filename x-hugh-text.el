@@ -31,7 +31,7 @@
               (let (case-fold-search)
 		(and
                  (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]")
-		 (not (looking-at "GHz\\|IPs\\|VMs")))) ; no brackets for alternation!
+		 (not (looking-at "GHz\\|IPs\\|VMs\\|DCs")))) ; no brackets for alternation!
 	      (capitalize-word 1)))))
 
 (define-minor-mode dubcaps-mode
