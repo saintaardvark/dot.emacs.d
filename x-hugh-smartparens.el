@@ -17,6 +17,12 @@
   (forward-line -1)
   (indent-according-to-mode))
 
+;; This is the package that enables showing matching parens.
+;; FIXME: it *may* be necessary to enable this package before
+;; smartparens.
+(use-package mic-paren
+  :config (paren-activate))
+
 ;; NOTE: shell *scripting* mode is "sh-mode"; the docstring for
 ;; shell-script-mode says "shell-script-mode is an alias for ‘sh-mode’
 ;; in ‘sh-script.el’."  The thing to keep in mind is that the *hook*

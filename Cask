@@ -105,6 +105,7 @@
 (depends-on "markdown-mode")
 (depends-on "markdown-mode+")
 (depends-on "marshal")
+(depends-on "mic-paren")
 (depends-on "multiple-cursors")
 (depends-on "nav-flash")
 (depends-on "nyan-mode")
