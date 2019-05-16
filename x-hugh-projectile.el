@@ -7,7 +7,10 @@
 ;; (add-hook 'chef-mode-hook 'projectile-mode)
 (projectile-mode)
 
+;; FIXME -- I like the helm-projectile, but I *really* want C-c p s for
+;; a shell.
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; (define-key projectile-mode-map (kbd "C-c p") 'helm-projectile)
 
 ;; (projectile-register-project-type
 ;;  'chef
