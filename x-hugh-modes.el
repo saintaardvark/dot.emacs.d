@@ -5,8 +5,6 @@
 
 ;;; Code:
 
-;; FIXME: Alphabetize the modes
-
 ;; NOTE: Since I come here for examples for use-package...there *is* a
 ;; custom section.  Example:
 
