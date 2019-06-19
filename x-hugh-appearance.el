@@ -49,7 +49,7 @@
 (defun x-hugh-set-font-larger ()
   "Set font to 16 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-18"))
+  (set-frame-font "Inconsolata-16"))
 ;; (require 'color-theme nil 'noerror)
 ;; (load-theme "solarized-dark" t)
 
@@ -115,8 +115,8 @@ Assumes font named like `Inconsolata-14`."
 (defun fontify-frame-appropriate-font ()
   "Return the appropriate font for displays."
   (interactive)
-  (cond ((fontify-frame-screen-res-retina-p) "Inconsolata-18")
-        ((fontify-frame-screen-res-high-enough-p) "Inconsolata-14")
+  (cond ((fontify-frame-screen-res-retina-p) "Inconsolata-22")
+        ((fontify-frame-screen-res-high-enough-p) "Inconsolata-18")
         ((fontify-frame-screen-tiny-laptop-p) "Inconsolata-12")))
 
 (defun fontify-frame-screen-res-retina-p ()
