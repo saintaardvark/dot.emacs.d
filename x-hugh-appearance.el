@@ -28,12 +28,16 @@
 (setq column-number-mode t
       display-time-24hr-format t
       display-time-and-date t)
+
 (display-time)
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+
 ;; Only works in X mode, sadly...see .bashrc for a commented-out line
 ;; that'll turn off blinking in a linux terminal.
 (blink-cursor-mode -1)
+
 ;; Begone!
 (setq inhibit-splash-screen t)
 
@@ -57,7 +61,6 @@
   "Reload x-hugh-appearance.el."
   (interactive)
   (load-file "~/.emacs.d/x-hugh-appearance.el"))
-
 
 ;; FIXME: Refactor all this
 ;; FIXME: This needs to be broken out into a package
