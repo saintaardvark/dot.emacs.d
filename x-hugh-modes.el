@@ -18,9 +18,10 @@
   :config (global-annoying-arrows-mode))
 
 ;; FIXME: Pretty sure there's a better way to add hooks here...
-;; For ANSI colourization in compilation buffers.
-;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode/20788581#20788581
 (defun my-colorize-compilation-buffer ()
+  "Enable ANSI colourization in compilation buffers.
+
+Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode/20788581#20788581"
   (when (eq major-mode 'compilation-mode)
     (ansi-color-apply-on-region compilation-filter-start (point-max))))
 
