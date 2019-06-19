@@ -75,7 +75,6 @@
            (clean-buffer-list-kill-never-buffer-names (quote ("*scratch*" "*Messages*" "*server*" ".\\*\\.org$")))))
 
 ;; Because it's fun.
-;; FIXME: do I need to enable using :config?
 (use-package nyan-mode
   :config (nyan-mode))
 
