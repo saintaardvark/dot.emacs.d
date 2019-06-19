@@ -51,6 +51,15 @@
 	   (dired-recursive-copies 'always)
 	   (dired-recursive-deletes 'top)))
 
+;; button-lock is required for `fixmee` mode.  My `use-package` stanzas
+;; are listed alphabetically, so this would work -- but that seems a
+;; poor thing to count on, and it's not good to have it far away.
+;; Putting this here, using the `preface` directive to ensure it's
+;; loaded first.  Still not great, but it will work for now.
+(use-package fixmee
+  :preface (use-package button-lock)
+  :config (global-fixmee-mode))
+
 (use-package flycheck
   :config (add-hook 'after-init-hook #'global-flycheck-mode)
   :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
