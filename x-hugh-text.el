@@ -71,6 +71,21 @@ Example output:
     (goto-char (point-min))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
+(defun x-hugh-hi-bob ()
+  "Clean up email when replying to another amateur."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "Saint Aardvark the Carpeted <aardvark@saintaardvarkthecarpeted.com>" nil t)
+      (replace-match "Hugh Brown VA7UNX <va7unx@members.fsf.org>" nil nil))
+    (post-goto-signature)
+    (let ((beg (point)))
+      (goto-char (point-max))
+      (kill-region beg (point))
+      (insert-file-contents "~/.signature-va7unx"))
+
+    (flush-lines "Because the plural of Anecdote is Myth" nil t)))
+
 (defun x-hugh-zap (arg char)
   "Kill up to, but *not* including, ARGth occurrence of CHAR.
 
