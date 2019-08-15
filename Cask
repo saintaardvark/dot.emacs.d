@@ -78,7 +78,6 @@
 (depends-on "helm-swoop")
 (depends-on "highlight-current-line")
 (depends-on "highlight-indent-guides")
-(depends-on "highlight-indentation")
 (depends-on "highlight-tail")
 (depends-on "highlight-thing")
 (depends-on "hl-line+")

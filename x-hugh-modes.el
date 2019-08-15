@@ -66,6 +66,10 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
            (flycheck-idle-change-delay 2)
            (flycheck-keymap-prefix ".")))
 
+(use-package highlight-indent-guides
+  :custom (highlight-indent-guides-method 'character)
+  :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+
 (use-package linum)
 
 (use-package midnight

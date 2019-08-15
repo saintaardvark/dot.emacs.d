@@ -6,16 +6,10 @@
 ;;; Code:
 
 (use-package elpy
+  ;; The default list, but minus highlight-indentation.
+  ;; Giving highlight-indentationo-guides a try.
+  :custom (elpy-modules '(elpy-module-sane-defaults elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-django))
   :config (elpy-enable))
-;; I like this better than highlight-indentation-mode.
-;; highlight-indentation is set as part of elpy-modules; that's in
-;; x-hugh-custom.
-
-(use-package highlight-indent-guides
-  :custom (highlight-indent-guides-method 'character))
-
-;; I'm not liking how this looks
-;; :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 (defun x-hugh-highlight-indentation-mode-toggle ()
   "Toggle whether highlight-indentation-mode is enabled.
