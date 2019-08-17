@@ -4,7 +4,6 @@
 ;;; Might as well put them some place...
 
 ;;; Code:
-;; FIXME: Set password file as var somewhere.
 
 (defgroup x-hugh-passwords nil
   "Settings for passwords.."
