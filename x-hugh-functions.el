@@ -164,22 +164,6 @@ I can never remember how to do this."
   (set-buffer-file-coding-system 'undecided-unix)
   (save-buffer))
 
-(defun x-hugh-die-outlook-die ()
-  "Decode HTML mail when replying.  Not quite perfect, but close."
-  (interactive)
-  (save-excursion
-    (post-goto-body)
-    (search-forward-regexp "^>")
-    (let ((beg (point)))
-      (goto-char (point-max))
-      (search-backward-regexp ">")
-      (end-of-line)
-      (shell-command-on-region beg (point) "/usr/bin/w3m -T text/html" t t)
-      (flush-lines (rx bol ">" (zero-or-more blank) eol))
-      (flush-lines (rx bol (zero-or-more blank) eol))
-      (post-goto-signature)
-      (post-quote-region beg (point)))))
-
 ;; From http://stackoverflow.com/questions/23588549/emacs-copy-region-line-and-comment-at-the-same-time
 
 (defun x-hugh-copy-and-comment-region (beg end &optional arg)

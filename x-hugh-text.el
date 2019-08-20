@@ -71,6 +71,22 @@ Example output:
     (goto-char (point-min))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
+(defun x-hugh-die-outlook-die ()
+  "Decode HTML mail when replying.  Not quite perfect, but close."
+  (interactive)
+  (save-excursion
+    (post-goto-body)
+    (search-forward-regexp "^>")
+    (let ((beg (point)))
+      (goto-char (point-max))
+      (search-backward-regexp ">")
+      (end-of-line)
+      (shell-command-on-region beg (point) "/usr/bin/w3m -T text/html" t t)
+      (flush-lines (rx bol ">" (zero-or-more blank) eol))
+      (flush-lines (rx bol (zero-or-more blank) eol))
+      (post-goto-signature)
+      (post-quote-region beg (point)))))
+
 (defun x-hugh-hi-bob ()
   "Clean up email when replying to another amateur."
   (interactive)
