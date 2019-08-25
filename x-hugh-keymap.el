@@ -80,6 +80,8 @@
 (global-set-key (kbd "C-c y") 'hydra-python/body)
 (global-set-key (kbd "C-c z") 'hydra-zoom/body)
 
+;; Oooh, expand-region!
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 ;; For some reason, markdown mode grabs this binding.  I *REALLY* want
 ;; it back.  I don't know why this isn't working.
