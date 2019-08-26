@@ -6,7 +6,7 @@
 ;;; Code:
 
 (defgroup x-hugh-passwords nil
-  "Settings for passwords.."
+  "Settings for passwords."
   :group 'tools)
 
 (defcustom x-hugh-passwords/password-file "~/passwords.git/passwords.gpg"
