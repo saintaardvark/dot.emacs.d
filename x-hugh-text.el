@@ -17,6 +17,29 @@
 
 ;; (add-hook 'git-commit-mode '(lambda () (auto-fill-mode -1)))
 
+;; (defgroup x-hugh-doubled-words nil
+;;   "Settings for doubled-words.."
+;;   :group 'tools)
+
+;; (defcustom x-hugh-doubled-words/exclusions
+;;   '("GHz" "IPs" "VMs" "DCs")
+;;   "List of words to exclude from doubling protection."
+;;   :type 'string
+;;   :group 'x-hugh-doubled-words)
+
+;; (defun x-hugh-doubled-words/build-exclusion-regex (excluded-words)
+;;   "Build a regex out of words to exclude from x-hugh-doubled-words."
+;;   ;; for w in excluded-words:
+;;   ;;   regex += "w\\|"
+;;   ;;
+;;   ;; regex.trim("\\|")
+;;   (while (excluded-words
+;; 	 (excluded-words-regex (format "%s\\|" (car excluded-words)))
+;; 	 (setq excluded-words (cdr excluded-words))))
+;;   (excluded-words-regex))
+
+;; (x-hugh-doubled-words/build-exclusion-regex x-hugh-doubled-words/exclusions)
+
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
 ;; FIXME: Have better way of specifying words to exclude
