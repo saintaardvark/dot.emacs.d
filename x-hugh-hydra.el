@@ -51,6 +51,7 @@
   ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
   ("f" ag  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
+  ("h" x-hugh-hi-bob "hi bob")
   ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
