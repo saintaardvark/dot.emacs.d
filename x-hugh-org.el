@@ -95,8 +95,9 @@
 (global-set-key (kbd "C-M-r") 'org-capture)
 (global-set-key (kbd "<f12>") 'org-agenda)
 
-(add-hook 'org-after-todo-state-change-hook
-	  'x-hugh-org-schedule-todo-item)
+;; Enable this if I start using Org mode to schedule things again.
+;; (add-hook 'org-after-todo-state-change-hook
+;; 	  'x-hugh-org-schedule-todo-item)
 
 (defun x-hugh-get-current-log-file()
   "Return the name of the current orgmode log file."
