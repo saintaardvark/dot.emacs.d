@@ -54,8 +54,11 @@
 ;; (load-theme "solarized-dark" t)
 
 ;; Just make it larger...I always do this at startup anyhow.
+;; FIXME / TODO: This is borking the display on Wayland.  For now I'm
+;; disabling it, but it would be good to understand what's going on
+;; here.
+;;  (x-hugh-set-font-larger)
 
-(x-hugh-set-font-larger)
 
 (defun x-hugh-set-appearance ()
   "Reload x-hugh-appearance.el."
@@ -137,15 +140,16 @@ Assumes font named like `Inconsolata-14`."
    (< (display-pixel-height) 800)
    (< (display-pixel-width) 1400)))
 
+;; FIXME: Causing problems with, I think, inconsolata 3
 ;; Only if Emacs >= 24.4
-(if window-system
-    (progn
-      (scroll-bar-mode -1)
-      ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
-      (fontify-frame-appropriately)
-      ;; maximize-frame gone in 26
-      ;; (maximize-frame)))
-      (toggle-frame-maximized)))
+;; (if window-system
+;;     (progn
+;;       (scroll-bar-mode -1)
+;;       ;; Fontify current frame (so that it happens on startup; may be unnecessary if you use focus-in-hook)
+;;       (fontify-frame-appropriately)
+;;       ;; maximize-frame gone in 26
+;;       ;; (maximize-frame)))
+;;       (toggle-frame-maximized)))
 
 (defun x-hugh-load-solarized (which)
   "Load solarized-WHICH theme, where WHICH is light or dark."
