@@ -170,5 +170,30 @@ Assumes font named like `Inconsolata-14`."
     (setq x-hugh-solarized--current "dark"))
   (x-hugh-load-solarized x-hugh-solarized--current))
 
+(defun x-hugh-decrease-default-face-height ()
+  "Shrink face height for current frame.  Default shrinkage is 5."
+  (interactive)
+  (let* ((current-height (x-hugh-get-face-height))
+	 (new-height (- current-height 5)))
+    (x-hugh-set-face-height new-height)))
+
+(defun x-hugh-increase-default-face-height ()
+  "Increase face height for current frame.  Default shrinkage is 5."
+  (interactive)
+  (let* ((current-height (x-hugh-get-face-height))
+	 (new-height (+ current-height 5)))
+    (x-hugh-set-face-height new-height)))
+
+(defun x-hugh-get-face-height ()
+  "Get height for default face in current frame."
+  (interactive)
+  (face-attribute 'default :height))
+
+(defun x-hugh-set-face-height (arg)
+  "Set height for default face in current frame to ARG."
+  (interactive)
+  (set-face-attribute 'default (selected-frame) :height arg)
+  (face-attribute 'default :height))
+
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here

@@ -145,15 +145,15 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"
-  ("g" (text-scale-adjust 1) "in")
-  ("l" (text-scale-adjust -1) "out")
+  ("g" (text-scale-adjust 1) "zoom in current window")
+  ("l" (text-scale-adjust -1) "zoom out current window")
   ("0" (progn (text-scale-adjust 0) (maximize-frame)) "reset")
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo")
   ("s" x-hugh-solarized-toggle "toggle solarized")
   ;; FIXME: `set-face-attribute` is "mostly intended for internal use only" ☹
-  ("z" (set-face-attribute 'default (selected-frame) :height 200) "zoom in all")
-  ("a" (set-face-attribute 'default (selected-frame) :height 150) "zoom out all")
+  ("z" (x-hugh-increase-default-face-height) "zoom in all")
+  ("a" (x-hugh-decrease-default-face-height) "zoom out all")
   ("x" toggle-frame-maximized "toggle max"))
 
 (defhydra hydra-text (:color blue)
