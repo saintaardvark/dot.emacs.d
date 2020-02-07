@@ -16,6 +16,8 @@
   - will turn off, will not turn back on
 * DONE Python hydra
   CLOSED: [2019-05-01 Wed 08:46]
+* TODO Add shell to projectile-commander methods
+  - Replace current "s" to switch projects
 * TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
 * TODO Why is grx being detected as make project instead of go?
   - Problem: C-c p 4 t from main.go does not open main_test.go;
