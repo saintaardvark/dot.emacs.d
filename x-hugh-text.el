@@ -121,8 +121,8 @@ Example output:
     (let ((beg (point)))
       (goto-char (point-max))
       (kill-region beg (point))
-      (insert-file-contents "~/.signature-va7unx"))
-
+      (insert-file-contents "~/.signature-va7unx")
+      (insert "--\n"))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
 (defun x-hugh-zap (arg char)
