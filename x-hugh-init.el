@@ -13,6 +13,9 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
+;; TODO: Figure out a way to make this work in the terminal
+;; (setq frame-background-mode 'dark)
+
 ;; OMG this is brilliant
 ;; But! I need to clone https://github.com/jodonnell/emacs/blob/master/auto-cask.el
 ;; (require 'auto-cask)

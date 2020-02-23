@@ -50,6 +50,10 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 	   (dired-recursive-copies 'always)
 	   (dired-recursive-deletes 'top)))
 
+;; TODO: Use dired-git-info
+;; (use-package dired-git-info
+;;   :config (define-key dired-mode-map ")" 'dired-git-info-mode))
+
 ;; button-lock is required for `fixmee` mode.  My `use-package` stanzas
 ;; are listed alphabetically, so this would work -- but that seems a
 ;; poor thing to count on, and it's not good to have it far away.

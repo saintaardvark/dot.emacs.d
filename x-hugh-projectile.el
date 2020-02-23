@@ -12,6 +12,12 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 ;; (define-key projectile-mode-map (kbd "C-c p") 'helm-projectile)
 
+;; TODO: Add shell as an option for projectile-commander (which is
+;; run after C-c p p)
+
+;; TODO: Implement this helm-other-window fix:
+;; https://emacs.stackexchange.com/questions/17072/open-file-in-a-specific-window
+
 ;; (projectile-register-project-type
 ;;  'chef
 ;;  '("Berksfile")           ; marker files
