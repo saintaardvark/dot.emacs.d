@@ -143,7 +143,9 @@ Rewritten as defun."
   (let ((beg (point)))
     (save-excursion
       (post-goto-signature)
-      (kill-region beg (point)))))
+      (kill-region beg (point))
+      (if (looking-at "--")
+	  (insert "\n")))))
 
 
 (defun x-hugh-boxquote-yank-and-indent ()
