@@ -147,6 +147,15 @@ Rewritten as defun."
       (if (looking-at "--")
 	  (insert "\n")))))
 
+(defun x-hugh-fix-andys-links ()
+  "Fix up Andy's links in email, which for some reason get split over two lines."
+  (interactive)
+  (save-excursion
+    (post-goto-body)
+    (search-forward "http")
+    (forward-line)
+    (join-line)
+    (delete-char 1)))
 
 (defun x-hugh-boxquote-yank-and-indent ()
   "My attempt to combine boxquote-yank and indent.
