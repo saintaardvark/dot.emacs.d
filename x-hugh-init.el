@@ -66,6 +66,9 @@
     (push "~/bin" exec-path))
 (exec-path-from-shell-copy-env "PATH")
 
+;; Trying this as a way of pointing Emacs in the right direction.
+(exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+
 ;; And now everything else
 
 (use-package x-hugh-mouse)
