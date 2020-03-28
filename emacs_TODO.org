@@ -1,3 +1,4 @@
+#+FILETAGS: emacs
 * DONE Steal C-' back from org-cycle-agenda-files
   CLOSED: [2019-01-10 Thu 08:04]
   - This should be bound to navi-click-cmd instead
@@ -36,20 +37,21 @@
 * TODO Add keyboard shortcut for delete-horizontal-space
 * TODO File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
   - not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
-* TODO Clear out custom file
 * TODO Set custom file to /dev/null or some such
 * TODO Figure out flashing matching parens script again
   - mic-paren
-* TODO Figure out why server keeps needing restart on home laptop
-  - Is this midnight mode?
 * TODO Stop helm from trying to autocomplete stuff at point
   - I very rarely want to email someone if point at an email address
   - ditto for hyperlink
-* TODO Nyan cat images missing from home emacs [MAX_EMERG]
-* TODO gruvbox theme does not work
-  Get this error when loading at home: "Symbol’s value as variable is
-  void": neo-banner-face poss from
-  https://github.com/jaypei/emacs-neotree? which doesn't look like it
+* DONE Nyan cat images missing from home emacs [MAX_EMERG]
+  CLOSED: [2020-03-16 Mon 20:46]
+  - Encountered this again [2020-03-20 Fri]
+    - They're in the upstream repo, not sure why they're not here
+    - Copied manually from my old laptop. :-(
 * TODO Add visual-lines-mode to hydra if not there already
 * TODO Add longlines-mode alias for visual-lines-mode
    I can never remember the new name...
+* TODO Watch for fix for Inconsolata
+  - https://github.com/googlefonts/Inconsolata/issues/42
+  - https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
+* TODO There's an Emacs 27? 28?
