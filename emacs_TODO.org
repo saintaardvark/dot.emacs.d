@@ -55,3 +55,6 @@
   - https://github.com/googlefonts/Inconsolata/issues/42
   - https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
 * TODO There's an Emacs 27? 28?
+* TODO Turn off touchpad stuff in x-hugh-mouse.el
+  - Trackpad on recent laptops is fine
+  - Make a custom variable to enable it or not

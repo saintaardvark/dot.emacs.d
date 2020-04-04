@@ -30,14 +30,16 @@
   (interactive)
   (shell-command ENABLE-TOUCHPAD))
 
-;; FIXME: focus-in-hook/focus-out-hook are obsolete
-(when (executable-find "xinput")
-  (progn
-    (add-hook 'focus-in-hook #'touchpad-off)
-    (add-hook 'focus-out-hook #'touchpad-on)
-    (add-hook 'delete-frame-functions #'touchpad-on)
-    ;;; and don't forget to enable the touchpad when you exit Emacs:
-    (add-hook 'kill-emacs-hook #'touchpad-on)))
+
+;; FIXME: Make this customizable; see emacs_TODO.org
+;; ;; FIXME: focus-in-hook/focus-out-hook are obsolete
+;; (when (executable-find "xinput")
+;;   (progn
+;;     (add-hook 'focus-in-hook #'touchpad-off)
+;;     (add-hook 'focus-out-hook #'touchpad-on)
+;;     (add-hook 'delete-frame-functions #'touchpad-on)
+;;     ;;; and don't forget to enable the touchpad when you exit Emacs:
+;;     (add-hook 'kill-emacs-hook #'touchpad-on)))
 
 ;; make mouse middle-click only paste from primary X11 selection, not clipboard and kill ring.
 (global-set-key [mouse-2] 'mouse-yank-primary)
