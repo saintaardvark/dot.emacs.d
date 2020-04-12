@@ -58,3 +58,4 @@
 * TODO Turn off touchpad stuff in x-hugh-mouse.el
   - Trackpad on recent laptops is fine
   - Make a custom variable to enable it or not
+* TODO See if Emacs can chord ctrl+space to replace that awful alt key on the MS keyboard
