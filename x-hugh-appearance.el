@@ -8,24 +8,10 @@
 
 ;; Custom themes package
 (use-package custom
-  :custom (
-	   ;; Note: `custom-safe-themes` needs to come before
-	   ;; `custom-enabled-themes`; otherwise, you'll get
-	   ;; interrupted with a prompt to trust the custom theme.
-	   ;; The help documentation says that this is the sha256sum of the theme file.
-	   (custom-safe-themes
-	    '("a22f40b63f9bc0a69ebc8ba4fbc6b452a4e3f84b80590ba0a92b4ff599e53ad0"
-	      "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0"
-	      "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
-	      "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
-	      "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
-	      "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
-	      "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
-	      "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e"
-	      "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f"
-	      "47c5d4659e26b8229a1940d762673e3ddf5d2227e3323ce85982522a707a0d3b"
-	      default))
-	   (custom-enabled-themes '(gruvbox-dark-hard))))
+  ;; Aha: if we call load-theme, we can add a no-confirm argument.
+  ;; Much easier than updating checksums all the time...
+  ;; (custom-enabled-themes '(gruvbox-dark-hard)))
+  :config (load-theme 'gruvbox-dark-hard t))
 
 (setq column-number-mode t
       display-time-24hr-format t
