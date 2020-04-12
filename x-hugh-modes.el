@@ -183,5 +183,8 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 
 (add-hook 'ibuffer-mode-hook #'(ibuffer-switch-to-saved-filter-groups "Default"))
 
+(use-package abbrev
+  :custom (save-abbrevs 'silently))
+
 (provide 'x-hugh-modes)
 ;;; x-hugh-modes ends here
