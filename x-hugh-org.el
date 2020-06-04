@@ -396,4 +396,14 @@ Hugh
     ;; Note: not yet working.
     (kill-buffer)))
 
+;; Hm, does not work yet: leaves me in capture template with nothing
+;; filled in.
+(defun x-hugh-org-log-headline-in-journal ()
+  "Log text of current headline in journal."
+  (interactive)
+  (save-excursion
+    (let ((entry (org-entry-get nil "ITEM")))
+      (org-capture-string "hello world" "l")
+      (message (format "Logged entry: %s" entry)))))
+
 (provide 'x-hugh-org)
