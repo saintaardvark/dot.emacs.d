@@ -8,6 +8,7 @@
 (defhydra hydra-menu (:exit t)
   "menu"
   ("a" hydra-apropos/body "apropos")
+  ("d" hydra-dev/body "dev")
   ("e" hydra-elisp/body "elisp")
   ("g" hydra-golang/body "go")
   ("i" hydra-personal-files/body "personal files")
@@ -28,9 +29,12 @@
   ("u" apropos-user-option "option")
   ("e" apropos-value "value"))
 
-(defhydra hydra-org (:exit t )
-  ("a" org-agenda "agenda")
-  ("c" org-capture "capture"))
+(defhydra hydra-dev (:exit t)
+  ("a" x-hugh-git-changetype "Cycle changetype")
+  ("g" x-hugh-grx "grx")
+  ("l" linum-mode "linum")
+  ("L" global-linum-mode "global-linum")
+)
 
 (defhydra hydra-elisp (:exit t)
   "elisp"

@@ -71,6 +71,7 @@
 
 ;; Now all the rest in alphabetical order
 (global-set-key (kbd "C-c a") 'hydra-apropos/body)
+(global-set-key (kbd "C-c d") 'hydra-dev/body)
 (global-set-key (kbd "C-c e") 'hydra-elisp/body)
 (global-set-key (kbd "C-c g") 'hydra-golang/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
