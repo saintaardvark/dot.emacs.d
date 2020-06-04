@@ -23,22 +23,7 @@
   ;; :mode ("\\.org$" . org-mode)
   :custom ((org-log-done t)
            (org-agenda-columns-add-appointments-to-effort-sum t)
-           (org-agenda-files
-            (quote
-             ("/home/aardvark/orgmode/Development_for_Sysadmins.org"
-              "/home/aardvark/orgmode/TODO.org"
-              "/home/aardvark/orgmode/emacs.org"
-              "/home/aardvark/orgmode/fitness.org"
-              "/home/aardvark/orgmode/fun_projects.org"
-              "/home/aardvark/orgmode/goaltracking.org"
-              "/home/aardvark/orgmode/home.org"
-              "/home/aardvark/orgmode/kitchen.org"
-              "/home/aardvark/orgmode/kubernetes.org"
-              "/home/aardvark/orgmode/radio.org"
-              "/home/aardvark/orgmode/space.org"
-              "/home/aardvark/orgmode/travel.org"
-              "/home/aardvark/orgmode/vacation.org"
-              "/home/aardvark/orgmode/satnogs/notes.org")))
+           (org-agenda-files (quote ("~/orgmode")))
            (org-agenda-log-mode-items (quote (clock)))
            (org-agenda-restore-windows-after-quit t)
            (org-agenda-skip-scheduled-if-done t)
