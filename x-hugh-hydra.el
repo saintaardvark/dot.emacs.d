@@ -20,7 +20,7 @@
   ("y" hydra-python/body "python")
   ("z" hydra-zoom/body "zoom"))
 
-(defhydra hydra-apropos (:exit t )
+(defhydra hydra-apropos (:exit t)
   ("a" apropos "apropos")
   ("d" apropos-documentation "documentation")
   ("v" apropos-variable "variable")
