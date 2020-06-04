@@ -75,7 +75,7 @@
 Goto:
 ^Char^              ^Word^                ^org^                    ^search^
 ^^^^^^^^---------------------------------------------------------------------------
-_c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-occur
+_c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-swiper
 _2_: 2 chars        _W_: some word        _a_: heading in agenda   _p_: helm-swiper
 _L_: char in line                       _q_: swoop org buffers   _f_: search forward
 ^  ^                                    ^ ^                      _b_: search backward
@@ -104,7 +104,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("q" helm-multi-swoop-org)
   ("x" helm-M-x)
 
-  ("o" helm-occur)
+  ("o" swiper-helm)
   ("p" swiper-helm)
 
   ("f" isearch-forward)
