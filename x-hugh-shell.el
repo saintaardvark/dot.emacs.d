@@ -6,11 +6,11 @@
 ;;; Code:
 
 (defun x-hugh-edit-dot-bashrc (arg)
-  "Edit .bashrc_local, or (with arg) .bashrc."
+  "Better way to edit bashrc files, now that I've split them up.
+
+If ARG is provided, open in other window."
   (interactive "P")
-  (if arg
-      (find-file (file-truename "~/.bashrc"))
-    (find-file (file-truename"~/.bashrc_local"))))
+  (x-hugh-edit-completing-read arg "~/" ".bashrc"))
 
 (defun hlu-make-script-executable ()
   "If file starts with a shebang, make `buffer-file-name' executable.
