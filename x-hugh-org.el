@@ -373,7 +373,7 @@ Hugh
   (align-newline-and-indent)
   (insert "- "))
 
-(defun x-hugh-org-publish-books-org()
+(defun x-hugh-org-publish-books-org ()
   "Publish books.org as HTML on website."
   (interactive)
   (save-excursion
@@ -384,7 +384,7 @@ Hugh
     (write-region nil nil "/ssh:l2:/home/aardvark/public_html/random/books.html")
     (kill-buffer)))
 
-(defun x-hugh-org-export-password-file()
+(defun x-hugh-org-export-password-file ()
   "Export the password file in HTML to /dev/shm."
   (interactive)
   (save-excursion
