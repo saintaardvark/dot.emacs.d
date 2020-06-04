@@ -8,6 +8,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode settings.
 
+;; FIXME: This hook is not working yet.
+;; https://www.reddit.com/r/orgmode/comments/6n7dk7/q_refreshing_agenda_after_capturing_a_task/dk91lbk/
+(defun nebucatnetzer:org-agenda-redo ()
+  "Refresh the org agenda if the buffer for it exists."
+  (interactive)
+  (when (get-buffer "*Org Agenda*")
+    (with-current-buffer "*Org Agenda*"
+      (org-agenda-maybe-redo)
+      (message "[org agenda] refreshed!"))))
+
 (use-package org
   ;; FIXME: getting an error with this next bit; not sure what i'm doing wrong
   ;; :mode ("\\.org$" . org-mode)
