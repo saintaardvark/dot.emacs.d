@@ -100,6 +100,7 @@
 (use-package x-hugh-python)
 (use-package x-hugh-shell)
 ;; (use-package x-hugh-ruby)
+(use-package x-hugh-typescript)
 
 ;; (use-package cfg
 ;;   :custom (cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef"))

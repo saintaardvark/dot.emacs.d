@@ -60,3 +60,8 @@
   - Make a custom variable to enable it or not
 * TODO See if Emacs can chord ctrl+space to replace that awful alt key on the MS keyboard
 * TODO Try https://github.com/emacs-lsp/lsp-mode
+* TODO Shellcheck in emacs appears to assume posix shell rather than looking at shebang
+  - Shellcheck in emacs will complain about Bashisms when shebang has them
+  - Shellcheck run from shell will be fine about this
+  - Is this configured somewhere?
+>>>>>>> merge-from-work:TODO.org

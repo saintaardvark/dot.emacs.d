@@ -8,6 +8,7 @@
 (defhydra hydra-menu (:exit t)
   "menu"
   ("a" hydra-apropos/body "apropos")
+  ("d" hydra-dev/body "dev")
   ("e" hydra-elisp/body "elisp")
   ("g" hydra-golang/body "go")
   ("i" hydra-personal-files/body "personal files")
@@ -19,7 +20,7 @@
   ("y" hydra-python/body "python")
   ("z" hydra-zoom/body "zoom"))
 
-(defhydra hydra-apropos (:exit t )
+(defhydra hydra-apropos (:exit t)
   ("a" apropos "apropos")
   ("d" apropos-documentation "documentation")
   ("v" apropos-variable "variable")
@@ -28,9 +29,12 @@
   ("u" apropos-user-option "option")
   ("e" apropos-value "value"))
 
-(defhydra hydra-org (:exit t )
-  ("a" org-agenda "agenda")
-  ("c" org-capture "capture"))
+(defhydra hydra-dev (:exit t)
+  ("a" x-hugh-git-changetype "Cycle changetype")
+  ("g" x-hugh-grx "grx")
+  ("l" linum-mode "linum")
+  ("L" global-linum-mode "global-linum")
+)
 
 (defhydra hydra-elisp (:exit t)
   "elisp"
@@ -71,7 +75,7 @@
 Goto:
 ^Char^              ^Word^                ^org^                    ^search^
 ^^^^^^^^---------------------------------------------------------------------------
-_c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-occur
+_c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-swiper
 _2_: 2 chars        _W_: some word        _a_: heading in agenda   _p_: helm-swiper
 _L_: char in line                       _q_: swoop org buffers   _f_: search forward
 ^  ^                                    ^ ^                      _b_: search backward
@@ -100,7 +104,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("q" helm-multi-swoop-org)
   ("x" helm-M-x)
 
-  ("o" helm-occur)
+  ("o" swiper-helm)
   ("p" swiper-helm)
 
   ("f" isearch-forward)
@@ -161,7 +165,9 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("'" ruby-toggle-string-quotes "Toggle single/double quotes")
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
+  ("c" x-hugh-git-changetype "git-changetype")
   ("f" ag "figl (actually ag, but who cares)")
+  ("g" x-hugh-git-changetype "Change patch type")
   ("i" indent-defun "indent-defun")
   ("l" display-line-numbers-mode "line numbers")
   ("p" smartparens-mode "Toggle smartparens mode")

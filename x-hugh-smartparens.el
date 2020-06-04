@@ -40,6 +40,7 @@
                                                "jinja2"
                                                "json"
                                                "markdown"
+					       "org"
                                                "ruby"
                                                "python"
 					       "sh"

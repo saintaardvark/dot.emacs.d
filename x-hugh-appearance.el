@@ -8,10 +8,11 @@
 
 ;; Custom themes package
 (use-package custom
-  ;; Aha: if we call load-theme, we can add a no-confirm argument.
-  ;; Much easier than updating checksums all the time...
-  ;; (custom-enabled-themes '(gruvbox-dark-hard)))
-  :config (load-theme 'gruvbox-dark-hard t))
+  ;; Note: previously, I customzed the value of custom-safe-themes.
+  ;; This holds sha256sums of themes that have been designated as
+  ;; safe.  This is a PITA to update.  For now, I'm going to use the
+  ;; no-confirm variant of load-theme, as shown above.
+  :config (load-theme 'gruvbox-dark-hard "no-confirm"))
 
 (setq column-number-mode t
       display-time-24hr-format t

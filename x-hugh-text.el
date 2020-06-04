@@ -163,8 +163,28 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
   (interactive)
   (save-excursion
     (boxquote-yank)
-    (next-line)
+    (forward-line)
     (indent-region (car (boxquote-points)) (cdr (boxquote-points)))))
+
+(defun x-hugh-git-changetype ()
+  "Cycle through git changetype.
+
+Meant for use in magit."
+  (interactive)
+  (save-excursion
+    (search-forward-regexp "^Change-type: ")
+    (cond ((looking-at "\\[patch\\|minor\\|major\\]")
+	   (progn (kill-line)
+		  (insert "patch")))
+	  ((looking-at "patch")
+	   (progn (kill-line)
+		  (insert "minor")))
+	  ((looking-at "minor")
+	   (progn (kill-line)
+		  (insert "major")))
+	  ((looking-at "major")
+	   (progn (kill-line)
+		  (insert "patch"))))))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.

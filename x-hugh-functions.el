@@ -5,26 +5,33 @@
 
 ;;; Code:
 
+(defun x-hugh-edit-completing-read (arg dir prefix)
+  "Edit files matching a particular pattern.
+
+If ARG is given, open in other window.
+If DIR is given, propose files from that directory.
+If PREFIX is given, open files matching that prefix."
+  (interactive "P")
+  (let ((path (file-truename dir)))
+    (if (eq arg 'nil)
+        (find-file (completing-read "File: "
+                                    (directory-files path t prefix)
+                                    nil nil (concat path prefix)))
+      (find-file-other-window (completing-read "File: "
+                                               (directory-files path t prefix)
+                                               nil nil (concat path prefix))))))
+
 (defun x-hugh-reload-dot-emacs ()
   "Reload .emacs."
   (interactive)
   (load-file "~/.emacs"))
 
-;; FIXME: Look at initial-input arg for completing-read in order to
-;; populate the initial file to x-hugh-something.
 (defun x-hugh-edit-dot-emacs (arg)
-  "Edit .emacs.d/x-hugh-* files.
+  "Better way to edit bashrc files, now that I've split them up.
 
-If ARG is given, open in other window."
+If ARG is provided, open in other window."
   (interactive "P")
-  (let ((path (file-truename "~/.emacs.d/")))
-    (if (eq arg 'nil)
-        (find-file (completing-read "File: "
-                                    (directory-files path t "x-hugh-")
-                                    nil nil (concat path "x-hugh-")))
-      (find-file-other-window (completing-read "File: "
-                                               (directory-files path t "x-hugh-")
-                                               nil nil (concat path "x-hugh-"))))))
+  (x-hugh-edit-completing-read arg "~/.emacs.d/" "x-hugh-"))
 
 ;;; It's clumsy, I'm sure, but it works!
 (defun x-hugh-wordcount ()

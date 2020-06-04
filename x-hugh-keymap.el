@@ -12,6 +12,7 @@
 ;; (global-set-key "\C-c\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-m" 'helm-M-x)
 (global-set-key "\C-c\C-m" 'helm-M-x)
+(global-set-key "\C-x\m" 'helm-M-x) 	; Do I need to compose email within Emacs? No, I do not.
 (global-unset-key "\M-x")
 
 ;; Win-switch
@@ -70,6 +71,7 @@
 
 ;; Now all the rest in alphabetical order
 (global-set-key (kbd "C-c a") 'hydra-apropos/body)
+(global-set-key (kbd "C-c d") 'hydra-dev/body)
 (global-set-key (kbd "C-c e") 'hydra-elisp/body)
 (global-set-key (kbd "C-c g") 'hydra-golang/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)

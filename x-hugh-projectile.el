@@ -4,27 +4,31 @@
 
 ;;; Code:
 
-;; (add-hook 'chef-mode-hook 'projectile-mode)
 (projectile-mode)
 
-;; FIXME -- I like the helm-projectile, but I *really* want C-c p s for
-;; a shell.
+(use-package projectile
+  ;; https://emacs.stackexchange.com/questions/32634/how-can-the-list-of-projects-used-by-projectile-be-manually-updated
+  ;; FIXME: Not sure what's going wrong.  Evaluating the progn works,
+  ;; but not in with the rest of the use-package function.
+  :init
+  (progn
+    (mapc #'projectile-add-known-project
+	  (mapcar #'file-name-as-directory (magit-list-repos)))
+    ;; Optionally write to persistent `projectile-known-projects-file'
+    (projectile-save-known-projects))
+   ;; FIXME -- I like the helm-projectile, but I *really* want C-c p s for
+  ;; a shell.
+)
+
+;; FIXME -- Can't remember why I have this here.  Do I need it?
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; (define-key projectile-mode-map (kbd "C-c p") 'helm-projectile)
 
-;; TODO: Add shell as an option for projectile-commander (which is
-;; run after C-c p p)
 
-;; TODO: Implement this helm-other-window fix:
-;; https://emacs.stackexchange.com/questions/17072/open-file-in-a-specific-window
+;; ;; TODO: Add shell as an option for projectile-commander (which is
+;; ;; run after C-c p p)
 
-;; (projectile-register-project-type
-;;  'chef
-;;  '("Berksfile")           ; marker files
-;;  "bundle exec rails server"             ; compile command
-;;  "chef exec rspec"                      ; test command
-;;  "kitchen test")
-                                        ; run command
+;; ;; TODO: Implement this helm-other-window fix:
+;; ;; https://emacs.stackexchange.com/questions/17072/open-file-in-a-specific-window
 
 ;; Copy-pasta...there must be a better way to do this.
 
@@ -42,7 +46,9 @@
 
 (setq projectile-test-suffix-function 'x-hugh-projectile-test-suffix)
 
-(global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
+;; TODO: Not working; suspect swallowed by projectile keymap.
+;; TODO: Somehow get helm projectile while still have nice keyboard shortcut for shell
+;; (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
 
 ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
 (setq projectile-switch-project-action

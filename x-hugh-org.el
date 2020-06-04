@@ -8,22 +8,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode settings.
 
+;; FIXME: This hook is not working yet.
+;; https://www.reddit.com/r/orgmode/comments/6n7dk7/q_refreshing_agenda_after_capturing_a_task/dk91lbk/
+(defun nebucatnetzer:org-agenda-redo ()
+  "Refresh the org agenda if the buffer for it exists."
+  (interactive)
+  (when (get-buffer "*Org Agenda*")
+    (with-current-buffer "*Org Agenda*"
+      (org-agenda-maybe-redo)
+      (message "[org agenda] refreshed!"))))
+
 (use-package org
   ;; FIXME: getting an error with this next bit; not sure what i'm doing wrong
   ;; :mode ("\\.org$" . org-mode)
   :custom ((org-log-done t)
            (org-agenda-columns-add-appointments-to-effort-sum t)
-           (org-agenda-files
-            (quote
-	     ("/home/aardvark/orgmode/TODO.org"
-              "/home/aardvark/.emacs.d/emacs_TODO.org"
-              "/home/aardvark/orgmode/fun_projects.org"
-              "/home/aardvark/orgmode/goaltracking.org"
-              "/home/aardvark/orgmode/home.org"
-              "/home/aardvark/orgmode/employment/balena.org"
-              "/home/aardvark/orgmode/space.org"
-              "/home/aardvark/orgmode/travel.org"
-              "/home/aardvark/orgmode/vacation.org")))
+           (org-agenda-files (quote ("~/orgmode")))
            (org-agenda-log-mode-items (quote (clock)))
            (org-agenda-restore-windows-after-quit t)
            (org-agenda-skip-scheduled-if-done t)
@@ -34,37 +34,26 @@
            (org-capture-templates
             (quote
              (("l" "Log" item
-               (file+olp+datetree "/Users/hubrown/orgmode/log_2018.org"))
-              ("s" "SatNOGS" entry
-               (file "~/satnogs/notes/notes.org")
-               "** TODO [#A] %?")
-              ("R" "Autofill RT ticket" entry
-               (file "~/orgmode/all.org")
-               "** TODO [#A] %?")
-              ("r" "RT Ticket" entry
-               (file "~/orgmode/all.org")
-               "** TODO RT #%^{Number} -- %^{Subject}")
-              ("e" "Emacs" entry
-               (file "~/orgmode/emacs.org")
-               "** TODO %^{TODO}")
+               (file+olp+datetree "~/orgmode/journal.org"))
               ("t" "TODO" entry
-               (file "~/orgmode/TODO.org")
-               "** TODO %^{TODO}")
+               (file "~/orgmode/misc.org")
+               "** TODO [#A] %?")
               ("q" "Question" entry
-               (file "~/orgmode/TODO.org")
-               "** Q from %^{Who} re: %^{Subject}")
-              ("i" "Random Item" entry
-               (file "~/orgmode/TODO.org")
-               "** %^{What}"))))
-           (org-clock-continuously t)
+               (file "~/orgmode/misc.org")
+               "** Question [#A] %?")
+              ("f" "Feedback" entry
+               (file "~/orgmode/misc.org")
+               "** TODO [#A] %? :feedback"))))
+           (org-clock-continuously nil)
            (org-clock-into-drawer t)
-           (org-default-notes-file "~/orgmode/TODO.org")
+           (org-default-notes-file "~/orgmode/misc.org")
            (org-default-priority 65)
            (org-log-done (quote time))
            (org-log-into-drawer t)
            (org-modules
             (quote
              (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+	   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
            (org-stuck-projects
             (quote
              ("+PROJECT/-MAYBE-DONE"
@@ -83,7 +72,8 @@
   :custom-face (org-level-5 ((t (:inherit nil :foreground "#2aa198"))))
   :custom-face (org-level-6 ((t (:inherit nil :foreground "#859900"))))
   :custom-face (org-level-7 ((t (:inherit nil :foreground "#dc322f"))))
-  :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2")))))
+  :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2"))))
+  :hook ('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo))
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
@@ -383,7 +373,7 @@ Hugh
   (align-newline-and-indent)
   (insert "- "))
 
-(defun x-hugh-org-publish-books-org()
+(defun x-hugh-org-publish-books-org ()
   "Publish books.org as HTML on website."
   (interactive)
   (save-excursion
@@ -394,7 +384,7 @@ Hugh
     (write-region nil nil "/ssh:l2:/home/aardvark/public_html/random/books.html")
     (kill-buffer)))
 
-(defun x-hugh-org-export-password-file()
+(defun x-hugh-org-export-password-file ()
   "Export the password file in HTML to /dev/shm."
   (interactive)
   (save-excursion
@@ -405,5 +395,15 @@ Hugh
     ;;   (print-buffer))
     ;; Note: not yet working.
     (kill-buffer)))
+
+;; Hm, does not work yet: leaves me in capture template with nothing
+;; filled in.
+(defun x-hugh-org-log-headline-in-journal ()
+  "Log text of current headline in journal."
+  (interactive)
+  (save-excursion
+    (let ((entry (org-entry-get nil "ITEM")))
+      (org-capture-string "hello world" "l")
+      (message (format "Logged entry: %s" entry)))))
 
 (provide 'x-hugh-org)
