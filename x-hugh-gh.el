@@ -27,13 +27,15 @@
     (magit-status dir)))
 
 (defun x-hugh-gh-open-github-repo-url (project)
-  "Open GH page for current repo in browser."
+  "Open GH page for PROJECT in browser."
   (interactive "sProject: ")
   (browse-url (format "%s/%s" x-hugh-gh/web-repo project)))
 
 ;; FIXME: Make this work from within magit, too
 (defun x-hugh-gh-git-commit-and-push-without-mercy ()
-  "Commit all outstanding and push without hesitation. Meant to be called from within a file buffer.
+  "Commit all outstanding and push without hesitation.
+
+Meant to be called from within a file buffer.
 
 Do it, monkey boy!"
   (interactive)
