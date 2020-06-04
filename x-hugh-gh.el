@@ -39,5 +39,14 @@ Do it, monkey boy!"
   (interactive)
   (start-process "nomercy" "git-commit-and-push-without-mercy" "~/bin/git-commit-and-push-without-mercy.sh" (concat "-r " (buffer-file-name))))
 
+(defun x-hugh-grx (url)
+  "Run grx on URL."
+  (interactive "sURL: ")
+  (magit-status
+   ;; https://stackoverflow.com/questions/14074912/how-do-i-delete-the-newline-from-a-process-output/54503687#54503687
+   (substring
+    (shell-command-to-string (format "/home/hugh/bin/grx %s" url))
+    0 -1)))
+
 (provide 'x-hugh-gh)
 ;;; x-hugh-functions ends here
