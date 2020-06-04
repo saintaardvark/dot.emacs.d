@@ -34,37 +34,26 @@
            (org-capture-templates
             (quote
              (("l" "Log" item
-               (file+olp+datetree "/Users/hubrown/orgmode/log_2018.org"))
-              ("s" "SatNOGS" entry
-               (file "~/satnogs/notes/notes.org")
-               "** TODO [#A] %?")
-              ("R" "Autofill RT ticket" entry
-               (file "~/orgmode/all.org")
-               "** TODO [#A] %?")
-              ("r" "RT Ticket" entry
-               (file "~/orgmode/all.org")
-               "** TODO RT #%^{Number} -- %^{Subject}")
-              ("e" "Emacs" entry
-               (file "~/orgmode/emacs.org")
-               "** TODO %^{TODO}")
+               (file+olp+datetree "~/orgmode/journal.org"))
               ("t" "TODO" entry
-               (file "~/orgmode/TODO.org")
-               "** TODO %^{TODO}")
+               (file "~/orgmode/misc.org")
+               "** TODO [#A] %?")
               ("q" "Question" entry
-               (file "~/orgmode/TODO.org")
-               "** Q from %^{Who} re: %^{Subject}")
-              ("i" "Random Item" entry
-               (file "~/orgmode/TODO.org")
-               "** %^{What}"))))
-           (org-clock-continuously t)
+               (file "~/orgmode/misc.org")
+               "** Question [#A] %?")
+              ("f" "Feedback" entry
+               (file "~/orgmode/misc.org")
+               "** TODO [#A] %? :feedback"))))
+           (org-clock-continuously nil)
            (org-clock-into-drawer t)
-           (org-default-notes-file "~/orgmode/TODO.org")
+           (org-default-notes-file "~/orgmode/misc.org")
            (org-default-priority 65)
            (org-log-done (quote time))
            (org-log-into-drawer t)
            (org-modules
             (quote
              (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+	   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
            (org-stuck-projects
             (quote
              ("+PROJECT/-MAYBE-DONE"
@@ -83,7 +72,8 @@
   :custom-face (org-level-5 ((t (:inherit nil :foreground "#2aa198"))))
   :custom-face (org-level-6 ((t (:inherit nil :foreground "#859900"))))
   :custom-face (org-level-7 ((t (:inherit nil :foreground "#dc322f"))))
-  :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2")))))
+  :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2"))))
+  :hook ('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo))
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
