@@ -163,7 +163,7 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
   (interactive)
   (save-excursion
     (boxquote-yank)
-    (next-line)
+    (forward-line)
     (indent-region (car (boxquote-points)) (cdr (boxquote-points)))))
 
 (provide 'x-hugh-text)
