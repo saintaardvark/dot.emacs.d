@@ -20,16 +20,22 @@
   :custom (git-commit-summary-max-length 90))
 
 (use-package magit
-  :config
   ;; From https://magit.vc/manual/magit/Performance.html#Performance
-  (progn (setq magit-refresh-status-buffer nil)
-         (setq vc-handled-backends nil)
-         (setq magit-clone-set-remote\.pushDefault t)
-         (setq magit-commit-arguments (quote ("--signoff")))
-         (setq magit-commit-show-diff t)
-         (setq magit-save-repository-buffers (quote dontask))
-         (setq magit-use-overlays nil)
-         (remove-hook 'server-switch-hook 'magit-commit-diff)))
+  :custom ((magit-refresh-status-buffer nil)
+	   (vc-handled-backends nil)
+	   (magit-clone-set-remote\.pushDefault t)
+	   (magit-commit-arguments (quote ("--signoff")))
+	   (magit-commit-show-diff t)
+	   (magit-save-repository-buffers (quote dontask))
+	   (magit-use-overlays nil)
+	   (magit-repository-directories
+	    '(;; Directory containing project root directories
+	      ("~/dev/"      . 3)
+	      ;; Specific project root directory
+	      ;; ("~/dotfiles/" . 1)
+	      ))
+	   )
+  :config (remove-hook 'server-switch-hook 'magit-commit-diff))
 
 ;; Turning this off -- refreshing CI status every time is very, very slow.
 ;; (require 'magithub)
