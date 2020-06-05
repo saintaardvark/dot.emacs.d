@@ -77,6 +77,7 @@
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 (global-set-key (kbd "C-c n") 'hydra-goto/body)
+(global-set-key (kbd "C-c s") 'hydra-support/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c w") 'hydra-window/body)
 (global-set-key (kbd "C-c y") 'hydra-python/body)
