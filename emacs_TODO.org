@@ -64,5 +64,6 @@
   - Shellcheck in emacs will complain about Bashisms when shebang has them
   - Shellcheck run from shell will be fine about this
   - Is this configured somewhere?
->>>>>>> merge-from-work:TODO.org
 * TODO https://github.com/alphapapa/org-super-agenda
+* TODO Try out these ivy/counsel/swiper settings
+  - Good intro: https://writequit.org/denver-emacs/presentations/2017-04-11-ivy.html
