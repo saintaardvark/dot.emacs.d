@@ -105,9 +105,6 @@
 ;; (global-set-key "\C-cpq"	'x-hugh-wiki-blockquote-quote)
 ;; (global-set-key "\C-cpv"	'x-hugh-wiki-verbatim-quote)
 
-; Markdown mode
-(define-key markdown-mode-map (kbd "\C-cwl") 'x-hugh-markdown-footnote)
-
 ;; I'm gonna declare C-co the offical prefix of my org stuff.
 ;; (global-set-key "\C-cod"		'x-hugh-org-new-day-in-notes)
 ;; (global-set-key "\C-cof"		'x-hugh-open-org-file-for-rt-ticket)
@@ -126,7 +123,6 @@
 ;; (global-set-key "\C-cvp"                'vagrant-provision)
 ;; (global-set-key "\C-cvs"                'vagrant-ssh)
 ;; (global-set-key "\C-cvt"                'vagrant-tramp-term)
-
 
 
 ; God, I hate what this does when using Emacs in X
