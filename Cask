@@ -43,6 +43,7 @@
 (depends-on "edit-indirect")
 (depends-on "ein")
 (depends-on "elpy")
+(depends-on "emojify")
 (depends-on "epl")
 (depends-on "esxml")
 (depends-on "exec-path-from-shell")
