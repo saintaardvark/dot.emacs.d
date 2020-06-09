@@ -332,5 +332,12 @@ REGION
   (interactive)
   (search-backward-regexp "^--- "))
 
+(defun x-hugh-korect-speling (korecshun)
+  "Add abbrev to turn mispeld \"word-at-point\" into KORECSHUN."
+  (interactive "sKorekshun: ")
+  (let ((mispeld (downcase (word-at-point))))
+    (define-abbrev global-abbrev-table korecshun mispeld)
+    (write-abbrev-file abbrev-file-name)))
+
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions ends here
