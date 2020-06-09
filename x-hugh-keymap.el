@@ -94,36 +94,6 @@
             (define-key markdown-mode-map "\C-c '"
               'hydra-text/body)))
 
-;; These can be turned into Hydra if needed.
-
-;; (global-set-key "\C-cpa"	'x-hugh-wiki-attach-file-to-wiki-page)
-;; (global-set-key "\C-cpb"	'x-hugh-blog-entry)
-;; (global-set-key "\C-cpc"	'x-hugh-open-blog-page)
-;; (global-set-key "\C-cpg"	'x-hugh-gh-git-commit-and-push-without-mercy)
-;; (global-set-key "\C-cpr"	'x-hugh-insert-wiki-rt-link)
-;; (global-set-key "\C-cpt"	'x-hugh-insert-wiki-rt-link-as-detailed-in)
-;; (global-set-key "\C-cpq"	'x-hugh-wiki-blockquote-quote)
-;; (global-set-key "\C-cpv"	'x-hugh-wiki-verbatim-quote)
-
-;; I'm gonna declare C-co the offical prefix of my org stuff.
-;; (global-set-key "\C-cod"		'x-hugh-org-new-day-in-notes)
-;; (global-set-key "\C-cof"		'x-hugh-open-org-file-for-rt-ticket)
-;; (global-set-key "\C-com"		'x-hugh-mail-buffer-to-rt)
-;; (global-set-key "\C-con"		'x-hugh-org-clock-in-starting-now-dammit)
-;; (global-set-key "\C-cop"		'x-hugh-insert-rt-ticket-into-org)
-;; (global-set-key "\C-coR"		'x-hugh-org-autofill-rt-entry)
-;; (global-set-key "\C-cos"		'x-hugh-insert-rt-ticket-commit-comment)
-;; (global-set-key "\C-cot"		'x-hugh-insert-rt-ticket-into-org-from-rt-email)
-;; (global-set-key "\C-coy"		'x-hugh-boxquote-yank-and-indent)
-
-;; Vagrant
-;; (global-set-key "\C-cvd"                'vagrant-destroy)
-;; (global-set-key "\C-cve"                'vagrant-edit)
-;; (global-set-key "\C-cvu"                'vagrant-up)
-;; (global-set-key "\C-cvp"                'vagrant-provision)
-;; (global-set-key "\C-cvs"                'vagrant-ssh)
-;; (global-set-key "\C-cvt"                'vagrant-tramp-term)
-
 
 ; God, I hate what this does when using Emacs in X
 (global-unset-key "\C-z")
