@@ -65,3 +65,4 @@
   - Shellcheck run from shell will be fine about this
   - Is this configured somewhere?
 >>>>>>> merge-from-work:TODO.org
+* TODO https://github.com/alphapapa/org-super-agenda
