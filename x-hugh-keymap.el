@@ -62,7 +62,7 @@
 ;; C-c o: org
 ;; C-c p: RESERVED FOR PROJECTILE
 ;; C-c u: random
-;; C-c v: vagrant
+;; C-c v: fixmee-listview
 ;; C-c w: workgroups.
 ;; C-c y: window (hydra)
 
