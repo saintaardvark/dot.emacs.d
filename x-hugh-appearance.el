@@ -148,7 +148,7 @@ Assumes font named like `Inconsolata-14`."
   (interactive)
   ;;; FIXME: Not sure I understand what's going on with the intern here
   ;;; Need to dig a bit more into load-theme
-  (load-theme (intern (format "solarized-%s" which))))
+  (load-theme (intern (format "solarized-%s" which))) "no-confirm")
 
 ;; Assumption: this code will be run at startup, when I have the dark
 ;; theme loaded.
