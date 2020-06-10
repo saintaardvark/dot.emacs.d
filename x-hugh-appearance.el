@@ -15,7 +15,7 @@
   :config (load-theme 'gruvbox-dark-hard "no-confirm"))
 
 (use-package emojify
-  :config (emojify-mode))
+  :config (global-emojify-mode))
 
 (setq column-number-mode t
       display-time-24hr-format t
