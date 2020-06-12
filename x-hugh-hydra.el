@@ -136,7 +136,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
    "horz")
   ("t" transpose-frame "rotate frame")
   ("o"  ace-maximize-window "ace-one" :color blue)
-  ("a" ace-window "ace")
+  ("a" ace-window "ace" :color blue)
   ("s" ace-swap-window "swap")
   ("d" ace-delete-window "del")
   ("b" ido-switch-buffer "buf")
