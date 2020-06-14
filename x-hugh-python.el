@@ -27,5 +27,11 @@ else, turn on."
 (use-package python
   :custom (python-indent-guess-indent-offset t))
 
+(defun x-hugh-python-fixme ()
+  "Insert my patented debugging string in Python."
+  (interactive)
+  (insert "print(\"[FIXME] \")")
+  (backward-char 2))
+
 (provide 'x-hugh-python)
 ;;; x-hugh-python ends here

@@ -191,9 +191,13 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("o" (dired "~/go/src") "Browse ~/go/src")
   ("s" (dired "/usr/local/go/src") "Browse GOROOT/src"))
 
+;; TODO: You could imagine this being something that is
+;; mode-appropriate.  Like, x-hugh-insert-fixme, figure out mode,
+;; figure out what that looks like.
 (defhydra hydra-python (:exit t)
   "python"
-  ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight"))
+  ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight")
+  ("f" x-hugh-python-fixme "FIXME"))
 
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
