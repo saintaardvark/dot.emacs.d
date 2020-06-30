@@ -103,13 +103,14 @@
 
 (define-abbrev-table 'global-abbrev-table
   '(
-    ("soemthing" "something" nil 4)
+    ("TF" "Terraform" nil 6)
+    ("_shrug_" "¯_(ツ)_/¯" nil 4)
+    ("_tf_" "(╯°□°)╯︵ ┻━┻" nil 4)
+    ("e_shrug" "¯_(ツ)_/¯" nil 4)
     ("somethign" "something" nil 7)
-    ("tableflip" "(╯°□°)╯︵ ┻━┻" nil 1)
-    ("tf" "(╯°□°)╯︵ ┻━┻" nil 4)
-    ("thing" "thign" nil 0)
+    ("tf" "(╯°□°)╯︵ ┻━┻" nil 7)
+    ("thign" "thing" nil 2)
     ("trackign" "tracking" nil 1)
-    ("tracking" "trackign" nil 0)
    ))
 
 (define-abbrev-table 'gnus-group-mode-abbrev-table '())
