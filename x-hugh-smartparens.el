@@ -51,8 +51,8 @@
                                                "toml"
                                                "yaml"))
                  ;; See https://github.com/Fuco1/smartparens/wiki/Permissions
-                 (sp-local-pair 'go-mode "{" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))
-                 (sp-local-pair 'go-mode "(" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))))
+                 (sp-local-pair 'prog-mode "{" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))
+                 (sp-local-pair 'prog-mode "(" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))))
 
 (provide 'x-hugh-smartparens)
 ;;; x-hugh-smartparens ends here
