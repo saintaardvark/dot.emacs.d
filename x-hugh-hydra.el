@@ -31,6 +31,7 @@
 
 (defhydra hydra-dev (:exit t)
   ("a" x-hugh-git-changetype "Cycle changetype")
+  ("c" x-hugh-git-connects-to "Connects-to")
   ("g" x-hugh-grx "grx")
   ("l" linum-mode "linum")
   ("L" global-linum-mode "global-linum")

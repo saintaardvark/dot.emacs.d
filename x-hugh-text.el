@@ -188,5 +188,20 @@ Meant for use in magit."
 	   (progn (kill-line)
 		  (insert "patch"))))))
 
+(defun x-hugh-git-connects-to ()
+  "Add \"Connects-to\" argument to git commit.
+
+Meant for use in magit."
+  (interactive)
+  (save-excursion
+    (if (search-forward-regexp "^Connects-to:" nil t)
+	(progn (beginning-of-line)
+	       (kill-line)
+	       (join-line))
+      (let ((ticket (read-from-minibuffer "Ticket: ")))
+	(search-forward-regexp "^Change-type: ")
+	(forward-line)
+      (insert (format "Connects-to: %s\n" ticket))))))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
