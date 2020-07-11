@@ -163,6 +163,7 @@
 (depends-on "terraform-mode")
 (depends-on "test-kitchen")
 (depends-on "tide")
+(depends-on "toggle-quotes")
 (depends-on "toml-mode")
 (depends-on "transient")
 (depends-on "transpose-frame")

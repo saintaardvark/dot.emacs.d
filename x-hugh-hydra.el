@@ -169,7 +169,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("x" toggle-frame-maximized "toggle max"))
 
 (defhydra hydra-text (:color blue)
-  ("'" ruby-toggle-string-quotes "Toggle single/double quotes")
+  ("'" toggle-quotes "Toggle single/double quotes")
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("c" x-hugh-git-changetype "git-changetype")
