@@ -91,6 +91,7 @@
 (depends-on "htmlize")
 (depends-on "hydra")
 (depends-on "idle-highlight-mode")
+(depends-on "indium")
 (depends-on "ivy")
 (depends-on "jammer")
 (depends-on "jedi")
