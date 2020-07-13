@@ -91,7 +91,7 @@ Example output:
     (while (re-search-forward "Saint Aardvark the Carpeted" nil t)
       (replace-match "Hugh Brown" nil nil))
     (goto-char (point-min))
-    (while (re-search-forward "disturbed my sleep to write" nil t)
+    (while (re-search-forward "In a surprising turn of events, " nil t)
       (replace-match "wrote" nil nil))
     (goto-char (point-min))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
