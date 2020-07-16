@@ -33,9 +33,10 @@
   ("a" x-hugh-git-changetype "Cycle changetype")
   ("c" x-hugh-git-connects-to "Connects-to")
   ("g" x-hugh-grx "grx")
+  ("j" json-pretty-print-buffer "pretty-print json")
   ("l" linum-mode "linum")
   ("L" global-linum-mode "global-linum")
-)
+  )
 
 (defhydra hydra-elisp (:exit t)
   "elisp"
