@@ -23,7 +23,10 @@
   ;; :mode ("\\.org$" . org-mode)
   :custom ((org-log-done t)
            (org-agenda-columns-add-appointments-to-effort-sum t)
-           (org-agenda-files (quote ("~/orgmode")))
+	   (org-agenda-files (f-files "~/orgmode"
+				      (lambda (f)
+					(string= (f-ext f) "org"))
+				      'recursive))
            (org-agenda-log-mode-items (quote (clock)))
            (org-agenda-restore-windows-after-quit t)
            (org-agenda-skip-scheduled-if-done t)
