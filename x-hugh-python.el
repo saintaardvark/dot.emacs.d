@@ -5,10 +5,18 @@
 
 ;;; Code:
 
+;; FIXME: Turn off auto-complete & auto-composition in *at least*
+;; Python, possibly all modes.
 (use-package elpy
   ;; The default list, but minus highlight-indentation.
   ;; Giving highlight-indentationo-guides a try.
-  :custom (elpy-modules '(elpy-module-sane-defaults elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-django))
+  :custom (elpy-modules '(elpy-module-sane-defaults
+			  elpy-module-company
+			  elpy-module-eldoc
+			  elpy-module-flymake
+			  elpy-module-pyvenv
+			  elpy-module-yasnippet
+			  elpy-module-django))
   :config (elpy-enable))
 
 (defun x-hugh-highlight-indentation-mode-toggle ()
