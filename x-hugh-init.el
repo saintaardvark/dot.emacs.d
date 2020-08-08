@@ -90,7 +90,8 @@
 ;; Devel
 (use-package x-hugh-magit)
 (use-package x-hugh-projectile)
-(use-package x-hugh-company)
+;; Try turning off company mode & see how I feel.
+;; (use-package x-hugh-company)
 (use-package x-hugh-yasnippet)
 (use-package x-hugh-gh)
 (use-package x-hugh-smartparens)
