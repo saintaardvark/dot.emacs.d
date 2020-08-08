@@ -22,6 +22,7 @@ else, turn on."
 	   (eq highlight-indentation-mode t))
       (highlight-indentation-mode -1)
     (highlight-indentation-mode)))
+
 (x-hugh-highlight-indentation-mode-toggle)
 
 (use-package python
