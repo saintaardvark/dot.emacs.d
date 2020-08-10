@@ -1,0 +1,26 @@
+;;; Directory Local Variables
+;;; For more information see (info "(emacs) Directory Variables")
+
+
+;;  Note:  The manual is pretty clear about having the syntax be different here:
+
+;; ((sh-mode .
+;;   ((sh-basic-offset . 8)
+;;    (eval remove-hook 'after-save-hook 'hlu-make-script-executable t)))
+
+;; However, this caused errors when trying to load it.  I'm not sure
+;; what was going on.
+
+;; Additionally, shell-script-mode is, it turns out, an alias for
+;; sh-mode. However, I did not have any luck trying to addd the `eval
+;; remove-hook` part to sh-mode -- again, more syntax complaints.  I'm
+;; not sure what was going on there.
+
+;; For now, I'm going to stick with what's working, and can dig into
+;; this another time if needed.
+
+((sh-mode
+  (sh-basic-offset . 8))
+ (shell-script-mode
+  (eval remove-hook 'after-save-hook 'hlu-make-script-executable t)
+  (sh-basic-offset . 8)))
