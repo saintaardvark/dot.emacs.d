@@ -41,7 +41,7 @@
 ;; be put in use-package stanzas; for the rest, I'll put them here.
 ;; For discussion and background, see:
 ;; https://www.reddit.com/r/emacs/comments/9rrhy8/emacsers_with_beautiful_initel_files_what_about/
-
+;; FIXME: Have better name for this.
 (use-package x-hugh-random)
 
 ;; Custom file next
