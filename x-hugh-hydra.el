@@ -154,6 +154,9 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   "diagnostics"
   ("n" x-hugh-diagnostics-next-section "next diag")
   ("p" x-hugh-diagnostics-prev-section "prev diag")
+  ("l" recenter-top-bottom "recenter")
+  ("u" scroll-down-command "scroll up") ; weird, backwards
+  ("d" scroll-up-command "scroll down")
 )
 
 (defhydra hydra-zoom (global-map "<f2>")
