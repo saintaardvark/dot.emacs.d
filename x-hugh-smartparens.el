@@ -4,12 +4,6 @@
 
 ;;; Code:
 
-(defmacro x-hugh-sp-add-hook-to-modes (modes)
-  "Ensure that smart-parens mode is added to each of (MODES) mode-hook."
-  (dolist (mode modes)
-    (let ((hooksymbol (intern (concat mode "-mode-hook"))))
-      (add-hook hooksymbol #'smartparens-mode))))
-
 (defun x-hugh-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent."
   (newline)
@@ -33,26 +27,30 @@
 ;; on in this mode.
 (use-package smartparens
   :custom (sp-navigate-close-if-unbalanced t)
-  :config (progn (x-hugh-sp-add-hook-to-modes ("arduino"
-                                               "bats"
-                                               "emacs-lisp"
-                                               "go"
-                                               "groovy"
-                                               "javascript"
-                                               "jinja2"
-                                               "json"
-                                               "markdown"
-					       "org"
-                                               "ruby"
-                                               "python"
-					       "sh"
-                                               "shell"
-                                               "terraform"
-                                               "toml"
-                                               "yaml"))
-                 ;; See https://github.com/Fuco1/smartparens/wiki/Permissions
-                 (sp-local-pair 'prog-mode "{" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))
-                 (sp-local-pair 'prog-mode "(" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))))
+  :hook (
+	 (prog-mode . smartparens-mode)
+	 (emacs-lisp-mode . smartparens-mode)
+	 (arduino-mode . smartparens-mode)
+	 (bats-mode . smartparens-mode)
+	 (emacs-lisp-mode . smartparens-mode)
+	 (groovy-mode . smartparens-mode)
+	 (javascript-mode . smartparens-mode)
+	 (jinja2-mode . smartparens-mode)
+	 (json-mode . smartparens-mode)
+	 (markdown-mode . smartparens-mode)
+	 (org-mode . smartparens-mode)
+	 (ruby-mode . smartparens-mode)
+	 (python-mode . smartparens-mode)
+	 (sh-mode . smartparens-mode)
+	 (shell-mode . smartparens-mode)
+	 (terraform-mode . smartparens-mode)
+	 (toml-mode . smartparens-mode)
+	 (yaml-mode . smartparens-mode)
+	 )
+  :config (progn
+	    ;; See https://github.com/Fuco1/smartparens/wiki/Permissions
+	    (sp-local-pair 'prog-mode "{" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))
+	    (sp-local-pair 'prog-mode "(" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))))
 
 (provide 'x-hugh-smartparens)
 ;;; x-hugh-smartparens ends here
