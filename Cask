@@ -169,7 +169,6 @@
 (depends-on "transient")
 (depends-on "transpose-frame")
 (depends-on "treepy")
-(depends-on "twittering-mode")
 (depends-on "typescript-mode")
 (depends-on "ucs-utils")
 (depends-on "use-package")
@@ -182,5 +181,3 @@
 (depends-on "yafolding")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
-(depends-on "zone-nyan")
-(depends-on "zone-rainbow")
