@@ -167,6 +167,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo")
   ("s" x-hugh-solarized-toggle "toggle solarized")
+  ("t" x-hugh-set-theme-for-terminal "nice terminal theme")
   ;; FIXME: `set-face-attribute` is "mostly intended for internal use only" ☹
   ("z" (x-hugh-increase-default-face-height) "zoom in all")
   ("a" (x-hugh-decrease-default-face-height) "zoom out all")

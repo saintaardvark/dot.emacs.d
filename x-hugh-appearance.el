@@ -187,5 +187,10 @@ Assumes font named like `Inconsolata-14`."
   (set-face-attribute 'default (selected-frame) :height arg)
   (face-attribute 'default :height))
 
+(defun x-hugh-set-theme-for-terminal ()
+  "I always forget that tsdh-dark looks good in a terminal."
+  (interactive)
+  (load-theme (intern "tsdh-dark") "no-confirm"))
+
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here
