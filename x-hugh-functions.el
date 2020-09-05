@@ -284,6 +284,7 @@ FIXME: Need to figure out how to put point at right column."
   (kill-buffer))
 
 ;; http://emacs.stackexchange.com/a/10080
+;; FIXME: Have this kill the buffer after it's done: https://stackoverflow.com/questions/34857843/kill-emacss-async-shell-command-buffer-if-command-is-terminated
 (defun crontab-e ()
   "Edit crontab within Emacs."
   (interactive)
