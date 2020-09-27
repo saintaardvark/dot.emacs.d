@@ -13,7 +13,7 @@
       (replace-match "Hugh Brown" nil nil))
     (goto-char (point-min))
     (while (re-search-forward "In a surprising turn of events, " nil t)
-      (replace-match "wrote" nil nil))
+      (replace-match "" nil nil))
     (goto-char (point-min))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
