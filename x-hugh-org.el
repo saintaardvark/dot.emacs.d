@@ -51,6 +51,7 @@
            (org-clock-into-drawer t)
            (org-default-notes-file "~/orgmode/misc.org")
            (org-default-priority 65)
+           (org-duration-format (quote h:mm))
            (org-log-done (quote time))
            (org-log-into-drawer t)
            (org-modules
