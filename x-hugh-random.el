@@ -41,16 +41,18 @@
 (setq js-indent-level 2)
 (setq require-final-newline t)
 (setq safe-local-variable-values
-   (quote
-    ((eval add-hook
-	   (quote write-file-hooks)
-	   (quote delete-trailing-whitespace))
-     (eval add-hook
-	   (quote before-save-hook)
-	   (lambda nil
-	     (delete-trailing-whitespace)
-	     nil))
-     (mangle-whitespace . t))))
+      (quote
+       ((indent-tabs-mode t)
+       (indent-tabs-mode nil)
+       ((eval add-hook
+	      (quote write-file-hooks)
+	      (quote delete-trailing-whitespace))
+	(eval add-hook
+	      (quote before-save-hook)
+	      (lambda nil
+		(delete-trailing-whitespace)
+		nil))
+	(mangle-whitespace . t)))))
 
 ;; From http://www.emacswiki.org/emacs/CopyAndPaste
 (setq select-active-regions t) ;  active region sets primary X11 selection
