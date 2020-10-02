@@ -1,4 +1,3 @@
-(source "melpa" "https://melpa.org/packages/")
 (source gnu)
 (source melpa)
 
