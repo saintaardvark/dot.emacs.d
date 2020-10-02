@@ -42,6 +42,8 @@
   "elisp"
   ("d" edebug-defun "edebug-defun")
   ("e" eval-defun "eval-defun")
+  ("t" (setq debug-on-error t) "turn on debug-on-error")
+  ("T" (setq debug-on-error nil) "turn off debug-on-error")
   )
 
 (defhydra hydra-personal-files (:exit t)
