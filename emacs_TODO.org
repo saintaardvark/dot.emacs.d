@@ -67,3 +67,23 @@
 * TODO https://github.com/alphapapa/org-super-agenda
 * TODO Try out these ivy/counsel/swiper settings
   - Good intro: https://writequit.org/denver-emacs/presentations/2017-04-11-ivy.html
+* TODO [#A] Emacs: delete trailing whitespace in file and update magit :emacs:
+* TODO [#C] Keyboard shortcut for todo/today                          :emacs:
+* TODO [#C] Keyboard shortcut for maximize/3xbigger                   :emacs:
+* TODO [#C] Think about how journal and checkin to different org headlines could be integrated :emacs:
+  - Example: I think of the journal as my easily searchable record of
+    work.  If I check into another item (rather than just "Tuesday"),
+    then I'd like that to show up in the journal -- a pointer to the
+    original headline would be fine.
+  - I'd also want to make sure the original headline contents would be
+    available even if archived or deleted -- I don't want to lose
+    history.  Some detail could be lost -- detailed notes would likely
+    be less useful over time -- but i'd still want to know that I
+    worked on Foo that day.
+* TODO [#C] Have way of reverting the capitalization for doublecaps   :emacs:
+* TODO [#C] Is there a way to run typescript calls from Emacs?        :emacs:
+  - Could I run
+    https://github.com/balena-io/open-balena-api/pull/356/files from
+    it to test the API calls?
+* TODO [#C] Save register a and make it persistent                    :emacs:
+  - journal.org on left, agenda on right, certain level of zoom
