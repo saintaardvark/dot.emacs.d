@@ -152,13 +152,14 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("\\" isearch-backward "search-backward" :color blue)
   ("q" nil "cancel"))
 
-(defhydra hydra-support (:color amaran)
+(defhydra hydra-support (:color amaranth)
   "diagnostics"
   ("n" x-hugh-diagnostics-next-section "next diag")
   ("p" x-hugh-diagnostics-prev-section "prev diag")
   ("l" recenter-top-bottom "recenter")
   ("u" scroll-down-command "scroll up") ; weird, backwards
   ("d" scroll-up-command "scroll down")
+  ("q" nil "quit")
 )
 
 (defhydra hydra-zoom (global-map "<f2>")
