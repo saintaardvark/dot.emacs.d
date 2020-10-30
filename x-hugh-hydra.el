@@ -182,7 +182,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("c" x-hugh-git-changetype "git-changetype")
   ("d" x-hugh-markdown-footnote "markdown footnote")
-  ("f" ag "figl (actually ag, but who cares)")
+  ("f" set-selective-display-dlw "folding")
   ("g" x-hugh-git-changetype "Change patch type")
   ("i" indent-defun "indent-defun")
   ("l" display-line-numbers-mode "line numbers")

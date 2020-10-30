@@ -85,6 +85,7 @@
 (use-package x-hugh-text)
 (use-package x-hugh-email)
 (use-package x-hugh-markdown)
+(use-package x-hugh-folding)
 
 (use-package x-hugh-passwords)
 
