@@ -87,3 +87,4 @@
     it to test the API calls?
 * TODO [#C] Save register a and make it persistent                    :emacs:
   - journal.org on left, agenda on right, certain level of zoom
+* TODO https://github.com/cute-jumper/emacs-firefox-controller
