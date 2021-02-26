@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: fxm
+# key: fxm
+# group: dunder methods
+# --
+print("[FIXME] $1 == {}".format($1))
