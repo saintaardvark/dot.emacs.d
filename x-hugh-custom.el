@@ -12,7 +12,20 @@
  ;; If there is more than one, they won't work right.
  '(ns-command-modifier nil)
  '(package-selected-packages
-   '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent)))
+   '(wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
+ '(safe-local-variable-values
+   '((eval add-hook 'before-save-hook
+	   (lambda nil
+	     (delete-trailing-whitespace)
+	     nil))
+     (indent-tabs-mode t)
+     (indent-tabs-mode nil)
+     ((eval add-hook 'write-file-hooks 'delete-trailing-whitespace)
+      (eval add-hook 'before-save-hook
+	    (lambda nil
+	      (delete-trailing-whitespace)
+	      nil))
+      (mangle-whitespace . t)))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
