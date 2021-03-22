@@ -39,3 +39,5 @@ fi
 #       (normal-top-level-add-subdirs-to-load-path)))
 # restart
 # Note that this was *after* running cask.  Did get error re: cask init function gone ... did not have time to dig into that
+#
+# Note: I encountered this again, and the steps above did not fix.  I had to blow away ~/.emac.d/.cask and run this script (first_run.sh) again.
