@@ -108,6 +108,8 @@
 (depends-on "let-alist")
 (depends-on "list-utils")
 (depends-on "logito")
+(depends-on "lsp-mode")
+(depends-on "lsp-python-ms")
 (depends-on "lv")
 (depends-on "magit")
 (depends-on "magit-gh-pulls")

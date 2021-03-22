@@ -98,6 +98,7 @@
 (use-package x-hugh-passwords)
 
 ;; Devel
+(use-package x-hugh-lsp)
 (use-package x-hugh-magit)
 (use-package x-hugh-projectile)
 ;; Try turning off company mode & see how I feel.
