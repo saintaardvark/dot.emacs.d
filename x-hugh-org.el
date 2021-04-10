@@ -8,6 +8,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode settings.
 
+(defgroup x-hugh-org nil
+  "Settings for working with org."
+  :group 'tools)
+
+(defcustom x-hugh-org/journal-file "~/orgmode/journal.org"
+  "Where to store journal file."
+  :type 'string
+  :group 'x-hugh-blog)
+
+(defcustom x-hugh-org/misc-file "~/orgmode/misc.org"
+  "Where to store misc notes."
+  :type 'string
+  :group 'x-hugh-blog)
+
 ;; FIXME: This hook is not working yet.
 ;; https://www.reddit.com/r/orgmode/comments/6n7dk7/q_refreshing_agenda_after_capturing_a_task/dk91lbk/
 (defun nebucatnetzer:org-agenda-redo ()
@@ -37,19 +51,19 @@
            (org-capture-templates
             (quote
              (("l" "Log" item
-               (file+olp+datetree "~/orgmode/journal.org"))
+               (file+olp+datetree x-hugh-org/journal-file))
               ("t" "TODO" entry
-               (file "~/orgmode/misc.org")
+               (file x-hugh-org/misc-file)
                "** TODO [#A] %?")
               ("q" "Question" entry
-               (file "~/orgmode/misc.org")
+               (file x-hugh-org/misc-file)
                "** Question [#A] %?")
               ("f" "Feedback" entry
-               (file "~/orgmode/misc.org")
+               (file x-hugh-org/misc-file)
                "** TODO [#A] %? :feedback"))))
            (org-clock-continuously nil)
            (org-clock-into-drawer t)
-           (org-default-notes-file "~/orgmode/misc.org")
+           (org-default-notes-file x-hugh-org/misc-file)
            (org-default-priority 65)
            (org-duration-format (quote h:mm))
            (org-log-done (quote time))
