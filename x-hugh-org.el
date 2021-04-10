@@ -77,7 +77,9 @@
   :custom-face (org-level-6 ((t (:inherit nil :foreground "#859900"))))
   :custom-face (org-level-7 ((t (:inherit nil :foreground "#dc322f"))))
   :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2"))))
-  :hook ('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo))
+  :hook ('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo)
+  :hook ('org-capture-mode-hook 'x-hugh-indent-buffer)
+)
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
