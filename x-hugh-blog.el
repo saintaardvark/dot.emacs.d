@@ -24,7 +24,7 @@
   :group 'x-hugh-blog)
 
 (defun x-hugh-jekyll-new-blog-entry (title)
-  "A Small but Useful(tm) function to make a new blog entry in Jekyll."
+  "A Small but Useful(tm) function to make a new blog entry named titled TITLE in Jekyll."
   (interactive "sTitle: ")
   (let ((filename (replace-regexp-in-string "[^a-zA-Z0-9]" "_" (downcase title))))
     (message filename)
