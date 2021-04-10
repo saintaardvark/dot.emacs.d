@@ -197,6 +197,42 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
         (insert (format "https://saintaardvarkthecarpeted.com/images/%s" base)))
       (async-shell-command (format "/home/aardvark/bin/mogrify_for_blog.sh %s" img)))))
 
+(defun x-hugh-get-name-of-previous-month ()
+  "Return the name of the previous month."
+  ()
+  (let ((this-month-by-name (format-time-string "%B"))
+	;; Stupid simple
+	(this-month-to-last-month #s(hash-table
+				     size 30
+				     test equal
+				     data (
+					   "January" "December"
+					   "February" "January"
+					   "March" "February"
+					   "April" "March"
+					   "May" "April"
+					   "June" "May"
+					   "July" "June"
+					   "August" "July"
+					   "September" "August"
+					   "October" "September"
+					   "November" "October"
+					   "December" "November"
+					   ))))
+    (gethash this-month-by-name this-month-to-last-month)))
+
+(defun x-hugh-blog-what-happened-last-month ()
+  "Create post for what happened last month."
+  (interactive)
+  (let ((last-month (x-hugh-get-name-of-previous-month))
+	(title-format "What happened in %s")
+	(journal-file x-hugh-org/journal-file))
+    (message (format title-format last-month))
+    (x-hugh-hugo-new-blog-entry (format title-format last-month))
+    (find-file-other-window journal-file)))
+;; also open journal.org to its left, ideally opened to last month's entries
+;; Bonus points: hugo -D in backgroundk
+
 (provide 'x-hugh-blog)
 
 ;;; x-hugh-blog ends here
