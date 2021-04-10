@@ -8,13 +8,18 @@
   "Settings for working with git."
   :group 'tools)
 
-(defcustom x-hugh-blog/repo-path "~/jekyll-blog"
+(defcustom x-hugh-blog/repo-path "~/dev/va7unx.space"
   "Path to where the blog repo is kept."
   :type 'string
   :group 'x-hugh-blog)
 
-(defcustom x-hugh-blog/post-dir "_posts"
+(defcustom x-hugh-blog/post-dir "content/posts"
   "Directory within the blog repo where new posts are put."
+  :type 'string
+  :group 'x-hugh-blog)
+
+(defcustom x-hugh-blog/hugo-exe "/home/aardvark/dev/bin/hugo"
+  "Path to hugo executable."
   :type 'string
   :group 'x-hugh-blog)
 
@@ -29,6 +34,18 @@
     (insert (format "date: %s\n" (format-time-string "%a %b %d %R:%S %Z %Y")))
     (insert (format "tags:\n---\n\n"))))
                                         ; (add-hook 'before-save-hook 'x-hugh-chronicle-update-datestamp nil t)
+(defun x-hugh-hugo-new-blog-entry (title)
+  "A Small but Useful(tm) function to make a new blog entry named titled TITLE in Hugo."
+  (interactive "sTitle: ")
+  (let* ((hugo-ified-title (replace-regexp-in-string "[^a-zA-Z0-9]" "-" (downcase title)))
+	 (filename-with-extension (format "%s/%s.md" x-hugh-blog/post-dir hugo-ified-title))
+	 (default-directory x-hugh-blog/repo-path)
+	 (full-blog-post-path (format "%s/%s" x-hugh-blog/repo-path filename-with-extension))) ; TODO: This could be its own helper function
+    (message (format "DEBUG: fulp-blog-post-path: %s" full-blog-post-path))
+    (if (not (file-exists-p full-blog-post-path))
+	(async-shell-command (format "%s new %s" x-hugh-blog/hugo-exe filename-with-extension))
+      (find-file full-blog-post-path))))
+
 (defun x-hugh-jekyll-update-datestamp ()
   "Update the timestamp on a blog post."
   (interactive)
