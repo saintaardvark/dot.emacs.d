@@ -103,7 +103,7 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
         (progn
           (message (match-string 1))
           (eval (+ 1 (string-to-number (match-string 1)))))
-      ; else:
+      ;; else:
       (if (search-backward-regexp (rx bol "[") (point-min) t)
           (progn
             (if (looking-at "^\\[\\([0-9]+\\)]:")
@@ -146,15 +146,15 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
            (setq first-prefix "![")))
         (link (read-string "Link: "))
         (link-number (x-hugh-add-markdown-footnote-at-end-of-page link))
-    (if (region-active-p)
-        (progn
-          (setq pos1 (region-beginning) pos2 (region-end))
-          (goto-char pos1)
-          (insert "[")
-          (goto-char pos2)
-          (forward-char)
-          (insert (format "][%d]" link-number)))
-      (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number))))))
+	(if (region-active-p)
+            (progn
+              (setq pos1 (region-beginning) pos2 (region-end))
+              (goto-char pos1)
+              (insert "[")
+              (goto-char pos2)
+              (forward-char)
+              (insert (format "][%d]" link-number)))
+	  (insert (format "%s%s][%d]" first-prefix (read-string "Description: ") link-number))))))
 
 (defun x-hugh-chronicle-add-tag ()
   "Add a tag to a chronicle blog post."
