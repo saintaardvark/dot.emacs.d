@@ -49,7 +49,7 @@
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
 (defun x-hugh-libre-space-email ()
-  "Set appropriate email bits when using aardvark@libre.space email.."
+  "Set appropriate email bits when using aardvark@libre.space email."
   (interactive)
   (save-excursion
     (goto-char (point-min))

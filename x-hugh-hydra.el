@@ -60,7 +60,7 @@
   ("f" ag  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("h" x-hugh-hi-bob "hi bob")
-  ("l" (find-file "~/orgmode/log_2016.org") "Open logfile")
+  ("l" x-hugh-libre-space-email "LSF Email")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
   ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
