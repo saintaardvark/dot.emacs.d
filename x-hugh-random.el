@@ -52,6 +52,10 @@
 	      (lambda nil
 		(delete-trailing-whitespace)
 		nil))
+	(eval add-hook 'before-save-hook
+	   (lambda nil
+	     (delete-trailing-whitespace)
+	     nil))
 	(mangle-whitespace . t)))))
 
 ;; From http://www.emacswiki.org/emacs/CopyAndPaste
