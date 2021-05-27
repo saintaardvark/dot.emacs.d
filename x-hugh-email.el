@@ -39,7 +39,7 @@
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward "Saint Aardvark the Carpeted <aardvark@saintaardvarkthecarpeted.com>" nil t)
-      (replace-match "Hugh Brown VA7UNX <va7unx@members.fsf.org>" nil nil))
+      (replace-match "Hugh Brown VA7UNX <cq@va7unx.space>" nil nil))
     (post-goto-signature)
     (let ((beg (point)))
       (goto-char (point-max))
