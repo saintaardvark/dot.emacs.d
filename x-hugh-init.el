@@ -4,6 +4,17 @@
 
 ;;; Code:
 
+;; https://emacs.stackexchange.com/questions/60560/error-retrieving-https-elpa-gnu-org-packages-archive-contents-error-http-400
+;; "It is a race bug int Emacs and newer versions of GNU TLS that
+;; showed up in Emacs v26.1 but is fixed in Emacs v27. A simple
+;; temporary fix is just to turn of TLS 1.3 support in Emacs v26.1 and
+;; the race conditions goes away. It is not a good solution, as we
+;; need TLS 3.1, but it will do until the propper sollution is
+;; implemented. As discussed in the original bug report. See
+;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341#19".
+(if (version< emacs-version "27.0")
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+
 ;; Do this so that we can add directories to .emacs.d and have them load.
 ;; For example:  with this stanza, we can do (require 'w3m-load), which is
 ;; at ~/.emacs/w3m/w3m-load.el.

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -d ~/.cask ] ; then
-	cd ~/.cask 
+	cd ~/.cask
         git pull origin master
 else
 	git clone https://github.com/cask/cask.git ~/.cask
@@ -16,6 +16,25 @@ if [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ] ; then
 fi
 
 ~/.cask/bin/cask
+
+# Note to myself:
+# Emacs 26 (still the default on Debian 10) has a problem with gnutls-cli.  See x-hugh-init.el for details.
+# If you get random errors about packages not being downloadable, add these lines to cask-cli.el:
+# diff --git a/cask-cli.el b/cask-cli.el
+# index b9016ce..d11a7f0 100644
+# --- a/cask-cli.el
+# +++ b/cask-cli.el
+# @@ -40,6 +40,11 @@
+#  (when noninteractive
+#     (shut-up-silence-emacs))
+#
+#     +
+#     +;;  See comment in ~/.emacs.d/x-hugh-init.el
+#     +(if (version< emacs-version "27.0")
+#     +       (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+#     +
+#      (defconst cask-cli--table-padding 10
+#         "Number of spaces to pad with when printing table.")
 
 # Note to myself:
 # Not sure what's gone wrong, but in updating my .emacs.d repo I manage to bork packages pretty badly.  Here's what I had to do to revert:
