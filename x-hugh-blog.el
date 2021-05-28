@@ -18,7 +18,7 @@
   :type 'string
   :group 'x-hugh-blog)
 
-(defcustom x-hugh-blog/hugo-exe "/home/aardvark/dev/bin/hugo"
+(defcustom x-hugh-blog/hugo-exe "/home/aardvark/bin/hugo"
   "Path to hugo executable."
   :type 'string
   :group 'x-hugh-blog)
