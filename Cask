@@ -144,6 +144,7 @@
 (depends-on "python-black")
 (depends-on "pyvenv")
 (depends-on "rainbow-delimiters")
+(depends-on "reformatter")
 (depends-on "request")
 (depends-on "restclient")
 (depends-on "restclient-test")
