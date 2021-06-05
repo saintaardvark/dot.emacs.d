@@ -52,7 +52,7 @@
 
 ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
 (setq projectile-switch-project-action
-      #'projectile-commander)
+      #'projectile-vc)
 
 ;; Ermergerd:
 ;; `projectile-mode' Minor Mode Bindings Starting With C-c p x:
