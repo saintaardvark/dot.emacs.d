@@ -207,8 +207,12 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 (defhydra hydra-python (:exit t)
   "python"
   ("b" python-black-buffer "Black buffer")
+  ("e" ein:run "Start jupyter server with ein")
+  ("l" ein-login "Log into already-running jupyter server with ein")
   ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight")
-  ("f" x-hugh-python-fixme "FIXME"))
+  ("f" x-hugh-python-fixme "FIXME")
+  ("v" pyvenv-activate "pyvenv-activate")
+  )
 
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
