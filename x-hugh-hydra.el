@@ -206,6 +206,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 ;; figure out what that looks like.
 (defhydra hydra-python (:exit t)
   "python"
+  ("b" python-black-buffer "Black buffer")
   ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight")
   ("f" x-hugh-python-fixme "FIXME"))
 
