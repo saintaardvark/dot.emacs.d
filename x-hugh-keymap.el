@@ -19,12 +19,7 @@
 ;; (global-set-key "\C-xo" 'win-switch-dispatch)
 ;; (win-switch-setup-keys-ijkl "\C-xo")
 
-;; From
-;; http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
-;; FIXME: Not sure what's going on, but something about this is not
-;; working right now.  Oct 2020 Weird: restart emacs with this
-;; commented out; uncomment; eval; and now working.  Keep an eye on
-;; this.
+;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (global-set-key (kbd "C-x k")   'jcs-kill-a-buffer)
 
 ;; Indent whole buffer
