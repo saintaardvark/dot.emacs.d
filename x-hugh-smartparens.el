@@ -44,6 +44,7 @@
 	 (sh-mode . smartparens-mode)
 	 (shell-mode . smartparens-mode)
 	 (terraform-mode . smartparens-mode)
+	 (text-mode . smartparens-mode)
 	 (toml-mode . smartparens-mode)
 	 (yaml-mode . smartparens-mode)
 	 )
