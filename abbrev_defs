@@ -105,14 +105,12 @@
   '(
     (":table:" "(╯°□°)╯︵ ┻━┻" nil 2)
     ("TF" "Terraform" nil 6)
-    ("_shrug_" "¯_(ツ)_/¯" nil 4)
-    ("_tf_" "(╯°□°)╯︵ ┻━┻" nil 4)
+    ("_shrug_" "¯\_(ツ)_/¯" nil 4)
     ("a@s" "aardvark@saintaardvarkthecarpeted.com" nil 1)
     ("e_shrug" "¯\_(ツ)_/¯" nil 4)
     ("hth" "I hope that helps.  Please let me know if you have any questions." nil 2)
     ("sacm" "saintaardvarkthecarpeted.com" nil 3)
     ("somethign" "something" nil 7)
-    ("tf" "(╯°□°)╯︵ ┻━┻" nil 7)
     ("thagain" "Thanks again,
 Hugh" nil 2)
     ("thast" "Thanks, and please let me know if I can be of any further assistance." nil 2)
@@ -124,7 +122,6 @@ Hugh" nil 2)
     ("thugh" "Thanks,
 Hugh" nil 2)
     ("trackign" "tracking" nil 1)
-    ("wtoc" "{toc:style=disc|indent=20px}" nil 2)
    ))
 
 (define-abbrev-table 'gnus-group-mode-abbrev-table '())
