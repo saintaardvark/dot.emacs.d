@@ -137,5 +137,33 @@ Meant for use in magit."
 	(forward-line)
       (insert (format "Connects-to: %s\n" ticket))))))
 
+(defun x-hugh-details-summary ()
+  "Add details/summary tag pair to text.  Useful for PRs."
+  (interactive)
+  (insert "<details>\n")
+  (insert "<summary>Details go here</summary>\n\n")
+  (insert "```\n")
+  (insert "details go here inside a code block\n")
+  (insert "```\n")
+  (insert "</details>\n"))
+
+(defun x-hugh-details-surround ()
+  "Surround regions with details tags.  Useful for PRs."
+  (interactive)
+  (if (region-active-p)
+      (x-hugh-surround-region-plus-newlines "<details>\n<summary>Details go here</summary\n\n```\n" "```\n</details>\n")))
+
+(defun x-hugh-gh-pr-munge-text ()
+  "Run unfill on buffer and turn on viewlines-mode.
+
+Meant for adapting text for PRs created with gh."
+  (interactive)
+  (save-excursion
+    (let ((beg (point-min))
+	  (end (point-max)))
+      (unfill-region beg end))
+    (electric-indent-mode 0)
+    (turn-on-visual-line-mode)))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
