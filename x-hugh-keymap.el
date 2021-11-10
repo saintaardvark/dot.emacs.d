@@ -136,5 +136,8 @@
 ;; (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
 ;; (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
+;; Pop-tag-mark, the opposite of M-.
+(global-set-key (kbd "C-M-.") 'pop-tag-mark)
+
 (provide 'x-hugh-keymap)
 ;;; x-hugh-keymap ends here
