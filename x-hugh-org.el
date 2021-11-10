@@ -427,3 +427,4 @@ Hugh
       (message (format "Logged entry: %s" entry)))))
 
 (provide 'x-hugh-org)
+;;; x-hugh-org ends here
