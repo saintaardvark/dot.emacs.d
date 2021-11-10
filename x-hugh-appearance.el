@@ -184,7 +184,9 @@ Assumes font named like `Inconsolata-14`."
 (defun x-hugh-set-face-height (arg)
   "Set height for default face in current frame to ARG."
   (interactive)
-  (set-face-attribute 'default (selected-frame) :height arg)
+  (message (format "Calling set-face-attribute with %d" arg))
+  ;; (set-face-attribute 'default (selected-frame) :height arg)
+  (set-face-attribute 'default nil :height arg)
   (face-attribute 'default :height))
 
 (defun x-hugh-set-theme-for-terminal ()
