@@ -221,17 +221,27 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
 					   ))))
     (gethash this-month-by-name this-month-to-last-month)))
 
+(defun x-hugh-get-year-of-previous-month ()
+  "Return the year of the previous month."
+  ()
+  (let ((this-month-by-name (format-time-string "%B"))
+	(this-year (format-time-string "%Y")))
+    (if (eq this-month-by-name "January")
+	(- this-year 1)
+      this-year)))
+
 (defun x-hugh-blog-what-happened-last-month ()
   "Create post for what happened last month."
   (interactive)
   (let ((last-month (x-hugh-get-name-of-previous-month))
-	(title-format "What happened in %s")
+	(year-of-last-month (x-hugh-get-year-of-previous-month))
+	(title-format "What happened in %s %s")
 	(journal-file x-hugh-org/journal-file))
-    (message (format title-format last-month))
-    (x-hugh-hugo-new-blog-entry (format title-format last-month))
+    (message (format title-format last-month year-of-last-month))
+    (x-hugh-hugo-new-blog-entry (format title-format last-month year-of-last-month))
     (find-file-other-window journal-file)))
 ;; also open journal.org to its left, ideally opened to last month's entries
-;; Bonus points: hugo -D in backgroundk
+;; Bonus points: hugo -D in background
 
 (provide 'x-hugh-blog)
 
