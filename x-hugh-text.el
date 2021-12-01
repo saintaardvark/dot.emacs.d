@@ -153,17 +153,22 @@ Meant for use in magit."
   (if (region-active-p)
       (x-hugh-surround-region-plus-newlines "<details>\n<summary>Details go here</summary\n\n```\n" "```\n</details>\n")))
 
-(defun x-hugh-gh-pr-munge-text ()
-  "Run unfill on buffer and turn on viewlines-mode.
+(defun x-hugh-get-random-emoji()
+  (interactive)
+  (require 'subr-x)
+  (nth (random (length (hash-table-keys emoji--derived))) (hash-table-keys emoji--derived)))
 
-Meant for adapting text for PRs created with gh."
+(defun x-hugh-gh-pr-munge-text ()
+  "Prepare buffer for PR created with gh tool."
   (interactive)
   (save-excursion
     (let ((beg (point-min))
 	  (end (point-max)))
       (unfill-region beg end))
     (electric-indent-mode 0)
-    (turn-on-visual-line-mode)))
+    (turn-on-visual-line-mode)
+    ;; Inspiration from Tal
+    (x-hugh-get--random-emoji)))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
