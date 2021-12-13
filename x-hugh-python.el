@@ -47,7 +47,9 @@ else, turn on."
 (x-hugh-highlight-indentation-mode-toggle)
 
 (use-package python
-  :custom (python-indent-guess-indent-offset t))
+  :custom ((python-indent-guess-indent-offset t)
+	   (python-shell-interpreter "python3"))
+  )
 
 (use-package lsp-pyright
   :ensure t
