@@ -156,7 +156,13 @@ Meant for use in magit."
 (defun x-hugh-get-random-emoji()
   (interactive)
   (require 'subr-x)
-  (nth (random (length (hash-table-keys emoji--derived))) (hash-table-keys emoji--derived)))
+  (let (all-emojis (hash-table-keys emoji--derived))
+    (nth (random (length all-emojis)) all-emojis)
+    ))
+
+(defun x-hugh-insert-random-emoji()
+  (interactive)
+  (insert (x-hugh-get-random-emoji)))
 
 (defun x-hugh-gh-pr-munge-text ()
   "Prepare buffer for PR created with gh tool."
@@ -168,7 +174,7 @@ Meant for use in magit."
     (electric-indent-mode 0)
     (turn-on-visual-line-mode)
     ;; Inspiration from Tal
-    (x-hugh-get--random-emoji)))
+    (x-hugh-get-random-emoji)))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
