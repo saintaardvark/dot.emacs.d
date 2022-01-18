@@ -226,8 +226,8 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
   ()
   (let ((this-month-by-name (format-time-string "%B"))
 	(this-year (format-time-string "%Y")))
-    (if (eq this-month-by-name "January")
-	(- this-year 1)
+    (if (string= this-month-by-name "January")
+	(- (string-to-number this-year) 1)
       this-year)))
 
 (defun x-hugh-blog-what-happened-last-month ()
