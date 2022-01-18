@@ -36,6 +36,12 @@ else, turn on."
 (use-package python
   :custom (python-indent-guess-indent-offset t))
 
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
+
 (defun x-hugh-python-fixme ()
   "Insert my patented debugging string in Python."
   (interactive)

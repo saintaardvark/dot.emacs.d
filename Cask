@@ -112,7 +112,7 @@
 (depends-on "list-utils")
 (depends-on "logito")
 (depends-on "lsp-mode")
-(depends-on "lsp-python-ms")
+(depends-on "lsp-pyright")
 (depends-on "lv")
 (depends-on "magit")
 (depends-on "magit-gh-pulls")
