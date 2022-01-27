@@ -76,6 +76,9 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 
 (use-package linum)
 
+(use-package make-mode
+  :mode ("Makefile.*$" . makefile-mode))
+
 (use-package midnight
   :custom ((midnight-mode t)
            (clean-buffer-list-delay-general 1)
