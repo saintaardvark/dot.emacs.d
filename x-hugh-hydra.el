@@ -178,6 +178,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 
 (defhydra hydra-text (:color blue)
   ("'" toggle-quotes "Toggle single/double quotes")
+  ("," ispell-word "ispell word")
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("c" x-hugh-git-changetype "git-changetype")
@@ -188,7 +189,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("l" display-line-numbers-mode "line numbers")
   ("o" org-ascii-export-as-ascii "org ascii export")
   ("p" smartparens-mode "Toggle smartparens mode")
-  ("r" replace-region-command-output "Replace region with shell command")
+  ("r" query-replace "Query-replace")
+  ("R" replace-region-command-output "Replace region with shell command")
   ("s" delete-trailing-whitespace "Delete trailing whitespace")
   ("t" x-hugh-markdown-code-block "Markdown code block")
   ("v" view-lines-mode "view-lines-mode"))
