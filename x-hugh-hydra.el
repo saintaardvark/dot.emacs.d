@@ -167,7 +167,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("!" comint-previous-input "!" :color blue)
   ("q" nil "cancel"))
 
-(defhydra hydra-support (:color amaran)
+(defhydra hydra-support (:color amaranth)
   "diagnostics"
   ("n" x-hugh-diagnostics-next-section "next diag")
   ("p" x-hugh-diagnostics-prev-section "prev diag")
