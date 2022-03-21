@@ -136,7 +136,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("y" yas-describe-tables)
   ("'"  delete-trailing-whitespace "Delete trailing whitespace"))
 
-(defhydra hydra-window (:color blue)
+(defhydra hydra-window (:color amaranth :timeout 5)
   "window"
   ("h" windmove-left)
   ("j" windmove-down)
