@@ -11,6 +11,14 @@
   :config (add-hook 'go-mode-hook #'lsp-deferred)
   :custom ((lsp-gopls-staticcheck t)
 	   (lsp-eldoc-render-all t)
+	   ;; Adding this to try & get pyright to start in project
+	   ;; directory, not in my home directory.  See
+	   ;; https://github.com/emacs-lsp/lsp-pyright/issues/6.
+	   ;; Note: not sure that this will do what I want; see
+	   ;; settings at https://github.com/emacs-lsp/lsp-pyright,
+	   ;; but also there are a few issues/unmerged PRs that
+	   ;; suggest this package is not getting a lot of love. :-(
+	   (lsp-auto-guess-root t)
 	   ;; (lsp-gopls-complete-unimported)
   ))
 
