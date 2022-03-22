@@ -12,7 +12,7 @@
  ;; If there is more than one, they won't work right.
  '(ns-command-modifier nil)
  '(package-selected-packages
-   '(lsp-pyright adoc-mode elscreen elscreen-buffer-group 0blayout avy-flycheck flyspell-correct-avy-menu lsp-ui lsp-mode wsd-mode rg wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent)))
+   '(lsp-pyright adoc-mode elscreen elscreen-buffer-group 0blayout avy-flycheck flyspell-correct-avy-menu lsp-ui lsp-mode wsd-mode rg wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
  '(warning-suppress-types '((initialization))))
 
 (custom-set-faces
