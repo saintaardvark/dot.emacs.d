@@ -202,6 +202,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("g" x-hugh-git-changetype "Change patch type")
   ("i" indent-defun "indent-defun")
   ("l" display-line-numbers-mode "line numbers")
+  ("o" (org-capture nil "l") "org-capture log")
   ("p" smartparens-mode "Toggle smartparens mode")
   ("r" replace-region-command-output "Replace region with shell command")
   ("s" delete-trailing-whitespace "Delete trailing whitespace")
