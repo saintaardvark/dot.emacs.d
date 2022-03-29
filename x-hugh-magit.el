@@ -37,6 +37,9 @@
 	   )
   :config (remove-hook 'server-switch-hook 'magit-commit-diff))
 
+(use-package forge
+  :after magit)
+
 ;; Turning this off -- refreshing CI status every time is very, very slow.
 ;; (require 'magithub)
 ;; (require 'magit-gh-pulls)
