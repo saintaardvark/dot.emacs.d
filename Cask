@@ -69,6 +69,7 @@
 (depends-on "flymake-puppet")
 (depends-on "flyspell-correct")
 (depends-on "flyspell-correct-avy-menu")
+(depends-on "forge")
 (depends-on "gh")
 (depends-on "ghub")
 (depends-on "ghub+")
