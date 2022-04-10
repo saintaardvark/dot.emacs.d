@@ -171,10 +171,12 @@ Meant for use in magit."
     (let ((beg (point-min))
 	  (end (point-max)))
       (unfill-region beg end))
+    (auto-fill-mode -1)
     (electric-indent-mode 0)
     (turn-on-visual-line-mode)
     ;; Inspiration from Tal
-    (x-hugh-get-random-emoji)))
+    ;;(x-hugh-get-random-emoji)		; this function is borked :( 
+))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
