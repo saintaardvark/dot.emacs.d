@@ -161,7 +161,7 @@ Meant for use in magit."
     ))
 
 (defun x-hugh-insert-random-emoji()
-  (interactive)
+ (interactive)
   (insert (x-hugh-get-random-emoji)))
 
 (defun x-hugh-gh-pr-munge-text ()
