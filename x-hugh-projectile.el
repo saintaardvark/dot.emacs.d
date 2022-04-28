@@ -51,8 +51,17 @@
 ;; (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
 
 ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
+;;
+;; NOTE: Originally, I had this set to projectile-vc, which opens
+;; magit.  Nice!  But it would always split the window it was on,
+;; which became very annoying.
+;; https://github.com/bbatsov/projectile/issues/1624 seemed to
+;; describe the error; however, I have a newer version than the one
+;; that had the fix (1.6.0), so I'm not sure what's going on.  I'll
+;; dig into this another time.
+;; April 28, 2022
 (setq projectile-switch-project-action
-      #'projectile-vc)
+      #'projectile-dired)
 
 ;; Ermergerd:
 ;; `projectile-mode' Minor Mode Bindings Starting With C-c p x:
