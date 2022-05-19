@@ -48,6 +48,7 @@
            (org-agenda-start-with-clockreport-mode t)
            (org-agenda-start-with-follow-mode t)
            (org-agenda-start-with-log-mode t)
+	   (org-agenda-skip-entry-if 'todo '("Reference"))
            (org-capture-templates
             (quote
              (("l" "Log" item
