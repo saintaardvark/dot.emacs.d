@@ -135,5 +135,4 @@
 (use-package x-hugh-finally)
 
 (provide 'x-hugh-init)
-
 ;;; x-hugh-init ends here
