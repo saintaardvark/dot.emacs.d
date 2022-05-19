@@ -95,9 +95,7 @@
 (use-package x-hugh-functions)
 (use-package x-hugh-blog)
 (use-package x-hugh-appearance)
-;; (use-package x-hugh-confluence)
 (use-package x-hugh-org)
-;; (use-package x-hugh-cfengine)
 (use-package x-hugh-helm)
 (use-package x-hugh-reference)
 (use-package x-hugh-modes)
@@ -105,7 +103,6 @@
 (use-package x-hugh-email)
 (use-package x-hugh-markdown)
 (use-package x-hugh-folding)
-
 (use-package x-hugh-passwords)
 
 ;; Devel
