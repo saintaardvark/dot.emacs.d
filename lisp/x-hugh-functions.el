@@ -322,17 +322,6 @@ REGION
       (insert end)
       (insert "\n"))))
 
-;; FIXME: Merge these two functions
-(defun x-hugh-diagnostics-next-section ()
-  "Little thing to try."
-  (interactive)
-  (search-forward-regexp "^--- "))
-
-(defun x-hugh-diagnostics-prev-section ()
-  "Little thing to try."
-  (interactive)
-  (search-backward-regexp "^--- "))
-
 (defun x-hugh-korect-speling (korecshun)
   "Add abbrev to turn mispeld \"word-at-point\" into KORECSHUN."
   (interactive "sKorekshun: ")
