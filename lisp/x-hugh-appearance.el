@@ -23,6 +23,8 @@
   (load-theme 'gruvbox-dark-hard "no-confirm")
   )
 
+(use-package transpose-frame
+  :ensure t)
 
 ;; (use-package emojify
 ;;   :config (global-emojify-mode))
