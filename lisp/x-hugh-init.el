@@ -91,7 +91,7 @@
 (use-package x-hugh-hydra)
 ;; Keymaps come last.  Put a comment in other files about what
 ;; keymappings are set, but put the actual mapping in here.
-(use-package x-hugh-keymap)p
+(use-package x-hugh-keymap)
 ;; Any startup things (server-start), etc.
 (use-package x-hugh-finally)
 
