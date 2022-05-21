@@ -15,15 +15,6 @@
 (if (version< emacs-version "27.0")
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
-;; Do this so that we can add directories to .emacs.d and have them load.
-;; For example:  with this stanza, we can do (require 'w3m-load), which is
-;; at ~/.emacs/w3m/w3m-load.el.
-(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-    (let* ((my-lisp-dir "~/.emacs.d/")
-	   (default-directory my-lisp-dir))
-      (setq load-path (cons my-lisp-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path)))
-
 ;; FIXME: See note in first_run.sh, and figure out what went wrong.
 ;; At the very least, this is copy-pasta of code above.
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -43,7 +34,7 @@
 ;; Need to use require here -- after this, use-package is loaded.
 ;; FIXME: Is there a way around this?
 (require 'cask "~/.cask/cask.el")
-(cask-initialize)
+;; (cask-initialize)
 
 (use-package pallet
   :config

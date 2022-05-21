@@ -11,8 +11,25 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ns-command-modifier nil)
+ '(package-archives
+   '(("org" . "https://orgmode.org/elpa/")
+     ("melpa" . "https://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
    '(lsp-pyright adoc-mode elscreen elscreen-buffer-group 0blayout avy-flycheck flyspell-correct-avy-menu lsp-ui lsp-mode wsd-mode rg wc-mode skewer-mode web-beautify ag gited company-go go-autocomplete go-eldoc golint go-mode go-projectile frame-cmds use-package solarized-theme smex smartparens exec-path-from-shell counsel aggressive-indent))
+ '(safe-local-variable-values
+   '((eval add-hook 'before-save-hook
+	   (lambda nil
+	     (delete-trailing-whitespace)
+	     nil))
+     (indent-tabs-mode t)
+     (indent-tabs-mode nil)
+     ((eval add-hook 'write-file-hooks 'delete-trailing-whitespace)
+      (eval add-hook 'before-save-hook
+	    (lambda nil
+	      (delete-trailing-whitespace)
+	      nil))
+      (mangle-whitespace . t))))
  '(warning-suppress-types '((initialization))))
 
 (custom-set-faces
