@@ -115,30 +115,6 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
   ;; 24.2; not sure what is different.  This is ugly but it works.
                                         ; (fset 'post-finish 'server-edit)
   :mode ("mutt.*$" . post-mode))
-;; FIXME: Not sure what I intended here -- I think to turn on abbrev
-;; and smartparens, but not sure.  In any case, uncommenting these
-;; gives this error:
-;; https://stackoverflow.com/questions/11807128/emacs-nesting-exceeds-max-lisp-eval-depth
-
-;; :hook ((abbrev-mode . post-mode))
-;;  (smartparens-mode . post-mode)))
-
-;; Without this particular form for :hook, I get this error:
-;; File mode specification error: (error Autoloading file /home/aardvark/.emacs.d/.cask/26.1/elpa/rainbow-delimiters-20170929.1132/rainbow-delimiters.elc failed to define function rainbow-delimiters)
-;;
-;; Explanation: You've implicitly told use-package to make an autoload
-;; declaration that the rainbow-delimiters library defines a function
-;; which is also named rainbow-delimiters (and to add that function to
-;; prog-mode-hook). Consequently when prog-mode-hook runs and calls
-;; the (autoloaded) function rainbow-delimiters, the autoloading
-;; mechanism duly loads the rainbow-delimiters library in order to get
-;; the real definition of that function -- and then finds that the
-;; stated function wasn't defined by that library after all, and
-;; complains.
-;;
-;; Quoted from https://www.reddit.com/r/emacs/comments/87atsm/issue_with_rainbowdelimiters_not_defining_the/
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Load ssh.
 (use-package ssh
