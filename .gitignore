@@ -14,3 +14,9 @@
 /network-security.data
 /ac-comphist.dat
 /elpa
+/.cache/
+/.lsp-session-v1
+/.python-environments/
+/eln-cache/
+/elpy/
+/emojis/
