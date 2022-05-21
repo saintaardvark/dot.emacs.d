@@ -18,7 +18,11 @@
 ;;   :config (load-theme 'gruvbox-dark-hard "no-confirm"))
 
 (use-package gruvbox-theme
-  :ensure t)
+  :ensure t
+  :config
+  (load-theme 'gruvbox-dark-hard "no-confirm")
+  )
+
 
 ;; (use-package emojify
 ;;   :config (global-emojify-mode))
