@@ -4,41 +4,8 @@
 
 ;;; Code:
 
-;; https://emacs.stackexchange.com/questions/60560/error-retrieving-https-elpa-gnu-org-packages-archive-contents-error-http-400
-;; "It is a race bug int Emacs and newer versions of GNU TLS that
-;; showed up in Emacs v26.1 but is fixed in Emacs v27. A simple
-;; temporary fix is just to turn of TLS 1.3 support in Emacs v26.1 and
-;; the race conditions goes away. It is not a good solution, as we
-;; need TLS 3.1, but it will do until the propper sollution is
-;; implemented. As discussed in the original bug report. See
-;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341#19".
-(if (version< emacs-version "27.0")
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
-;; FIXME: See note in first_run.sh, and figure out what went wrong.
-;; At the very least, this is copy-pasta of code above.
-(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-    (let* ((my-lisp-dir "~/.emacs.d/.cask")
-	   (default-directory my-lisp-dir))
-      (setq load-path (cons my-lisp-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path)))
-
-;; TODO: Figure out a way to make this work in the terminal
-;; (setq frame-background-mode 'dark)
-
-;; OMG this is brilliant
-;; But! I need to clone https://github.com/jodonnell/emacs/blob/master/auto-cask.el
-;; (require 'auto-cask)
-;; (auto-cask/setup "~/.emacs.d")
-
-;; Need to use require here -- after this, use-package is loaded.
-;; FIXME: Is there a way around this?
-(require 'cask "~/.cask/cask.el")
-;; (cask-initialize)
-
-(use-package pallet
-  :config
-  (pallet-mode t))
+;; Should this be require?
+(use-package x-hugh-elpa)
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
@@ -124,7 +91,7 @@
 (use-package x-hugh-hydra)
 ;; Keymaps come last.  Put a comment in other files about what
 ;; keymappings are set, but put the actual mapping in here.
-(use-package x-hugh-keymap)
+(use-package x-hugh-keymap)p
 ;; Any startup things (server-start), etc.
 (use-package x-hugh-finally)
 
