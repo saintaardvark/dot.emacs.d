@@ -15,6 +15,7 @@
 
 ;; I'm gonna break this habit if it kills me
 (use-package annoying-arrows-mode
+  :ensure t
   :config (global-annoying-arrows-mode))
 
 ;; FIXME: Pretty sure there's a better way to add hooks here...
@@ -35,9 +36,11 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
          ("access\\.conf\\'" . apache-mode)
          ("sites-\\(available\\|enabled\\)/" . apache-mode)))
 
-(use-package browse-kill-ring)
+(use-package browse-kill-ring
+  :ensure t)
 
-(use-package boxquote)
+(use-package boxquote
+  :ensure t)
 
 (use-package compile
   :custom (compilation-scroll-output 'first-error))
@@ -60,10 +63,12 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 ;; Putting this here, using the `preface` directive to ensure it's
 ;; loaded first.  Still not great, but it will work for now.
 (use-package fixmee
+  :ensure t
   :preface (use-package button-lock)
   :config (global-fixmee-mode))
 
 (use-package flycheck
+  :ensure t
   :config (add-hook 'after-init-hook #'global-flycheck-mode)
   :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
            (flycheck-flake8-maximum-line-length 9990)
@@ -71,6 +76,7 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
            (flycheck-keymap-prefix ".")))
 
 (use-package highlight-indent-guides
+  :ensure t
   :custom (highlight-indent-guides-method 'character)
   :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
@@ -86,6 +92,7 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 
 ;; Because it's fun.
 (use-package nyan-mode
+  :ensure t
   :config (nyan-mode))
 
 (use-package paren
@@ -134,7 +141,8 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Load ssh.
-(use-package ssh)
+(use-package ssh
+  :ensure t)
 
 ;; Use scp for tramp.
 (use-package tramp
@@ -154,7 +162,8 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
   :custom ((uniquify-buffer-name-style 'post-forward nil (uniquify))
            (uniquify-min-dir-content 2)))
 
-(use-package xclip)
+(use-package xclip
+  :ensure t)
 
 ;; Not sure how handy this is going to be...
 (autoload 'map-lines "map-lines"
@@ -164,7 +173,8 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
 
-(use-package yasnippet)
+(use-package yasnippet
+  :ensure t)
 
 ;; Man, I always forget about winner-mode...
 (winner-mode 1)

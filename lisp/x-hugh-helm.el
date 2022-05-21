@@ -10,6 +10,7 @@
 
 (if x-hugh-helm-enabled
     (use-package helm
+      :ensure t
       :config
       (progn
         (helm-mode 1)

@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+(use-package hydra
+  :ensure t)
+
 ;; ONE MENU TO RULE THEM ALL
 (defhydra hydra-menu (:exit t)
   "menu"

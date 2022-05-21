@@ -5,7 +5,8 @@
 ;;; Code:
 
 ;; Text mode
-(use-package filladapt)
+(use-package filladapt
+  :ensure t)
 
 ;; FIXME: Not even sure what keypress that flyspell binding actually maps to
 (use-package flyspell

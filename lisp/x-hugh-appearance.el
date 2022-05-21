@@ -7,15 +7,21 @@
 ;; Emacs appearance
 
 ;; Custom themes package
-(use-package custom
-  ;; Note: previously, I customzed the value of custom-safe-themes.
-  ;; This holds sha256sums of themes that have been designated as
-  ;; safe.  This is a PITA to update.  For now, I'm going to use the
-  ;; no-confirm variant of load-theme, as shown above.
-  :config (load-theme 'gruvbox-dark-hard "no-confirm"))
 
-(use-package emojify
-  :config (global-emojify-mode))
+;; (require 'gruvbox-theme)
+
+;; (use-package custom
+;;   ;; Note: previously, I customzed the value of custom-safe-themes.
+;;   ;; This holds sha256sums of themes that have been designated as
+;;   ;; safe.  This is a PITA to update.  For now, I'm going to use the
+;;   ;; no-confirm variant of load-theme, as shown above.
+;;   :config (load-theme 'gruvbox-dark-hard "no-confirm"))
+
+(use-package gruvbox-theme
+  :ensure t)
+
+;; (use-package emojify
+;;   :config (global-emojify-mode))
 
 (setq column-number-mode t
       display-time-24hr-format t

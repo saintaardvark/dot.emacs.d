@@ -8,7 +8,10 @@
 (exec-path-from-shell-copy-env "GOROOT")
 (setenv "GO111MODULE" "auto")		; Will this fix gopls borking in streamline-ssh?
 
-(go-eldoc-setup)
+(use-package go-eldoc
+  :ensure t
+  :config
+  (go-eldoc-setup))
 
 ;; FIXME: Flycheck + go vet has a very annoying error in golang mode
 ;; that doesn't seem to have been fixed.  Full details at
@@ -37,7 +40,9 @@
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 
-(require 'go-autocomplete)
+;; FIXME: Not sure this is maintained...
+(use-package go-autocomplete
+  :ensure t)
 
 (add-hook 'go-mode-hook 'go-mode-setup)
 

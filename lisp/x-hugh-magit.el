@@ -17,9 +17,11 @@
 ;; ;; (require 'magit nil 'noerror)
 
 (use-package git-commit
+  :ensure t
   :custom (git-commit-summary-max-length 90))
 
 (use-package magit
+  :ensure t
   ;; From https://magit.vc/manual/magit/Performance.html#Performance
   :custom ((magit-refresh-status-buffer nil)
 	   (vc-handled-backends nil)

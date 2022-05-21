@@ -6,7 +6,8 @@
 
 ;; TODO: Break out to x-hugh-node or some such
 
-(use-package "nvm")
+(use-package "nvm"
+  :ensure t)
 
 ;; TODO: use-package
 (defun setup-tide-mode ()

@@ -15,6 +15,7 @@
 ;; FIXME: it *may* be necessary to enable this package before
 ;; smartparens.
 (use-package mic-paren
+  :ensure t
   :config (paren-activate))
 
 ;; FIXME: smartparens not enabled in javascript mode
@@ -26,6 +27,7 @@
 ;; where that proper name is used to ensure that smartparens is turned
 ;; on in this mode.
 (use-package smartparens
+  :ensure t
   :custom (sp-navigate-close-if-unbalanced t)
   :hook (
 	 (prog-mode . smartparens-mode)

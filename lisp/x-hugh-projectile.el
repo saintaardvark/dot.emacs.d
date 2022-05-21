@@ -4,12 +4,11 @@
 
 ;;; Code:
 
-(projectile-mode)
-
 (use-package projectile
   ;; https://emacs.stackexchange.com/questions/32634/how-can-the-list-of-projects-used-by-projectile-be-manually-updated
   ;; FIXME: Not sure what's going wrong.  Evaluating the progn works,
   ;; but not in with the rest of the use-package function.
+  :ensure t
   :init
   (progn
     (mapc #'projectile-add-known-project
