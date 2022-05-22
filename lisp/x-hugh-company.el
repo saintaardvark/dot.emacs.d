@@ -6,6 +6,7 @@
 
 
 (use-package company
+  :ensure t
   :config (progn
             (company-quickhelp-mode 1)
             ;; Needed for the ac-complete stuff up ahead
@@ -22,7 +23,8 @@
                  (define-key company-active-map (kbd "C-p") #'company-select-previous)
                  (define-key company-mode-map (kbd "C-:") 'helm-company)
                  (define-key company-active-map (kbd "C-:") 'helm-company)
-                 (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))))
+                 ;; (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))))
+  )
 
 (provide 'x-hugh-company)
 ;;; x-hugh-company ends here
