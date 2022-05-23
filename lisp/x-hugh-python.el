@@ -18,10 +18,12 @@
 ;; 			  elpy-module-django))
 ;;   :config (elpy-enable))
 
+;; FIXME: Why is this here?
 (use-package dash
   :ensure t)
 (dash-unload-function)
 
+;; And what's this?
 (-map (lambda (num) (* num num)) '(1 2 3 4))
 (funcall (-compose #'- #'1+ #'+) 1 2 3)
 
