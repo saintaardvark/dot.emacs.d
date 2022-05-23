@@ -52,6 +52,7 @@
 (use-package x-hugh-navi)
 (use-package x-hugh-functions)
 (use-package x-hugh-blog)
+(use-package x-hugh-ace)
 (use-package x-hugh-appearance)
 ;; (use-package x-hugh-confluence)
 (use-package x-hugh-org)
@@ -83,6 +84,7 @@
 ;; (use-package x-hugh-ruby)
 (use-package x-hugh-terraform)
 (use-package x-hugh-typescript)
+
 
 ;; (use-package cfg
 ;;   :custom (cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef"))
