@@ -93,6 +93,9 @@
   :custom-face (org-level-8 ((t (:inherit nil :foreground "#268bd2"))))
   :hook ('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo)
   :hook ('org-capture-mode-hook 'x-hugh-indent-buffer)
+  :hook (('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo)
+	 ('org-capture-mode-hook 'x-hugh-indent-buffer)
+	 ('org-mode-hook 'org-indent-mode))
 )
 
 (define-key global-map "\C-cl" 'org-store-link)
