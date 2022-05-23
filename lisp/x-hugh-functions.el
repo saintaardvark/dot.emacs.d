@@ -31,7 +31,7 @@ If PREFIX is given, open files matching that prefix."
 
 If ARG is provided, open in other window."
   (interactive "P")
-  (x-hugh-edit-completing-read arg "~/.emacs.d/" "x-hugh-"))
+  (x-hugh-edit-completing-read arg "~/.emacs.d/lisp/" "x-hugh-"))
 
 ;;; It's clumsy, I'm sure, but it works!
 (defun x-hugh-wordcount ()
