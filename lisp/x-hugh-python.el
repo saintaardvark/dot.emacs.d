@@ -49,6 +49,13 @@
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
 
+(use-package python-black
+  :demand t
+  :after python
+  :ensure t
+  :hook (python-mode . python-black-on-save-mode-enable-dwim)
+  )
+
 (defun x-hugh-python-fixme ()
   "Insert my patented debugging string in Python."
   (interactive)
