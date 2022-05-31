@@ -19,6 +19,8 @@
 (use-package git-commit
   :custom (git-commit-summary-max-length 90))
 
+;; NOTE: Also see x-hugh-appearance for split-width-threshold and
+;; split-horizontal-threshold.
 (use-package magit
   ;; From https://magit.vc/manual/magit/Performance.html#Performance
   :custom ((magit-refresh-status-buffer nil)

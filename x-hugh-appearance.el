@@ -194,5 +194,11 @@ Assumes font named like `Inconsolata-14`."
   (interactive)
   (load-theme (intern "tsdh-dark") "no-confirm"))
 
+;; My attempt to get Magit to prefer splitting windows vertically
+;; rather than horizontally.  See
+;; https://emacs.stackexchange.com/questions/28496/magit-status-always-split-vertically
+(setq split-width-threshold 0)
+(setq split-height-threshold nil)
+
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance ends here
