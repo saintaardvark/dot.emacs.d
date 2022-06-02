@@ -39,6 +39,10 @@
 	   )
   :config (remove-hook 'server-switch-hook 'magit-commit-diff))
 
+;; TODO: Implement this to delete trailing whitespace from magit
+;; status page:
+;; https://stackoverflow.com/questions/20127377/how-can-i-remove-trailing-whitespace-from-a-hunk-in-magit
+
 ;; Turning this off -- refreshing CI status every time is very, very slow.
 ;; (require 'magithub)
 ;; (require 'magit-gh-pulls)
