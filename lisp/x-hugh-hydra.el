@@ -176,6 +176,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("l" (text-scale-adjust -1) "zoom out current window")
   ("0" (progn (text-scale-adjust 0) (maximize-frame)) "reset")
   ("1" (x-hugh-set-font-larger) "Set to 16 point Inconsolata")
+  ("2" (x-hugh-set-font-largest) "Set to 20 point Inconsolata")
+  ("3" (x-hugh-set-font-zomg) "Set to 30 point Inconsolata")
   ("j" winner-undo "winner-undo")
   ("k" winner-redo "winner-redo")
   ("s" x-hugh-solarized-toggle "toggle solarized")
