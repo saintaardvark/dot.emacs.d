@@ -77,6 +77,9 @@
   ("f" ag  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("h" x-hugh-hi-bob "hi bob")
+  ("j" (progn
+	 (find-file "~/orgmode/journal.org")
+	 (goto-char (point-max))) "Journal")
   ("l" x-hugh-libre-space-email "LSF Email")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
