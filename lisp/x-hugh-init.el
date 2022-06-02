@@ -4,8 +4,9 @@
 
 ;;; Code:
 
-;; Should this be require?
-(use-package x-hugh-elpa)
+;; This first one needs to be `require`; it loads the `use-package`
+;; package.  After that, we can use `(use-package)`.  Clear as mud?
+(require 'x-hugh-elpa)
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
