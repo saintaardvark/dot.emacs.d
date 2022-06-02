@@ -71,7 +71,6 @@
 ;; here.
 ;;  (x-hugh-set-font-larger)
 
-
 (defun x-hugh-set-appearance ()
   "Reload x-hugh-appearance.el."
   (interactive)
