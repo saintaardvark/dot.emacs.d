@@ -77,6 +77,7 @@
 (use-package x-hugh-yasnippet)
 (use-package x-hugh-gh)
 (use-package x-hugh-smartparens)
+(use-package x-hugh-docker)
 
 ;; Languages
 (use-package x-hugh-golang)
