@@ -6,9 +6,27 @@
 (require 'package)
 (require 'cl-lib)
 
-(setq package-user-dir
-      (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version)
-			user-emacs-directory))
+;; Note: Originally, I was copying the approach of
+;; https://github.com/purcell/emacs.d, where he sets a custom
+;; directory for packages.  However, this caused problems for me on
+;; OSX: the first, from-scratch, no-packages-downloaded run
+;; worked...but restarting Emacs would give me an error about how
+;; `use-package` didn't exist.  The closest I could find to a fix was
+;; this comment in an issue for use-package:
+;;
+;;	https://github.com/jwiegley/use-package/issues/593#issuecomment-919567264
+;;
+;; ...which said that it appeared to be some kind of bootstrap issue,
+;; and removing the custom directory did the trick for them.  So...:shrug:
+;;
+;; I'm commenting this out.  If/when upgrades to Emacs happen, I may
+;; need to blow away ~/.emacs.d/elpa and restart.
+;;
+;; June 2, 2022
+
+;; (setq package-user-dir
+;;       (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version)
+;; 			user-emacs-directory))
 
 ;; https://emacs.stackexchange.com/questions/60560/error-retrieving-https-elpa-gnu-org-packages-archive-contents-error-http-400
 ;; "It is a race bug int Emacs and newer versions of GNU TLS that
@@ -57,7 +75,8 @@ available package lists will not be re-downloaded in order to locate PACKAGE."
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
+(eval-when-compile
+  (require 'use-package))
 ;; (setq use-package-always-ensure t)	
 
 
