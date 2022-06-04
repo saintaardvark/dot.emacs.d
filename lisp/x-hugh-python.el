@@ -7,7 +7,11 @@
 
 ;; FIXME: Turn off auto-complete & auto-composition in *at least*
 ;; Python, possibly all modes.
+;;
+;; FIXME: elpy is giving lots of errors on my laptop when I start it
+;; up; will dig into it later, but disabling it for now.
 ;; (use-package elpy
+;;   :ensure t
 ;;   ;; The default list, but minus highlight-indentation.
 ;;   ;; Giving highlight-indentationo-guides a try.
 ;;   :custom (elpy-modules '(elpy-module-sane-defaults
