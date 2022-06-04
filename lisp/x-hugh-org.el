@@ -72,6 +72,7 @@
             (quote
              (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
 	   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+	   (org-startup indented t)
            (org-stuck-projects
             (quote
              ("+PROJECT/-MAYBE-DONE"
