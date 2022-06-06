@@ -4,12 +4,6 @@
 
 ;;; Code:
 
-;; FIXME: Not sure what's going on, but for some reason my list of
-;; known projects isn't getting loaded when projectile initializes.
-;; To get around this manually, run:
-;;
-;; (projectile-load-known-projects)
-
 (use-package projectile
   ;; https://emacs.stackexchange.com/questions/32634/how-can-the-list-of-projects-used-by-projectile-be-manually-updated
   ;; FIXME: Not sure what's going wrong.  Evaluating the progn works,
@@ -30,6 +24,12 @@
   ;; FIXME: this might be the source of the other-window problem
   (projectile-switch-project-action #'projectile-vc)
   )
+
+;; FIXME: Not sure what's going on, but for some reason my list of
+;; known projects isn't getting loaded when projectile initializes.
+;; To get around this manually, I'm adding this line:
+;;
+(projectile-load-known-projects)
 
 ;; ;; TODO: Add shell as an option for projectile-commander (which is
 ;; ;; run after C-c p p)
