@@ -173,9 +173,7 @@ Meant for use in magit."
 	  (end (point-max)))
       (unfill-region beg end))
     (electric-indent-mode 0)
-    (turn-on-visual-line-mode)
-    ;; Inspiration from Tal
-    (x-hugh-get-random-emoji)))
+    (turn-on-visual-line-mode)))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
