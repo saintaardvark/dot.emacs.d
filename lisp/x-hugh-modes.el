@@ -149,6 +149,9 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 ;; Diff mode
 (add-hook 'diff-mode 'font-lock-mode)
 
+(use-package yaml-mode
+  :ensure t)
+
 (use-package yasnippet
   :ensure t)
 
