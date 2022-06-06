@@ -4,6 +4,12 @@
 
 ;;; Code:
 
+;; FIXME: Not sure what's going on, but for some reason my list of
+;; known projects isn't getting loaded when projectile initializes.
+;; To get around this manually, run:
+;;
+;; (projectile-load-known-projects)
+
 (use-package projectile
   ;; https://emacs.stackexchange.com/questions/32634/how-can-the-list-of-projects-used-by-projectile-be-manually-updated
   ;; FIXME: Not sure what's going wrong.  Evaluating the progn works,
