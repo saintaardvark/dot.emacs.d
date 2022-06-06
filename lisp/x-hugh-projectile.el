@@ -15,22 +15,20 @@
   (progn
     (mapc #'projectile-add-known-project
 	  (mapcar #'file-name-as-directory (magit-list-repos)))
-    ;; Optionally write to persistent `projectile-known-projects-file'
-    (projectile-save-known-projects))
+    )
+  ;; Optionally write to persistent `projectile-known-projects-file'
+  ;; FIXME: This was causing problems, so I've removed it.
   ;; FIXME -- I like the helm-projectile, but I *really* want C-c p s for
   ;; a shell.
   :custom
   ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
   ;; FIXME: this might be the source of the other-window problem
   (projectile-switch-project-action #'projectile-vc)
+  ;; FIXME: Not sure what's going on, but for some reason my list of
+  ;; known projects isn't getting loaded when projectile initializes.
+  ;; To get around this manually, I'm adding this line:
+  :config (projectile-load-known-projects)
   )
-
-;; FIXME: Not sure what's going on, but for some reason my list of
-;; known projects isn't getting loaded when projectile initializes.
-;; To get around this manually, I'm adding this line:
-;;
-(projectile-load-known-projects)
-
 ;; ;; TODO: Add shell as an option for projectile-commander (which is
 ;; ;; run after C-c p p)
 
