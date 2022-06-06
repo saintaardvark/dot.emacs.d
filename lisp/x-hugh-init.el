@@ -59,6 +59,7 @@
 (use-package x-hugh-org)
 ;; (use-package x-hugh-cfengine)
 (use-package x-hugh-helm)
+(use-package x-hugh-swiper)
 (use-package x-hugh-reference)
 (use-package x-hugh-modes)
 (use-package x-hugh-text)

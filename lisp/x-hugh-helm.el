@@ -23,5 +23,7 @@
         (setq helm-ff-newfile-prompt-p nil))
       (use-package helm-config)))
 
+;; Also: see x-hugh-swiper.el for swiper-helm
+
 (provide 'x-hugh-helm)
 ;;; x-hugh-helm.el ends here
