@@ -48,22 +48,22 @@
 (defun x-hugh-set-font-smaller ()
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-12"))
+  (set-frame-font "Inconsolata-12" t))
 
 (defun x-hugh-set-font-larger ()
   "Set font to 16 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-16"))
+  (set-frame-font "Inconsolata-16" t))
 
 (defun x-hugh-set-font-largest ()
   "Set font to 20 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-20"))
+  (set-frame-font "Inconsolata-20" t))
 
 (defun x-hugh-set-font-zomg ()
   "Set font to 30 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-30"))
+  (set-frame-font "Inconsolata-30" t))
 
 ;; Just make it larger...I always do this at startup anyhow.
 ;; FIXME / TODO: This is borking the display on Wayland.  For now I'm
