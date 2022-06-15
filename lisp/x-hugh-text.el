@@ -175,5 +175,10 @@ Meant for use in magit."
     (electric-indent-mode 0)
     (turn-on-visual-line-mode)))
 
+(defun x-hugh-linky-netx-ticket (ticket)
+  "Insert a full URL for a NETX ticket."
+  (interactive "sTicket: ")
+  (insert (format "https://https://jira.it.umbrella.com/browse/NETX-%s" ticket)))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
