@@ -23,3 +23,6 @@
 /transient/
 /request/
 /elpa*
+/lisp/projectile-bookmarks.eld
+/lisp/projectile.cache
+/multisession/
