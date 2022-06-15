@@ -188,7 +188,10 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ;; FIXME: `set-face-attribute` is "mostly intended for internal use only" ☹
   ("z" (x-hugh-increase-default-face-height) "zoom in all")
   ("a" (x-hugh-decrease-default-face-height) "zoom out all")
-  ("x" toggle-frame-maximized "toggle max"))
+  ("x" toggle-frame-maximized "toggle max")
+  ("-" x-hugh-appearance-make-things-smaller "Decrease font size")
+  ("=" x-hugh-appearance-make-things-bigger "Increase font size")
+)
 
 (defhydra hydra-text (:color blue)
   ("'" toggle-quotes "Toggle single/double quotes")

@@ -82,6 +82,25 @@
 ;; From https://gist.github.com/MatthewDarling/8c232b1780126275c3b4
 ;; Based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
 
+;; I appear to have lost x-hugh-appearance--font :-(
+;; Trying to recreate it.
+
+(defun x-hugh-appearance-experiment-get-font-size ()
+  "Get font size for current frame.
+
+That is, given a font of:
+
+-*-Inconsolata-regular-normal-normal-*-16-*-*-*-m-0-iso10646-1
+
+return 16."
+  (interactive)
+  (let ((current-font (frame-parameter nil 'font)))
+    ;; You could imagine splitting that by dash; assuming there's a
+    ;; zero-width zero index to the left of that first dash (ie, that
+    ;; the first * is the first element), that makes the size the 7th
+    ;; element.
+    (string-to-number (nth 7 (split-string current-font (rx "-"))))))
+
 (defun fontify-frame (target font)
   "Adjust font size based on screen resolution.  Takes argument target for frame and font."
   (interactive)
@@ -105,14 +124,14 @@ Assumes font named like `Inconsolata-14`."
 (defun x-hugh-appearance-get-larger-font-size ()
   "Return string with current font, but size increased by one."
   (interactive)
-  (let ((biggersize (+ 1 (x-hugh-appearance-get-font-size))))
+  (let ((biggersize (+ 1 (x-hugh-appearance-experiment-get-font-size))))
     (format "Inconsolata-%d" biggersize)))
 
 (defun x-hugh-appearance-get-smaller-font-size ()
   "Return string with current font, but size increased by one."
   (interactive)
-  (let ((biggersize (+ -1 (x-hugh-appearance-get-font-size))))
-    (format "Inconsolata-%d" biggersize)))
+  (let ((smallersize (+ -1 (x-hugh-appearance-experiment-get-font-size))))
+    (format "Inconsolata-%d" smallersize)))
 
 (defun x-hugh-appearance-make-things-bigger ()
   "Increase default font size by one."
