@@ -86,7 +86,8 @@
   ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
   ("r" (x-hugh-open-password-file) "Search password file")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
-  ("t" (find-file "~/orgmode/TODO.org") "TODO"))
+  ("t" (find-file "~/orgmode/TODO.org") "TODO")
+  ("z" (org-agenda) "Agenda"))
 
 (defhydra hydra-copy-lines (:exit t)
   "Shortcuts for copying lines/regions."
