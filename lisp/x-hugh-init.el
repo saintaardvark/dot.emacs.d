@@ -79,6 +79,7 @@
 (use-package x-hugh-gh)
 (use-package x-hugh-smartparens)
 (use-package x-hugh-docker)
+(use-package x-hugh-arduino)
 
 ;; Languages
 (use-package x-hugh-golang)
