@@ -172,6 +172,7 @@ Meant for use in magit."
     (let ((beg (point-min))
 	  (end (point-max)))
       (unfill-region beg end))
+    (auto-fill-mode -1)
     (electric-indent-mode 0)
     (turn-on-visual-line-mode)))
 
