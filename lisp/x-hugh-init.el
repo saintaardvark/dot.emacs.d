@@ -83,6 +83,7 @@
 
 ;; Languages
 (use-package x-hugh-golang)
+(use-package x-hugh-html)
 (use-package x-hugh-python)
 (use-package x-hugh-shell)
 ;; (use-package x-hugh-ruby)
