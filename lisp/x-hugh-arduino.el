@@ -1,10 +1,8 @@
-;;; x-hugh-arduino --- stuff related to go editing
+;;; x-hugh-arduino --- stuff related to arduino work
 
 ;;; Commentary:
 
 ;;; Code:
-
-;; TODO: Break out to x-hugh-node or some such
 
 (use-package arduino-mode
   :ensure t)
@@ -13,4 +11,4 @@
   :ensure t)
 
 (provide 'x-hugh-arduino)
-;;; x-hugh-arduino ends here
+;;; x-hugh-arduino.el ends here
