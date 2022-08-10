@@ -47,4 +47,4 @@
 (add-hook 'go-mode-hook 'go-mode-setup)
 
 (provide 'x-hugh-golang)
-;;; x-hugh-golang ends here
+;;; x-hugh-golang.el ends here

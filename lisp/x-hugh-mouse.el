@@ -34,4 +34,4 @@
 (global-set-key [mouse-2] 'mouse-yank-primary)
 
 (provide 'x-hugh-mouse)
-;;; x-hugh-mouse ends here
+;;; x-hugh-mouse.el ends here

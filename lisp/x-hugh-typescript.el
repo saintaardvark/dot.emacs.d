@@ -34,4 +34,4 @@
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (provide 'x-hugh-typescript)
-;;; x-hugh-typescript ends here
+;;; x-hugh-typescript.el ends here

@@ -15,4 +15,4 @@
 ;; 				     )))
 
 (provide 'x-hugh-erc)
-;;; x-hugh-erc ends here
+;;; x-hugh-erc.el ends here

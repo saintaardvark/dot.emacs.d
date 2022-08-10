@@ -69,4 +69,4 @@
   (backward-char 2))
 
 (provide 'x-hugh-python)
-;;; x-hugh-python ends here
+;;; x-hugh-python.el ends here

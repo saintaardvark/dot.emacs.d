@@ -49,4 +49,4 @@
       nil))
 
 (provide 'x-hugh-yasnippet)
-;;; x-hugh-yasnippet ends here
+;;; x-hugh-yasnippet.el ends here

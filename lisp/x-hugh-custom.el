@@ -49,4 +49,4 @@
  '(org-level-7 ((t (:inherit nil :foreground "#dc322f"))))
  '(org-level-8 ((t (:inherit nil :foreground "#268bd2")))))
 
-;;; x-hugh-custom ends here.
+;;; x-hugh-custom.el ends here.

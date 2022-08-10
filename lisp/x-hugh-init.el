@@ -102,4 +102,4 @@
 
 (provide 'x-hugh-init)
 
-;;; x-hugh-init ends here
+;;; x-hugh-init.el ends here

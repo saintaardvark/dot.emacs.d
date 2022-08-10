@@ -27,4 +27,4 @@
   )
 
 (provide 'x-hugh-company)
-;;; x-hugh-company ends here
+;;; x-hugh-company.el ends here

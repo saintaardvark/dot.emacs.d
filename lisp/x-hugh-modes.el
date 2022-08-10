@@ -179,4 +179,4 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
   :custom (save-abbrevs 'silently))
 
 (provide 'x-hugh-modes)
-;;; x-hugh-modes ends here
+;;; x-hugh-modes.el ends here

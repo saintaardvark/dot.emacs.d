@@ -339,4 +339,4 @@ REGION
     (fill-region beg end)))
 
 (provide 'x-hugh-functions)
-;;; x-hugh-functions ends here
+;;; x-hugh-functions.el ends here

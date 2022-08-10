@@ -9,4 +9,4 @@
 
 (provide 'x-hugh-docker)
 
-;;; x-hugh-docker ends here
+;;; x-hugh-docker.el ends here

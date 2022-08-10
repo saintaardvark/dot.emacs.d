@@ -105,4 +105,4 @@
 
 (provide 'x-hugh-random)
 
-;;; x-hugh-random ends here
+;;; x-hugh-random.el ends here

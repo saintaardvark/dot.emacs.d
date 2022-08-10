@@ -233,4 +233,4 @@ Assumes font named like `Inconsolata-14`."
   (load-theme (intern "tsdh-dark") "no-confirm"))
 
 (provide 'x-hugh-appearance)
-;;; x-hugh-appearance ends here
+;;; x-hugh-appearance.el ends here

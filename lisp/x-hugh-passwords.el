@@ -32,4 +32,4 @@
 	  (kill-buffer (get-file-buffer x-hugh-passwords/password-file))))))
 
 (provide 'x-hugh-passwords)
-;;; x-hugh-passwords ends here
+;;; x-hugh-passwords.el ends here

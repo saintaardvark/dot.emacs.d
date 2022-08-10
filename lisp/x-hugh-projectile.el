@@ -63,4 +63,4 @@
 ;; C-c p x t       projectile-run-term
 
 (provide 'x-hugh-projectile)
-;;; x-hugh-projectile ends here
+;;; x-hugh-projectile.el ends here

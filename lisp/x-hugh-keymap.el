@@ -145,4 +145,4 @@
 (global-set-key (kbd "C-M-.") 'pop-tag-mark)
 
 (provide 'x-hugh-keymap)
-;;; x-hugh-keymap ends here
+;;; x-hugh-keymap.el ends here

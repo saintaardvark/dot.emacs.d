@@ -10,4 +10,4 @@
 )
 
 (provide 'x-hugh-terraform)
-;;; x-hugh-terraform ends here
+;;; x-hugh-terraform.el ends here

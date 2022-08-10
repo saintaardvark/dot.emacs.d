@@ -40,4 +40,4 @@
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
 (provide 'x-hugh-lsp)
-;;; x-hugh-lsp ends here
+;;; x-hugh-lsp.el ends here

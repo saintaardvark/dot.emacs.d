@@ -85,4 +85,4 @@ Meant for use in magit."
 
 (provide 'x-hugh-magit)
 
-;;; x-hugh-magit ends here
+;;; x-hugh-magit.el ends here

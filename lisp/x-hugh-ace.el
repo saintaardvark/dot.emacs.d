@@ -9,4 +9,4 @@
 
 (provide 'x-hugh-ace)
 
-;;; x-hugh-ace ends here
+;;; x-hugh-ace.el ends here

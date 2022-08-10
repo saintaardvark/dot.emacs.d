@@ -56,4 +56,4 @@
 	    (sp-local-pair 'prog-mode "(" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))))
 
 (provide 'x-hugh-smartparens)
-;;; x-hugh-smartparens ends here
+;;; x-hugh-smartparens.el ends here

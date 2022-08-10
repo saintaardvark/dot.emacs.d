@@ -245,4 +245,4 @@ Uses numbers for links.  Linkify the region if region active. Prefix means make 
 
 (provide 'x-hugh-blog)
 
-;;; x-hugh-blog ends here
+;;; x-hugh-blog.el ends here

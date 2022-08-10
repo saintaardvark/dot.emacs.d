@@ -151,4 +151,4 @@ Do it, monkey boy!"
   (insert (format "RT #%s -- %s" ticket (shell-command-to-string (format "~/bin/rt-get-ticket-subjectline.sh %s" ticket)))))
 
 (provide 'x-hugh-rt)
-;;; x-hugh-rt ends here
+;;; x-hugh-rt.el ends here

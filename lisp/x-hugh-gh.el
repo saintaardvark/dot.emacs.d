@@ -51,4 +51,4 @@ Do it, monkey boy!"
     0 -1)))
 
 (provide 'x-hugh-gh)
-;;; x-hugh-functions ends here
+;;; x-hugh-functions.el ends here

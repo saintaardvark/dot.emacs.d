@@ -23,5 +23,5 @@
 (setq flycheck-ruby-rubocop-executable (executable-find "rubocop"))
 
 (provide 'x-hugh-ruby)
-;;; x-hugh-ruby ends here
+;;; x-hugh-ruby.el ends here
 

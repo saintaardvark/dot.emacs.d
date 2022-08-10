@@ -13,4 +13,4 @@
 (setq cperl-indent-level 8)
 
 (provide 'x-hugh-perl)
-;;; x-hugh-perl ends here
+;;; x-hugh-perl.el ends here

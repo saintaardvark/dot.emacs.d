@@ -38,4 +38,4 @@ Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
 	   '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
 
 (provide 'x-hugh-shell)
-;;; x-hugh-shell ends here
+;;; x-hugh-shell.el ends here

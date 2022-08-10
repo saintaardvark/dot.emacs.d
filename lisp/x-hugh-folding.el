@@ -16,4 +16,4 @@ F5 again will unset 'selective-display' by setting it to 0."
     (set-selective-display (or level (1+ (current-column))))))
 
 (provide 'x-hugh-folding)
-;;; x-hugh-folding ends here
+;;; x-hugh-folding.el ends here
