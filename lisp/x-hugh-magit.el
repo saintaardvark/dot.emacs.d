@@ -39,6 +39,41 @@
 	   )
   :config (remove-hook 'server-switch-hook 'magit-commit-diff))
 
+(defun x-hugh-git-changetype ()
+  "Cycle through git changetype.
+
+Meant for use in magit."
+  (interactive)
+  (save-excursion
+    (search-forward-regexp "^Change-type: ")
+    (cond ((looking-at "\\[patch\\|minor\\|major\\]")
+	   (progn (kill-line)
+		  (insert "patch")))
+	  ((looking-at "patch")
+	   (progn (kill-line)
+		  (insert "minor")))
+	  ((looking-at "minor")
+	   (progn (kill-line)
+		  (insert "major")))
+	  ((looking-at "major")
+	   (progn (kill-line)
+		  (insert "patch"))))))
+
+(defun x-hugh-git-connects-to ()
+  "Add \"Connects-to\" argument to git commit.
+
+Meant for use in magit."
+  (interactive)
+  (save-excursion
+    (if (search-forward-regexp "^Connects-to:" nil t)
+	(progn (beginning-of-line)
+	       (kill-line)
+	       (join-line))
+      (let ((ticket (read-from-minibuffer "Ticket: ")))
+	(search-forward-regexp "^Change-type: ")
+	(forward-line)
+      (insert (format "Connects-to: %s\n" ticket))))))
+
 ;; TODO: Implement this to delete trailing whitespace from magit
 ;; status page:
 ;; https://stackoverflow.com/questions/20127377/how-can-i-remove-trailing-whitespace-from-a-hunk-in-magit
