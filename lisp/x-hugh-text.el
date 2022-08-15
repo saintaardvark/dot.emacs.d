@@ -147,5 +147,18 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
   (interactive "sTicket: ")
   (insert (format "https://https://jira.it.umbrella.com/browse/NETX-%s" ticket)))
 
+(defun x-hugh-arrayify (start end quote)
+  "Turn strings on newlines into a QUOTEd, comma-separated one-liner.
+
+Source: https://news.ycombinator.com/item?id=22131815
+Thanks, numlocked!"
+  (interactive "r\nMQuote: ")
+  (let ((insertion
+         (mapconcat
+          (lambda (x) (format "%s%s%s" quote x quote))
+          (split-string (buffer-substring start end)) ", ")))
+    (delete-region start end)
+    (insert insertion)))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
