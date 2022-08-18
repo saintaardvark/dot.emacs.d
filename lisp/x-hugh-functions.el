@@ -78,7 +78,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
   "Display tip o' the day."
   (interactive)
   (with-output-to-temp-buffer "*Tip of the day*"
-    (let* ((commands (loop for s being the symbols
+    (let* ((commands (cl-loop for s being the symbols
                            when (commandp s) collect s))
            (command (nth (random (length commands)) commands)))
       (princ
