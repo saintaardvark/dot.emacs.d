@@ -151,7 +151,8 @@ Returns nil if no differences found, 't otherwise."
 (defun x-hugh-boxquote-yank-and-indent ()
   "My attempt to combine boxquote-yank and indent.
 
-The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly to run it twice, but it was simple."
+The car/cdr bits are from the docstring for boxquote-points.
+It's a bit silly to run it twice, but it was simple."
   (interactive)
   (save-excursion
     (if (region-active-p)
@@ -175,7 +176,10 @@ I can never remember how to do this."
 
 (defun x-hugh-copy-and-comment-region (beg end &optional arg)
   "Duplicate the region marked by BEG and END and comment-out the copied text.
-See `comment-region' for behavior of a prefix arg."
+
+If ARG provided, this will be provided as the prefix to the call
+to `comment-region'; see that function's docstring for what that
+will do."
   (interactive "r\nP")
   (copy-region-as-kill beg end)
   (goto-char end)
@@ -226,7 +230,7 @@ FIXME: Need to figure out how to put point at right column."
 ;; Awesome.  From https://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs --
 ;; bury *scratch* buffer instead of kill it
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
-  "Don't kill *scratch* buffer. Just don't."
+  "Don't kill *scratch* buffer.  Just don't."
   (let ((buffer-to-kill (ad-get-arg 0)))
     (if (equal buffer-to-kill "*scratch*")
         (bury-buffer)
@@ -331,9 +335,9 @@ REGION
 
 ;; Source: https://www.emacswiki.org/emacs/UnfillRegion
 (defun unfill-region (beg end)
-  "Unfill the region, joining text paragraphs into a single
-    logical line.  This is useful, e.g., for use with
-    `visual-line-mode'."
+  "Unfill region from BEG to END, joining text paragraphs into single logical line.
+
+This is useful, e.g., for use with `visual-line-mode'."
   (interactive "*r")
   (let ((fill-column (point-max)))
     (fill-region beg end)))
