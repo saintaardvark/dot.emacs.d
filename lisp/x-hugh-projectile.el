@@ -29,6 +29,24 @@
   ;; To get around this manually, I'm adding this line:
   :config (projectile-load-known-projects)
   )
+
+;; Good lord...ran into problems with projectile today:
+;; - not caching new projects
+;; - (wrong-type-argument hash-table-p nil) when running projectile-current-project-files
+;; turns out the solution is to call projectile-global-mode --
+;; docstring for which says it's deprecated, and to use projectile-mode instead.
+;; https://github.com/bbatsov/projectile/issues/496
+;;
+;; "Yes, this variable is initialized when projectile-mode gets
+;; started - otherwise it will be nil (the root of your problem). I
+;; didn't imagine anyone would be using projectile without
+;; projectile-mode, so I guess there's some room for improvement."
+;; - bbatsov, writer of projectile-mode
+
+(projectile-mode)
+
+;; can confirm this works.  August 23, 2022
+
 ;; ;; TODO: Add shell as an option for projectile-commander (which is
 ;; ;; run after C-c p p)
 
