@@ -15,3 +15,17 @@
 /ac-comphist.dat
 /elpa
 /emojis
+/.cache/
+/.lsp-session-v1
+/.python-environments/
+/eln-cache/
+/elpy/
+/emojis/
+/transient/
+/request/
+/elpa*
+/lisp/projectile-bookmarks.eld
+/lisp/projectile.cache
+/multisession/
+/early-init.el
+/auto-save-list/
