@@ -22,6 +22,10 @@
 	   ;; (lsp-gopls-complete-unimported)
   ))
 
+(use-package lsp-ui
+  :ensure t
+  )
+
 ;; FIXME: lsp is trying to install deps automagically -- which is
 ;; great, except that streamline-ssh *should* be iimported as
 ;; "streamline_ssh" (note the underscore); gopls doesn't do that, and
