@@ -21,7 +21,11 @@
         ;; helm-do-grep is better.
         ;; (global-set-key "\C-cif"	'helm-do-grep)
         (setq helm-ff-newfile-prompt-p nil))
-      (use-package helm-config)))
+      (use-package helm-config
+	:ensure t)
+      (use-package helm-xref
+	:ensure t)
+      ))
 
 ;; Also: see x-hugh-swiper.el for swiper-helm
 
