@@ -32,6 +32,10 @@
       (org-agenda-maybe-redo)
       (message "[org agenda] refreshed!"))))
 
+;; Needed before use-package org.
+(use-package f
+  :ensure t)
+
 (use-package org
   ;; FIXME: getting an error with this next bit; not sure what i'm doing wrong
   ;; :mode ("\\.org$" . org-mode)
