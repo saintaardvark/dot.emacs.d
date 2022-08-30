@@ -6,12 +6,7 @@ This is my .emacs.d repository.
 
 ## Usage
 
-Clone to .emacs.d, then:
-
-```
-# Needs to be run a few times...
-./first_run.sh ; ./first_run.sh
-```
+Clone to .emacs.d, then run Emacs.  Packages should be installed by default.
 
 ## License
 
