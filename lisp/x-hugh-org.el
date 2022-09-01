@@ -100,7 +100,8 @@
   (interactive)
   ;; FIXME: Placeholder.
   ;; FIXME: Calculate year
-  ;; FIXME: Have fixmee-mode turned on by default.
+  ;; FIXMEEEE: Have fixmee-mode turned on by default
+  ;; FIXMEEEE: Set fixmee mode to use another key prifix
   "/Users/hubrown/orgmode/log_2018.org")
 
 (defun x-hugh-org-schedule-todo-item ()
