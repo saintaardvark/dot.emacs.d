@@ -24,7 +24,7 @@
 
 (use-package lsp-ui
   :ensure t
-  )
+  :commands lsp-ui-mode)
 
 ;; FIXME: lsp is trying to install deps automagically -- which is
 ;; great, except that streamline-ssh *should* be iimported as

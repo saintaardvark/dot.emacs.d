@@ -9,6 +9,9 @@
 (use-package "nvm"
   :ensure t)
 
+(use-package "tide"
+  :ensure t)
+
 ;; TODO: use-package
 (defun setup-tide-mode ()
   "Set up tide mode for the developer."
