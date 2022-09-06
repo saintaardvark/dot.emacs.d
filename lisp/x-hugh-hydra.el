@@ -87,6 +87,8 @@
   ("r" (x-hugh-open-password-file) "Search password file")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("t" (find-file "~/orgmode/TODO.org") "TODO")
+  ("u" (calculator) "Calculator")
+  ("y" (calendar) "Calendar")
   ("z" (org-agenda) "Agenda"))
 
 (defhydra hydra-copy-lines (:exit t)
