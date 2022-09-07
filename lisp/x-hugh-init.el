@@ -66,8 +66,8 @@
 (use-package x-hugh-email)
 (use-package x-hugh-markdown)
 (use-package x-hugh-folding)
-
 (use-package x-hugh-passwords)
+(use-package x-hugh-rebuilder)
 
 ;; Devel
 (use-package x-hugh-lsp)
