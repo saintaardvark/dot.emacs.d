@@ -23,6 +23,9 @@
   (load-theme 'gruvbox-dark-hard "no-confirm")
   )
 
+(use-package solarized-theme
+  :ensure t)
+
 (use-package transpose-frame
   :ensure t)
 
