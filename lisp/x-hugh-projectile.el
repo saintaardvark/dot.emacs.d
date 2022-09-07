@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+;; Putting it here to make sure Projectile can use it
+(use-package ripgrep
+  :ensure t)
+
 (use-package projectile
   ;; https://emacs.stackexchange.com/questions/32634/how-can-the-list-of-projects-used-by-projectile-be-manually-updated
   ;; FIXME: Not sure what's going wrong.  Evaluating the progn works,
