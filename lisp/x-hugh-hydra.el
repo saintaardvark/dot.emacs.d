@@ -89,7 +89,9 @@
   ("t" (find-file "~/orgmode/TODO.org") "TODO")
   ("u" (calculator) "Calculator")
   ("y" (calendar) "Calendar")
-  ("z" (org-agenda) "Agenda"))
+  ("z" (org-agenda nil "a") "Agenda for today")
+  ("Z" (org-agenda) )
+  )
 
 (defhydra hydra-copy-lines (:exit t)
   "Shortcuts for copying lines/regions."
