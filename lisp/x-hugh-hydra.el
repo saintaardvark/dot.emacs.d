@@ -225,7 +225,13 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("5" query-replace "query-replace")
   )
 
-;; FIXME: Add a hydra for shell.  Or maybe just a keyboard shortcut.
+(defhydra hydra-shell ()
+  "shell"
+  ("n" comint-next-input "Previous input")
+  ("p" comint-previous-input "Previous input")
+  ("s" x-hugh-launch-shell "Launch shell")
+  )
+
 
 (defhydra hydra-golang ()
   "golang"

@@ -37,5 +37,15 @@ Stolen from http://www.emacswiki.org/emacs/MakingScriptsExecutableOnSave."
   :custom (eshell-visual-commands
 	   '("vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm" "ssh")))
 
+(defun x-hugh-launch-shell ()
+  "Launch a shell in the Hugh-approved manner.
+
+If we're in a projectile-associated buffer, then invoke
+projectile-run-shell; otherwise, just invoke shell."
+  (interactive)
+  (if (projectile-project-p)
+      (projectile-run-shell)
+    (shell)))
+
 (provide 'x-hugh-shell)
 ;;; x-hugh-shell.el ends here
