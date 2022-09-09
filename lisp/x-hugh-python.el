@@ -45,7 +45,9 @@
   )
 
 (use-package python
-  :custom ((python-indent-guess-indent-offset t)
+  :custom ((python-indent-guess-indent-offset nil) ; Had been t, but
+						   ; this was causing
+						   ; problems for me.
 	   (python-shell-interpreter "python3"))
   )
 
