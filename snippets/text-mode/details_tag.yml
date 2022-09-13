@@ -1,0 +1,10 @@
+# name: details summary tag
+# key: ds
+# --
+<details>
+<summary>$1</summary>
+
+```
+$2
+```
+</details>
