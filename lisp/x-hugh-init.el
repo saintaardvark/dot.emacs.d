@@ -70,8 +70,10 @@
 (use-package x-hugh-rebuilder)
 
 ;; Devel
+(use-package x-hugh-compile-mode)
 (use-package x-hugh-lsp)
 (use-package x-hugh-magit)
+(use-package x-hugh-make)
 (use-package x-hugh-projectile)
 ;; Try turning off company mode & see how I feel.
 (use-package x-hugh-company)
@@ -91,11 +93,26 @@
 (use-package x-hugh-typescript)
 
 ;; Various modes
+(use-package x-hugh-abbrev)
 (use-package x-hugh-annoying-arrows)
 (use-package x-hugh-apache)
+(use-package x-hugh-boxquote)
+(use-package x-hugh-browse-kill-ring)
+(use-package x-hugh-delsel)
 (use-package x-hugh-dired)
 (use-package x-hugh-fixmee)
 (use-package x-hugh-flycheck)
+(use-package x-hugh-highlight-indent-guide)
+(use-package x-hugh-linum)
+(use-package x-hugh-midnight-mode)
+(use-package x-hugh-nyan)
+(use-package x-hugh-paren) 		; But also see x-hugh-smartparens
+(use-package x-hugh-ssh)
+(use-package x-hugh-tramp)
+(use-package x-hugh-uniquify)
+(use-package x-hugh-winner)
+(use-package x-hugh-xclip)
+(use-package x-hugh-yaml)
 
 ;; (use-package cfg
 ;;   :custom (cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef"))
