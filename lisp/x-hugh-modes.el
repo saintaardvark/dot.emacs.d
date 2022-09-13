@@ -97,9 +97,6 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 (use-package yaml-mode
   :ensure t)
 
-(use-package yasnippet
-  :ensure t)
-
 ;; Man, I always forget about winner-mode...
 (winner-mode 1)
 

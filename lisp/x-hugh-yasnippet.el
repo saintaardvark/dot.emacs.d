@@ -3,12 +3,14 @@
 ;;; Commentary:
 
 ;;; Code:
-(require 'yasnippet nil 'noerror)
-(yas-global-mode 1)
+(use-package yasnippet
+  :ensure t
+  :init
+  (let ((snippetsdir (file-truename "~/.emacs.d/snippets")))
+    (if (file-exists-p snippetsdir)
+	(yas-load-directory snippetsdir)))
 
-(let ((snippetsdir (file-truename "~/.emacs.d/snippets")))
-  (if (file-exists-p snippetsdir)
-    (yas-load-directory snippetsdir)))
+  :config (yas-global-mode 1))
 
 ;; This is turning out to be pretty slow.
 ;; https://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
@@ -29,24 +31,24 @@
 ;; https://www.emacswiki.org/emacs/Yasnippet#toc4
 ;; not yet working.
 (defun shk-yas/helm-prompt (prompt choices &optional display-fn)
-    "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
-    (interactive)
-    (setq display-fn (or display-fn 'identity))
-    (if (require 'helm-config)
-        (let (tmpsource cands result rmap)
-          (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
-          (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
-          (setq tmpsource
-                (list
-                 (cons 'name prompt)
-                 (cons 'candidates cands)
-                 '(action . (("Expand" . (lambda (selection) selection))))
-                 ))
-          (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
-          (if (null result)
-              (signal 'quit "user quit!")
-            (cdr (assoc result rmap))))
-      nil))
+  "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
+  (interactive)
+  (setq display-fn (or display-fn 'identity))
+  (if (require 'helm-config)
+      (let (tmpsource cands result rmap)
+        (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
+        (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
+        (setq tmpsource
+              (list
+               (cons 'name prompt)
+               (cons 'candidates cands)
+               '(action . (("Expand" . (lambda (selection) selection))))
+               ))
+        (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
+        (if (null result)
+            (signal 'quit "user quit!")
+          (cdr (assoc result rmap))))
+    nil))
 
 (provide 'x-hugh-yasnippet)
 ;;; x-hugh-yasnippet.el ends here
