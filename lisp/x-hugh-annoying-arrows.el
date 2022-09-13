@@ -10,5 +10,5 @@
   :ensure t
   :config (global-annoying-arrows-mode))
 
-(provide 'x-hugh-annoying-arrows-mode)
+(provide 'x-hugh-annoying-arrows)
 ;;; x-hugh-annoying-arrows.el ends here
