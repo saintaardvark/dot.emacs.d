@@ -8,7 +8,7 @@
 ;; Random settings.
 
 ;; FIXME: Organize a bit
-;; - setq in one region, alphebetized
+;; - setq in one region, alphabetized
 
 ;; Variables:
 
