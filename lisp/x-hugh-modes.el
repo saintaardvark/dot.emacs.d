@@ -13,10 +13,6 @@
 ;;   :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 
-;; I'm gonna break this habit if it kills me
-(use-package annoying-arrows-mode
-  :ensure t
-  :config (global-annoying-arrows-mode))
 
 ;; FIXME: Pretty sure there's a better way to add hooks here...
 (defun my-colorize-compilation-buffer ()
@@ -29,13 +25,6 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 (use-package ansi-color
   :custom (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
-(use-package apache-mode
-  :mode (("\\.htaccess\\'" . apache-mode)
-         ("httpd\\.conf\\'"  . apache-mode)
-         ("srm\\.conf\\'"    . apache-mode)
-         ("access\\.conf\\'" . apache-mode)
-         ("sites-\\(available\\|enabled\\)/" . apache-mode)))
-
 (use-package browse-kill-ring
   :ensure t)
 
@@ -47,33 +36,6 @@ Source: https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilatio
 
 (use-package delsel
   :custom (delete-selection-mode nil))
-
-(use-package dired
-  :custom ((dired-dwim-target t)
-	   (dired-recursive-copies 'always)
-	   (dired-recursive-deletes 'top)))
-
-;; TODO: Use dired-git-info
-;; (use-package dired-git-info
-;;   :config (define-key dired-mode-map ")" 'dired-git-info-mode))
-
-;; button-lock is required for `fixmee` mode.  My `use-package` stanzas
-;; are listed alphabetically, so this would work -- but that seems a
-;; poor thing to count on, and it's not good to have it far away.
-;; Putting this here, using the `preface` directive to ensure it's
-;; loaded first.  Still not great, but it will work for now.
-(use-package fixmee
-  :ensure t
-  :preface (use-package button-lock)
-  :config (global-fixmee-mode))
-
-(use-package flycheck
-  :ensure t
-  :config (add-hook 'after-init-hook #'global-flycheck-mode)
-  :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
-           (flycheck-flake8-maximum-line-length 9990)
-           (flycheck-idle-change-delay 2)
-           (flycheck-keymap-prefix ".")))
 
 (use-package highlight-indent-guides
   :ensure t

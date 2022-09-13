@@ -90,6 +90,12 @@
 (use-package x-hugh-terraform)
 (use-package x-hugh-typescript)
 
+;; Various modes
+(use-package x-hugh-annoying-arrows)
+(use-package x-hugh-apache)
+(use-package x-hugh-dired)
+(use-package x-hugh-fixmee)
+(use-package x-hugh-flycheck)
 
 ;; (use-package cfg
 ;;   :custom (cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef"))
