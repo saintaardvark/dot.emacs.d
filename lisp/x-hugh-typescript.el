@@ -26,6 +26,32 @@
   ;; `m-x package-install [ret] company`
   (company-mode +1))
 
+;; Require web mode when editing tsx files.
+;;
+;; TODO: So far, my approach to separating elisp files has been
+;; something like "one per package".  However, this file is a perfect
+;; example of a case where it'd make a lot of sense to have "one per
+;; task" -- x-hugh-web.el, for example, which would hold Typescript,
+;; Javascript, HTML and other webby things.
+;;
+;; Note that at least part of what prompts that comment is the use of
+;; flycheck up ahead.  Really, where *should* that go?  Should it be
+;; in x-hugh-flycheck?  In here?  Obviously, these two files still
+;; work as config files even if the settings are split up -- but then
+;; I need to keep ordering in mind.
+;;
+;; *stops before badly implementing a dependency graph for elisp
+;; *packages*
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+;; enable typescript-tslint checker
+(flycheck-add-mode 'typescript-tslint 'web-mode)
+
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
