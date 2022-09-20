@@ -18,8 +18,6 @@
   :ensure t
   :config (paren-activate))
 
-;; FIXME: smartparens not enabled in javascript mode
-
 ;; NOTE: shell *scripting* mode is "sh-mode"; the docstring for
 ;; shell-script-mode says "shell-script-mode is an alias for ‘sh-mode’
 ;; in ‘sh-script.el’."  The thing to keep in mind is that the *hook*
@@ -47,6 +45,7 @@
 	 (shell-mode . smartparens-mode)
 	 (terraform-mode . smartparens-mode)
 	 (text-mode . smartparens-mode)
+	 (tide-mode . smartparens-mode)
 	 (toml-mode . smartparens-mode)
 	 (yaml-mode . smartparens-mode)
 	 )
