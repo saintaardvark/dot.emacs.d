@@ -43,12 +43,17 @@
 ;; *stops before badly implementing a dependency graph for elisp
 ;; *packages*
 
-(require 'web-mode)
+
+(use-package web-mode
+  :custom (web-mode-code-indent-offset 2)
+  )
+;; TODO: Put these next two bits into the use-package stanza
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
+
 ;; enable typescript-tslint checker
 (flycheck-add-mode 'typescript-tslint 'web-mode)
 
