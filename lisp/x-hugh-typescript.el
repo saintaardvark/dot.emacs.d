@@ -45,8 +45,9 @@
 
 
 (use-package web-mode
-  :custom (web-mode-code-indent-offset 2)
-  )
+  :custom
+  (web-mode-code-indent-offset 2)
+  (web-mode-markup-indent-offset 2))
 ;; TODO: Put these next two bits into the use-package stanza
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
