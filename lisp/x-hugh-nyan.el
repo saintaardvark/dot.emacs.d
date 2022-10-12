@@ -10,7 +10,5 @@
   :ensure t
   :config (nyan-mode))
 
-
-
 (provide 'x-hugh-nyan)
 ;;; x-hugh-nyan.el ends here
