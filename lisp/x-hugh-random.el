@@ -35,6 +35,7 @@
 (setq find-grep-options "-qi")
 (setq global-flycheck-mode nil)
 (setq global-font-lock-mode t)
+(setq image-use-external-converter t)	; Allows me to include webp images in orgmode files
 (setq indent-tabs-mode nil)
 (setq iswitchb-prompt-newbuffer nil)
 (setq kill-read-only-ok t)
