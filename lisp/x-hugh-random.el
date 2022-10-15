@@ -62,6 +62,8 @@
 (setq c-basic-offset 8)
 (setq standard-indent 8)
 (setq user-mail-address "aardvark@saintaardvarkthecarpeted.com")
+;; https://www.reddit.com/r/emacs/comments/l42oep/suppress_nativecomp_warnings_buffer/
+(setq warning-minimum-level :error)
 
 (put 'narrow-to-region 'disabled nil)
 (fset 'yes-or-no-p 'y-or-n-p) ; enable one letter y/n answers to yes/no
