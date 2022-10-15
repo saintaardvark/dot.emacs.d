@@ -68,5 +68,12 @@
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
+;; Again, more Javascript stuff.
+;; comint-mode appears wonderful.  Source: https://www.emacswiki.org/emacs/NodeJs
+(defun node-repl ()
+  (interactive)
+  (setenv "NODE_NO_READLINE" "1") ;avoid fancy terminal codes
+  (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
+
 (provide 'x-hugh-typescript)
 ;;; x-hugh-typescript.el ends here
