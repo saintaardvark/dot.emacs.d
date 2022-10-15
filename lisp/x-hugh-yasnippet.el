@@ -7,6 +7,7 @@
   :ensure t
   :init
   (let ((snippetsdir (file-truename "~/.emacs.d/snippets")))
+    ;; TODO: ⛔ Error (use-package): yasnippet/:init: Symbol’s function definition is void: yas-load-directory
     (if (file-exists-p snippetsdir)
 	(yas-load-directory snippetsdir)))
 

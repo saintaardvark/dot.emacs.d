@@ -8,6 +8,8 @@
     (setq x-hugh-helm-enabled nil)
   (setq x-hugh-helm-enabled t))
 
+;; TODO: ⛔ Error (use-package): Failed to install helm-config: Package ‘helm-config-’ is unavailable
+
 (if x-hugh-helm-enabled
     (use-package helm
       :ensure t

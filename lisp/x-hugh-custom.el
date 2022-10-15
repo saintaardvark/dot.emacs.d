@@ -32,6 +32,7 @@
       (mangle-whitespace . t))))
  '(warning-suppress-types '((initialization))))
 
+;; TODO Move these settings to orgmode, fixmee mode
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
