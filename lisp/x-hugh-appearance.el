@@ -238,8 +238,57 @@ Assumes font named like `Inconsolata-14`."
 ;; My attempt to get Magit to prefer splitting windows vertically
 ;; rather than horizontally.  See
 ;; https://emacs.stackexchange.com/questions/28496/magit-status-always-split-vertically
-(setq split-width-threshold 90)
-(setq split-height-threshold 40)
+;;
+;; See also: (split-window-sensibly)
+;; See also: (split-window-below)
+;; See also: (split-window-right)
+;;
+;; Docstrng for split-window-spensibly:
+;;
+;; "Split WINDOW in a way suitable for `display-buffer'.  WINDOW
+;; defaults to the currently selected window.
+;;
+;; If `split-height-threshold' specifies an integer, WINDOW is at
+;; least `split-height-threshold' lines tall and can be split
+;; vertically, split WINDOW into two windows one above the other and
+;; return the lower window.
+
+;; IE: Use split-window-below
+
+;; Otherwise, if `split-width-threshold' specifies an integer, WINDOW
+;; is at least `split-width-threshold' columns wide and can be split
+;; horizontally, split WINDOW into two windows side by side and return
+;; the window on the right.
+
+;; IE: Use split-window-right
+
+;; If this can't be done either and WINDOW is the only window on its
+;; frame, try to split WINDOW vertically disregarding any value
+;; specified by `split-height-threshold'.  If that succeeds, return
+;; the lower window.  Return nil otherwise.
+
+;; By default `display-buffer' routines call this function to split
+;; the largest or least recently used window.  To change the default
+;; customize the option `split-window-preferred-function'.
+
+;; You can enforce this function to not split WINDOW horizontally,
+;; by setting (or binding) the variable `split-width-threshold' to
+;; nil.  If, in addition, you set `split-height-threshold' to zero,
+;; chances increase that this function does split WINDOW vertically.
+
+;; In order to not split WINDOW vertically, set (or bind) the
+;; variable `split-height-threshold' to nil.  Additionally, you can
+;; set `split-width-threshold' to zero to make a horizontal split
+;; more likely to occur.
+
+;; Have a look at the function `window-splittable-p' if you want to
+;; know how `split-window-sensibly' determines whether WINDOW can be
+;; split."
+
+;; Oct 21, 2022: I *think* that I've got this right: set
+;; split-width-threshold hight but not too high, and leave
+;; split-height-threshold alone (default value is 80).
+(setq split-width-threshold 150)
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance.el ends here
