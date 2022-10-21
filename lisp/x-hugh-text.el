@@ -155,5 +155,8 @@ Thanks, numlocked!"
     (delete-region start end)
     (insert insertion)))
 
+;; Don't prompt me to save personal dictionary
+(setq ispell-silently-savep t)
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
