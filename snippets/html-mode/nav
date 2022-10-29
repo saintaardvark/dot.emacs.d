@@ -1,5 +1,7 @@
 # contributor: Jimmy Wu <frozenthrone88@gmail.com>
-# name: <br>
-# key: br
+# name: <nav>...</nav>
+# key: nav
 # --
-<br>
+<nav>
+  $0
+</nav>

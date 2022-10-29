@@ -6,7 +6,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>$1</title>
   </head>
-  <body></body>
+  <body>
+    $0
+  </body>
 </html>

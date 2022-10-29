@@ -1,5 +1,5 @@
 # contributor: Jimmy Wu <frozenthrone88@gmail.com>
-# name: <br>
-# key: br
+# name: <em>...</em>
+# key: em
 # --
-<br>
+<em>$1</em>

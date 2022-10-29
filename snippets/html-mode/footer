@@ -1,0 +1,7 @@
+# contributor: Jimmy Wu <frozenthrone88@gmail.com>
+# name: <footer>...</footer>
+# key: footer
+# --
+<footer>
+  $0
+</footer>
