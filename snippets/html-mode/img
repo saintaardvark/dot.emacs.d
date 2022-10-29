@@ -1,0 +1,5 @@
+# contributor: Hugh Brown <aardvark@saintaardvarkthecarpeted.com>
+# name: <img alt="..." title="...">
+# key: img
+# --
+<img src="$1" alt="$2" title="$3">

@@ -1,7 +1,7 @@
 # contributor: Hugh Brown <aardvark@saintaardvarkthecarpeted.com>
-# name: <nav>...</nav>
-# key: nav
+# name: <figure>...</figure>
+# key: figure
 # --
-<nav>
+<figure>
   $0
-</nav>
+</figure>
