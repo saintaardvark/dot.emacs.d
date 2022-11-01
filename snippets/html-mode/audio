@@ -1,0 +1,4 @@
+# name: <audio...>...</audio>
+# key: audio
+# --
+<audio src="${1:src}" controls>$0</audio>
