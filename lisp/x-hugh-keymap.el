@@ -60,6 +60,7 @@
 ;; Official key prefixes:
 ;; C-c .  flycheck
 ;; C-c e: lisp stuff
+;; C-c f: web stuff
 ;; C-c g: golang stuff
 ;; C-c i: random file stuff.
 ;; C-c o: elscreen
@@ -68,6 +69,7 @@
 ;; C-c v: fixmee-listview
 ;; C-c w: workgroups.
 ;; C-c y: window (hydra)
+;; C-c z: zoom (hydra)
 
 ;; Global menu
 (global-set-key (kbd "C-c h") 'hydra-menu/body)
@@ -76,6 +78,7 @@
 (global-set-key (kbd "C-c a") 'hydra-apropos/body)
 (global-set-key (kbd "C-c d") 'hydra-dev/body)
 (global-set-key (kbd "C-c e") 'hydra-elisp/body)
+(global-set-key (kbd "C-c f") 'hydra-web/body)
 (global-set-key (kbd "C-c g") 'hydra-golang/body)
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)

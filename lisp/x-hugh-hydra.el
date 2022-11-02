@@ -252,6 +252,11 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("v" pyvenv-activate "pyvenv-activate")
   )
 
+(defhydra hydra-web ()
+  "web"
+  ("s" web-mode-surround "Surround with tag")
+  )
+
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
 
