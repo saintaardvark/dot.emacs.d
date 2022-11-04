@@ -34,7 +34,7 @@
 * TODO Figure out how to turn on comment-auto-fill-only-comments again
   - If turn this on globally, then it ends up borking auto-fill-mode
     in Post-mode...but it's damn handy for nearly everything else
-* TODO Add keyboard shortcut for delete-horizontal-space
+* TODO [#A] Add keyboard shortcut for delete-horizontal-space
 * TODO File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
   - not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
 * TODO Set custom file to /dev/null or some such
@@ -89,3 +89,8 @@
   - journal.org on left, agenda on right, certain level of zoom
 * TODO https://github.com/cute-jumper/emacs-firefox-controller
 * TODO https://github.com/CyberShadow/term-keys for fixing ctrl-' in a terminal
+* TODO Figure out why auto-complete mode in css file is so annoying
+- "azimuth" fills out to right of point whenever I type brackets, and
+  if I'm not careful it'll do that
+  - then usual drop-down menu comes up too
+  - company-mode is *not* enabled here
