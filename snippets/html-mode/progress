@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: progress
+# key: progress
+# --
+<progress id="$1" max="$2" value="$3"> %3% </progress>x
