@@ -13,6 +13,7 @@
   ("a" hydra-apropos/body "apropos")
   ("d" hydra-dev/body "dev")
   ("e" hydra-elisp/body "elisp")
+  ("f" hydra-web/body "web")
   ("g" hydra-golang/body "go")
   ("i" hydra-personal-files/body "personal files")
   ("j" hydra-copy-lines/body "copy lines")
@@ -22,7 +23,8 @@
   ("v" hydra-vinz/body "Vinz")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
-  ("z" hydra-zoom/body "zoom"))
+  ("z" hydra-zoom/body "zoom")
+  )
 
 (defhydra hydra-elscreen (:exit t)
   ("s" elscreen-start "start elscreen - do this if you get wrong-type-error")
