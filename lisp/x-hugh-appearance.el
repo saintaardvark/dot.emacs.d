@@ -48,6 +48,7 @@
 ;; Begone!
 (setq inhibit-splash-screen t)
 
+;; TODO: This whole thing is whack
 (defun x-hugh-set-font-smaller ()
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
@@ -68,95 +69,100 @@
   (interactive)
   (set-frame-font "Inconsolata-30" t))
 
-;; Just make it larger...I always do this at startup anyhow.
-;; FIXME / TODO: This is borking the display on Wayland.  For now I'm
+(defun x-hugh-set-font-smol ()
+  "set font to 8 point.  fixme: make this something like ctrl-shift-+/- in ff."
+  (interactive)
+  (set-frame-font "inconsolata-8" t))
+
+;; just make it larger...i always do this at startup anyhow.
+;; fixme / todo: this is borking the display on wayland.  for now i'm
 ;; disabling it, but it would be good to understand what's going on
 ;; here.
 ;;  (x-hugh-set-font-larger)
 
 (defun x-hugh-set-appearance ()
-  "Reload x-hugh-appearance.el."
+  "reload x-hugh-appearance.el."
   (interactive)
   (load-file "~/.emacs.d/x-hugh-appearance.el"))
 
-;; FIXME: Refactor all this
-;; FIXME: This needs to be broken out into a package
+;; fixme: refactor all this
+;; fixme: this needs to be broken out into a package
 
-;; From https://gist.github.com/MatthewDarling/8c232b1780126275c3b4
-;; Based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
+;; from https://gist.github.com/matthewdarling/8c232b1780126275c3b4
+;; based on http://arnab-deka.com/posts/2012/09/emacs-change-fonts-dynamically-based-on-screen-resolution/
 
-;; I appear to have lost x-hugh-appearance--font :-(
-;; Trying to recreate it.
+;; i appear to have lost x-hugh-appearance--font :-(
+;; trying to recreate it.
 
 (defun x-hugh-appearance-experiment-get-font-size ()
-  "Get font size for current frame.
+  "get font size for current frame.
 
-That is, given a font of:
+that is, given a font of:
 
--*-Inconsolata-regular-normal-normal-*-16-*-*-*-m-0-iso10646-1
+-*-inconsolata-regular-normal-normal-*-16-*-*-*-m-0-iso10646-1
 
 return 16."
   (interactive)
   (let ((current-font (frame-parameter nil 'font)))
-    ;; You could imagine splitting that by dash; assuming there's a
+    ;; you could imagine splitting that by dash; assuming there's a
     ;; zero-width zero index to the left of that first dash (ie, that
     ;; the first * is the first element), that makes the size the 7th
     ;; element.
     (string-to-number (nth 7 (split-string current-font (rx "-"))))))
 
 (defun fontify-frame (target font)
-  "Adjust font size based on screen resolution.  Takes argument target for frame and font."
+  "adjust font size based on screen resolution.  takes argument target for frame and font."
   (interactive)
   (setq x-hugh-appearance--font font)
   (set-frame-parameter target 'font font))
 
 (defun fontify-frame-appropriately (&optional frame)
-  "Adjust font size to appropriate size.  Takes optional argument FRAME."
+  "adjust font size to appropriate size.  takes optional argument frame."
   (interactive)
   (let ((target (or frame (window-frame))))
     (fontify-frame target (fontify-frame-appropriate-font))))
 
 (defun x-hugh-appearance-get-font-size ()
-  "Return font size of x-hugh-appearance--font.
+  "return font size of x-hugh-appearance--font.
 
-Assumes font named like `Inconsolata-14`."
+assumes font named like `inconsolata-14`."
   (interactive)
-  ;; FIXME: Has to be a better way to do this
+  ;; fixme: has to be a better way to do this
   (string-to-number (car (cdr (split-string x-hugh-appearance--font "-")))))
 
 (defun x-hugh-appearance-get-larger-font-size ()
-  "Return string with current font, but size increased by one."
+  "return string with current font, but size increased by one."
   (interactive)
   (let ((biggersize (+ 1 (x-hugh-appearance-experiment-get-font-size))))
-    (format "Inconsolata-%d" biggersize)))
+    (format "inconsolata-%d" biggersize)))
 
 (defun x-hugh-appearance-get-smaller-font-size ()
-  "Return string with current font, but size increased by one."
+  "return string with current font, but size increased by one."
   (interactive)
   (let ((smallersize (+ -1 (x-hugh-appearance-experiment-get-font-size))))
-    (format "Inconsolata-%d" smallersize)))
+    (format "inconsolata-%d" smallersize)))
 
 (defun x-hugh-appearance-make-things-bigger ()
-  "Increase default font size by one."
+  "increase default font size by one."
   (interactive)
   (fontify-frame (window-frame) (x-hugh-appearance-get-larger-font-size))
   (toggle-frame-maximized))
 
 (defun x-hugh-appearance-make-things-smaller ()
-  "Decrease default font size by one."
+  "decrease default font size by one."
   (interactive)
   (fontify-frame (window-frame) (x-hugh-appearance-get-smaller-font-size))
   (toggle-frame-maximized))
 
 (defun fontify-frame-appropriate-font ()
-  "Return the appropriate font for displays."
+  "return the appropriate font for displays."
   (interactive)
-  (cond ((fontify-frame-screen-res-retina-p) "Inconsolata-22")
-        ((fontify-frame-screen-res-high-enough-p) "Inconsolata-18")
-        ((fontify-frame-screen-tiny-laptop-p) "Inconsolata-12")))
+  (cond ((fontify-frame-screen-res-retina-p) "inconsolata-22")
+        ((fontify-frame-screen-res-high-enough-p) "inconsolata-18")
+        ((fontify-frame-screen-tiny-laptop-p) "inconsolata-12")))
 
 (defun fontify-frame-screen-res-retina-p ()
-  "Detect retina display."
+  "detect retina display."
   (and
    (>= (display-pixel-height) 1200)
    (>= (display-pixel-width) 1920)))
