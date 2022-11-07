@@ -84,6 +84,7 @@
 (use-package x-hugh-arduino)
 
 ;; Languages
+(use-package x-hugh-ansible) 		; Is it a language or a dessert topping? ¯\_(ツ)_/¯
 (use-package x-hugh-golang)
 (use-package x-hugh-html)
 (use-package x-hugh-python)

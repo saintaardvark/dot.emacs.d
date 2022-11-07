@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: taskfile
+# key: taskfile
+# --
+---
+# tasks file for $0
