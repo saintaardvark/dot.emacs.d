@@ -1,15 +1,14 @@
-#contributor: Hugh Brown
-#name: x-hugh-template
-#key: xht
+# -*- mode: snippet -*-
+# name: x-hugh
+# key: x-hugh
 # --
-;; x-hugh-template --- Template stuff
+
+;;; x-hugh-$0
 
 ;;; Commentary:
-;; Commentary goes here.
 
 ;;; Code:
 
-;; code goes here
+(provide 'x-hugh-$0)
 
-(provide 'x-hugh-template)
-;;; x-hugh-template.el ends here
+;;; x-hugh-$0 ends here
