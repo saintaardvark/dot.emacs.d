@@ -52,7 +52,7 @@
       (post-quote-region beg (point)))))
 
 (defun x-hugh-hi-bob ()
-  "Clean up email when replying to another amateur."
+  "Set email to cq at va7unx.space"
   (interactive)
   (save-excursion
     (goto-char (point-min))
@@ -66,18 +66,18 @@
       (insert "--\n"))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 
-(defun x-hugh-libre-space-email ()
-  "Set appropriate email bits when using aardvark@libre.space email."
+(defun x-hugh-hugh-va7unx ()
+  "Set email to hugh@va7unx.space."
   (interactive)
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward "Saint Aardvark the Carpeted <aardvark@saintaardvarkthecarpeted.com>" nil t)
-      (replace-match "Hugh Brown <aardvark@libre.space>" nil nil))
+      (replace-match "Hugh Brown VA7UNX <hugh@va7unx.space>" nil nil))
     (post-goto-signature)
     (let ((beg (point)))
       (goto-char (point-max))
       (kill-region beg (point))
-      (insert-file-contents "~/.signature-librespace")
+      (insert-file-contents "~/.signature-va7unx")
       (insert "--\n"))
     (flush-lines "Because the plural of Anecdote is Myth" nil t)))
 

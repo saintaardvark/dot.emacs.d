@@ -82,7 +82,7 @@
   ("j" (progn
 	 (find-file "~/orgmode/journal.org")
 	 (goto-char (point-max))) "Journal")
-  ("l" x-hugh-libre-space-email "LSF Email")
+  ("l" x-hugh-hugh-va7unx "hugh@va7unx.space")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
   ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
