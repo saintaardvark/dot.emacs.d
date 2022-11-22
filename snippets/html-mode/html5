@@ -6,6 +6,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/main.css" type="text/css">
+    <!-- See https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup -->
+    <script src="assets/javascript/main.js" async></script>
     <title>$1</title>
   </head>
   <body>
