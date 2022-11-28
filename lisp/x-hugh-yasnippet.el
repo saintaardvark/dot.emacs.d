@@ -2,16 +2,19 @@
 
 ;;; Commentary:
 
+(setq x-hugh-snippets-dir "~/.emacs.d/snippets")
+
 ;;; Code:
 (use-package yasnippet
   :ensure t
   :init
-  (let ((snippetsdir (file-truename "~/.emacs.d/snippets")))
+  (let ((snippetsdir (file-truename x-hugh-snippets-dir)))
     ;; TODO: ⛔ Error (use-package): yasnippet/:init: Symbol’s function definition is void: yas-load-directory
     (if (file-exists-p snippetsdir)
 	(yas-load-directory snippetsdir)))
 
   :config (yas-global-mode 1))
+
 
 ;; This is turning out to be pretty slow.
 ;; https://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
