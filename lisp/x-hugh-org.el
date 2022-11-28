@@ -22,6 +22,11 @@
   :type 'string
   :group 'x-hugh-blog)
 
+(defcustom x-hugh-org/fun-project-file "~/orgmode/fun_projects/fun_projects.org"
+  "Where to store fun projects."
+  :type 'string
+  :group 'x-hugh-blog)
+
 ;; FIXME: This hook is not working yet.
 ;; https://www.reddit.com/r/orgmode/comments/6n7dk7/q_refreshing_agenda_after_capturing_a_task/dk91lbk/
 (defun nebucatnetzer:org-agenda-redo ()
@@ -63,6 +68,9 @@
               ("q" "Question" entry
                (file x-hugh-org/misc-file)
                "** Question [#A] %?")
+              ("f" "Fun project" entry
+               (file x-hugh-org/fun-project-file)
+               "** Fun project: %?")
               ("f" "Feedback" entry
                (file x-hugh-org/misc-file)
                "** TODO [#A] %? :feedback"))))
