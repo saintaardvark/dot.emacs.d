@@ -40,10 +40,6 @@
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 
-;; FIXME: Not sure this is maintained...
-(use-package go-autocomplete
-  :ensure t)
-
 (add-hook 'go-mode-hook 'go-mode-setup)
 
 (provide 'x-hugh-golang)
