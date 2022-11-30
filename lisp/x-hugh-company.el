@@ -19,5 +19,8 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+(use-package company-web
+  :ensure t)
+
 (provide 'x-hugh-company)
 ;;; x-hugh-company.el ends here
