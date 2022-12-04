@@ -20,7 +20,6 @@
   ("n" hydra-goto/body "navigate")
   ("o" hydra-elscreen/body "elscreen")
   ("t" hydra-text/body "text")
-  ("v" hydra-vinz/body "Vinz")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
   ("z" hydra-zoom/body "zoom")
@@ -202,7 +201,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 )
 
 (defhydra hydra-text (:color blue)
-  ("'" toggle-quotes "Toggle single/double quotes")
+  ("'" toggle-quotes "Toggle single/double quotes") ; FIXME: I don't have this function!
   ("," ispell-word "ispell word")
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
