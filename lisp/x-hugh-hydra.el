@@ -210,6 +210,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("e" x-hugh-details-summary "<details>")
   ("f" ag "figl (actually ag, but who cares)")
   ("g" x-hugh-git-changetype "Change patch type")
+  ("h" org-toggle-heading "org-toggle-heading")
   ("i" indent-defun "indent-defun")
   ("l" display-line-numbers-mode "line numbers")
   ("m" x-hugh-gh-pr-munge-text "pr munge")
