@@ -17,6 +17,7 @@
                  (define-key company-active-map (kbd "C-:") 'helm-company))))
   )
 
+;; TODO: Remove/disable company mode in org, text, shell
 (add-hook 'after-init-hook 'global-company-mode)
 
 (use-package company-web
