@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: print_fixme
-# key: pfx
+# key: fx
 # --
-print("[FIXME] $0")
+print(f"[FIXME] $1 == {$1}")
