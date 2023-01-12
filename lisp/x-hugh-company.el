@@ -20,6 +20,13 @@
 ;; TODO: Remove/disable company mode in org, text, shell
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; But not org mode, text mode pls
+;; https://stackoverflow.com/questions/34652692/how-to-turn-off-company-mode-in-org-mode
+;; TODO: Make this more like my usual code
+(defun jpk/org-mode-hook ()
+  (company-mode -1))
+(add-hook 'org-mode-hook #'jpk/org-mode-hook)
+
 (use-package company-web
   :ensure t)
 
