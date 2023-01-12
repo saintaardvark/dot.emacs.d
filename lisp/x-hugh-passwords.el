@@ -14,7 +14,6 @@
   :type 'string
   :group 'x-hugh-passwords)
 
-
 (defun x-hugh-open-password-file ()
   "Open password file."
   (interactive)
