@@ -7,6 +7,7 @@
     ("a@s" "aardvark@saintaardvarkthecarpeted.com" nil :count 1)
     ("e_shrug" "¯_(ツ)_/¯" nil :count 4)
     ("hth" "I hope that helps.  Please let me know if you have any questions." nil :count 2)
+    ("rjs" "RSSSA" nil :count 1)
     ("rw" "rsync window_detector/ /pyboard/" nil :count 0)
     ("sacm" "saintaardvarkthecarpeted.com" nil :count 3)
     ("somethign" "something" nil :count 7)
@@ -21,6 +22,7 @@ Hugh" nil :count 2)
     ("thugh" "Thanks,
 Hugh" nil :count 2)
     ("trackign" "tracking" nil :count 1)
+    ("ts" "Terrastream" nil :count 6)
    ))
 
 (define-abbrev-table 'shell-mode-abbrev-table
