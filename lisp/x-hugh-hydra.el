@@ -18,7 +18,7 @@
   ("i" hydra-personal-files/body "personal files")
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
-  ("o" hydra-elscreen/body "elscreen")
+  ("o" hydra-org/body "org")
   ("t" hydra-text/body "text")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
@@ -235,6 +235,10 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("s" x-hugh-launch-shell "Launch shell")
   )
 
+(defhydra hydra-org ()
+  "org"
+  ("h" org-toggle-heading "Toggle heading")
+  )
 
 (defhydra hydra-golang ()
   "golang"

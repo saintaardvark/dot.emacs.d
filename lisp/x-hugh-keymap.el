@@ -63,7 +63,7 @@
 ;; C-c f: web stuff
 ;; C-c g: golang stuff
 ;; C-c i: random file stuff.
-;; C-c o: elscreen
+;; C-c o: org
 ;; C-c p: RESERVED FOR PROJECTILE
 ;; C-c u: random
 ;; C-c v: fixmee-listview
@@ -83,7 +83,7 @@
 (global-set-key (kbd "C-c i") 'hydra-personal-files/body)
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 (global-set-key (kbd "C-c n") 'hydra-goto/body)
-(global-set-key (kbd "C-c o") 'hydra-elscreen/body)
+(global-set-key (kbd "C-c o") 'hydra-org/body)
 (global-set-key (kbd "C-c s") 'hydra-shell/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c w") 'hydra-window/body)
