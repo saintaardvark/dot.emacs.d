@@ -236,7 +236,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("l" (org-capture nil "l") "org-capture log")
   ("t" (find-file "~/orgmode/TODO.org") "TODO")
   ("z" (org-agenda nil "a") "Agenda for today")
-  ("Z" (org-agenda) )
+  ("," (org-insert-structure-template) "Insert template (quote, src, etc)")
   )
 
 (defhydra hydra-golang ()
