@@ -233,7 +233,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("j" (progn
 	 (find-file "~/orgmode/journal.org")
 	 (goto-char (point-max))) "Journal")
-  ("o" (org-capture nil "l") "org-capture log")
+  ("l" (org-capture nil "l") "org-capture log")
   ("t" (find-file "~/orgmode/TODO.org") "TODO")
   ("z" (org-agenda nil "a") "Agenda for today")
   ("Z" (org-agenda) )
