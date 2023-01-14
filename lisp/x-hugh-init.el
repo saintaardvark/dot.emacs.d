@@ -72,7 +72,9 @@
 
 ;; Devel
 (use-package x-hugh-compile-mode)
-(use-package x-hugh-lsp)
+;; (use-package x-hugh-lsp)
+;; Let's try eglot:
+(use-package x-hugh-eglot)
 (use-package x-hugh-magit)
 (use-package x-hugh-make)
 (use-package x-hugh-projectile)
