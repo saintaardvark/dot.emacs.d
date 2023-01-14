@@ -54,6 +54,7 @@
   ("l" linum-mode "linum")
   ("L" global-linum-mode "global-linum")
   ("x" x-hugh-open-dev-netx "netx")
+  ("u" x-hugh-update-projectile-known-projects-list)
   )
 
 (defhydra hydra-elisp (:exit t)
