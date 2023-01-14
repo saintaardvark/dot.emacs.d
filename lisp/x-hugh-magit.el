@@ -34,7 +34,7 @@
 	   (magit-use-overlays nil)
 	   (magit-repository-directories
 	    '(;; Directory containing project root directories
-	      ("~/dev/"      . 3)
+	      ("~/dev/"      . 4)
 	      ;; Specific project root directory
 	      ;; ("~/dotfiles/" . 1)
 	      ))
