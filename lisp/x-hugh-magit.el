@@ -18,7 +18,7 @@
 
 (use-package git-commit
   :ensure t
-  :custom (git-commit-summary-max-length 90))
+  :custom (git-commit-summary-max-length 50))
 
 ;; NOTE: Also see x-hugh-appearance for split-width-threshold and
 ;; split-horizontal-threshold.
