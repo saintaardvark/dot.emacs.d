@@ -235,7 +235,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 	 (find-file "~/orgmode/journal.org")
 	 (goto-char (point-max))) "Journal")
   ("l" (org-capture nil "l") "org-capture log")
-  ("t" (find-file "~/orgmode/TODO.org") "TODO")
+  ("t" (org-agenda nil "t") "Show TODOs")
   ("z" (org-agenda nil "a") "Agenda for today")
   ("," (org-insert-structure-template) "Insert template (quote, src, etc)")
   )
