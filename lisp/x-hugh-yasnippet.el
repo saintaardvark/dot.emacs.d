@@ -10,6 +10,7 @@
   :init
   (let ((snippetsdir (file-truename x-hugh-snippets-dir)))
     ;; TODO: ⛔ Error (use-package): yasnippet/:init: Symbol’s function definition is void: yas-load-directory
+    ;; See https://github.com/joaotavora/yasnippet/blob/master/README.mdown for fix
     (if (file-exists-p snippetsdir)
 	(yas-load-directory snippetsdir)))
 
