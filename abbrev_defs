@@ -7,6 +7,7 @@
     ("a@s" "aardvark@saintaardvarkthecarpeted.com" nil :count 1)
     ("e_shrug" "¯_(ツ)_/¯" nil :count 4)
     ("hth" "I hope that helps.  Please let me know if you have any questions." nil :count 2)
+    ("r3" "RSSSA" nil :count 1)
     ("rjs" "RSSSA" nil :count 1)
     ("rw" "rsync window_detector/ /pyboard/" nil :count 0)
     ("sacm" "saintaardvarkthecarpeted.com" nil :count 3)
