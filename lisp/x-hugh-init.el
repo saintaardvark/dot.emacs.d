@@ -98,7 +98,8 @@
 
 ;; Various modes
 (use-package x-hugh-abbrev)
-(use-package x-hugh-annoying-arrows)
+;; It's getting annoying 🙃
+;; (use-package x-hugh-annoying-arrows)
 (use-package x-hugh-apache)
 (use-package x-hugh-boxquote)
 (use-package x-hugh-browse-kill-ring)
