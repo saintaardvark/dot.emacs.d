@@ -97,7 +97,7 @@
   :hook (('org-capture-after-finalize-hook 'nebucatnetzer:org-agenda-redo)
 	 ('org-capture-mode-hook 'x-hugh-indent-buffer)
 	 ('org-mode-hook 'org-indent-mode))
-)
+  )
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
