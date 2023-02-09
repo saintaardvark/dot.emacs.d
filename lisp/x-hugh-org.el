@@ -431,5 +431,12 @@ Hugh
       (org-capture-string "hello world" "l")
       (message (format "Logged entry: %s" entry)))))
 
+;; FIXME: Hm, not working as expected.
+(defun x-hugh-org-toggle-heading-save-excursion ()
+  "Wrap org-toggle-heading with save-excursion."
+  (interactive)
+  (org-toggle-heading)
+  (move-end-of-line nil))
+
 (provide 'x-hugh-org)
 ;;; x-hugh-org.el ends here
