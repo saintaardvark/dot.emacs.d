@@ -48,6 +48,7 @@
 (defhydra hydra-dev (:exit t)
   ("a" x-hugh-git-changetype "Cycle changetype")
   ("c" x-hugh-git-connects-to "Connects-to")
+  ("e" eglot "eglot")
   ("f" flycheck-mode "Flycheck mode")
   ("g" x-hugh-grx "grx")
   ("j" json-pretty-print-buffer "pretty-print json")
