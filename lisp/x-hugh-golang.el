@@ -30,7 +30,7 @@
 (defun go-mode-setup ()
   "Wrapper for a bunch of Golang settings."
   (add-hook 'before-save-hook 'gofmt-before-save)
-  (local-set-key (kbd "M-.") 'godef-jump)
+  ;; (local-set-key (kbd "M-.") 'godef-jump)
   (company-mode)
   (setq flycheck-checkers (remove "go-vet" flycheck-checkers))
   (set (make-local-variable 'company-backends) '(company-go))
