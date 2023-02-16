@@ -234,6 +234,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 (defhydra hydra-org ()
   "org"
   ("a" (org-agenda nil "a") "Agenda for today")
+  ("c" (org-capture) "Capture")
   ("h" x-hugh-org-toggle-heading-save-excursion "Toggle heading")
   ("j" (progn
 	 (find-file "~/orgmode/journal.org")
