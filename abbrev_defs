@@ -5,6 +5,7 @@
     ("TF" "Terraform" nil :count 6)
     ("_shrug_" "¯_(ツ)_/¯" nil :count 4)
     ("a@s" "aardvark@saintaardvarkthecarpeted.com" nil :count 1)
+    ("awsm" "AWS SecretsManager" nil :count 9)
     ("e_shrug" "¯_(ツ)_/¯" nil :count 4)
     ("hth" "I hope that helps.  Please let me know if you have any questions." nil :count 2)
     ("r3" "RSSSA" nil :count 1)
@@ -28,6 +29,6 @@ Hugh" nil :count 2)
 
 (define-abbrev-table 'shell-mode-abbrev-table
   '(
-    ("rw" "rsync window_detector/ /pyboard/" nil :count 8)
+    ("awsm" "AWS SecretsManager" nil :count 8)
    ))
 
