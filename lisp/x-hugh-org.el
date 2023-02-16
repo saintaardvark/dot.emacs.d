@@ -27,6 +27,11 @@
   :type 'string
   :group 'x-hugh-org)
 
+(defcustom x-hugh-org/reading-file "~/orgmode/reading.org"
+  "Where to store reading prompts."
+  :type 'string
+  :group 'x-hugh-org)
+
 ;; FIXME: This hook is not working yet.
 ;; https://www.reddit.com/r/orgmode/comments/6n7dk7/q_refreshing_agenda_after_capturing_a_task/dk91lbk/
 (defun nebucatnetzer:org-agenda-redo ()
@@ -71,9 +76,10 @@
               ("f" "Fun project" entry
                (file x-hugh-org/fun-project-file)
                "** Fun project: %?")
-              ("f" "Feedback" entry
-               (file x-hugh-org/misc-file)
-               "** TODO [#A] %? :feedback"))))
+              ("r" "Reading" entry
+               (file x-hugh-org/reading-file)
+               "** Reading [#A] %?")
+	      )))
            (org-clock-continuously nil)
            (org-clock-into-drawer t)
            (org-default-notes-file x-hugh-org/misc-file)
