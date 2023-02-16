@@ -15,17 +15,17 @@
 (defcustom x-hugh-org/journal-file "~/orgmode/journal.org"
   "Where to store journal file."
   :type 'string
-  :group 'x-hugh-blog)
+  :group 'x-hugh-org)
 
 (defcustom x-hugh-org/misc-file "~/orgmode/misc.org"
   "Where to store misc notes."
   :type 'string
-  :group 'x-hugh-blog)
+  :group 'x-hugh-org)
 
 (defcustom x-hugh-org/fun-project-file "~/orgmode/fun_projects/fun_projects.org"
   "Where to store fun projects."
   :type 'string
-  :group 'x-hugh-blog)
+  :group 'x-hugh-org)
 
 ;; FIXME: This hook is not working yet.
 ;; https://www.reddit.com/r/orgmode/comments/6n7dk7/q_refreshing_agenda_after_capturing_a_task/dk91lbk/
