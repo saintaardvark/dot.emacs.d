@@ -276,17 +276,6 @@ FIXME: Need to figure out how to put point at right column."
 ;; See help for save-some-buffers.
 ;; emacsclient -e '(save-buffers-kill-emacs t)'
 
-;; FIXME: Should be using indirect buffer here (is that the right term?
-(defun x-hugh-add-to-venus (url title)
-  "Add a URL with TITLE to planet.ini."
-  (interactive "sURL: \nsTitle: ")
-  (find-file "/home/aardvark/venus/planet.ini")
-  (goto-char (point-max))
-  (insert (format "\n[%s]\nname = %s\n" url title))
-  (save-buffer)
-  (x-hugh-git-commit-and-push-without-mercy)
-  (kill-buffer))
-
 ;; http://emacs.stackexchange.com/a/10080
 ;; FIXME: Have this kill the buffer after it's done: https://stackoverflow.com/questions/34857843/kill-emacss-async-shell-command-buffer-if-command-is-terminated
 (defun crontab-e ()
