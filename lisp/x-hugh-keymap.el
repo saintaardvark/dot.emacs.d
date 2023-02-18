@@ -47,9 +47,8 @@
 
 ;; Turns out that the hydra-goto is really a good idea.  Going to
 ;; steal C-; for that, but keep C-' for navi.
-;; (global-set-key (kbd "C-'") 'navi-call-navigation-method)
+;; See also x-hugh-navi.el
 (global-set-key (kbd "C-'") 'navi-click-cmd)
-
 (global-set-key (kbd "C-M-'") 'navi-rotate-method)
 
 ;; Trying out avy-mode
