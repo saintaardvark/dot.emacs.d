@@ -115,9 +115,6 @@
 (use-package x-hugh-xclip)
 (use-package x-hugh-yaml)
 
-;; (use-package cfg
-;;   :custom (cfg-chef-cookbook-directory "/Users/hubrown/gh/Chef"))
-
 ;; Hydra comes before keymap.
 (use-package x-hugh-hydra)
 ;; Keymaps come last.  Put a comment in other files about what

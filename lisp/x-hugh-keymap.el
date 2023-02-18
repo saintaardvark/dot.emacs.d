@@ -8,16 +8,10 @@
 
 ;; Unbind M-x and use C-x C-m or C-c C-m instead.
 ;; Thank you, Steve Yegge.
-;; (global-set-key "\C-x\C-m" 'execute-extended-command)
-;; (global-set-key "\C-c\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-m" 'helm-M-x)
 (global-set-key "\C-c\C-m" 'helm-M-x)
 (global-set-key "\C-x\m" 'helm-M-x) 	; Do I need to compose email within Emacs? No, I do not.
 (global-unset-key "\M-x")
-
-;; Win-switch
-;; (global-set-key "\C-xo" 'win-switch-dispatch)
-;; (win-switch-setup-keys-ijkl "\C-xo")
 
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (global-set-key (kbd "C-x k")   'jcs-kill-a-buffer)
@@ -35,7 +29,6 @@
 (global-set-key "\C-cb"		'x-hugh-jekyll-new-blog-entry)
 (global-set-key "\C-ck"		'compile)
 (global-set-key "\C-cm"		'magit-status)
-;; (global-set-key "\C-cn"		'notmuch-search)
 
 (global-set-key "\C-cx"		'x-hugh-set-appearance)
 (global-set-key "\C-\M-z"	'x-hugh-delete-to-sig)
@@ -141,9 +134,6 @@
 (define-key smartparens-mode-map (kbd "C-M-p") 'sp-previous-sexp)
 (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
 (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
-;; Garr, I hate what these do.
-;; (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
-;; (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
 ;; Pop-tag-mark, the opposite of M-.
 (global-set-key (kbd "C-M-.") 'pop-tag-mark)

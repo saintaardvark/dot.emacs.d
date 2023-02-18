@@ -5,17 +5,6 @@
 
 ;;; Code:
 
-;; We need cl-lib if less than 24.  This check taken from post.el.
-;; (if (< (string-to-number (substring (emacs-version)
-;; 				    (string-match "[0-9]+\.[0-9]"
-;; 						  (emacs-version) 5))) 24)
-;;     (load-file "~/.emacs.d/cl-lib-0.3.el"))
-;; (setq load-path  (cons (expand-file-name "~/.emacs.d/git-modes/") load-path))
-;; ;; (require 'git-commit-mode nil 'noerror)
-;; ;; (setq load-path  (cons (expand-file-name "~/.emacs.d/magit/") load-path))
-;; (setq magit-last-seen-setup-instructions "1.4.0")
-;; ;; (require 'magit nil 'noerror)
-
 (use-package git-commit
   :ensure t
   :custom (git-commit-summary-max-length 50))
@@ -75,15 +64,6 @@ Meant for use in magit."
 	(search-forward-regexp "^Change-type: ")
 	(forward-line)
       (insert (format "Connects-to: %s\n" ticket))))))
-
-;; TODO: Implement this to delete trailing whitespace from magit
-;; status page:
-;; https://stackoverflow.com/questions/20127377/how-can-i-remove-trailing-whitespace-from-a-hunk-in-magit
-
-;; Turning this off -- refreshing CI status every time is very, very slow.
-;; (require 'magithub)
-;; (require 'magit-gh-pulls)
-;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
 (provide 'x-hugh-magit)
 

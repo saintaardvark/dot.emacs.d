@@ -213,20 +213,6 @@ FIXME: Need to figure out how to put point at right column."
       (yank)))
   (forward-line))
 
-;; stolen from http://emacswiki.org/emacs/TransposeWindows
-;; Not needed: use ace-swap-windows instead
-;; (defun x-hugh-transpose-windows (arg)
-;;   "Transpose the buffers shown in two windows."
-;;   (interactive "p")
-;;   (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
-;;     (while (/= arg 0)
-;;       (let ((this-win (window-buffer))
-;;             (next-win (window-buffer (funcall selector))))
-;;         (set-window-buffer (selected-window) next-win)
-;;         (set-window-buffer (funcall selector) this-win)
-;;         (select-window (funcall selector)))
-;;       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
-
 ;; Awesome.  From https://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs --
 ;; bury *scratch* buffer instead of kill it
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
