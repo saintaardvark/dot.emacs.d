@@ -25,7 +25,9 @@
 ;; Indent whole buffer
 (global-set-key "\C-\\"         'x-hugh-indent-buffer)
 
-;; Use ibuffer mode by default
+;; Use ibuffer mode for this key combo.
+;; There is definitely some overlap between this and helm-mini,
+;; but I'll leave it for now.
 (global-set-key "\C-x\C-b"      'ibuffer)
 
 ;; open confluence page
