@@ -209,6 +209,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("f" ag "figl (actually ag, but who cares)")
   ("g" x-hugh-git-changetype "Change patch type")
   ("i" indent-defun "indent-defun")
+  ("k" x-hugh-korect-speling "Korect speling")
   ("l" display-line-numbers-mode "line numbers")
   ("m" x-hugh-gh-pr-munge-text "pr munge")
   ("p" smartparens-mode "Toggle smartparens mode")
