@@ -9,7 +9,7 @@
   "Settings for working with git."
   :group 'tools)
 
-(defcustom x-hugh-gh/repo-path "~/software"
+(defcustom x-hugh-gh/repo-path "~/dev/src"
   "Path to where your main git repos are kept."
   :type 'string
   :group 'x-hugh-gh)
