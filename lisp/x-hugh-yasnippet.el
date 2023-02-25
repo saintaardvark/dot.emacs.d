@@ -8,12 +8,8 @@
 (use-package yasnippet
   :ensure t
   :init
-  (let ((snippetsdir (file-truename x-hugh-snippets-dir)))
-    ;; TODO: ⛔ Error (use-package): yasnippet/:init: Symbol’s function definition is void: yas-load-directory
-    ;; See https://github.com/joaotavora/yasnippet/blob/master/README.mdown for fix
-    (if (file-exists-p snippetsdir)
-	(yas-load-directory snippetsdir)))
-
+  (setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"))
   :config (yas-global-mode 1))
 
 ;; https://www.emacswiki.org/emacs/Yasnippet#toc4
