@@ -23,6 +23,8 @@
         ;; helm-do-grep is better.
         ;; (global-set-key "\C-cif"	'helm-do-grep)
         (setq helm-ff-newfile-prompt-p nil))
+      (use-package helm-swoop
+	:ensure t)
       (use-package helm-xref
 	:ensure t)
       ))
