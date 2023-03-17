@@ -49,7 +49,12 @@
 (setq inhibit-splash-screen t)
 
 ;; TODO: This whole thing is whack
-(defun x-hugh-set-font-smaller ()
+(defun x-hugh-set-font-smol ()
+  "Set font to 8 point.  fixme: make this something like ctrl-shift-+/- in ff."
+  (interactive)
+  (set-frame-font "inconsolata-8" t))
+
+(defun x-hugh-set-font-semi-smol ()
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
   (set-frame-font "Inconsolata-12" t))
@@ -68,11 +73,6 @@
   "Set font to 30 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
   (set-frame-font "Inconsolata-30" t))
-
-(defun x-hugh-set-font-smol ()
-  "set font to 8 point.  fixme: make this something like ctrl-shift-+/- in ff."
-  (interactive)
-  (set-frame-font "inconsolata-8" t))
 
 ;; just make it larger...i always do this at startup anyhow.
 ;; fixme / todo: this is borking the display on wayland.  for now i'm
