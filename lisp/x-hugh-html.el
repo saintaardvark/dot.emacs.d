@@ -21,5 +21,17 @@
 (use-package web-narrow-mode
   :ensure t)
 
+;; Not *exactly* webby, but...
+
+(defun x-hugh-open-in-firefox ()
+  "Open URL at point in Firefox."
+  (interactive)
+  (shell-command (format "firefox %s" (thing-at-point 'url))))
+
+(defun x-hugh-open-in-chrome ()
+  "Open URL at point in Chrome."
+  (interactive)
+  (shell-command (format "/opt/google/chrome/chrome %s" (thing-at-point 'url))))
+
 (provide 'x-hugh-html)
 ;;; x-hugh-html.el ends here
