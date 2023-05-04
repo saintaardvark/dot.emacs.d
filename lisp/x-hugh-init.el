@@ -81,6 +81,7 @@
 (use-package x-hugh-smartparens)
 (use-package x-hugh-docker)
 (use-package x-hugh-arduino)
+(use-package x-hugh-jira)
 
 ;; Languages
 (use-package x-hugh-ansible) 		; Is it a language or a dessert topping? ¯\_(ツ)_/¯
