@@ -69,9 +69,15 @@
 (use-package x-hugh-passwords)
 (use-package x-hugh-rebuilder)
 
+;; Try out combobulate, treesitter, eglot
+(use-package x-hugh-eglot)
+(use-package x-hugh-treesitter)
+(use-package x-hugh-combobulate)
+(use-package x-hugh-multiple-cursors)
+
 ;; Devel
 (use-package x-hugh-compile-mode)
-(use-package x-hugh-eglot)
+
 (use-package x-hugh-magit)
 (use-package x-hugh-make)
 (use-package x-hugh-projectile)
