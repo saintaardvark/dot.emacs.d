@@ -58,18 +58,18 @@
   :hook (python-mode . python-black-on-save-mode-enable-dwim)
   )
 
-(setq x-hugh-default-conda-location "~/anaconda3")
-(if (file-exists-p x-hugh-default-conda-location)
-    (use-package conda
-      :after python
-      :ensure t
-      :config
-      (progn
-	(setq conda-env-home-directory x-hugh-default-conda-location)
-	;;get current environment--from environment variable CONDA_DEFAULT_ENV
-	(conda-env-activate 'getenv "CONDA_DEFAULT_ENV")
-	;;(conda-env-autoactivate-mode t)
-	(setq-default mode-line-format (cons mode-line-format '(:exec conda-env-current-name))))))
+;; (setq x-hugh-default-conda-location "~/anaconda3")
+;; (if (file-exists-p x-hugh-default-conda-location)
+;;     (use-package conda
+;;       :after python
+;;       :ensure t
+;;       :config
+;;       (progn
+;; 	(setq conda-env-home-directory x-hugh-default-conda-location)
+;; 	;;get current environment--from environment variable CONDA_DEFAULT_ENV
+;; 	(conda-env-activate 'getenv "CONDA_DEFAULT_ENV")
+;; 	;;(conda-env-autoactivate-mode t)
+;; 	(setq-default mode-line-format (cons mode-line-format '(:exec conda-env-current-name))))))
 
 (defun x-hugh-python-fixme ()
   "Insert my patented debugging string in Python."
