@@ -23,7 +23,8 @@
 
 (setq treesit-extra-load-path '("/home/aardvark/.emacs.d/tree-sitter/tree-sitter-module/dist"))
 
-(mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+;; FIXME: not needed every time
+;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)) 
 
 (setq major-mode-remap-alist
  '((yaml-mode . yaml-ts-mode)
