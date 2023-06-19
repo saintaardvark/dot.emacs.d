@@ -31,11 +31,11 @@
 (-map (lambda (num) (* num num)) '(1 2 3 4))
 (funcall (-compose #'- #'1+ #'+) 1 2 3)
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-			 (require 'lsp-pyright)
-			 (lsp)))) 	;or lsp-deferred
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;; 			 (require 'lsp-pyright)
+;; 			 (lsp)))) 	;or lsp-deferred
 
 ;; FIXME: Should move highlight-indent-guides to another file
 (use-package highlight-indent-guides
