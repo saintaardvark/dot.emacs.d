@@ -249,6 +249,9 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("r" (org-refile) "refile")
   ("t" (org-agenda nil "t") "Show TODOs")
   ("w" (org-agenda-list 7) "Agenda for week")
+  ("y" (progn
+	 (find-file "~/orgmode/climate/climate_letters.org")
+	 (goto-char (point-max))) "Climate Letters")
   ("," (org-insert-structure-template) "Insert template (quote, src, etc)")
   )
 
