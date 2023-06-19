@@ -34,7 +34,8 @@
    (css-mode . css-ts-mode)
    (python-mode . python-ts-mode)))
 
+(setq treesit-font-lock-level 4)
+
 (provide 'x-hugh-treesitter)
 
 ;;; x-hugh-treestter.el ends here
-
