@@ -105,6 +105,15 @@
 	 ('org-mode-hook 'org-indent-mode))
   )
 
+(use-package ox-gfm
+  :ensure t)
+
+(use-package ox-slack
+  :ensure t)
+
+(use-package ox-twbs
+  :ensure t)
+
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (global-set-key (kbd "C-M-r") 'org-capture)
