@@ -49,6 +49,7 @@
 
 ;; And now everything else
 
+(use-package x-hugh-m-x)
 (use-package x-hugh-mouse)
 (use-package x-hugh-navi)
 (use-package x-hugh-functions)

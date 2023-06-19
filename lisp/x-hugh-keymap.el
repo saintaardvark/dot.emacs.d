@@ -6,13 +6,6 @@
 
 ;; Keymaps
 
-;; Unbind M-x and use C-x C-m or C-c C-m instead.
-;; Thank you, Steve Yegge.
-(global-set-key "\C-x\C-m" 'helm-M-x)
-(global-set-key "\C-c\C-m" 'helm-M-x)
-(global-set-key "\C-x\m" 'helm-M-x) 	; Do I need to compose email within Emacs? No, I do not.
-(global-unset-key "\M-x")
-
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (global-set-key (kbd "C-x k")   'jcs-kill-a-buffer)
 
