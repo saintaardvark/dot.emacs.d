@@ -5,6 +5,7 @@
 
 ;;; Code:
 ;; `M-x combobulate' (or `C-c o o') to start using Combobulate
+;; TODO: Choose prefix that doesn't clash w/my org stuff
 (use-package treesit
   :preface
   (defun mp-setup-install-grammars ()
@@ -61,4 +62,4 @@
 
 (provide 'x-hugh-combobulate)
 
-;;; x-hugh- ends here
+;;; x-hugh-combobulate.el ends here
