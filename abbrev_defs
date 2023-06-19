@@ -30,11 +30,9 @@ Hugh" nil :count 2)
     ("thugh" "Thanks,
 Hugh" nil :count 2)
     ("trackign" "tracking" nil :count 1)
-    ("ts" "Terrastream" nil :count 6)
    ))
 
 (define-abbrev-table 'shell-mode-abbrev-table
   '(
     ("awsm" "AWS SecretsManager" nil :count 8)
    ))
-
