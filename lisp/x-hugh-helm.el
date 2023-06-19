@@ -16,6 +16,7 @@
       :config
       (progn
         (helm-mode 1)
+	(global-set-key (kbd "C-x RET") 'helm-M-x)
         (global-set-key (kbd "M-x")     'helm-M-x)
         (global-set-key (kbd "M-y")     'helm-show-kill-ring)
         (global-set-key (kbd "C-x b")   'helm-mini)
