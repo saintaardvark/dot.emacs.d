@@ -273,6 +273,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("l" ein:login "Log into already-running jupyter server with ein")
   ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight")
   ("f" x-hugh-python-fixme "FIXME")
+  ("r" run-python "Python shell")
   ("v" pyvenv-activate "pyvenv-activate")
   )
 
