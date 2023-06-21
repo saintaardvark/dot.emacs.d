@@ -71,11 +71,16 @@
 ;; 	;;(conda-env-autoactivate-mode t)
 ;; 	(setq-default mode-line-format (cons mode-line-format '(:exec conda-env-current-name))))))
 
+(use-package ein
+  :ensure t)
+
 (defun x-hugh-python-fixme ()
   "Insert my patented debugging string in Python."
   (interactive)
   (insert "print(\"[FIXME] \")")
   (backward-char 2))
+
+
 
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here
