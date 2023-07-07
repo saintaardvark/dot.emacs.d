@@ -52,7 +52,7 @@
 ;; C-c i: random file stuff.
 ;; C-c o: org
 ;; C-c p: RESERVED FOR PROJECTILE
-;; C-c u: random
+;; C-c u: RESERVED FOR COMBOBOLATE
 ;; C-c v: fixmee-listview
 ;; C-c w: workgroups.
 ;; C-c y: window (hydra)

@@ -46,7 +46,10 @@
   ;;  M-x customize-group RET combobulate RET
   ;;
   (use-package combobulate
-    ;; Optional, but recommended.
+    :preface
+    ;; You can customize Combobulate's key prefix here.
+    ;; Note that you may have to restart Emacs for this to take effect!
+    (setq combobulate-key-prefix "C-c u")
     ;;
     ;; You can manually enable Combobulate with `M-x
     ;; combobulate-mode'.
