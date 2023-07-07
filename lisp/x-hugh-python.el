@@ -128,7 +128,7 @@
     (if (file-exists-p venvdir)
         (pyvenv-activate venvdir))))
 
-(add-hook 'python-mode-hook 'pyvenv-autoload)
+(add-hook 'python-ts-mode-hook 'pyvenv-autoload)
 
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here
