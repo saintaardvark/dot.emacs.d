@@ -45,9 +45,8 @@
   )
 
 (use-package python
-  :custom ((python-indent-guess-indent-offset nil) ; Had been t, but
-						   ; this was causing
-						   ; problems for me.
+  ;; Had been `t`, but this was causing problems for me.
+  :custom ((python-indent-guess-indent-offset nil)
 	   (python-shell-interpreter "python3"))
   )
 
@@ -80,7 +79,58 @@
   (insert "print(\"[FIXME] \")")
   (backward-char 2))
 
+;; https://fredrikmeyer.net/2020/08/26/emacs-python-venv.html
+;;
+;; > So my workflow is this: activate the virtual environment with M-x
+;; > pyvenv-activate, experiment in a Python shell (started with C-c
+;; > C-p), profit.
+;;
+;; Note: this *also* works for running python-lsp-server!
+;;
+;; So what I can do is:
+;;
+;; M-x pyvenv-activate   -> point at .venv in project root
+;;  -- **NOTE:** Now taken care of by pyvenv-autoload
+;; open python file
+;; M-x eglot
+;; and now imports are resolved! 🥳
 
+;; TODO: There's a set of dependencies I haven't quite optimized yet:
+;;
+;; - pyvenv
+;;   - the pyvenv-post-activate-hooks
+;; - pyenv-autoload
+;;
+;; The sequence right now is:
+;; - open a python file in a project
+;; - pyvenv-autoload triggers
+;; - which tries to pyvenv-activate a venv in the project root
+;; - the pyvenv-post-activate-hook sets the python interpreter correctly
+;; - and then we can run eglot
+(use-package pyvenv
+  :ensure t
+  :config
+  (pyvenv-mode t)
+
+  ;; Set correct Python interpreter
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
+
+(defun pyvenv-autoload ()
+  "Function to automagically load a project venv."
+  (interactive)
+  (let* ((pdir (projectile-project-root))
+	 (venvdir (concat pdir ".venv")))
+    (if (file-exists-p venvdir)
+        (pyvenv-activate venvdir))))
+
+(add-hook 'python-mode-hook 'pyvenv-autoload)
 
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here
+
+(file-exists-p "/etc")
