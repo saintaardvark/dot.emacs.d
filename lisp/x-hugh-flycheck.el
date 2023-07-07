@@ -9,7 +9,7 @@
 
 (use-package flycheck
   :ensure t
-  :config (add-hook 'after-init-hook #'global-flycheck-mode)
+  ;; :config (add-hook 'after-init-hook #'global-flycheck-mode)
   :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
            (flycheck-flake8-maximum-line-length 9990)
            (flycheck-idle-change-delay 2)
