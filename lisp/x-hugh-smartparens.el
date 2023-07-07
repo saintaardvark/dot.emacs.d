@@ -34,6 +34,7 @@
 	 (bats-mode . smartparens-mode)
 	 (emacs-lisp-mode . smartparens-mode)
 	 (groovy-mode . smartparens-mode)
+	 (inferior-python-mode . smartparens-mode)
 	 (javascript-mode . smartparens-mode)
 	 (jinja2-mode . smartparens-mode)
 	 (json-mode . smartparens-mode)
