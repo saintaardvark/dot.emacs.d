@@ -197,9 +197,10 @@ assumes font named like `inconsolata-14`."
   ;;; Need to dig a bit more into load-theme
   (load-theme (intern (format "solarized-%s" which))) "no-confirm")
 
-;; Assumption: this code will be run at startup, when I have the dark
-;; theme loaded.
-(setq x-hugh-solarized--current "dark")
+;; Set "light" as --current.  ATM I'm not loading solarized at start
+;; time, but switching to it later when I feel like it...and when that
+;; happens, I mainly want it dark.
+(setq x-hugh-solarized--current "light")
 
 (defun x-hugh-solarized-toggle ()
   "Toggle whether solarized dark or light is loaded."
