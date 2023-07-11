@@ -52,7 +52,7 @@
   ("f" flycheck-mode "Flycheck mode")
   ("g" x-hugh-grx "grx")
   ("j" json-pretty-print-buffer "pretty-print json")
-  ("l" linum-mode "linum")
+  ("l" display-line-numbers-mode "linum") ; FIXME: Make this emacs-version dependent
   ("L" global-linum-mode "global-linum")
   ("m" flymake-show-project-diagnostics "flymake-show-project-diagnostics")
   ("r" eglot-rename "eglot-rename")
