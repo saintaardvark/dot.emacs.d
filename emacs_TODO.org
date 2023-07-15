@@ -17,15 +17,17 @@
   - will turn off, will not turn back on
 * DONE Python hydra
   CLOSED: [2019-05-01 Wed 08:46]
-* TODO Add shell to projectile-commander methods
-  - Replace current "s" to switch projects
-* TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
-* TODO Why is grx being detected as make project instead of go?
+* DONE Why is grx being detected as make project instead of go?
+CLOSED: [2023-07-15 Sat 12:10]
+  - No longer a problem as of now.
   - Problem: C-c p 4 t from main.go does not open main_test.go;
     instead, says "projectile-find-implementation-or-test: No matching
     test file found for project type ‘make’"
   - [[file:.cask/26.1/elpa/projectile-20190126.1117/projectile.el::(projectile-register-project-type%20'go%20projectile-go-project-test-function][this function]] (er, custom var appears to show that it *should* be
     detectable -- just not sure why it's not
+* TODO Add shell to projectile-commander methods
+  - Replace current "s" to switch projects
+* TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
 * TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
   your ‘.emacs.d’ directory: ~/.emacs.d/
