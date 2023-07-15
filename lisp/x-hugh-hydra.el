@@ -48,6 +48,7 @@
 (defhydra hydra-dev (:exit t)
   ("a" x-hugh-git-changetype "Cycle changetype")
   ("c" (describe-keymap combobulate-key-map) "Combobulate keymap")
+  ("d" (dired "~/dev/src") "Dev directory")
   ("e" eglot "eglot")
   ("f" flycheck-mode "Flycheck mode")
   ("g" x-hugh-grx "grx")
