@@ -71,10 +71,7 @@
 
 (defhydra hydra-personal-files (:exit t)
   "personal files"
-  ("a" (lambda ()
-	 (interactive)
-	 (find-file "/home/aardvark/saintaardvarkthecarpeted.com/astronomy.mdwn"))
-   "astronomy page")
+  ("a" (dired "~/.local/share/applications") "Desktop shortcuts")
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
   ("B" (find-file "~/.bashrc_local") ".bashrc_local")
   ("c" x-hugh-company-coming "Company coming!")
