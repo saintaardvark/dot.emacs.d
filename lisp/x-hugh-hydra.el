@@ -205,6 +205,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 (defhydra hydra-text (:color blue)
   ("'" toggle-quotes "Toggle single/double quotes") ; FIXME: I don't have this function!
   ("," ispell-word "ispell word")
+  ("." delete-horizontal-space "delete horizontal space")
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("c" x-hugh-git-changetype "git-changetype")
