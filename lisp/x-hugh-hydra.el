@@ -66,6 +66,7 @@
   "elisp"
   ("d" edebug-defun "edebug-defun")
   ("e" eval-defun "eval-defun")
+  ("h" x-hugh-jump-to-hydra "Jump to hydra")
   ("t" (setq debug-on-error t) "turn on debug-on-error")
   ("T" (setq debug-on-error nil) "turn off debug-on-error")
   )
@@ -280,6 +281,12 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   "web"
   ("s" web-mode-surround "Surround with tag")
   )
+
+(defun x-hugh-jump-to-hydra ()
+  "Jump to a particular hydra definition so I can edit it."
+  (interactive)
+  (find-file "~/.emacs.d/lisp/x-hugh-hydra.el")
+  (swiper-helm "(defhydra "))
 
 ;; Load x-hugh-hydra-local.el if present
 (require 'x-hugh-hydra-local "x-hugh-hydra-local.el" t)
