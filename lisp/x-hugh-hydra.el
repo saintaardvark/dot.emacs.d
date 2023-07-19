@@ -269,6 +269,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 (defhydra hydra-python (:exit t)
   "python"
   ("b" python-black-buffer "Black buffer")
+  ("c" conda-env-activate "Activate conda env")
+  ("d" conda-env-deactivate "Deactivate conda env")
   ("e" ein:run "Start jupyter server with ein")
   ("l" ein:login "Log into already-running jupyter server with ein")
   ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight")
