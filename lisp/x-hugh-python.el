@@ -76,7 +76,7 @@
 (defun x-hugh-python-fixme ()
   "Insert my patented debugging string in Python."
   (interactive)
-  (insert "print(\"[FIXME] \")")
+  (insert "print(f\"[FIXME] \")")
   (backward-char 2))
 
 ;; https://fredrikmeyer.net/2020/08/26/emacs-python-venv.html
