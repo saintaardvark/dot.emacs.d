@@ -115,10 +115,14 @@
   ;; Set correct Python interpreter
   (setq pyvenv-post-activate-hooks
         (list (lambda ()
-                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3"))
+                (setq python-interpreter (concat pyvenv-virtual-env "bin/python3"))
+		)))
   (setq pyvenv-post-deactivate-hooks
         (list (lambda ()
-                (setq python-shell-interpreter "python3")))))
+                (setq python-shell-interpreter "python3")
+                (setq python-interpreter "python3")
+		))))
 
 (defun pyvenv-autoload ()
   "Function to automagically load a project venv."
