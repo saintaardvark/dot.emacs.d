@@ -4,6 +4,19 @@
 
 ;;; Code:
 
+;; Not exactly sure this is the right place, but it'll do for now
+(defconst x-hugh-preferred-repo-dir
+    (let ((tempvar(getenv "PREFERRED_REPO_DIR")))
+    (if (eq tempvar nil)
+	"~/dev"
+      tempvar))
+  "Preferred repo dir; copied from env var PREFERRED_REPO_DIR.")
+
+(defun x-hugh-open-preferred-repo-dir ()
+  "Open preferred repo dir in dired."
+  (interactive)
+  (dired x-hugh-preferred-repo-dir))
+
 ;; Putting it here to make sure Projectile can use it
 (use-package ripgrep
   :ensure t)
