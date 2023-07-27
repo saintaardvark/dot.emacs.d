@@ -1,94 +1,120 @@
 #+FILETAGS: emacs
 * DONE Steal C-' back from org-cycle-agenda-files
-  CLOSED: [2019-01-10 Thu 08:04]
-  - This should be bound to navi-click-cmd instead
+CLOSED: [2019-01-10 Thu 08:04]
+- This should be bound to navi-click-cmd instead
 * DONE Error (use-package): Failed to parse package post: Wrong type argument: listp, abbrev-mode
-  CLOSED: [2019-01-10 Thu 08:31]
+CLOSED: [2019-01-10 Thu 08:31]
 * DONE Error (use-package): Cannot load perltidy
-  CLOSED: [2019-01-24 Thu 08:36]
+CLOSED: [2019-01-24 Thu 08:36]
 * DONE Error (use-package): Cannot load visual-line-mode
-  CLOSED: [2019-01-18 Fri 20:11]
+CLOSED: [2019-01-18 Fri 20:11]
 * DONE Error (use-package): Cannot load ssh
-  CLOSED: [2019-01-28 Mon 08:13]
+CLOSED: [2019-01-28 Mon 08:13]
 * DONE Change x-hugh-navi: C-' -> char, C-'' -> line
-  CLOSED: [2019-03-23 Sat 11:52]
+CLOSED: [2019-03-23 Sat 11:52]
 * DONE toggle highlight-indentation-mode in hydra
-  CLOSED: [2019-05-01 Wed 08:43]
-  - will turn off, will not turn back on
+CLOSED: [2019-05-01 Wed 08:43]
+- will turn off, will not turn back on
 * DONE Python hydra
-  CLOSED: [2019-05-01 Wed 08:46]
+CLOSED: [2019-05-01 Wed 08:46]
 * DONE Why is grx being detected as make project instead of go?
 CLOSED: [2023-07-15 Sat 12:10]
-  - No longer a problem as of now.
-  - Problem: C-c p 4 t from main.go does not open main_test.go;
-    instead, says "projectile-find-implementation-or-test: No matching
-    test file found for project type ‘make’"
-  - [[file:.cask/26.1/elpa/projectile-20190126.1117/projectile.el::(projectile-register-project-type%20'go%20projectile-go-project-test-function][this function]] (er, custom var appears to show that it *should* be
-    detectable -- just not sure why it's not
+- No longer a problem as of now.
+- Problem: C-c p 4 t from main.go does not open main_test.go;
+  instead, says "projectile-find-implementation-or-test: No matching
+  test file found for project type ‘make’"
+- [[file:.cask/26.1/elpa/projectile-20190126.1117/projectile.el::(projectile-register-project-type%20'go%20projectile-go-project-test-function][this function]] (er, custom var appears to show that it *should* be
+  detectable -- just not sure why it's not
 * TODO Add shell to projectile-commander methods
-  - Replace current "s" to switch projects
+- Replace current "s" to switch projects
 * TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
-* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
+If this was Python, I'd be doing:
+
+#+begin_src python
+  keymapping = { "a": hydra-apropos/body,
+                 "d": hdyra-dev/body,
+                }
+#+end_src
+
+...etc
+
+Could do this with alists:
+
+#+begin_src lisp
+  ((pine . cones)
+   (oak . acorns)
+   (maple . seeds))
+
+  (setq hydra_map '(("a" . hydra-apropos/body)
+                    ("d" . hydra-dev/body)))
+
+  ;; this is just to see how I could work with this
+  (dolist (entry hydra_map value)
+    (message (cdr (cdr hydra_map))))
+#+end_src
+,* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
-  your ‘.emacs.d’ directory: ~/.emacs.d/
-  This is likely to cause problems...
-  Consider using a subdirectory instead, e.g.: /Users/hubrown/.emacs.d/lisp
+your ‘.emacs.d’ directory: ~/.emacs.d/
+This is likely to cause problems...
+Consider using a subdirectory instead, e.g.: /Users/hubrown/.emacs.d/lisp
 * TODO Figure out how to turn on comment-auto-fill-only-comments again
-  - If turn this on globally, then it ends up borking auto-fill-mode
-    in Post-mode...but it's damn handy for nearly everything else
+- If turn this on globally, then it ends up borking auto-fill-mode
+  in Post-mode...but it's damn handy for nearly everything else
 * TODO [#A] Add keyboard shortcut for delete-horizontal-space
 * TODO File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
-  - not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
+- not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
 * TODO Set custom file to /dev/null or some such
 * TODO Figure out flashing matching parens script again
-  - mic-paren
+- mic-paren
 * TODO Stop helm from trying to autocomplete stuff at point
-  - I very rarely want to email someone if point at an email address
-  - ditto for hyperlink
+- I very rarely want to email someone if point at an email address
+- ditto for hyperlink
 * DONE Nyan cat images missing from home emacs [MAX_EMERG]
-  CLOSED: [2020-03-16 Mon 20:46]
-  - Encountered this again [2020-03-20 Fri]
-    - They're in the upstream repo, not sure why they're not here
-    - Copied manually from my old laptop. :-(
-* TODO Add visual-lines-mode to hydra if not there already
-* TODO Add longlines-mode alias for visual-lines-mode
-   I can never remember the new name...
+CLOSED: [2020-03-16 Mon 20:46]
+- Encountered this again [2020-03-20 Fri]
+  - They're in the upstream repo, not sure why they're not here
+  - Copied manually from my old laptop. :-(
+* DONE Add visual-lines-mode to hydra if not there already
+CLOSED: [2023-07-26 Wed 12:59]
+* DONE Add longlines-mode alias for visual-lines-mode
+CLOSED: [2023-07-26 Wed 12:59]
+I can never remember the new name...
 * TODO Watch for fix for Inconsolata
-  - https://github.com/googlefonts/Inconsolata/issues/42
-  - https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
+- https://github.com/googlefonts/Inconsolata/issues/42
+- https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
 * TODO There's an Emacs 27? 28?
 * TODO Turn off touchpad stuff in x-hugh-mouse.el
-  - Trackpad on recent laptops is fine
-  - Make a custom variable to enable it or not
+- Trackpad on recent laptops is fine
+- Make a custom variable to enable it or not
 * TODO See if Emacs can chord ctrl+space to replace that awful alt key on the MS keyboard
 * TODO Try https://github.com/emacs-lsp/lsp-mode
 * TODO Shellcheck in emacs appears to assume posix shell rather than looking at shebang
-  - Shellcheck in emacs will complain about Bashisms when shebang has them
-  - Shellcheck run from shell will be fine about this
-  - Is this configured somewhere?
+- Shellcheck in emacs will complain about Bashisms when shebang has them
+- Shellcheck run from shell will be fine about this
+- Is this configured somewhere?
 * TODO https://github.com/alphapapa/org-super-agenda
 * TODO Try out these ivy/counsel/swiper settings
-  - Good intro: https://writequit.org/denver-emacs/presentations/2017-04-11-ivy.html
+- Good intro: https://writequit.org/denver-emacs/presentations/2017-04-11-ivy.html
 * TODO [#A] Emacs: delete trailing whitespace in file and update magit :emacs:
 * TODO [#C] Keyboard shortcut for todo/today                          :emacs:
 * TODO [#C] Keyboard shortcut for maximize/3xbigger                   :emacs:
 * TODO [#C] Think about how journal and checkin to different org headlines could be integrated :emacs:
-  - Example: I think of the journal as my easily searchable record of
-    work.  If I check into another item (rather than just "Tuesday"),
-    then I'd like that to show up in the journal -- a pointer to the
-    original headline would be fine.
-  - I'd also want to make sure the original headline contents would be
-    available even if archived or deleted -- I don't want to lose
-    history.  Some detail could be lost -- detailed notes would likely
-    be less useful over time -- but i'd still want to know that I
-    worked on Foo that day.
+- Example: I think of the journal as my easily searchable record of
+  work.  If I check into another item (rather than just "Tuesday"),
+  then I'd like that to show up in the journal -- a pointer to the
+  original headline would be fine.
+- I'd also want to make sure the original headline contents would be
+  available even if archived or deleted -- I don't want to lose
+  history.  Some detail could be lost -- detailed notes would likely
+  be less useful over time -- but i'd still want to know that I
+  worked on Foo that day.
 * TODO [#C] Have way of reverting the capitalization for doublecaps   :emacs:
 * TODO [#C] Is there a way to run typescript calls from Emacs?        :emacs:
-  - Could I run
-    https://github.com/balena-io/open-balena-api/pull/356/files from
-    it to test the API calls?
+- Could I run
+  https://github.com/balena-io/open-balena-api/pull/356/files from
+  it to test the API calls?
 * TODO [#C] Save register a and make it persistent                    :emacs:
-  - journal.org on left, agenda on right, certain level of zoom
+- journal.org on left, agenda on right, certain level of zoom
 * TODO https://github.com/cute-jumper/emacs-firefox-controller
 * TODO https://github.com/CyberShadow/term-keys for fixing ctrl-' in a terminal
 * TODO Figure out why auto-complete mode in css file is so annoying
