@@ -19,7 +19,6 @@
 
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)
-(global-set-key "\C-cb"		'x-hugh-jekyll-new-blog-entry)
 (global-set-key "\C-ck"		'compile)
 (global-set-key "\C-cm"		'magit-status)
 
