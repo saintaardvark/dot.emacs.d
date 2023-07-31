@@ -83,7 +83,8 @@
 
 ;; For some reason, markdown mode grabs this binding.  I *REALLY* want
 ;; it back.  I don't know why this isn't working.
-(require 'markdown-mode)
+(use-package markdown-mode
+  :ensure t)
 (add-hook 'markdown-mode-hook
           (lambda ()
             (define-key markdown-mode-map "\C-c '"
