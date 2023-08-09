@@ -60,6 +60,8 @@
   ("u" x-hugh-update-projectile-known-projects-list)
   ("y" copilot-accept-completion "copilot accept")
   ("z" copilot-next-completion "copilot next")
+  ("[" eldoc-box-hover-mode "eldoc hover mode")
+  ("]" eldoc-box-hover-at-point-mode "eldoc hover at point mode")
   )
 
 (defhydra hydra-elisp (:exit t)
