@@ -51,6 +51,9 @@ Could do this with alists:
   ;; this is just to see how I could work with this
   (dolist (entry hydra_map value)
     (message (cdr (cdr hydra_map))))
+
+  ;; Dash is also good
+  (--map (message (car it)) hydra_map)
 #+end_src
 ,* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Warning (initialization): Your ‘load-path’ seems to contain
