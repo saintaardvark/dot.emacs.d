@@ -247,6 +247,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("c" (org-capture) "Capture")
   ("f" (find-file "~/orgmode/fun_projects/fun_projects.org") "Fun projects")
   ("h" x-hugh-org-toggle-heading-save-excursion "Toggle heading")
+  ("H" org-html-export-to-html "Export to HTML file")
   ("j" (progn
 	 (find-file "~/orgmode/journal.org")
 	 (goto-char (point-max))) "Journal")
