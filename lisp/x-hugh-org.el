@@ -114,6 +114,10 @@
 (use-package ox-twbs
   :ensure t)
 
+;; Needed for some HTML exports
+(use-package htmlize
+  :ensure t)
+
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (global-set-key (kbd "C-M-r") 'org-capture)
