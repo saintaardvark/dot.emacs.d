@@ -56,6 +56,7 @@
   ("l" display-line-numbers-mode "linum") ; FIXME: Make this emacs-version dependent
   ("L" global-linum-mode "global-linum")
   ("m" flymake-show-project-diagnostics "flymake-show-project-diagnostics")
+  ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
   ("r" eglot-rename "eglot-rename")
   ("u" x-hugh-update-projectile-known-projects-list)
   ("y" copilot-accept-completion "copilot accept")
@@ -89,11 +90,12 @@
   ("l" x-hugh-hugh-va7unx "hugh@va7unx.space")
   ("m" (magit-status "~/.dotfiles") "Open .dotfiles in magit")
   ("o" (dired "/backup/music/ogg") "Music")
-  ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
+  ("p" (image-dired "~/Pictures") "Pictures")
   ("r" (x-hugh-open-password-file) "Open password file")
   ("R" (find-file "~/.config/run-or-raise/shortcuts.conf") "Edit run-or-raise")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("u" (calculator) "Calculator")
+  ("w" (image-dired "~/Pictures/Wallpaper") "Wallpaper")
   ("y" (calendar) "Calendar")
   )
 
