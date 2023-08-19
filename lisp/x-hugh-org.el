@@ -260,6 +260,15 @@ Hugh
     (write-region nil nil "/ssh:l2:/home/aardvark/public_html/random/books.html")
     (kill-buffer)))
 
+(defun x-hugh-org-publish-fun-projects ()
+  "Publish fun_projects.org as HTML on website."
+  (interactive)
+  (save-excursion
+    (find-file "/home/aardvark/orgmode/fun_projects/fun_projects.org")
+    (org-html-export-as-html)
+    (write-region nil nil "/ssh:l2:/home/aardvark/public_html/random/fun_projects.html")
+    (kill-buffer)))
+
 (defun x-hugh-org-export-password-file ()
   "Export the password file in HTML to /dev/shm."
   (interactive)
