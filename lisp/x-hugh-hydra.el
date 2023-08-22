@@ -293,6 +293,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   )
 
 (defhydra hydra-emoji ()
+  ("r" (insert "ヽ( ಠ益ಠ )ﾉ") "rage")
   ("t" (insert "(╯°□°)╯︵ ┻━┻") "tableflip")
   ("p" (insert "🥳") "party")
 )

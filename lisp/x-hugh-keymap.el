@@ -72,7 +72,7 @@
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 (global-set-key (kbd "C-c n") 'hydra-goto/body)
 (global-set-key (kbd "C-c o") 'hydra-org/body)
-(global-set-key (kbd "C-c r") 'hydra-emoji/body)o
+(global-set-key (kbd "C-c r") 'hydra-emoji/body)
 (global-set-key (kbd "C-c s") 'hydra-shell/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c w") 'hydra-window/body)
