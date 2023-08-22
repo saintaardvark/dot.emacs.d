@@ -49,6 +49,8 @@
 ;; C-c f: web stuff
 ;; C-c g: golang stuff
 ;; C-c i: random file stuff.
+;; C-c k: compile
+;; C-c l: org-store link
 ;; C-c o: org
 ;; C-c p: RESERVED FOR PROJECTILE
 ;; C-c u: RESERVED FOR COMBOBOLATE
@@ -70,6 +72,7 @@
 (global-set-key (kbd "C-c j") 'hydra-copy-lines/body)
 (global-set-key (kbd "C-c n") 'hydra-goto/body)
 (global-set-key (kbd "C-c o") 'hydra-org/body)
+(global-set-key (kbd "C-c r") 'hydra-emoji/body)o
 (global-set-key (kbd "C-c s") 'hydra-shell/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
 (global-set-key (kbd "C-c w") 'hydra-window/body)

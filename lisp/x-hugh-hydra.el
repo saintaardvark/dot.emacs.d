@@ -19,6 +19,7 @@
   ("j" hydra-copy-lines/body "copy lines")
   ("n" hydra-goto/body "navigate")
   ("o" hydra-org/body "org")
+  ("r" hydra-emoji/body "emoji")
   ("t" hydra-text/body "text")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
@@ -290,6 +291,11 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   "web"
   ("s" web-mode-surround "Surround with tag")
   )
+
+(defhydra hydra-emoji ()
+  ("t" (insert "(╯°□°)╯︵ ┻━┻") "tableflip")
+  ("p" (insert "🥳") "party")
+)
 
 (defun x-hugh-jump-to-hydra ()
   "Jump to a particular hydra definition so I can edit it."
