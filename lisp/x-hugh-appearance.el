@@ -297,7 +297,7 @@ assumes font named like `inconsolata-14`."
 ;; split-height-threshold alone (default value is 80).
 
 ;; June 5, 2023: God, starting to hate how this works.  Setting threshold super high.
-(setq split-width-threshold 15000)
+(setq split-width-threshold 1500000)
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance.el ends here
