@@ -25,8 +25,28 @@ CLOSED: [2023-07-15 Sat 12:10]
   test file found for project type ‘make’"
 - [[file:.cask/26.1/elpa/projectile-20190126.1117/projectile.el::(projectile-register-project-type%20'go%20projectile-go-project-test-function][this function]] (er, custom var appears to show that it *should* be
   detectable -- just not sure why it's not
-* TODO Add shell to projectile-commander methods
-- Replace current "s" to switch projects
+* DONE File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
+CLOSED: [2023-08-27 Sun 16:08]
+- not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
+* DONE Warning (initialization): Your ‘load-path’ seems to contain
+CLOSED: [2023-08-27 Sun 16:08]
+your ‘.emacs.d’ directory: ~/.emacs.d/
+This is likely to cause problems...
+Consider using a subdirectory instead, e.g.: /Users/hubrown/.emacs.d/lisp
+* DONE There's an Emacs 27? 28?
+CLOSED: [2023-08-27 Sun 16:09]
+* DONE [#C] Nyan cat images missing from home emacs [MAX_EMERG]
+CLOSED: [2020-03-16 Mon 20:46]
+- Encountered this again [2020-03-20 Fri]
+  - They're in the upstream repo, not sure why they're not here
+  - Copied manually from my old laptop. :-(
+* DONE Add longlines-mode alias for visual-lines-mode
+CLOSED: [2023-07-26 Wed 12:59]
+I can never remember the new name...
+* DONE Add visual-lines-mode to hydra if not there already
+CLOSED: [2023-07-26 Wed 12:59]
+* DONE Try https://github.com/emacs-lsp/lsp-mode
+CLOSED: [2023-08-27 Sun 16:09]
 * TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
 If this was Python, I'd be doing:
 
@@ -55,42 +75,26 @@ Could do this with alists:
   ;; Dash is also good
   (--map (message (car it)) hydra_map)
 #+end_src
-,* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
-* TODO Warning (initialization): Your ‘load-path’ seems to contain
-your ‘.emacs.d’ directory: ~/.emacs.d/
-This is likely to cause problems...
-Consider using a subdirectory instead, e.g.: /Users/hubrown/.emacs.d/lisp
+* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
+* TODO Add shell to projectile-commander methods
+- Replace current "s" to switch projects
 * TODO Figure out how to turn on comment-auto-fill-only-comments again
 - If turn this on globally, then it ends up borking auto-fill-mode
   in Post-mode...but it's damn handy for nearly everything else
 * TODO [#A] Add keyboard shortcut for delete-horizontal-space
-* TODO File mode specification error: (error Autoloading file /Users/hubrown/.emacs.d/modes/post.el failed to define function post)
-- not sure where this is coming from. Looking for a hook or something that calls just "post", but not seeing anything.
 * TODO Set custom file to /dev/null or some such
 * TODO Figure out flashing matching parens script again
 - mic-paren
 * TODO Stop helm from trying to autocomplete stuff at point
 - I very rarely want to email someone if point at an email address
 - ditto for hyperlink
-* DONE Nyan cat images missing from home emacs [MAX_EMERG]
-CLOSED: [2020-03-16 Mon 20:46]
-- Encountered this again [2020-03-20 Fri]
-  - They're in the upstream repo, not sure why they're not here
-  - Copied manually from my old laptop. :-(
-* DONE Add visual-lines-mode to hydra if not there already
-CLOSED: [2023-07-26 Wed 12:59]
-* DONE Add longlines-mode alias for visual-lines-mode
-CLOSED: [2023-07-26 Wed 12:59]
-I can never remember the new name...
-* TODO Watch for fix for Inconsolata
+* TODO [#B] Watch for fix for Inconsolata
 - https://github.com/googlefonts/Inconsolata/issues/42
 - https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
-* TODO There's an Emacs 27? 28?
 * TODO Turn off touchpad stuff in x-hugh-mouse.el
 - Trackpad on recent laptops is fine
 - Make a custom variable to enable it or not
 * TODO See if Emacs can chord ctrl+space to replace that awful alt key on the MS keyboard
-* TODO Try https://github.com/emacs-lsp/lsp-mode
 * TODO Shellcheck in emacs appears to assume posix shell rather than looking at shebang
 - Shellcheck in emacs will complain about Bashisms when shebang has them
 - Shellcheck run from shell will be fine about this
