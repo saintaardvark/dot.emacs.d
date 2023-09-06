@@ -73,6 +73,7 @@
   ("h" x-hugh-jump-to-hydra "Jump to hydra")
   ("t" (setq debug-on-error t) "turn on debug-on-error")
   ("T" (setq debug-on-error nil) "turn off debug-on-error")
+  ("x" macroexpand-point "Expand macro at point")
   )
 
 (defhydra hydra-personal-files (:exit t)
