@@ -59,6 +59,7 @@
   ("m" flymake-show-project-diagnostics "flymake-show-project-diagnostics")
   ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
   ("r" eglot-rename "eglot-rename")
+  ("R" xref-find-references "xref-find-references")
   ("u" x-hugh-update-projectile-known-projects-list)
   ("y" copilot-accept-completion "copilot accept")
   ("z" copilot-next-completion "copilot next")
