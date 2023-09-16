@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+;; Reminder: for Python, run `pip install --user python-lsp-server`
+
 (setq treesit-language-source-alist
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
      (cmake "https://github.com/uyha/tree-sitter-cmake")

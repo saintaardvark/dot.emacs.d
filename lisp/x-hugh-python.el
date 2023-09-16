@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+;; Reminder: for Python, run `pip install --user python-lsp-server`
+
 ;; FIXME: Turn off auto-complete & auto-composition in *at least*
 ;; Python, possibly all modes.
 ;;
