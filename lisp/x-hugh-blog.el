@@ -8,7 +8,7 @@
   "Settings for working with git."
   :group 'tools)
 
-(defcustom x-hugh-blog/repo-path "~/dev/va7unx.space"
+(defcustom x-hugh-blog/repo-path "~/dev/src/va7unx.space"
   "Path to where the blog repo is kept."
   :type 'string
   :group 'x-hugh-blog)
