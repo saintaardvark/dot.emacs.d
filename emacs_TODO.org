@@ -130,3 +130,5 @@ Could do this with alists:
   - then usual drop-down menu comes up too
   - company-mode is *not* enabled here
 * TODO Figure out why splitting windows is so annoying
+* TODO Add asterisk to smartparens for markdown mode\
+- https://smartparens.readthedocs.io/en/latest/pair-management.html
