@@ -8,6 +8,8 @@
 (use-package filladapt
   :ensure t)
 
+(setq kill-whole-line t)
+
 ;; FIXME: Not even sure what keypress that flyspell binding actually maps to
 (use-package flyspell
   :config (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
