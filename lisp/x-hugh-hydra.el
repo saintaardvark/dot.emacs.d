@@ -263,6 +263,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 	 (find-file "~/orgmode/climate/climate_letters.org")
 	 (goto-char (point-max))) "Climate Letters")
   ("," (org-insert-structure-template) "Insert template (quote, src, etc)")
+  ("u" (org-metaleft) "Org metaleft")
+  ("i" (org-metaright) "Org metaright")
   )
 
 (defhydra hydra-golang ()
