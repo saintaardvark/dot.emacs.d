@@ -132,3 +132,7 @@ Could do this with alists:
 * TODO Figure out why splitting windows is so annoying
 * TODO Add asterisk to smartparens for markdown mode\
 - https://smartparens.readthedocs.io/en/latest/pair-management.html
+* TODO smartparens: why doesn't "" or `` + delete get rid of pair, as it does with ()?
+- Eg:
+  - () + delete will delete both
+  - `` + delete will delete one
