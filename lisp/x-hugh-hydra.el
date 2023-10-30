@@ -69,6 +69,8 @@
   "elisp"
   ("d" edebug-defun "edebug-defun")
   ("e" eval-defun "eval-defun")
+  ("g" x-hugh-edit-dot-emacs  "Open .emacs.d file")
+  ("G" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
   ("h" x-hugh-jump-to-hydra "Jump to hydra")
   ("t" (setq debug-on-error t) "turn on debug-on-error")
   ("T" (setq debug-on-error nil) "turn off debug-on-error")
@@ -83,9 +85,6 @@
   ("c" x-hugh-company-coming "Company coming!")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("D" (find-file "~/.local/share/applications") "Open desktop shortcuts directory")
-  ("E" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
-  ("e" x-hugh-edit-dot-emacs  "Open .emacs.d file")
-  ("f" ag  "figl")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("h" x-hugh-hi-bob "hi bob")
   ("l" x-hugh-hugh-va7unx "hugh@va7unx.space")
@@ -97,6 +96,7 @@
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("u" (calculator) "Calculator")
   ("w" (image-dired "~/Pictures/Wallpaper") "Wallpaper")
+  ("x" (image-dired "~/Downloads") "Downloads")
   ("y" (calendar) "Calendar")
   )
 
