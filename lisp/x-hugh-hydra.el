@@ -299,6 +299,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("c" (insert "🤞") "🤞")
   ("d" (insert "ಠ_ಠ") "ಠ_ಠ")
   ("f" (insert "🤦") "🤦")
+  ("h" (insert "❤️" ) "❤️")
   ("l" (insert "🤣") "🤣")
   ("r" (insert "ヽ( ಠ益ಠ )ﾉ") "ヽ( ಠ益ಠ )ﾉ")
   ("m" (insert "ヽ(。_°)ノ") "ヽ(。_°)ノ")
