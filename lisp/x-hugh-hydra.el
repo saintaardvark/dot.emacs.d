@@ -72,6 +72,7 @@
   ("g" x-hugh-edit-dot-emacs  "Open .emacs.d file")
   ("G" (magit-status "~/.emacs.d")  "Open .emacs.d in magit")
   ("h" x-hugh-jump-to-hydra "Jump to hydra")
+  ("l" list-packages "list-packages")
   ("t" (setq debug-on-error t) "turn on debug-on-error")
   ("T" (setq debug-on-error nil) "turn off debug-on-error")
   ("x" macroexpand-point "Expand macro at point")
