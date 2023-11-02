@@ -234,8 +234,6 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("x" (dired "~/.emacs.d/snippets") "Show snippets directory")
   ("y" yas-describe-tables "Show snippets")
   ("z" yas-reload-all "Reload all snippets")
-  ("4" ispell-word "ispell-word")
-  ("5" query-replace "query-replace")
   )
 
 (defhydra hydra-shell ()
