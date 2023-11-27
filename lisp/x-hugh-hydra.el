@@ -97,7 +97,7 @@
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("u" (calculator) "Calculator")
   ("w" (image-dired "~/Pictures/Wallpaper") "Wallpaper")
-  ("x" (image-dired "~/Downloads") "Downloads")
+  ("x" (dired "~/Downloads") "Downloads")
   ("y" (calendar) "Calendar")
   )
 
