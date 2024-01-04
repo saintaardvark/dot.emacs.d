@@ -136,3 +136,15 @@ Could do this with alists:
 - Eg:
   - () + delete will delete both
   - `` + delete will delete one
+* TODO Try to add drag-and-drop for images to Markdown editing
+- Eg, like a featureful web editor
+  - https://github.com/abo-abo/org-download -- could not get this to work
+  - https://kitchingroup.cheme.cmu.edu/blog/2015/07/10/Drag-images-and-files-onto-org-mode-and-insert-a-link-to-them/ -
+    old approach, could not get this to work, is the code still
+    accurate?
+    - oh, it is: https://www.gnu.org/software/emacs/manual/html_node/elisp/Misc-Events.html
+  - https://www.gnu.org/software/emacs/manual/html_node/elisp/Drag-and-Drop.html#Drag-and-Drop
+  - https://www.gnu.org/software/emacs/manual/html_node/elisp/Drag-Events.html
+  - https://www.gnu.org/software/emacs/manual/html_node/elisp/Misc-Events.html
+  - https://www.emacswiki.org/emacs/extend-dnd.el
+    - extend dnd with advice
