@@ -5,9 +5,25 @@
 
 ;;; Code:
 
+(defun x-hugh-skip-over-issue-number-in-git-commit()
+  "Skip over the issue number in a git commit template, if present."
+  (interactive)
+  (if (looking-at "DNS-")
+      (progn
+	(search-forward ":")
+	(insert "  ")
+	(move-end-of-line))))
+
 (use-package git-commit
   :ensure t
-  :custom (git-commit-summary-max-length 50))
+  :custom ((git-commit-summary-max-length 50)
+	   ;; Hook copied from default in git-commit.el
+	   (git-commit-setup-hook '(git-commit-save-message
+				    git-commit-setup-changelog-support
+				    git-commit-turn-on-auto-fill
+				    git-commit-propertize-diff
+				    bug-reference-mode
+				    x-hugh-skip-over-issue-number-in-git-commit))))
 
 ;; NOTE: Also see x-hugh-appearance for split-width-threshold and
 ;; split-horizontal-threshold.
