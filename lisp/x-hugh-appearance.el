@@ -299,5 +299,9 @@ assumes font named like `inconsolata-14`."
 ;; June 5, 2023: God, starting to hate how this works.  Setting threshold super high.
 (setq split-width-threshold 1500000)
 
+;; Start Emacs maximized
+;; https://emacsredux.com/blog/2020/12/04/maximize-the-emacs-frame-on-startup/
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance.el ends here
