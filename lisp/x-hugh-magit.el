@@ -11,7 +11,7 @@
   (if (looking-at "DNS-")
       (progn
 	(search-forward ":")
-	(insert "  ")
+	(insert " ")
 	(move-end-of-line))))
 
 (use-package git-commit
