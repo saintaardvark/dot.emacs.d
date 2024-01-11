@@ -23,6 +23,7 @@
 				    git-commit-turn-on-auto-fill
 				    git-commit-propertize-diff
 				    bug-reference-mode
+				    magit-diff-while-committing
 				    x-hugh-skip-over-issue-number-in-git-commit))))
 
 ;; NOTE: Also see x-hugh-appearance for split-width-threshold and
