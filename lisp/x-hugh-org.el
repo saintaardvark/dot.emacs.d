@@ -73,6 +73,9 @@
               ("t" "TODO" entry
                (file x-hugh-org/misc-file)
                "** TODO [#A] %?")
+              ("d" "Dad TODO" entry
+               (file "~/orgmode/dad.org")
+               "* TODO [#B] %?")
               ("q" "Question" entry
                (file x-hugh-org/misc-file)
                "** Question [#A] %?")
