@@ -53,7 +53,10 @@
            (org-agenda-columns-add-appointments-to-effort-sum t)
 	   (org-agenda-files (f-files "~/orgmode"
 				      (lambda (f)
-					(string= (f-ext f) "org"))
+					;; (string= (f-ext f) "org"))
+					;; Ref: https://github.com/rejeep/f.el#f-filename
+					;; While I'm getting things sorted out
+				      (string= (f-filename f) "dad.org"))
 				      'recursive))
            (org-agenda-log-mode-items (quote (clock)))
            (org-agenda-restore-windows-after-quit t)
