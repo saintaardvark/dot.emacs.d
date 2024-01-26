@@ -138,5 +138,3 @@
 
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here
-
-(file-exists-p "/etc")
