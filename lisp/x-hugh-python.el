@@ -5,7 +5,13 @@
 
 ;;; Code:
 
-;; Reminder: for Python, run `pip install --user python-lsp-server`
+;; Reminder: for Python, run:
+;;
+;;     pip install --user 'python-lsp-server[all]'
+;;
+;; Alternatively, on Debian run:
+;;
+;;     sudo apt-get install -y '^python3-pylsp[a-z-]*$'
 
 ;; FIXME: Turn off auto-complete & auto-composition in *at least*
 ;; Python, possibly all modes.
