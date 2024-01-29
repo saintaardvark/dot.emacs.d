@@ -1,0 +1,52 @@
+* Very rough notes on compiling on Debian w/Tree-sitter
+- https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
+** Problem with native compilation on Debian/Ubuntu?
+- https://lists.gnu.org/archive/html/bug-gnu-emacs/2023-03/msg00076.html
+- https://www.reddit.com/r/emacs/comments/z640in/emacs_28_doesnt_seem_to_be_doing_native/
+- Make bootstrap appears to have worked?  However, looks like it
+  didn’t include treesit – no function treesit-available-p
+- https://www.gnu.org/software/emacs/manual/html_node/elisp/Native-Compilation.html
+- https://www.gnu.org/software/emacs/manual/html_node/elisp/Native-Compilation.html
+- Compilation:
+#+begin_src sh
+  ./configure --without-compress-install \
+              --with-native-compilation \
+              --with-json \
+              --prefix /home/hugh/.local/ \
+              --no-create \
+              --no-recursion \
+              --with-pgtk \
+              --with-tree-sitter
+#+end_src
+- That compile worked after adding a few more packages.  Wow, was bootstrap the solution?
+- Add tree-sitter
+  - Had to export LD_LIBRARY_PATH
+  - After that, had to add to /etc/ld.so.conf.d/usr-local.conf & run ldconfig
+** Run-or-raise
+- Windowclass not being caught correctly – keeps being set to just “emacs”
+  - https://emacs.stackexchange.com/questions/60168/how-can-i-set-wm-class-for-emacs-27
+  - Used the solution there:
+  - Script in my_emacs.sh in ~/bin:
+
+    #+begin_src sh
+      #!/bin/bash
+
+      # emacs.sh:
+      # call as ./emacs.sh [<file1>] [...]
+
+      flock "/run/lock/emacs-wmclassfix-$USER" bash -s "$@" <<'EOF' 
+      {
+              emacsclient --no-wait --create-frame "$@" ||
+              exec emacs --name MyEmacs -f server-start "$@"
+      } &
+      EOF
+    #+end_src
+  - Run-or-raise looks for MyEmacs
+  - Emacs desktop shortcut now called MyEmacs, and invokes ~/bin/my_emacs.sh
+  - Seems to work
+** Eglot not working for python scripts – no problem starting up, but does not find definitions
+- Aha, need to install pylsp globally
+- Debian testing:
+  #+begin_src sh
+    apt-get install '^python3-pylsp[a-z-]*$’
+  #+end_src
