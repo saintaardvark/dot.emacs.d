@@ -16,6 +16,7 @@
               --no-create \
               --no-recursion \
               --with-pgtk \
+              --with-xml2 \
               --with-tree-sitter
 #+end_src
 - That compile worked after adding a few more packages.  Wow, was bootstrap the solution?
