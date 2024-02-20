@@ -26,6 +26,9 @@
 				    magit-diff-while-committing
 				    x-hugh-skip-over-issue-number-in-git-commit))))
 
+(use-package magit-delta
+  :hook (magit-mode . magit-delta-mode))
+
 ;; NOTE: Also see x-hugh-appearance for split-width-threshold and
 ;; split-horizontal-threshold.
 (use-package magit
