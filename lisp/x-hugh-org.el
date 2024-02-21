@@ -71,7 +71,9 @@
              (("l" "Log" item
                (file+olp+datetree x-hugh-org/journal-file))
               ("t" "TODO" entry
-               (file x-hugh-org/misc-file)
+               ;; (file x-hugh-org/misc-file)
+	       ;; Sigh...put everything in Dad file for now.
+               (file "~/orgmode/dad.org")
                "** TODO [#A] %?")
               ("d" "Dad TODO" entry
                (file "~/orgmode/dad.org")
