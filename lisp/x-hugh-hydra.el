@@ -244,7 +244,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("s" x-hugh-launch-shell "Launch shell")
   )
 
-(defhydra hydra-org (:exit t)
+(defhydra hydra-org (:exit t) 		; Inconsistent with metaleft/right; may have to adjust this in the future
   "org"
   ("a" (org-agenda nil "a") "Agenda for today")
   ("b" (find-file "~/orgmode/books.org.txt") "Books.org")
