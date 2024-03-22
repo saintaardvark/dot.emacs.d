@@ -35,7 +35,7 @@
   ("p" elscreen-previous "previous")
   ("'" elscreen-goto "goto")
   ("j" elscreen-jump "jump")
-)
+  )
 
 (defhydra hydra-apropos (:exit t)
   ("a" apropos "apropos")
@@ -208,7 +208,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("x" toggle-frame-maximized "toggle max")
   ("-" x-hugh-appearance-make-things-smaller "Decrease font size")
   ("=" x-hugh-appearance-make-things-bigger "Increase font size")
-)
+  )
 
 (defhydra hydra-text (:color blue)
   ("'" toggle-quotes "Toggle single/double quotes") ; FIXME: I don't have this function!
@@ -303,14 +303,17 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("d" (insert "ಠ_ಠ") "ಠ_ಠ")
   ("f" (insert "🤦") "🤦")
   ("h" (insert "❤️" ) "❤️")
+  ("H" (insert "😍" ) "😍")
   ("l" (insert "🤣") "🤣")
   ("r" (insert "ヽ( ಠ益ಠ )ﾉ") "ヽ( ಠ益ಠ )ﾉ")
   ("m" (insert "ヽ(。_°)ノ") "ヽ(。_°)ノ")
+  ("o" (insert "😮") "😮")
   ("s" (insert "¯\\_(ツ)_/¯") "¯\\_(ツ)_/¯")
   ("t" (insert "(╯°□°)╯︵ ┻━┻") "(╯°□°)╯︵ ┻━┻")
   ("T" (insert "👍") "👍")
   ("p" (insert "🥳") "🥳")
-)
+  ("-" (insert "😑") "😑")
+  )
 
 (defun x-hugh-jump-to-hydra ()
   "Jump to a particular hydra definition so I can edit it."
