@@ -60,6 +60,7 @@
   ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
   ("r" eglot-rename "eglot-rename")
   ("R" xref-find-references "xref-find-references")
+  ("s" x-hugh-open-preferred-repo-dir-scratch-repos "Dired scratch repos")
   ("u" x-hugh-update-projectile-known-projects-list)
   ("[" eldoc-box-hover-mode "eldoc hover mode")
   ("]" eldoc-box-hover-at-point-mode "eldoc hover at point mode")

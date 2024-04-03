@@ -17,6 +17,11 @@
   (interactive)
   (dired x-hugh-preferred-repo-dir))
 
+(defun x-hugh-open-preferred-repo-dir-scratch-repos ()
+  "Open preferred repo dir in dired, but just the scratch repos."
+  (interactive)
+  (dired (format "%s/*scratch" x-hugh-preferred-repo-dir)))
+
 ;; Putting it here to make sure Projectile can use it
 (use-package ripgrep
   :ensure t)
