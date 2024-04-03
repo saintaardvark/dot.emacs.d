@@ -22,6 +22,19 @@
   (interactive)
   (dired (format "%s/*scratch" x-hugh-preferred-repo-dir)))
 
+(defun x-hugh-list-scratch-projects ()
+  "Return list of scratch projects."
+  (interactive)
+  (directory-files x-hugh-preferred-repo-dir t "\\\\*scratch"))
+
+(defun x-hugh-projectile-switch-to-scratch-project ()
+  "Switch to one of my scratch projects."
+  (interactive)
+  (projectile-completing-read
+    "Switch to project: " (x-hugh-list-scratch-projects)
+    :action (lambda (project)
+	      (projectile-switch-project-by-name project))))
+
 ;; Putting it here to make sure Projectile can use it
 (use-package ripgrep
   :ensure t)
