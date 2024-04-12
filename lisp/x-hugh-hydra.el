@@ -78,6 +78,9 @@
   ("t" (setq debug-on-error t) "turn on debug-on-error")
   ("T" (setq debug-on-error nil) "turn off debug-on-error")
   ("x" macroexpand-point "Expand macro at point")
+  ("s" (dired "~/.emacs.d/snippets") "Show snippets directory")
+  ("y" yas-describe-tables "Show snippets")
+  ("z" yas-reload-all "Reload all snippets")
   )
 
 (defhydra hydra-personal-files (:exit t)
@@ -234,9 +237,6 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("s" delete-trailing-whitespace "Delete trailing whitespace")
   ("t" x-hugh-markdown-code-block "Markdown code block")
   ("v" visual-line-mode "visual-lines-mode")
-  ("x" (dired "~/.emacs.d/snippets") "Show snippets directory")
-  ("y" yas-describe-tables "Show snippets")
-  ("z" yas-reload-all "Reload all snippets")
   )
 
 (defhydra hydra-shell ()
