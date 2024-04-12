@@ -6,6 +6,10 @@
 
 ;; Keymaps
 
+;; WTF, why am I hitting this by accident so much
+(global-unset-key "\C-x\C-c")
+
+
 ;; From http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
 (global-set-key (kbd "C-x k")   'jcs-kill-a-buffer)
 
