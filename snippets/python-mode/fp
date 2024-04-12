@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: fprint
+# key: fp
+# --
+print(f"$0")
