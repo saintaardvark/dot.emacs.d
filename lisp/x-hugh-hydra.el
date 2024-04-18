@@ -265,7 +265,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("y" (progn
 	 (find-file "~/orgmode/climate/climate_letters.org")
 	 (goto-char (point-max))) "Climate Letters")
-  ("," (org-insert-structure-template) "Insert template (quote, src, etc)")
+  ("," (call-interactively 'org-insert-structure-template) "Insert template (quote, src, etc)")
   ("u" (org-metaleft) "Org metaleft")
   ("i" (org-metaright) "Org metaright")
   )
