@@ -160,5 +160,45 @@ Thanks, numlocked!"
 ;; Don't prompt me to save personal dictionary
 (setq ispell-silently-savep t)
 
+;; FIXME: Not working, unsure why
+(defun toggle-quotes ()
+  "Toggle quotes between single, double and backquotes.
+
+Source: https://stackoverflow.com/a/41079223"
+  (interactive)
+  (let* ((beg (nth 8 (syntax-ppss)))
+         (orig-quote (char-after beg))
+         (new-quote (case orig-quote
+                      (?\' ?\")
+                      (?\" ?\`)
+                      (?\` ?\')
+		      )))
+    (save-restriction
+     (widen)
+     (save-excursion
+      (catch 'done
+        (unless new-quote
+          (message "Not inside a string")
+          (throw 'done nil))
+        (goto-char beg)
+        (delete-char 1)
+        (insert-char new-quote)
+        (while t
+          (cond ((eobp)
+                 (throw 'done nil))
+                ((= (char-after) orig-quote)
+                 (delete-char 1)
+                 (insert-char new-quote)
+                 (throw 'done nil))
+                ((= (char-after) ?\\)
+                 (forward-char 1)
+                 (when (= (char-after) orig-quote)
+                   (delete-char -1))
+                 (forward-char 1))
+                ((= (char-after) new-quote)
+                 (insert-char ?\\)
+                 (forward-char 1))
+                (t (forward-char 1)))))))))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
