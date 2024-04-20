@@ -88,6 +88,32 @@ Meant for use in magit."
 	(forward-line)
       (insert (format "Connects-to: %s\n" ticket))))))
 
+;; See https://systemcrafters.net/learning-emacs-lisp/creating-minor-modes/
+(define-minor-mode x-hugh-github-pr-mode
+  "Toggles global x-hugh-github-pr-mode."
+  nil   ; Initial value, nil for disabled
+  :global t
+  :group 'dotfiles
+  :lighter " x-hugh-github-pr"
+  :keymap
+  (list (cons (kbd "C-c C-. t") (lambda ()
+                              (interactive)
+                              (message "x-hugh-github-pr key binding used!"))))
+
+  (if x-hugh-github-pr-mode
+      (message "x-hugh-github-pr-basic-mode activated!")
+    (message "x-hugh-github-pr-basic-mode deactivated!")))
+
+(add-hook 'x-hugh-github-pr-mode-hook
+	  (lambda ()
+	    (progn
+	      (auto-fill-mode nil)
+	      (visual-line-mode)
+	      (message "Hook was executed!"))))
+
+(add-hook 'x-hugh-github-pr-mode-on-hook (lambda () (message "x-hugh-github-pr turned on!")))
+(add-hook 'x-hugh-github-pr-mode-off-hook (lambda () (message "x-hugh-github-pr turned off!")))
+
 (provide 'x-hugh-magit)
 
 ;;; x-hugh-magit.el ends here
