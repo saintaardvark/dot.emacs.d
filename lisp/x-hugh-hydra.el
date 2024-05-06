@@ -81,6 +81,7 @@
   ("s" (dired "~/.emacs.d/snippets") "Show snippets directory")
   ("y" yas-describe-tables "Show snippets")
   ("z" yas-reload-all "Reload all snippets")
+  ("X" save-buffers-kill-emacs "Exit Emacs")
   )
 
 (defhydra hydra-personal-files (:exit t)
@@ -290,6 +291,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("f" x-hugh-python-fixme "FIXME")
   ("r" run-python "Python shell")
   ("v" pyvenv-activate "pyvenv-activate")
+  ("V" (dired ".venv/lib/python3.11/site-packages") "Venv site-packages dir")
   )
 
 (defhydra hydra-web ()
