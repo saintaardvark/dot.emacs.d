@@ -34,6 +34,9 @@
 ;; Using this a lot less than I thought I would.
 ;; (global-set-key (kbd "C-'") #'sp-rewrap-sexp)
 
+;; OMG, why didn't I do this years ago
+(global-set-key "\M-o" 'other-window)
+
 ;; Turns out that the hydra-goto is really a good idea.  Going to
 ;; steal C-; for that, but keep C-' for navi.
 ;; See also x-hugh-navi.el
