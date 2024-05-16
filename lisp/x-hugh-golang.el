@@ -10,8 +10,9 @@
 
 (use-package go-eldoc
   :ensure t
-  :config
-  (go-eldoc-setup))
+  :config (go-eldoc-setup)
+  )
+
 
 ;; FIXME: Flycheck + go vet has a very annoying error in golang mode
 ;; that doesn't seem to have been fixed.  Full details at
@@ -36,7 +37,8 @@
   (set (make-local-variable 'company-backends) '(company-go))
   (setq compile-command "")
   (setq indent-tabs-mode 1)
-  (setq tab-width 4))
+  (setq tab-width 4)
+  (eglot-ensure))
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 
