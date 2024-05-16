@@ -130,7 +130,7 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (let* ((variable-tuple
-        (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
+        (cond ((x-list-fonts "Ubuntu")         '(:font "Ubuntu"))
               ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
               ((x-list-fonts "Open Sans")       '(:Font "Open Sans"))
               ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
