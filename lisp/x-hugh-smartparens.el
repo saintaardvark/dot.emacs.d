@@ -55,6 +55,8 @@
 	    (sp-local-pair 'prog-mode "{" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))
 	    (sp-local-pair 'prog-mode "(" nil :post-handlers '((x-hugh-create-newline-and-enter-sexp "RET")))
 	    (sp-local-pair 'org-mode "~" "~") ; Org's equiv. of Markdown's `monospace`
+	    (sp-local-pair 'org-mode "*" "*") ; emPHAsis
+	    (sp-local-pair 'text-mode "*" "*") ; emPHAsis
 	    )
   )
 
