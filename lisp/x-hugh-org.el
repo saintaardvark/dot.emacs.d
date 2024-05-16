@@ -155,12 +155,12 @@
 (custom-theme-set-faces
  'user
  '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
- '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
+ '(fixed-pitch ((t ( :family "Inconsolata" :foreground "#333333")))))
 
   (custom-theme-set-faces
    'user
    '(org-block ((t (:inherit fixed-pitch))))
-   '(org-code ((t (:inherit (shadow fixed-pitch)))))
+   '(org-code ((t (:box t :inherit (fixed-pitch)))))
    '(org-document-info ((t (:foreground "dark orange"))))
    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
