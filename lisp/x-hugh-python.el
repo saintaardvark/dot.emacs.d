@@ -141,6 +141,7 @@
         (pyvenv-activate venvdir))))
 
 (add-hook 'python-ts-mode-hook 'pyvenv-autoload)
+(add-hook 'python-ts-mode-hook 'eglot-ensure)
 
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here
