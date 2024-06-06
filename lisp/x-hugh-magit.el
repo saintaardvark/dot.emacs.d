@@ -13,7 +13,7 @@
 	(search-forward ":")
 	(if (not (looking-at " "))
 	    (insert " "))
-	(move-end-of-line))))
+	(move-end-of-line nil))))
 
 (use-package git-commit
   :ensure t
