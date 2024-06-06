@@ -63,6 +63,7 @@
   ("s" x-hugh-projectile-switch-to-scratch-project "Projectile: switch to scratch project")
   ("S" x-hugh-open-preferred-repo-dir-scratch-repos "Dired scratch repos")
   ("u" x-hugh-update-projectile-known-projects-list)
+  ("u" x-hugh-spinoff-branch-named-after-current-one)
   ("[" eldoc-box-hover-mode "eldoc hover mode")
   ("]" eldoc-box-hover-at-point-mode "eldoc hover at point mode")
   )

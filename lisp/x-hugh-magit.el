@@ -15,6 +15,12 @@
 	    (insert " "))
 	(move-end-of-line nil))))
 
+(defun x-hugh-spinoff-branch-named-after-current-one (suffix)
+  "Spin off new git branch named after current branch."
+  (interactive "sNew branch name: ")
+  (message (format "%s-%s" (magit-get-current-branch) suffix))
+  (magit-branch-spinoff (format "%s-%s" (magit-get-current-branch) suffix)))
+
 (use-package git-commit
   :ensure t
   :custom ((git-commit-summary-max-length 50)
