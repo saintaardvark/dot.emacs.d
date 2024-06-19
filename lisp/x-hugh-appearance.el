@@ -250,7 +250,7 @@ assumes font named like `inconsolata-14`."
 ;; See also: (split-window-below)
 ;; See also: (split-window-right)
 ;;
-;; Docstrng for split-window-spensibly:
+;; Docstrng for split-window-sensibly:
 ;;
 ;; "Split WINDOW in a way suitable for `display-buffer'.  WINDOW
 ;; defaults to the currently selected window.
@@ -296,7 +296,8 @@ assumes font named like `inconsolata-14`."
 ;; split-width-threshold hight but not too high, and leave
 ;; split-height-threshold alone (default value is 80).
 
-;; June 5, 2023: God, starting to hate how this works.  Setting threshold super high.
+;; June 5, 2023: God, starting to hate how this works.  Setting
+;; threshold super high.
 (setq split-width-threshold 1500000)
 
 ;; Start Emacs maximized
