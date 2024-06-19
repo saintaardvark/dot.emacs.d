@@ -298,7 +298,12 @@ assumes font named like `inconsolata-14`."
 
 ;; June 5, 2023: God, starting to hate how this works.  Setting
 ;; threshold super high.
-(setq split-width-threshold 1500000)
+
+;; Hm, is this working?
+;; (setq split-width-threshold 0)
+;; (setq split-height-threshold nil)
+
+;; Nope
 
 ;; Start Emacs maximized
 ;; https://emacsredux.com/blog/2020/12/04/maximize-the-emacs-frame-on-startup/

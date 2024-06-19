@@ -19,12 +19,27 @@
 ;; Use ibuffer mode for this key combo.
 ;; There is definitely some overlap between this and helm-mini,
 ;; but I'll leave it for now.
-(global-set-key "\C-x\C-b"      'ibuffer)
+;; (global-set-key "\C-x\C-b"      'ibuffer)
 
 ;; open confluence page
 (global-set-key "\C-xs"		'replace-region-command-output)
 (global-set-key "\C-ck"		'compile)
 (global-set-key "\C-cm"		'magit-status)
+
+;; Moved from x-hugh-m-x.el
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
+(global-set-key "\C-x\m" 'execute-extended-command) 	; Do I need to compose email within Emacs? No, I do not.
+
+(if x-hugh-helm-enabled
+    (progn
+      (global-set-key (kbd "C-x RET") 'helm-M-x)
+      (global-set-key (kbd "M-x")     'helm-M-x)
+      (global-set-key (kbd "\C-x\C-m")     'helm-M-x)
+      (global-set-key (kbd "\C-c\C-m")     'helm-M-x)
+      (global-set-key (kbd "M-y")     'helm-show-kill-ring)
+      (global-set-key (kbd "C-x C-f") 'helm-find-files)
+      ))
 
 (global-set-key "\C-cx"		'x-hugh-set-appearance)
 (global-set-key "\C-\M-z"	'x-hugh-delete-to-sig)
@@ -98,10 +113,10 @@
 (add-hook 'markdown-mode-hook
           (lambda ()
             (define-key markdown-mode-map "\C-c '"
-              'hydra-text/body)))
+			'hydra-text/body)))
 
 
-; God, I hate what this does when using Emacs in X
+					; God, I hate what this does when using Emacs in X
 (global-unset-key "\C-z")
 
 (global-unset-key "\M-j")

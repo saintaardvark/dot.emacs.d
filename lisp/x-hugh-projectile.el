@@ -122,5 +122,24 @@ Handy if I add more projects through git clone, say."
 ;; C-c p x s       projectile-run-shell
 ;; C-c p x t       projectile-run-term
 
+(use-package perspective
+  :ensure t
+  :bind
+  ("C-x C-b" . persp-list-buffers)         ; or use a nicer switcher, see below
+  :custom
+  (persp-mode-prefix-key (kbd "C-c ."))  ; pick your own prefix key here
+  :init
+  (persp-mode))
+
+;; Hm: This comes from https://github.com/nex3/perspective-el.  If it works, it may be best to put this in x-hugh-appearances.
+(customize-set-variable 'display-buffer-base-action
+  '((display-buffer-reuse-window display-buffer-same-window)
+    (reusable-frames . t)))
+
+(customize-set-variable 'even-window-sizes nil)     ; avoid resizing
+
+(use-package persp-projectile
+  :ensure t)
+
 (provide 'x-hugh-projectile)
 ;;; x-hugh-projectile.el ends here

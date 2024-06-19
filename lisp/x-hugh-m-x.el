@@ -9,9 +9,6 @@
 ;;
 ;; Note: These will be overridden in x-hugh-helm.el...but only if that
 ;; package is successfully loaded.  I've had times where it isn't.
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
-(global-set-key "\C-x\m" 'execute-extended-command) 	; Do I need to compose email within Emacs? No, I do not.
 ;; (global-unset-key "\M-x")
 
 (provide 'x-hugh-m-x)
