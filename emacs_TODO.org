@@ -47,6 +47,8 @@ I can never remember the new name...
 CLOSED: [2023-07-26 Wed 12:59]
 * DONE Try https://github.com/emacs-lsp/lsp-mode
 CLOSED: [2023-08-27 Sun 16:09]
+* DONE [#A] Add keyboard shortcut for delete-horizontal-space
+CLOSED: [2024-06-19 Wed 14:13]
 * TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
 If this was Python, I'd be doing:
 
@@ -76,12 +78,11 @@ Could do this with alists:
   (--map (message (car it)) hydra_map)
 #+end_src
 * TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
-* TODO Add shell to projectile-commander methods
-- Replace current "s" to switch projects
 * TODO Figure out how to turn on comment-auto-fill-only-comments again
 - If turn this on globally, then it ends up borking auto-fill-mode
   in Post-mode...but it's damn handy for nearly everything else
-* TODO [#A] Add keyboard shortcut for delete-horizontal-space
+* TODO Add shell to projectile-commander methods
+- Replace current "s" to switch projects
 * TODO Set custom file to /dev/null or some such
 * TODO Figure out flashing matching parens script again
 - mic-paren
