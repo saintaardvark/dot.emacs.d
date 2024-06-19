@@ -40,6 +40,7 @@
       (global-set-key (kbd "M-x")     'helm-M-x)
       (global-set-key (kbd "\C-x\C-m")     'helm-M-x)
       (global-set-key (kbd "\C-c\C-m")     'helm-M-x)
+      (global-set-key "\C-x\m" 'helm-M-x)
       (global-set-key (kbd "M-y")     'helm-show-kill-ring)
       (global-set-key (kbd "C-x C-f") 'helm-find-files)
       ))
