@@ -31,6 +31,9 @@
 (global-set-key "\C-c\C-m" 'execute-extended-command)
 (global-set-key "\C-x\m" 'execute-extended-command) 	; Do I need to compose email within Emacs? No, I do not.
 
+;; Oooh, perspective-aware
+(global-set-key "\C-xb" 'helm-buffers-list)
+
 (if x-hugh-helm-enabled
     (progn
       (global-set-key (kbd "C-x RET") 'helm-M-x)
