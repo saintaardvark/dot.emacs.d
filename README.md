@@ -8,6 +8,21 @@ This is my .emacs.d repository.
 
 Clone to .emacs.d, then run Emacs.  Packages should be installed by default.
 
+## Building Emacs
+
+Just a reference for myself for Debian:
+```
+apt-get install texinfo texi2html autoconf libgccjit-12 libgnutls28-dev pkg-config libncurses-dev
+
+git clone git@github.com:tree-sitter/tree-sitter.git
+# Then build
+# Add /usr/local/lib to /etc/ld.so.conf.d
+
+./configure --without-compress-install --with-native-compilation --with-json --prefix $HOME/.local/ --no-create --no-recursion --with-pgtk --with-tree-sitter
+
+# Add --without-x if on terminal
+```
+
 ## You should buy this book:
 
 ["Mastering Emacs" by Mickey
@@ -22,4 +37,3 @@ available under their own licenses.
 
 
 ## All hail Liddy!
-
