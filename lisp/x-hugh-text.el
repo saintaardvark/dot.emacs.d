@@ -15,6 +15,28 @@
   :config (add-hook 'text-mode-hook '(lambda () (flyspell-mode 1)))
   :custom (flyspell-auto-correct-binding [67108904]))
 
+;; needed to get italian dictionary
+(setq ispell-library-directory "/usr/lib/ispell")
+;; needed to use ispell instead of aspell...which is just because
+;; that's the italian dictionary I found
+(setq ispell-program-name "/usr/bin/ispell")
+
+(defun x-hugh-italiano ()
+  "Uno modo per scrivere in italiano."
+  (interactive)
+  (set-input-method "italian-postfix")
+  (setq ispell-local-dictionary "italiano"))
+
+(defun x-hugh-nuovo-italiano (title)
+  "Una funzione per scrivere uno nuovo blog post in italiano."
+  (interactive "sTitolo (con dash e finisco con .md): ")
+  (projectile-switch-project-by-name "~/dev/src/va7unx.space")
+  (let* ((hugoname (format "italiano/%s" title))
+	(filename (format "content/%s" hugoname)))
+    (shell-command (format "hugo new %s" hugoname))
+    (projectile-find-file filename)
+    (x-hugh-italiano)))
+
 (add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
 (add-hook 'text-mode-hook '(lambda () (abbrev-mode 1)))
 

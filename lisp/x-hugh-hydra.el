@@ -226,7 +226,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("e" x-hugh-details-summary "<details>")
   ("f" auto-fill-mode "Toggle fill mode")
   ("g" x-hugh-git-changetype "Change patch type")
-  ("i" indent-defun "indent-defun")
+  ("i" x-hugh-italiano "italiano")
   ("j" x-hugh-expand-jira "Expand Jira URL")
   ("J" x-hugh-jira-url)
   ("k" x-hugh-korect-speling "Add abbrev to turn mispeld word-at-point into KORECSHUN")
