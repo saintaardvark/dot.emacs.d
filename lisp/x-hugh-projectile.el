@@ -136,6 +136,10 @@ Handy if I add more projects through git clone, say."
   '((display-buffer-reuse-window display-buffer-same-window)
     (reusable-frames . t)))
 
+;; Cloned from https://git.sr.ht/~woozong/perspective-tabs
+(load-file (expand-file-name "~/.emacs.d/lisp/perspective-tabs.el"))
+(perspective-tabs-mode +1)
+
 (customize-set-variable 'even-window-sizes nil)     ; avoid resizing
 
 (use-package persp-projectile
