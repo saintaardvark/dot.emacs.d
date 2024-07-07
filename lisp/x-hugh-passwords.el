@@ -17,7 +17,7 @@
 (defun x-hugh-open-password-file ()
   "Open password file."
   (interactive)
-  (find-file x-hugh-passwords/password-file))
+  (find-file-read-only x-hugh-passwords/password-file))
 
 (defun x-hugh-open-password-file-maybe-matching-string (&optional arg)
   "Open the password file.  If ARG, only list lines matching string."
