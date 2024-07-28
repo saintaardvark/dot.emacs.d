@@ -315,7 +315,7 @@ Hugh
   (save-excursion
     (find-file "/home/aardvark/orgmode/fun_projects/fun_projects.org")
     (org-html-export-as-html)
-    (write-region nil nil "/ssh:l2:/home/aardvark/public_html/random/fun_projects.html")
+    (write-region nil nil "/ssh:l2:/var/www/projects/next/index.html")
     (kill-buffer)))
 
 (defun x-hugh-org-export-password-file ()
