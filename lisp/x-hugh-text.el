@@ -68,8 +68,7 @@
 ;; fix double-capitals
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
 ;; FIXME: Have better way of specifying words to exclude
-;; FIXME: Have way of rverting this change immediately after typing
-;; FIXME: Maybe exclude plurals (XXs)
+;; FIXME: Have way of reverting this change immediately after typing
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
@@ -81,6 +80,7 @@
               (let (case-fold-search)
 		(and
                  (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]")
+                 (not (looking-at "\\b[[:upper:]]\\{2\\}s")) ; Exclude plurals
 		 (not (looking-at "GHz\\|IPs\\|VMs\\|DCs\\|MRs\\|PRs")))) ; no brackets for alternation!
 	      (capitalize-word 1)))))
 
