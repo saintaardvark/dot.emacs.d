@@ -17,8 +17,12 @@
                  (define-key company-active-map (kbd "C-:") 'helm-company))))
   )
 
-;; TODO: Remove/disable company mode in org, text, shell
 (add-hook 'after-init-hook 'global-company-mode)
+
+;; Remove/disable company mode in org, text, shell
+(add-hook 'org-mode-hook (lambda() (company-mode 0)))
+(add-hook 'text-mode-hook (lambda() (company-mode 0)))
+(add-hook 'shell-mode-hook (lambda() (company-mode 0)))
 
 ;; But not org mode, text mode pls
 ;; https://stackoverflow.com/questions/34652692/how-to-turn-off-company-mode-in-org-mode
