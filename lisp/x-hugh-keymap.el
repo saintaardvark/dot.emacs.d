@@ -54,7 +54,11 @@
 ;; (global-set-key (kbd "C-'") #'sp-rewrap-sexp)
 
 ;; OMG, why didn't I do this years ago
+(global-set-key (kbd "C-x o") (message "Use M-o!"))
 (global-set-key "\M-o" 'other-window)
+
+;; Use this instead of default
+(global-set-key (kbd "\M-d") 'x-hugh-kill-word-inc-following-whitespace)
 
 ;; Turns out that the hydra-goto is really a good idea.  Going to
 ;; steal C-; for that, but keep C-' for navi.

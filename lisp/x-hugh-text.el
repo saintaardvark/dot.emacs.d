@@ -222,5 +222,12 @@ Source: https://stackoverflow.com/a/41079223"
                  (forward-char 1))
                 (t (forward-char 1)))))))))
 
+(defun x-hugh-kill-word-inc-following-whitespace ()
+  "Kill word including any following whitespace."
+  (interactive)
+  (kill-word 1)
+  (just-one-space) 			; 😮😮😮
+  )
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
