@@ -69,6 +69,7 @@
 ;; from https://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
 ;; FIXME: Have better way of specifying words to exclude
 ;; FIXME: Have way of reverting this change immediately after typing
+;; -- see https://github.com/emacsorphanage/key-chord/blob/master/key-chord.el and the delay vars/functions there
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
