@@ -54,7 +54,7 @@
 ;; (global-set-key (kbd "C-'") #'sp-rewrap-sexp)
 
 ;; OMG, why didn't I do this years ago
-(global-set-key (kbd "C-x o") (message "Use M-o!"))
+(global-set-key (kbd "C-x o") '(message "Use M-o!"))
 (global-set-key "\M-o" 'other-window)
 
 ;; Use this instead of default
