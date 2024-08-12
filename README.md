@@ -54,5 +54,4 @@ it.  Recommended without hesitation.
 My stuff is available under GPLv3.  The other files in here are
 available under their own licenses.
 
-
 ## All hail Liddy!
