@@ -21,17 +21,17 @@
   (message (format "%s-%s" (magit-get-current-branch) suffix))
   (magit-branch-spinoff (format "%s-%s" (magit-get-current-branch) suffix)))
 
-(use-package git-commit
-  :ensure t
-  :custom ((git-commit-summary-max-length 50)
-	   ;; Hook copied from default in git-commit.el
-	   (git-commit-setup-hook '(git-commit-save-message
-				    git-commit-setup-changelog-support
-				    git-commit-turn-on-auto-fill
-				    git-commit-propertize-diff
-				    bug-reference-mode
-				    magit-diff-while-committing
-				    x-hugh-skip-over-issue-number-in-git-commit))))
+;; (use-package git-commit
+;;   :ensure t
+;;   :custom ((git-commit-summary-max-length 50)
+;; 	   ;; Hook copied from default in git-commit.el
+;; 	   (git-commit-setup-hook '(git-commit-save-message
+;; 				    git-commit-setup-changelog-support
+;; 				    git-commit-turn-on-auto-fill
+;; 				    git-commit-propertize-diff
+;; 				    bug-reference-mode
+;; 				    magit-diff-while-committing
+;; 				    x-hugh-skip-over-issue-number-in-git-commit))))
 
 ;; TODO: I like this, but I can't make it visible with my preferred themes.
 ;; (use-package magit-delta
