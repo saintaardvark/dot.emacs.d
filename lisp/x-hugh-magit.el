@@ -33,6 +33,11 @@
 ;; 				    magit-diff-while-committing
 ;; 				    x-hugh-skip-over-issue-number-in-git-commit))))
 
+(add-hook 'find-file-hook
+	  (lambda () (if (string-match-p "COMMIT_EDITMSG" buffer-file-name)
+			 (progn
+			   (x-hugh-skip-over-issue-number-in-git-commit)))))
+
 ;; TODO: I like this, but I can't make it visible with my preferred themes.
 ;; (use-package magit-delta
 ;;   :ensure t
