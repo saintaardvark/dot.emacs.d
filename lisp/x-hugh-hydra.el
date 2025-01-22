@@ -57,6 +57,7 @@
   ("l" display-line-numbers-mode "linum") ; FIXME: Make this emacs-version dependent
   ("L" global-linum-mode "global-linum")
   ("m" flymake-show-project-diagnostics "flymake-show-project-diagnostics")
+  ("o" browse-url-xdg-open "Open in browser") ; FIXME: Wrong place
   ("p" (x-hugh-gh-git-commit-and-push-without-mercy) "Push w/o mercy")
   ("r" eglot-rename "eglot-rename")
   ("s" x-hugh-projectile-switch-to-scratch-project "Projectile: switch to scratch project")
@@ -319,6 +320,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("x" (insert "❌") "❌")
   ("w" (insert "⚠️") "⚠️")
   ("-" (insert "😑") "😑")
+  ("3" (insert "⚠️ DRAG03 ⚠️") "⚠️ DRAG03 ⚠️")
   )
 
 (defun x-hugh-jump-to-hydra ()
