@@ -62,6 +62,7 @@
   ("r" eglot-rename "eglot-rename")
   ("s" x-hugh-projectile-switch-to-scratch-project "Projectile: switch to scratch project")
   ("S" x-hugh-open-preferred-repo-dir-scratch-repos "Dired scratch repos")
+  ("t" x-hugh-spinoff-branch-named-after-current-one "Spinoff branch named after current")
   ("u" x-hugh-update-projectile-known-projects-list)
   ("u" x-hugh-spinoff-branch-named-after-current-one)
   ("x" xref-find-references "xref-find-references")

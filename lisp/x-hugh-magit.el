@@ -15,11 +15,12 @@
 	    (insert " "))
 	(move-end-of-line nil))))
 
-(defun x-hugh-spinoff-branch-named-after-current-one (suffix)
+(defun x-hugh-spinoff-branch-named-after-current-one (new-branch)
   "Spin off new git branch named after current branch."
-  (interactive "sNew branch name: ")
-  (message (format "%s-%s" (magit-get-current-branch) suffix))
-  (magit-branch-spinoff (format "%s-%s" (magit-get-current-branch) suffix)))
+  ;; (interactive (format "sNew branch name: "))
+  (interactive (list (read-string "New branch name: " (magit-get-current-branch))))
+  (message new-branch)
+  (magit-branch-spinoff new-branch))
 
 ;; (use-package git-commit
 ;;   :ensure t
