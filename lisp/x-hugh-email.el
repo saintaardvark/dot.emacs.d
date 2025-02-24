@@ -60,9 +60,9 @@
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward "Saint Aardvark the Carpeted <aardvark@saintaardvarkthecarpeted.com>" nil t)
-      (replace-match "Hugh Brown VA7UNX <hugh@va7unx.space>" nil nil))
+      (replace-match "Hugh Brown <hugh@va7unx.space>" nil nil))
     (goto-char (point-min))
-    (while (re-search-forward "CC: Hugh Brown VA7UNX <hugh@va7unx.space>," nil t)
+    (while (re-search-forward "CC: Hugh Brown <hugh@va7unx.space>," nil t)
       (replace-match "CC: ")
       (kill-line))
     (goto-char (point-min))
