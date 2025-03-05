@@ -52,7 +52,8 @@
   ("d" (x-hugh-open-preferred-repo-dir) "Dev dir")
   ("e" eglot "eglot")
   ("f" flycheck-mode "Flycheck mode")
-  ("g" x-hugh-grx "grx")
+  ("g" x-hugh-gpc "Run gh pr create in this repo")
+  ("G" x-hugh-grx "grx")
   ("j" json-pretty-print-buffer "pretty-print json")
   ("l" display-line-numbers-mode "linum") ; FIXME: Make this emacs-version dependent
   ("L" global-linum-mode "global-linum")
