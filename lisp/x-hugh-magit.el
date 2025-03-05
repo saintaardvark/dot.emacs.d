@@ -127,6 +127,15 @@ Meant for use in magit."
 (add-hook 'x-hugh-github-pr-mode-on-hook (lambda () (message "x-hugh-github-pr turned on!")))
 (add-hook 'x-hugh-github-pr-mode-off-hook (lambda () (message "x-hugh-github-pr turned off!")))
 
+(use-package consult-gh
+  :after consult)
+
+;; OH WOW, this actually works really well 😍
+(defun x-hugh-gpc()
+  "Try to run gh pr create in ansi-term."
+  (interactive)
+  (ansi-term "gh pr create" "*x-hugh-gpc*"))
+
 (provide 'x-hugh-magit)
 
 ;;; x-hugh-magit.el ends here
