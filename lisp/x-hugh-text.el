@@ -295,6 +295,32 @@ Source: https://stackoverflow.com/a/41079223"
       (message "No equal sign found in the current line."))))
     
 
+(defun x-hugh-blank-pr ()
+  "Delete all non-heading lines and ensure one blank line between each heading."
+  (interactive)
+  (let ((heading-regex "^# ")
+        (blank-line-regex "^[[:space:]]*$")
+	(first-headline nil))
+    (goto-char (point-min))  ; Start at the beginning of the buffer
+    (while (not (eobp))  ; While not at the end of the buffer
+      (if (looking-at heading-regex)
+          (progn
+	    (insert "\n")
+            (forward-line 1)  ; Move to the next line
+            ;; Ensure one blank line after the heading
+            (when (not (looking-at blank-line-regex))
+              (insert "\n")  ; Insert a blank line if not present
+	      (forward-line 1))
+            (while (looking-at blank-line-regex)
+              (delete-region (point) (1+ (point))))  ; Delete extra blank lines
+            )
+        (delete-region (point) (1+ (line-end-position)))  ; Delete non-heading line
+        )
+      )
+    ;; Final cleanup: ensure there's a blank line at the end of the buffer
+    (goto-char (point-max))
+    (unless (looking-at blank-line-regex)
+      (insert "\n"))))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
