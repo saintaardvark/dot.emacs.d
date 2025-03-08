@@ -230,97 +230,14 @@ Source: https://stackoverflow.com/a/41079223"
   (just-one-space) 			; 😮😮😮
   )
 
-
-;; FIXME: not done yet.  Meant for editing text like this quickly by
-;; letting me go from the end of one line to the first non-whitespace
-;; char following the equal sign on the right.f
-
-;; resource "aws_route53_record" "www" {
-;;   zone_id = aws_route53_zone.primary.zone_id
-;;   name    = "www.example.com"
-;;   type    = "A"
-;;   ttl     = 300
-;;   records = [aws_eip.lb.public_ip]
-;; }
-;;
-;; this might work:
-;;  (let ((start (line-beginning-position))
-        (end (line-end-position)))
-    (if (search-forward (char-to-string char) end t)
-(defun move-to-next-assignment-value ()
-  "Move cursor to the first non-whitespace character after the equal sign on the next line."
+;; TODO: swtich to using avy for this.  See
+;; https://github.com/abo-abo/avy/wiki/custom-commands
+(defun x-hugh-move-to-next-assignment-value ()
+  "Move cursor to the first non-whitespace character after the next equal sign."
   (interactive)
-  (let ((current-line (thing-at-point 'line t)))
-    (if (string-match "=" current-line)
-        (let ((next-line (line-number-at-pos (1+ (line-beginning-position)))))
-          (if (and next-line (not (eobp)))
-              (progn
-                (forward-line 1)  ; Move to the next line
-                (skip-chars-forward " \t")  ; Skip whitespace
-                (if (looking-at "=")
-                    (progn
-                      (forward-char 1)  ; Move past the equal sign
-                      (skip-chars-forward " \t")))))  ; Skip whitespace after equal sign
-            (message "No next line or no equal sign found.")))
-      (message "No equal sign found in the current line."))))
-
-(defun move-to-next-assignment-value ()
-  "Move cursor to the first non-whitespace character after the equal sign on the next line."
-  (interactive)
-  (let ((current-line (thing-at-point 'line t)))
-    (if (string-match "=" current-line)
-        (let ((next-line (line-number-at-pos (1+ (line-beginning-position)))))
-          (if (and next-line (not (eobp)))
-              (progn
-                (forward-line 1)  ; Move to the next line
-                (skip-chars-forward " \t")  ; Skip whitespace
-                (if (looking-at "=")
-                    (progn
-                      (forward-char 1)  ; Move past the equal sign
-                      (skip-chars-forward " \t")))))
-            (message "No next line or no equal sign found.")))
-    (message "No equal sign found in the current line.")))
-
-(defun move-to-next-assignment-value ()
-  "Move cursor to the first non-whitespace character after the equal sign on the next line."
-  (interactive)
-  (let ((current-line (thing-at-point 'line t)))
-    (if (string-match "=" current-line)
-        (progn
-          (forward-line 1)  ; Move to the next line
-          (skip-chars-forward " \t")  ; Skip whitespace
-          (when (looking-at "=")
-            (forward-char 1)  ; Move past the equal sign
-            (skip-chars-forward " \t")))  ; Skip whitespace after equal sign
-      (message "No equal sign found in the current line."))))
-    
-
-(defun x-hugh-blank-pr ()
-  "Delete all non-heading lines and ensure one blank line between each heading."
-  (interactive)
-  (let ((heading-regex "^# ")
-        (blank-line-regex "^[[:space:]]*$")
-	(first-headline nil))
-    (goto-char (point-min))  ; Start at the beginning of the buffer
-    (while (not (eobp))  ; While not at the end of the buffer
-      (if (looking-at heading-regex)
-          (progn
-	    (insert "\n")
-            (forward-line 1)  ; Move to the next line
-            ;; Ensure one blank line after the heading
-            (when (not (looking-at blank-line-regex))
-              (insert "\n")  ; Insert a blank line if not present
-	      (forward-line 1))
-            (while (looking-at blank-line-regex)
-              (delete-region (point) (1+ (point))))  ; Delete extra blank lines
-            )
-        (delete-region (point) (1+ (line-end-position)))  ; Delete non-heading line
-        )
-      )
-    ;; Final cleanup: ensure there's a blank line at the end of the buffer
-    (goto-char (point-max))
-    (unless (looking-at blank-line-regex)
-      (insert "\n"))))
+  (search-forward "=")
+  (if (looking-at (rx whitespace))
+      (skip-chars-forward (rx whitespace))))
 
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.

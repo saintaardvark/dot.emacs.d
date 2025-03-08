@@ -70,6 +70,7 @@
   ("x" xref-find-references "xref-find-references")
   ("[" eldoc-box-hover-mode "eldoc hover mode")
   ("]" eldoc-box-hover-at-point-mode "eldoc hover at point mode")
+  ("=" x-hugh-move-to-next-assignment-value "=")
   )
 
 (defhydra hydra-elisp (:exit t)
