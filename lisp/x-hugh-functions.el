@@ -298,7 +298,7 @@ REGION
       (insert (format "\n%s" end))
       (insert "\n")
       (goto-char pos1)
-      (insert end)
+      (insert beg)
       (insert "\n"))))
 
 (defun x-hugh-korect-speling (korecshun)
