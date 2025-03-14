@@ -9,6 +9,11 @@
   :defer t
   :hook (python-mode . eglot-ensure))
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+	       '(terraform-mode . ("/home/hugh/bin/terraform-ls" "serve"))))
+
+
 ;; Eldoc is used for documentation.  It's shown in the mode line by
 ;; default, but there are a couple of packages that will do other
 ;; things:
