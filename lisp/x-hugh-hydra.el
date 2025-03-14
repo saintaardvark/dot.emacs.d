@@ -229,6 +229,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("c" x-hugh-git-changetype "git-changetype")
   ("d" x-hugh-markdown-footnote "markdown footnote")
   ("e" x-hugh-details-summary "<details>")
+  ("E" x-hugh-details-surround "<details>, but surround")
   ("f" auto-fill-mode "Toggle fill mode")
   ("g" x-hugh-git-changetype "Change patch type")
   ("i" x-hugh-italiano "italiano")

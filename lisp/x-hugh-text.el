@@ -143,7 +143,7 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
   "Surround regions with details tags.  Useful for PRs."
   (interactive)
   (if (region-active-p)
-      (x-hugh-surround-region-plus-newlines "<details>\n<summary>Details go here</summary\n\n```\n" "```\n</details>\n")))
+      (x-hugh-surround-region-plus-newlines "<details>\n<summary>Details go here</summary\n\n" "\n</details>\n")))
 
 (defun x-hugh-get-random-emoji()
   (interactive)
