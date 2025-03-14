@@ -309,6 +309,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 (defhydra hydra-emoji ()
   ("b" (insert "💪") "💪")
   ("c" (insert "🤞") "🤞")
+  ("C" (insert "✅") "✅")
   ("d" (insert "ಠ_ಠ") "ಠ_ಠ")
   ("f" (insert "🤦") "🤦")
   ("g" (insert "😬") "😬")
