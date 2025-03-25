@@ -133,7 +133,7 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
   "Add details/summary tag pair to text.  Useful for PRs."
   (interactive)
   (insert "<details>\n")
-  (insert "<summary>Details go here</summary>\n\n")
+  (insert "<summary>ENV=stage make plan</summary>\n\n")
   (insert "```\n")
   (insert "details go here inside a code block\n")
   (insert "```\n")
