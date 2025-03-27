@@ -68,6 +68,7 @@
 (use-package x-hugh-folding)
 (use-package x-hugh-passwords)
 (use-package x-hugh-rebuilder)
+(use-package x-hugh-vterm)
 
 ;; Try out combobulate, treesitter, eglot
 (use-package x-hugh-eglot)
