@@ -19,9 +19,24 @@
 
 (use-package gruvbox-theme
   :ensure t
-  :config
-  (load-theme 'gruvbox-dark-hard "no-confirm")
+  ;; :config
+  ;; (load-theme 'gruvbox-dark-hard "no-confirm")
   )
+
+(require-theme 'modus-themes)
+
+;; All customizations here
+(setq modus-themes-bold-constructs t
+      modus-themes-italic-constructs t)
+
+;; Maybe define some palette overrides, such as by using our presets
+(setq modus-themes-common-palette-overrides
+      modus-themes-preset-overrides-intense)
+
+;; Load the theme of choice (built-in themes are always "safe" so they
+;; do not need the `no-require' argument of `load-theme').
+(load-theme 'modus-vivendi-tinted)
+
 
 (use-package solarized-theme
   :ensure t)
