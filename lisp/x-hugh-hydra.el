@@ -183,7 +183,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
          (split-window-below)
          (windmove-down))
    "horz")
-  ("t" transpose-frame "rotate frame")
+  ("t" transpose-frame "rotate frame") 	; TODO: Use https://p.bauherren.ovh/blog/tech/new_window_cmds for these
   ("o"  ace-maximize-window "ace-one" :color blue)
   ("a" ace-window "ace-windowe" :color blue)
   ("s" ace-swap-window "swap")
