@@ -98,6 +98,7 @@
   ("c" x-hugh-company-coming "Company coming!")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("D" (find-file "~/.local/share/applications") "Open desktop shortcuts directory")
+  ("e" (dired "~/bin") "~/bin")
   ("g" x-hugh-open-git-repo "Open git repo")
   ("h" x-hugh-hi-bob "hi bob")
   ("l" x-hugh-hugh-va7unx "hugh@va7unx.space")
