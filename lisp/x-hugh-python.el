@@ -29,21 +29,10 @@
 ;; 			  elpy-module-yasnippet
 ;; 			  elpy-module-django))
 ;;   :config (elpy-enable))
-
-;; FIXME: Why is this here?
-(use-package dash
-  :ensure t)
-(dash-unload-function)
-
-;; And what's this?
-(-map (lambda (num) (* num num)) '(1 2 3 4))
-(funcall (-compose #'- #'1+ #'+) 1 2 3)
-
-;; (use-package lsp-pyright
-;;   :ensure t
-;;   :hook (python-mode . (lambda ()
-;; 			 (require 'lsp-pyright)
-;; 			 (lsp)))) 	;or lsp-deferred
+;;
+;; Possibly useful reference:
+;; - https://www.naiquev.in/understanding-emacs-packages-for-python.html
+;; - https://github.com/naiquevin/emacs-config/blob/f30dba4beae7eee06aa11e0ca3775ebb2f4f6df8/config/python-config.el#L79
 
 ;; FIXME: Should move highlight-indent-guides to another file
 (use-package highlight-indent-guides
@@ -52,10 +41,33 @@
   ;; 		       (highlight-indents-guide-mode)))
   )
 
+(use-package rainbow-delimiters
+  :ensure t)
+
 (use-package python
+  :ensure t
+  :after (smartparens
+	  rainbow-delimiters
+	  flycheck-eglot
+	  projectile)
   ;; Had been `t`, but this was causing problems for me.
   :custom ((python-indent-guess-indent-offset nil)
 	   (python-shell-interpreter "python3"))
+
+  ;; Jedi-language-server installable by "pip install -U jedi-language-server"
+  :config
+  (add-to-list 'eglot-server-programs
+               `(python-mode . ("jedi-language-server"
+                                ;; Set initial options to configure
+                                ;; the active virtualenv (if any) as
+                                ;; documented here -
+                                ;; https://www.gnu.org/software/emacs/manual/html_mono/eglot.html#User_002dspecific-configuration
+                                :initializationOptions
+                                ,(lambda (s)
+                                   (let ((ve (getenv "VIRTUAL_ENV")))
+                                     (if ve
+                                         `(:workspace (:environmentPath ,(concat ve "bin/python")))
+                                       eglot-{}))))))
   )
 
 (use-package python-black

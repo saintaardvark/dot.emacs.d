@@ -15,5 +15,8 @@
            (flycheck-idle-change-delay 2)
            (flycheck-keymap-prefix ".")))
 
+(use-package flycheck-eglot
+  :ensure t)
+
 (provide 'x-hugh-flycheck)
 ;;; x-hugh-flycheck.el ends here
