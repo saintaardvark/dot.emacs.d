@@ -99,7 +99,7 @@ Meant for use in magit."
       (let ((ticket (read-from-minibuffer "Ticket: ")))
 	(search-forward-regexp "^Change-type: ")
 	(forward-line)
-      (insert (format "Connects-to: %s\n" ticket))))))
+	(insert (format "Connects-to: %s\n" ticket))))))
 
 ;; See https://systemcrafters.net/learning-emacs-lisp/creating-minor-modes/
 (define-minor-mode x-hugh-github-pr-mode
@@ -110,8 +110,8 @@ Meant for use in magit."
   :lighter " x-hugh-github-pr"
   :keymap
   (list (cons (kbd "C-c C-. t") (lambda ()
-                              (interactive)
-                              (message "x-hugh-github-pr key binding used!"))))
+				  (interactive)
+				  (message "x-hugh-github-pr key binding used!"))))
 
   (if x-hugh-github-pr-mode
       (message "x-hugh-github-pr-basic-mode activated!")
