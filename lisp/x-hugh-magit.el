@@ -136,6 +136,26 @@ Meant for use in magit."
   (interactive)
   (ansi-term "gh pr create" "*x-hugh-gpc*"))
 
+(defun x-hugh-blank-pr ()
+  "Blank a Github PR template. 🤘"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (beginning-of-line)
+    ;; The 't' here means return `nil`, rather than raise an error, if we can't find our regex
+    (while (re-search-forward (rx line-start "#") nil t)
+      (forward-line 1)
+      (let ((beg (point)))
+	(if (re-search-forward (rx line-start "#") nil t)
+	    (progn
+	      (backward-char)
+	      (forward-line -1))
+	  (goto-char (point-max)))
+	(delete-region beg (point))
+	(insert "\n\n"))))
+  (goto-char (point-min))
+  (forward-line 2))
+
 (provide 'x-hugh-magit)
 
 ;;; x-hugh-magit.el ends here
