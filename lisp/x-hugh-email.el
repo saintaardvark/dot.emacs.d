@@ -98,5 +98,13 @@ Rewritten as defun."
       (if (looking-at "--")
 	  (insert "\n")))))
 
+(defun x-hugh-fcc-nwcah ()
+  "Add fcc/NWCAH header for Mutt"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (search-forward "Bcc:")
+    (insert "\nFcc: =nwcah")))
+
 (provide 'x-hugh-email)
 ;;; x-hugh-email.el ends here.

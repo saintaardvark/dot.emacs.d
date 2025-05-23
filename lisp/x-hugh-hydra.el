@@ -239,6 +239,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("k" x-hugh-korect-speling "Add abbrev to turn mispeld word-at-point into KORECSHUN")
   ("l" display-line-numbers-mode "line numbers")
   ("m" x-hugh-gh-pr-munge-text "pr munge")
+  ("n" x-hugh-fcc-nwcah "Fcc: =nwcah")
   ("o" occur "occur")
   ("p" smartparens-mode "Toggle smartparens mode")
   ("r" query-replace "Query-replace")
