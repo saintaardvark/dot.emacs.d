@@ -8,7 +8,7 @@
 (use-package post
   :custom ((post-email-address "aardvark@saintaardvarkthecarpeted.com")
            (post-should-prompt-for-attachment 'Never))
-  :mode ("mutt.*$" . post-mode))
+  :mode ("/tmp/mutt.*$" . post-mode))
 
 (defun x-hugh-company-coming ()
   "Clean up email."
