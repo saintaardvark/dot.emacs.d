@@ -156,6 +156,51 @@ Meant for use in magit."
   (goto-char (point-min))
   (forward-line 2))
 
+(defun run-shell-script-and-capture-output-as-list (script-path)
+  "Run a shell script at SCRIPT-PATH and return its output as a list of lines.
+If the script cannot be executed, return an empty list."
+  (if (and (file-exists-p script-path) (file-executable-p script-path))
+      (with-temp-buffer
+        (let ((exit-code (call-process "bash" nil t nil script-path)))
+          (if (eq exit-code 0)
+              (cl-loop for line in (split-string (buffer-string) "\n" t)
+                       collect line)
+            (message "Error: Script exited with code %d" exit-code)
+            '())))
+    (message "Error: Script does not exist or is not executable.")
+    '()))
+
+(defun x-hugh-branch-suggestions ()
+  "Branch name suggestions"
+  (interactive)
+  (let ((options (run-shell-script-and-capture-output-as-list "/home/hugh/bin/which_ticket-no_fzf.sh")))
+    (helm :sources (helm-build-sync-source "Select an Option"
+                     :candidates options
+                     :action (lambda (selected)
+                               (message "You selected: %s" selected))))))
+
+;; This version just returns the selection; it can be used for further transformation like so:
+;;
+;; (let ((selected-branch (x-hugh-branch-suggestions)))
+;;   (if selected-branch
+;;       (message "You selected: %s" selected-branch)
+;;     (message "No branch selected.")))
+;;
+;; (defun x-hugh-branch-suggestions ()
+;;   "Branch name suggestions."
+;;   (interactive)
+;;   (let ((options (run-shell-script-and-capture-output-as-list "/home/hugh/bin/which_ticket-no_fzf.sh")))
+;;     (helm :sources (helm-build-sync-source "Select an Option"
+;;                      :candidates options
+;;                      :action (lambda (selected)
+;;                                (setq selected (if (stringp selected) selected nil))
+;;                                (if selected
+;;                                    (progn
+;;                                      (message "You selected: %s" selected)
+;;                                      selected)
+;;                                  (error "No selection made.")))
+;;                      :volatile t))))
+
 (provide 'x-hugh-magit)
 
 ;;; x-hugh-magit.el ends here
