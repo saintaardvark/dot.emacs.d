@@ -177,9 +177,7 @@ If the script cannot be executed, return an empty list."
     (if ticket
 	(progn
 	  (setq branch (replace-regexp-in-string (rx punctuation) " " ticket))
-	  (message (format "Here: %s" branch))
-	  (setq branch (replace-regexp-in-region (rx (+ whitespace)) "-" branch))
-	  (message (format "THere: %s" branch))
+	  (setq branch (replace-regexp-in-string (rx (+ whitespace)) "-" branch))
 	  (setq branch (downcase branch))
 	  (message "You selected: %s" branch))
       (message "No suggestion."))))
