@@ -173,18 +173,16 @@ If the script cannot be executed, return an empty list."
 (defun x-hugh-branch-suggestions ()
   "Branch name suggestions"
   (interactive)
-  (let ((options (run-shell-script-and-capture-output-as-list "/home/hugh/bin/which_ticket-no_fzf.sh")))
-    (helm :sources (helm-build-sync-source "Select an Option"
-                     :candidates options
-                     :action (lambda (selected)
-                               (message "You selected: %s" selected))))))
-
-;; This version just returns the selection; it can be used for further transformation like so:
-;;
-;; (let ((selected-branch (x-hugh-pick-a-ticket)))
-;;   (if selected-branch
-;;       (message "You selected: %s" selected-branch)
-;;     (message "No branch selected.")))
+  (let ((ticket (x-hugh-pick-a-ticket)))
+    (if ticket
+	(progn
+	  (setq branch (replace-regexp-in-string (rx punctuation) " " ticket))
+	  (message (format "Here: %s" branch))
+	  (setq branch (replace-regexp-in-region (rx (+ whitespace)) "-" branch))
+	  (message (format "THere: %s" branch))
+	  (setq branch (downcase branch))
+	  (message "You selected: %s" branch))
+      (message "No suggestion."))))
 ;;
 (defun x-hugh-pick-a-ticket ()
   "Pick a ticket."
