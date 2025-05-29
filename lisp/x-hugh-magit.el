@@ -22,6 +22,13 @@
   (message new-branch)
   (magit-branch-spinoff new-branch))
 
+(defun x-hugh-spinoff-branch-named-after-a-ticket (new-branch)
+  "Spin off new git branch named after current branch."
+  ;; (interactive (format "sNew branch name: "))
+  (interactive (list (read-string "New branch name: " (x-hugh-branch-suggestions))))
+  (message new-branch)
+  (magit-branch-spinoff new-branch))
+
 ;; (use-package git-commit
 ;;   :ensure t
 ;;   :custom ((git-commit-summary-max-length 50)
@@ -179,7 +186,9 @@ If the script cannot be executed, return an empty list."
 	  (setq branch (replace-regexp-in-string (rx punctuation) " " ticket))
 	  (setq branch (replace-regexp-in-string (rx (+ whitespace)) "-" branch))
 	  (setq branch (downcase branch))
-	  (message "You selected: %s" branch))
+	  (setq branch (replace-regexp-in-string (rx line-start "dns") "DNS" branch))
+	  (message "You selected: %s" branch)
+	  branch)
       (message "No suggestion."))))
 ;;
 (defun x-hugh-pick-a-ticket ()
