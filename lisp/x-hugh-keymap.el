@@ -6,6 +6,12 @@
 
 ;; Keymaps
 
+;; 👉 Memo to myself: If using (kbd), you want to use it like so:
+;;
+;; (kbd "M-x") NOT (kbd "\M-x")
+;;
+;; For details, see help for kbd.
+
 ;; WTF, why am I hitting this by accident so much
 (global-unset-key "\C-x\C-c")
 
@@ -58,7 +64,7 @@
 (global-set-key "\M-o" 'other-window)
 
 ;; Use this instead of default
-(global-set-key (kbd "\M-d") 'x-hugh-kill-word-inc-following-whitespace)
+(global-set-key (kbd "M-d") 'x-hugh-kill-word-inc-following-whitespace)
 
 ;; Turns out that the hydra-goto is really a good idea.  Going to
 ;; steal C-; for that, but keep C-' for navi.
