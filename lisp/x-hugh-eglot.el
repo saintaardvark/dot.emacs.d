@@ -39,6 +39,13 @@
 ;; (but also eldoc-box-hover-at-point-mode, eldoc-box-help-at-point)
 (use-package eldoc-box
   :ensure t)
+
+;; TODO: Put these into config if I like them.
+;; https://github.com/joaotavora/eglot/discussions/912
+(setq eldoc-box-cleanup-interval 2
+      eldoc-box-max-pixel-height 900
+      eldoc-box-max-pixel-width 1000)
+
 (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)
 
 ;; https://lists.gnu.org/archive/html/emacs-devel/2023-02/msg00841.html
