@@ -47,7 +47,7 @@
   ("e" apropos-value "value"))
 
 (defhydra hydra-dev (:exit t)
-  ("a" x-hugh-git-changetype "Cycle changetype")
+  ("a" eglot-code-actions "Eglot code actions")
   ("b" x-hugh-blank-pr "Blank PR")
   ("c" (describe-keymap combobulate-key-map) "Combobulate keymap")
   ("d" (x-hugh-open-preferred-repo-dir) "Dev dir")
