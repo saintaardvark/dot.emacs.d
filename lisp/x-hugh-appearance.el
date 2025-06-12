@@ -324,17 +324,10 @@ assumes font named like `inconsolata-14`."
 ;; https://emacsredux.com/blog/2020/12/04/maximize-the-emacs-frame-on-startup/
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
-(use-package sideline
+;; Let's give 0blayout a try
+(use-package 0blayout
   :ensure t
-  :init
-  (setq sideline-backends-left-skip-current-line t   ; don't display on current line (left)
-        sideline-backends-right-skip-current-line t  ; don't display on current line (right)
-        sideline-order-left 'down                    ; or 'up
-        sideline-order-right 'up                     ; or 'down
-        sideline-format-left "%s   "                 ; format for left aligment
-        sideline-format-right "   %s"                ; format for right aligment
-        sideline-priority 100                        ; overlays' priority
-        sideline-display-backend-name t))            ; display the backend name
+  :config (0blayout-mode t))
 
 (provide 'x-hugh-appearance)
 ;;; x-hugh-appearance.el ends here
