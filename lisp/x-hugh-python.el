@@ -83,7 +83,12 @@
   :demand t
   :after python
   :ensure t
-  :hook (python-mode . python-black-on-save-mode-enable-dwim)
+  ;; Note:
+  ;; - need python-ts-mode since I'm using that, not python-mode
+  ;;
+  ;; - python-black-on-save-mode instead of the -dwim variant (which
+  ;; checks that black is listed in pyproject.toml, which I don't use)
+  :hook (python-ts-mode . python-black-on-save-mode)
   )
 
 ;; TODO: Break this out to a group var or some such
