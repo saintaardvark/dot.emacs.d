@@ -54,21 +54,30 @@
   :custom ((python-indent-guess-indent-offset nil)
 	   (python-shell-interpreter "python3"))
 
+  ;; NOTE: I could not get this to work with conda.  I suspect I need to d
+
   ;; Jedi-language-server installable by "pip install -U jedi-language-server"
-  :config
-  (add-to-list 'eglot-server-programs
-               `(python-mode . ("jedi-language-server"
-                                ;; Set initial options to configure
-                                ;; the active virtualenv (if any) as
-                                ;; documented here -
-                                ;; https://www.gnu.org/software/emacs/manual/html_mono/eglot.html#User_002dspecific-configuration
-                                :initializationOptions
-                                ,(lambda (s)
-                                   (let ((ve (getenv "VIRTUAL_ENV")))
-                                     (if ve
-                                         `(:workspace (:environmentPath ,(concat ve "bin/python")))
-                                       eglot-{}))))))
+  ;; :config
+  ;; (add-to-list 'eglot-server-programs
+  ;;              `(python-mode . ("jedi-language-server"
+  ;;                               ;; Set initial options to configure
+  ;;                               ;; the active virtualenv (if any) as
+  ;;                               ;; documented here -
+  ;;                               ;; https://www.gnu.org/software/emacs/manual/html_mono/eglot.html#User_002dspecific-configuration
+  ;;                               :initializationOptions
+  ;;                               ,(lambda (s)
+  ;;                                  (let ((ve (getenv "VIRTUAL_ENV")))
+  ;;                                    (if ve
+  ;;                                        `(:workspace (:environmentPath ,(concat ve "bin/python")))
+  ;;                                      eglot-{}))))))
   )
+
+;; Ruff server does not yet support going to definitions -- not great.
+;; (add-hook 'python-mode-hook 'eglot-ensure)
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                '(python-mode . ("ruff" "server")))
+;;   (add-hook 'after-save-hook 'eglot-format))
 
 (use-package python-black
   :demand t
