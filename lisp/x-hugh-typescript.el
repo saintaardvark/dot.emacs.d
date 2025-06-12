@@ -6,10 +6,10 @@
 
 ;; TODO: Break out to x-hugh-node or some such
 
-(use-package "nvm"
+(use-package nvm
   :ensure t)
 
-(use-package "tide"
+(use-package tide
   :ensure t)
 
 ;; TODO: use-package
