@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-ansible --- Ansible stuff
 
 ;;; Commentary:

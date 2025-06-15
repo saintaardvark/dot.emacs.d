@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-hydra --- Hydra stuff
 
 ;;; Commentary:
@@ -263,6 +264,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("c" (org-capture) "Capture")
   ("d" (find-file "~/orgmode/dad.org") "Dad")
   ("f" (find-file "~/orgmode/fun_projects/fun_projects.org") "Fun projects")
+  ("F" (find-file "~/orgmode/financial/financial.org") "Financial")
   ("h" x-hugh-org-toggle-heading-save-excursion "Toggle heading")
   ("H" org-html-export-to-html "Export to HTML file")
   ("j" (progn

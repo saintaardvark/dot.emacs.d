@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-helm --- My helm stuff
 
 ;;; Commentary:

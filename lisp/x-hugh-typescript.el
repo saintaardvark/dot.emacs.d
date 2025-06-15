@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-typescript --- stuff related to go editing
 
 ;;; Commentary:

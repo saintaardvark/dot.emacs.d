@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-annoying-arrows --- annoying-arrows stuff
 
 ;;; Commentary:

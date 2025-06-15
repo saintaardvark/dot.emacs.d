@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-yaml --- Yaml stuff
 
 ;;; Commentary:

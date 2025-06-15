@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-custom --- My custom file.
 
 ;;; Commentary:

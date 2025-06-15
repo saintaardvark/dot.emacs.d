@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-reference --- reference material
 
 ;;; Commentary:

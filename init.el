@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; Stolen shamelessly from http://hg.gomaa.us/dotfiles.
 ;;; His whole damn way of organizing dotfiles is pretty cool.
 ;;;

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-uniquify --- Uniquify stuff
 
 ;;; Commentary:

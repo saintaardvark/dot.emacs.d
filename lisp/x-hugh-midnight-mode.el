@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-midnight-mode --- Midnight-Mode stuff
 
 ;;; Commentary:
