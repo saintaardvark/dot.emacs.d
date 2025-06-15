@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-browse-kill-ring --- Browse-Kill-Ring stuff
 
 ;;; Commentary:

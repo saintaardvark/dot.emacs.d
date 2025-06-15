@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-swiper --- My swiper stuff
 
 ;;; Commentary:

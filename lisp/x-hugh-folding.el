@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-folding --- Some stuff for folding
 
 ;;; Commentary:

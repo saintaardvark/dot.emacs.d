@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-terraform --- stuff related to terraform
 
 ;;; Commentary:

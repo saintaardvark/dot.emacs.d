@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-pomm --- Pomm package
 
 ;;; Commentary:

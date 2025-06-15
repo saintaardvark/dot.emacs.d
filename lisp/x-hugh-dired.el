@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-dired --- Dired stuff
 
 ;;; Commentary:

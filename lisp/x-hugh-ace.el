@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-ace --- Initialize & use ace
 
 ;;; Commentary:

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-docker --- Docker stuff
 
 ;;; Commentary:

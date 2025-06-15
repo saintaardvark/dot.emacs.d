@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-tramp --- Tramp stuff
 
 ;;; Commentary:

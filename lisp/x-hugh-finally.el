@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-finally.el --- last thing before starting
 
 ;;; Commentary:

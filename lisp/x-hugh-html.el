@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-html --- stuff related to html editing
 
 ;;; Commentary:

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-compile --- Compile stuff
 
 ;;; Commentary:

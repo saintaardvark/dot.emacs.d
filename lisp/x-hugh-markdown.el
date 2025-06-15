@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-markdown --- My functions for markdown
 
 ;;; Commentary:

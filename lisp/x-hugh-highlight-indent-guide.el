@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-highlight-indent-guide --- Highlight-Indent-Guide stuff
 
 ;;; Commentary:

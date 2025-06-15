@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-rt --- My Request Tracker stuff
 
 ;;; Commentary:

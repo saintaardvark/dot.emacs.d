@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; x-hugh-python --- Python stuff
 
 ;;; Commentary:

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-m-x -- Settings for m-x key
 
 ;;; Commentary:

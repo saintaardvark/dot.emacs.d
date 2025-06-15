@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-gh --- Functions for working with git
 
 ;;; Commentary:
