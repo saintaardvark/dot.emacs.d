@@ -191,21 +191,6 @@ If the script cannot be executed, return an empty list."
 	  branch)
       (message "No suggestion."))))
 ;;
-(defun x-hugh-pick-a-ticket ()
-  "Pick a ticket."
-  (interactive)
-  (let ((options (run-shell-script-and-capture-output-as-list (expand-file-name "~/bin/which_ticket-no_fzf.sh"))))
-    (helm :sources (helm-build-sync-source "Select an Option"
-                     :candidates options
-                     :action (lambda (selected)
-                               (setq selected (if (stringp selected) selected nil))
-                               (if selected
-                                   (progn
-                                     (message "You selected: %s" selected)
-                                     selected)
-                                 (error "No selection made.")))
-                     :volatile t))))
-
 (provide 'x-hugh-magit)
 
 ;;; x-hugh-magit.el ends here
