@@ -317,6 +317,23 @@ This is useful, e.g., for use with `visual-line-mode'."
   (let ((fill-column (point-max)))
     (fill-region beg end)))
 
+Potential replacement for which_ticket-no_fzf.sh
+(defun extract-dns-entries ()
+  "Extract the last 500 lines from journal.org containing 'DNS-' and strip the prefix.
+Return a list of strings."
+  (with-temp-buffer
+    (insert-file-contents "~/orgmode/journal.org")
+    (goto-char (point-max))
+    (forward-line -500)
+    (let ((lines (buffer-substring (point) (point-max))))
+      (remove-if-not
+       (lambda (line)
+         (and (string-match "DNS-" line)
+              (replace-regexp-in-string ".*DNS-" "DNS-" line)))
+       (split-string lines "\n")))))
+
+(setq my-tix (extract-dns-entries))
+(message my-tix)
 (defun x-hugh-pick-a-ticket ()
   "Pick a ticket that's recorded in the journal; handy for branches, repeated logs, etc.
 
