@@ -79,9 +79,6 @@
 
 ;; From
 ;; http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
-;; FIXME: Help for kill-this-buffer says: "This command can be
-;; reliably invoked only from the menu bar,otherwise it could decide
-;; to silently do nothing." I seem to be encountering that now. :-(
 (defun jcs-kill-a-buffer (askp)
   "Just kill this damn buffer! If ASKP provided, ask which buffer to kill."
   (interactive "P")
@@ -89,7 +86,7 @@
       (kill-buffer (funcall completing-read-function
                             "Kill buffer: "
                             (mapcar #'buffer-name (buffer-list))))
-    (kill-this-buffer)))
+    (kill-current-buffer)))
 
 ;; Chrome extension for editing stuff in Emacs
 (use-package edit-server
