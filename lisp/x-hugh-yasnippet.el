@@ -13,6 +13,10 @@
       '("~/.emacs.d/snippets"))
   :config (yas-global-mode 1))
 
+;; https://www.reddit.com/r/emacs/comments/6ogn6c/indentation_in_yasnippet/
+;; TODO: Figure out how to add this as a :hook stanza in use-package
+(add-hook 'python-mode-hook '(lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
+
 ;; https://www.emacswiki.org/emacs/Yasnippet#toc4
 ;; not yet working.
 (defun shk-yas/helm-prompt (prompt choices &optional display-fn)
