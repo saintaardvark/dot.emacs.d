@@ -326,7 +326,7 @@ Return a list of strings."
     (goto-char (point-max))
     (forward-line -500)
     (let ((lines (buffer-substring (point) (point-max))))
-      (remove-if-not
+      (cl-remove-if-not
        (lambda (line)
          (and (string-match "DNS-" line)
               (replace-regexp-in-string ".*DNS-" "DNS-" line)))
