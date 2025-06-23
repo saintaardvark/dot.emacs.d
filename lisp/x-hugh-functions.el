@@ -317,7 +317,7 @@ This is useful, e.g., for use with `visual-line-mode'."
   (let ((fill-column (point-max)))
     (fill-region beg end)))
 
-Potential replacement for which_ticket-no_fzf.sh
+;; Potential replacement for which_ticket-no_fzf.sh
 (defun extract-dns-entries ()
   "Extract the last 500 lines from journal.org containing 'DNS-' and strip the prefix.
 Return a list of strings."
