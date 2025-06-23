@@ -332,8 +332,6 @@ Return a list of strings."
               (replace-regexp-in-string ".*DNS-" "DNS-" line)))
        (split-string lines "\n")))))
 
-(setq my-tix (extract-dns-entries))
-(message my-tix)
 (defun x-hugh-pick-a-ticket ()
   "Pick a ticket that's recorded in the journal; handy for branches, repeated logs, etc.
 
