@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-random --- where I keep random things.
 
 ;;; Commentary:

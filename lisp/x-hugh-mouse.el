@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-mouse --- where I keep mouse/trackpad things.
 
 ;;; Commentary:

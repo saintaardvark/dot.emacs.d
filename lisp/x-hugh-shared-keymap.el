@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; just an experiment
 
 ;; Goal: be able to define something like this...

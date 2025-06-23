@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-shell --- My shell stuff
 
 ;;; Commentary:

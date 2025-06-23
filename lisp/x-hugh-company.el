@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-company --- Company-mode and auto-complete-mode
 
 ;;; Commentary:

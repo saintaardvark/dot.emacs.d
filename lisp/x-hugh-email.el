@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-email --- stuff related to email editing
 
 ;;; Commentary:

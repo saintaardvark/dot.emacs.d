@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; ssh.el --- Support for remote logins using ssh.
 ;;; Source: https://github.com/ieure/ssh-el
 

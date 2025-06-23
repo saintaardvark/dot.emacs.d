@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-arduino --- stuff related to arduino work
 
 ;;; Commentary:

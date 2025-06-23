@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 (defun python-split-args (arg-string)
   "Split a python argument string into ((name, default)..) tuples"
   (mapcar (lambda (x)

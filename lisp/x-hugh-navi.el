@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-navi --- A Small but Useful(tm) way of navigating things
 
 ;;; Commentary:

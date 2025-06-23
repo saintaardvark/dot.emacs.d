@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-elpa.el --- Settings & helpers for package.el
 ;;; Commentary:
 ;;; Stolen shamelessly from https://github.com/purcell/emacs.d & his init-elpa.el.

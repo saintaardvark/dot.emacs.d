@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-rebuilder --- stuff related to rebuilder work
 
 ;;; Commentary:

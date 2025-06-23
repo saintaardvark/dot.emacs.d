@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; x-hugh-jira --- some helpful JIRA stuff
 
 ;;; Commentary:
