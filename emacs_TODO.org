@@ -49,6 +49,19 @@ CLOSED: [2023-07-26 Wed 12:59]
 CLOSED: [2023-08-27 Sun 16:09]
 * DONE [#A] Add keyboard shortcut for delete-horizontal-space
 CLOSED: [2024-06-19 Wed 14:13]
+* DONE Implement this article for beautifying orgmode
+CLOSED: [2025-06-23 Mon 10:20]
+- https://zzamboni.org/post/beautifying-org-mode-in-emacs/
+* DONE Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
+CLOSED: [2025-06-23 Mon 10:20]
+* DONE [#B] Watch for fix for Inconsolata
+CLOSED: [2025-06-23 Mon 10:20]
+- https://github.com/googlefonts/Inconsolata/issues/42
+- https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
+* DONE See if Emacs can chord ctrl+space to replace that awful alt key on the MS keyboard
+CLOSED: [2025-06-23 Mon 10:20]
+* DONE [#C] Keyboard shortcut for maximize/3xbigger                   :emacs:
+CLOSED: [2025-06-23 Mon 10:21]
 * TODO Have x-hugh-hydra.el and x-hugh-keymap use same source for hydra keys
 If this was Python, I'd be doing:
 
@@ -77,7 +90,6 @@ Could do this with alists:
   ;; Dash is also good
   (--map (message (car it)) hydra_map)
 #+end_src
-* TODO Error (use-package): filladapt/:catch: Loading ‘/Users/hubrown/.emacs.d/filladapt.el’: old-style backquotes detected!
 * TODO Figure out how to turn on comment-auto-fill-only-comments again
 - If turn this on globally, then it ends up borking auto-fill-mode
   in Post-mode...but it's damn handy for nearly everything else
@@ -89,13 +101,9 @@ Could do this with alists:
 * TODO Stop helm from trying to autocomplete stuff at point
 - I very rarely want to email someone if point at an email address
 - ditto for hyperlink
-* TODO [#B] Watch for fix for Inconsolata
-- https://github.com/googlefonts/Inconsolata/issues/42
-- https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39082
 * TODO Turn off touchpad stuff in x-hugh-mouse.el
 - Trackpad on recent laptops is fine
 - Make a custom variable to enable it or not
-* TODO See if Emacs can chord ctrl+space to replace that awful alt key on the MS keyboard
 * TODO Shellcheck in emacs appears to assume posix shell rather than looking at shebang
 - Shellcheck in emacs will complain about Bashisms when shebang has them
 - Shellcheck run from shell will be fine about this
@@ -105,7 +113,6 @@ Could do this with alists:
 - Good intro: https://writequit.org/denver-emacs/presentations/2017-04-11-ivy.html
 * TODO [#A] Emacs: delete trailing whitespace in file and update magit :emacs:
 * TODO [#C] Keyboard shortcut for todo/today                          :emacs:
-* TODO [#C] Keyboard shortcut for maximize/3xbigger                   :emacs:
 * TODO [#C] Think about how journal and checkin to different org headlines could be integrated :emacs:
 - Example: I think of the journal as my easily searchable record of
   work.  If I check into another item (rather than just "Tuesday"),
@@ -131,7 +138,7 @@ Could do this with alists:
   - then usual drop-down menu comes up too
   - company-mode is *not* enabled here
 * TODO Figure out why splitting windows is so annoying
-* TODO Add asterisk to smartparens for markdown mode\
+* TODO Add asterisk to smartparens for markdown mode
 - https://smartparens.readthedocs.io/en/latest/pair-management.html
 * TODO smartparens: why doesn't "" or `` + delete get rid of pair, as it does with ()?
 - Eg:
@@ -149,5 +156,5 @@ Could do this with alists:
   - https://www.gnu.org/software/emacs/manual/html_node/elisp/Misc-Events.html
   - https://www.emacswiki.org/emacs/extend-dnd.el
     - extend dnd with advice
-* TODO Implement this article for beautifying orgmode
-- https://zzamboni.org/post/beautifying-org-mode-in-emacs/
+* TODO Implement these Tramp speedup changes
+- https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
