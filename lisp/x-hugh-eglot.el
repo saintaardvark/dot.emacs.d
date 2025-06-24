@@ -39,6 +39,8 @@
 ;; toggle with: eldoc-box-hover-mode
 ;; (but also eldoc-box-hover-at-point-mode, eldoc-box-help-at-point)
 (use-package eldoc-box
+  :custom ((eldoc-box-max-pixel-width 800)
+	   (eldoc-box-max-pixel-height 400))
   :ensure t)
 
 ;; TODO: Put these into config if I like them.
