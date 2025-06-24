@@ -271,6 +271,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 	 (find-file "~/orgmode/journal.org")
 	 (goto-char (point-max))) "Journal")
   ("l" (org-capture nil "l") "org-capture log")
+  ("n" (find-file "~/orgmode/nwcah.org"))
   ("r" (org-refile) "refile")
   ("t" (org-agenda nil "t") "Show TODOs")
   ("w" (org-agenda-list 7) "Agenda for week")
