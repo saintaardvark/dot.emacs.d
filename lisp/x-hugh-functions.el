@@ -80,7 +80,7 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
   (interactive)
   (with-output-to-temp-buffer "*Tip of the day*"
     (let* ((commands (cl-loop for s being the symbols
-                           when (commandp s) collect s))
+                              when (commandp s) collect s))
            (command (nth (random (length commands)) commands)))
       (princ
        (concat "Your tip for the day is:\n"
@@ -89,7 +89,12 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
                "\n\nInvoke with:\n\n"
                (with-temp-buffer
                  (where-is command t)
-                 (buffer-string)))))))
+                 (buffer-string))
+	       "\n\nVersion: "
+	       (emacs-version)
+	       "\n\n🌈✨🚀  WELCOME TO EMACS – THE MOTHER OF ALL EDITORS  🚀✨🌈
+  🦄🌟  EXTEND, TWEAK, SCRIPT, REPEAT — UNICORN POWER!  🌟🦄
+  🐉⚡  UNLEASH THE FURY OF LISP & DOUBLE YOUR PRODUCTIVITY  ⚡🐉")))))
 
 ;;
 ;; A simple utility function.
