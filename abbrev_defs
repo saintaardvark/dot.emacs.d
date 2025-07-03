@@ -31,6 +31,7 @@ Hugh" nil :count 2)
     ("thugh" "Thanks,
 Hugh" nil :count 2)
     ("trackign" "tracking" nil :count 1)
+    ("udpate" "update" nil :count 0)
    ))
 
 (define-abbrev-table 'shell-mode-abbrev-table
