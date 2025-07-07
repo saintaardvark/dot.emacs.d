@@ -158,3 +158,5 @@ Could do this with alists:
     - extend dnd with advice
 * TODO Implement these Tramp speedup changes
 - https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
+* TODO Grab some of the eye candy (and files) from here
+- https://github.com/Likhon-baRoy/.emacs.d
