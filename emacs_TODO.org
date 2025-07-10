@@ -160,3 +160,18 @@ Could do this with alists:
 - https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 * TODO Grab some of the eye candy (and files) from here
 - https://github.com/Likhon-baRoy/.emacs.d
+* TODO Split window 70-30
+#+begin_src lisp
+  (defun my-split-window-right(&optional arg)
+    "Split the current window 70/30 rather than 50/50.
+  A single-digit prefix argument gives the top window arg*10%."
+    (interactive "P")
+    (let ((proportion (* (or arg 6) 0.1)))
+      (split-window-right (round (* proportion (window-height))))))
+
+  (global-set-key (kbd "C-x 2") 'my-split-window-below)
+
+#+end_src
+* TODO When splitting window, have smaller font on one side
+- https://emacs.stackexchange.com/questions/13256/different-fonts-for-different-emacs-windows
+- Also: https://stackoverflow.com/questions/9586475/ensure-that-when-working-with-split-windows-the-currently-active-emacs-window
