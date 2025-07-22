@@ -64,7 +64,8 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
           (dired-get-marked-files))))
 
 (defun x-hugh-dired-do-shred ()
-  "Run shred on marked files.  This will erase them."
+  "Run shred on marked files.  This is meant to erase files securely.
+NOTE: whether this works on an SSD is an open question."
   (interactive)
   (yes-or-no-p "Do you REALLY want to shred these files forever? ")
   (save-window-excursion
@@ -92,9 +93,10 @@ http://superuser.com/questions/176627/in-emacs-dired-how-can-i-run-a-command-on-
                  (buffer-string))
 	       "\n\nVersion: "
 	       (emacs-version)
-	       "\n\n🌈✨🚀  WELCOME TO EMACS – THE MOTHER OF ALL EDITORS  🚀✨🌈
-  🦄🌟  EXTEND, TWEAK, SCRIPT, REPEAT — UNICORN POWER!  🌟🦄
-  🐉⚡  UNLEASH THE FURY OF LISP & DOUBLE YOUR PRODUCTIVITY  ⚡🐉")))))
+	       "\n\n
+  🌈✨🚀  WELCOME TO EMACS – THE MOTHER OF ALL EDITORS  🚀✨🌈
+  🦄🌟   EXTEND, TWEAK, SCRIPT, REPEAT — UNICORN POWER!  🌟🦄
+  🐉⚡ UNLEASH THE FURY OF LISP & DOUBLE YOUR PRODUCTIVITY  ⚡🐉")))))
 
 ;;
 ;; A simple utility function.
