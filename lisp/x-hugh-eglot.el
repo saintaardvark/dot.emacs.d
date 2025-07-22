@@ -49,10 +49,12 @@
       eldoc-box-max-pixel-height 900
       eldoc-box-max-pixel-width 1000)
 
-(add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)
+;; (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)
+(remove-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode)
 
 ;; https://lists.gnu.org/archive/html/emacs-devel/2023-02/msg00841.html
 (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
+(remove-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
 
 (provide 'x-hugh-eglot)
 ;;; x-hugh-eglot.el ends here
