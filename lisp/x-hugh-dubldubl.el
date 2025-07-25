@@ -1,7 +1,9 @@
 ;; Second version of dubcaps mode -- WIP
 
-(defvar dubldubl--lastpair nil
-  "Store before-and-after versions of last dubldubl word")
+;; TODO: Turn this into a stack, or a ring buffer
+
+(defvar dubldubl--lastversion nil
+  "Store last version of last dubldubl word")
 
 (defvar dubldubl--lastpos nil
   "Store position of last dubldubl word")
@@ -20,10 +22,17 @@
                  (not (looking-at "\\b[[:upper:]]\\{2\\}s")) ; Exclude plurals
 		 (not (looking-at "GHz\\|IPs\\|VMs\\|DCs\\|MRs\\|PRs")))) ; no brackets for alternation!
 	      (setq dubldubl--lastpos (point))
-	      (setq dubldubl--lastpair (word-at-point))
+	      (setq dubldubl--lastversion (word-at-point))
 	      (capitalize-word 1)
-	      (message (word-at-point))
-	      (append dubldubl--lastpair (word-at-point))))))
+	      ))))
+
+(defun dubldubl-undo ()
+  "Undo the last dubldubl edit"
+  (interactive)
+  (save-excursion
+    (goto-char dubldubl--lastpos)
+    (kill-word 1)
+    (insert dubldubl--lastversion)))
 
 (define-minor-mode dubldubl-mode
   "Toggle `dubldubl-mode'.  Converts words in DOuble CApitals to
