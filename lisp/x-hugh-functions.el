@@ -358,5 +358,14 @@ This depends on ~/bin/which_ticket-no_fzf.sh, which should be replaced by some s
                                  (error "No selection made.")))
                      :volatile t))))
 
+;; Source: https://www.emacswiki.org/emacs/IncrementNumber
+(defun increment-number-at-point ()
+  "Increment number at point."
+  (interactive)
+  (skip-chars-backward "0-9")
+  (or (looking-at "[0-9]+")
+      (error "No number at point"))
+  (replace-match (number-to-string (1+ (string-to-number (match-string 0))))))
+
 (provide 'x-hugh-functions)
 ;;; x-hugh-functions.el ends here
