@@ -104,6 +104,9 @@
 
 (add-hook 'kill-buffer-hook 'kill-associated-diff-buf)
 
+;; Wow, this is handy
+(which-function-mode t)
+
 (provide 'x-hugh-random)
 
 ;;; x-hugh-random.el ends here

@@ -12,7 +12,7 @@
 
 ;; On Zombie, emacs was hanging when it exited.  This turned out to be pcache.
 ;; I'm not sure what's adding it to kill-emacs-hook, but removing it seems
-;; to fix this problem.  eomeone else w/same problem here:
+;; to fix this problem.  Someone else w/same problem here:
 ;; https://emacs.stackexchange.com/questions/51916/help-freeze-up-to-10-seconds-happening-on-windows-when-exiting-kill-emacs-w
 ;;
 ;; August 27, 2022
