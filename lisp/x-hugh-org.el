@@ -346,7 +346,7 @@ Hugh
   (move-end-of-line nil))
 
 (defun x-hugh-journal-log-previous-ticket ()
-  "Log previous ticket in today's journal"
+  "Log previous ticket in today's journal."
   (interactive)
   (if (string-match "CAPTURE-journal.org" (buffer-name))
       (x-hugh-org-toggle-heading-save-excursion)
@@ -354,7 +354,7 @@ Hugh
       (org-insert-heading-respect-content)
       (org-do-demote)))
   (insert (x-hugh-pick-a-ticket))
-  (backward-delete-char-untabify 1))
+  (insert "\n"))
 
 (provide 'x-hugh-org)
 ;;; x-hugh-org.el ends here
