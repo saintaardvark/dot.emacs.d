@@ -356,5 +356,14 @@ Hugh
   (insert (x-hugh-pick-a-ticket))
   (insert "\n"))
 
+(defun x-hugh-insert-daily-checklist ()
+  "Insert daily checklist iinto journal"
+  (interactive)
+  ;; TODO: use x-hugh-org/journal-file for this
+  ;; TODO: also in the hydra
+  (find-file "~/orgmode/journal.org")
+  (goto-char (point-max))
+  (insert-file "~/orgmode/.daily_checklist"))
+
 (provide 'x-hugh-org)
 ;;; x-hugh-org.el ends here
