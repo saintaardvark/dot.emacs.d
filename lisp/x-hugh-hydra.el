@@ -113,6 +113,7 @@
   ("w" (image-dired "~/Pictures/Wallpaper") "Wallpaper")
   ("x" (dired "~/Downloads" "-l --sort=time") "Downloads") ; newest first
   ("y" (calendar) "Calendar")
+  ("z" (dired "~/Pictures/Screenshots/" "-l --sort=time") "Screenshots") ; newest first
   )
 
 (defhydra hydra-copy-lines (:exit t)
