@@ -19,7 +19,9 @@
         (helm-mode 1)
         ;; helm-do-grep is better.
         ;; (global-set-key "\C-cif"	'helm-do-grep)
-        (setq helm-ff-newfile-prompt-p nil))
+        (setq helm-ff-newfile-prompt-p nil)
+	;; Oh, thank god
+	(setq helm-find-files-ignore-thing-at-point t))
       (use-package helm-swoop
 	:ensure t)
       (use-package helm-xref
