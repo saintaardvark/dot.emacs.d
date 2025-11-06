@@ -283,6 +283,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("," (call-interactively 'org-insert-structure-template) "Insert template (quote, src, etc)")
   ("u" (org-metaleft) "Org metaleft")
   ("i" (org-metaright) "Org metaright")
+  ("x" (x-hugh-insert-daily-checklist) "Insert checklist")
   )
 
 (defhydra hydra-golang ()
