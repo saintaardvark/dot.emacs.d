@@ -139,6 +139,9 @@ Handy if I add more projects through git clone, say."
 
 (customize-set-variable 'even-window-sizes nil)     ; avoid resizing
 
+(if (require 'vterm-module nil t)
+    (global-set-key (kbd "C-c p x s") 'projectile-run-vterm))
+
 ;; (use-package persp-projectile
 ;;   :ensure t)
 
