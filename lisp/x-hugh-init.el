@@ -106,9 +106,11 @@
 (use-package x-hugh-abbrev)
 ;; It's getting annoying 🙃
 ;; (use-package x-hugh-annoying-arrows)
+(use-package x-hugh-all-the-icons) 	; Needs to come before centaur tabs
 (use-package x-hugh-apache)
 (use-package x-hugh-boxquote)
 (use-package x-hugh-browse-kill-ring)
+(use-package x-hugh-centaur-tabs)
 (use-package x-hugh-delsel)
 (use-package x-hugh-dired)
 (use-package x-hugh-fixmee)
