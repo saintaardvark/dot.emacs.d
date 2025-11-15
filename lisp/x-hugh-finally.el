@@ -23,6 +23,7 @@
 
 ;; Lastly, like fortune:
 (totd)
+(dashboard-open)
 
 (provide 'x-hugh-finally)
 ;;; x-hugh-finally.el ends here
