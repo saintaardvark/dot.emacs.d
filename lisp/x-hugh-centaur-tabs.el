@@ -5,13 +5,6 @@
 
 ;;; Code:
 
-;; Note: after running this for the first time, you'll need to run
-;; M-x all-the-icons-install-fonts
-
-(use-package all-the-icons
-  :ensure t
-  :if (display-graphic-p))
-
 (use-package centaur-tabs
   :ensure t
   :demand
