@@ -101,6 +101,7 @@
 
 ;; Now all the rest in alphabetical order
 (global-set-key (kbd "C-c a") 'hydra-apropos/body)
+(global-set-key (kbd "C-c b") 'hydra-tabs/body)
 (global-set-key (kbd "C-c d") 'hydra-dev/body)
 (global-set-key (kbd "C-c e") 'hydra-elisp/body)
 (global-set-key (kbd "C-c f") 'hydra-web/body)

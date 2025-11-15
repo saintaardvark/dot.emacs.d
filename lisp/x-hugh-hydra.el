@@ -12,6 +12,7 @@
 (defhydra hydra-menu (:exit t)
   "menu"
   ("a" hydra-apropos/body "apropos")
+  ("b" hydra-tabs/body "tabs")
   ("d" hydra-dev/body "dev")
   ("e" hydra-elisp/body "elisp")
   ("f" hydra-web/body "web")
@@ -27,16 +28,10 @@
   ("z" hydra-zoom/body "zoom")
   )
 
-(defhydra hydra-elscreen (:exit t)
-  ("s" elscreen-start "start elscreen - do this if you get wrong-type-error")
-  ("c" elscreen-create "create") ;; Not sure why, but emacs doesn't like this
-  ("i" elscreen-screen-nickname "nickname")
-  ("k" elscreen-kill "kill")
-  ("n" elscreen-next "next")
-  ("p" elscreen-previous "previous")
-  ("'" elscreen-goto "goto")
-  ("j" elscreen-jump "jump")
-  )
+(defhydra hydra-tabs (:exit t)
+  ("b" centaur-tabs-backward "back")
+  ("f" centaur-tabs-forward "forward")
+  ("j" centaur-tabs-ace-jump "jump"))
 
 (defhydra hydra-apropos (:exit t)
   ("a" apropos "apropos")
