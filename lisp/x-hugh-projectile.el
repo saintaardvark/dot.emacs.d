@@ -66,7 +66,8 @@ Handy if I add more projects through git clone, say."
   :custom
   ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
   ;; FIXME: this might be the source of the other-window problem
-  (projectile-switch-project-action #'projectile-vc)
+  ((projectile-switch-project-action #'projectile-vc)
+   (projectile-create-missing-test-files t))
   ;; FIXME: Not sure what's going on, but for some reason my list of
   ;; known projects isn't getting loaded when projectile initializes.
   ;; To get around this manually, I'm adding this line:
