@@ -28,7 +28,7 @@
   ("z" hydra-zoom/body "zoom")
   )
 
-(defhydra hydra-tabs (:exit t)
+(defhydra hydra-tabs (:color amaranth :timeout 5)
   ("b" centaur-tabs-backward "back")
   ("f" centaur-tabs-forward "forward")
   ("j" centaur-tabs-ace-jump "jump"))
