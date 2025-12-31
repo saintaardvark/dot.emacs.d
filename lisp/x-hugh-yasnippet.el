@@ -10,8 +10,15 @@
   :ensure t
   :init
   (setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"))
-  :config (yas-global-mode 1))
+	'("~/.emacs.d/snippets"))
+  :custom
+  ;; These two lines make Python snippets work w/r/t indentation.
+  ;; https://emacs.stackexchange.com/questions/66878/yasnippet-snippets-indention-not-correct-for-python-functions
+  (yas-indent-line 'fixed)
+  (yas-wrap-around-region 'nil)
+  :config
+  (yas-global-mode 1)
+ )
 
 ;; https://www.reddit.com/r/emacs/comments/6ogn6c/indentation_in_yasnippet/
 ;; TODO: Figure out how to add this as a :hook stanza in use-package
