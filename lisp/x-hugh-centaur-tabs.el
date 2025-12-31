@@ -14,6 +14,8 @@
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 
+;; Consider using this: https://themkat.net/2024/01/04/emacs_centaur_tabs.html
+
 ;; The "demand" setting up above delays loading of some symbols, IIUC.
 ;; Instead of putting them in the :config secion, I'm breaking out to
 ;; separate setq calls.
