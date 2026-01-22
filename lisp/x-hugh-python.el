@@ -73,11 +73,10 @@
   ;;                                      eglot-{}))))))
   )
 
-;; Ruff server does not yet support going to definitions -- not great.
-;; (add-hook 'python-mode-hook 'eglot-ensure)
-;; (with-eval-after-load 'eglot
-;;   (add-to-list 'eglot-server-programs
-;;                '(python-mode . ("ruff" "server")))
+;; Let's try ty
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(python-mode . ("ty" "server"))))
 ;;   (add-hook 'after-save-hook 'eglot-format))
 
 (use-package python-black
