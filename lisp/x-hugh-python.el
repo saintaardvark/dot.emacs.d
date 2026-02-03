@@ -73,12 +73,14 @@
   ;;                                      eglot-{}))))))
   )
 
-;; Ruff server does not yet support going to definitions -- not great.
-;; (add-hook 'python-mode-hook 'eglot-ensure)
+;; Ty is failing for me: it can't seem to find a function def in
+;; another file.  Not sure what's going on, but pylsp continues to
+;; work.
+;;
 ;; (with-eval-after-load 'eglot
 ;;   (add-to-list 'eglot-server-programs
-;;                '(python-mode . ("ruff" "server")))
-;;   (add-hook 'after-save-hook 'eglot-format))
+;;                '(python-mode . ("ty" "server"))))
+;; ;;   (add-hook 'after-save-hook 'eglot-format))
 
 (use-package python-black
   :demand t
