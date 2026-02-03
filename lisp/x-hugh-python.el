@@ -73,11 +73,14 @@
   ;;                                      eglot-{}))))))
   )
 
-;; Let's try ty
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '(python-mode . ("ty" "server"))))
-;;   (add-hook 'after-save-hook 'eglot-format))
+;; Ty is failing for me: it can't seem to find a function def in
+;; another file.  Not sure what's going on, but pylsp continues to
+;; work.
+;;
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                '(python-mode . ("ty" "server"))))
+;; ;;   (add-hook 'after-save-hook 'eglot-format))
 
 (use-package python-black
   :demand t
