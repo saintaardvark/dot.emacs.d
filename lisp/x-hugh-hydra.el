@@ -28,11 +28,6 @@
   ("z" hydra-zoom/body "zoom")
   )
 
-(defhydra hydra-tabs (:exit t)
-  ("b" centaur-tabs-backward "back")
-  ("f" centaur-tabs-forward "forward")
-  ("j" centaur-tabs-ace-jump "jump"))
-
 (defhydra hydra-apropos (:exit t)
   ("a" apropos "apropos")
   ("d" apropos-documentation "documentation")
