@@ -6,10 +6,13 @@
 
 ;;; Code:
 
+;; Note: The git commit template is set in
+;; ~/.githooks_global/prepare-commit-msg.
 (defun x-hugh-skip-over-issue-number-in-git-commit()
   "Skip over the issue number in a git commit template, if present."
   (interactive)
-  (if (looking-at "DNS-")
+  (if (or (looking-at "DNS-")
+	  (looking-at "DS"))
       (progn
 	(search-forward ":")
 	(if (not (looking-at " "))
@@ -188,6 +191,7 @@ If the script cannot be executed, return an empty list."
 	  (setq branch (replace-regexp-in-string (rx (+ whitespace)) "-" branch))
 	  (setq branch (downcase branch))
 	  (setq branch (replace-regexp-in-string (rx line-start "dns") "DNS" branch))
+	  (setq branch (replace-regexp-in-string (rx line-start "ds") "DS" branch))
 	  (message "You selected: %s" branch)
 	  branch)
       (message "No suggestion."))))
