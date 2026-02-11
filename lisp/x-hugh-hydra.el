@@ -262,7 +262,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 	 (find-file "~/orgmode/journal.org")
 	 (goto-char (point-max))) "Journal")
   ("l" (org-capture nil "l") "org-capture log")
-  ("n" (find-file "~/orgmode/climate/nwcah.org"))
+  ("n" (find-file "~/orgmode/climate/nwcah/nwcah.org"))
   ("p" (x-hugh-journal-log-previous-ticket) "Log previous ticket")
   ("r" (find-file "~/orgmode/reference.org"))
   ("R" (org-refile) "refile")
