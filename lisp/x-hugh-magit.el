@@ -12,7 +12,8 @@
   "Skip over the issue number in a git commit template, if present."
   (interactive)
   (if (or (looking-at "DNS-")
-	  (looking-at "DS"))
+	  (looking-at "DS")
+	  (looking-at "MSIMP"))
       (progn
 	(search-forward ":")
 	(if (not (looking-at " "))
@@ -145,7 +146,10 @@ Meant for use in magit."
 (defun x-hugh-gpc()
   "Try to run gh pr create in ansi-term."
   (interactive)
-  (ansi-term "gh pr create" "*x-hugh-gpc*"))
+  ;; Set EDITOR here explicitly.  I've had to turn off sourcing
+  ;; .bashrc at Gnome login, and that means losing the EDITOR
+  ;; variable automagic.
+  (ansi-term "EDITOR=emacslient gh pr create" "*x-hugh-gpc*"))
 
 (defun x-hugh-blank-pr ()
   "Blank a Github PR template. 🤘"
@@ -192,6 +196,7 @@ If the script cannot be executed, return an empty list."
 	  (setq branch (downcase branch))
 	  (setq branch (replace-regexp-in-string (rx line-start "dns") "DNS" branch))
 	  (setq branch (replace-regexp-in-string (rx line-start "ds") "DS" branch))
+	  (setq branch (replace-regexp-in-string (rx line-start "msimp") "MSIMP" branch))
 	  (message "You selected: %s" branch)
 	  branch)
       (message "No suggestion."))))
