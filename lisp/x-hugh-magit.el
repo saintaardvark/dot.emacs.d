@@ -146,10 +146,10 @@ Meant for use in magit."
 (defun x-hugh-gpc()
   "Try to run gh pr create in ansi-term."
   (interactive)
-  ;; Set EDITOR here explicitly.  I've had to turn off sourcing
-  ;; .bashrc at Gnome login, and that means losing the EDITOR
-  ;; variable automagic.
-  (ansi-term "EDITOR=emacslient gh pr create" "*x-hugh-gpc*"))
+  ;; Use `bash -c` here.  I've had to turn off sourcing .bashrc at
+  ;; Gnome login, and that means losing the EDITOR and github variable
+  ;; automagic.
+  (ansi-term "bash -c 'gh pr create'" "*x-hugh-gpc*"))
 
 (defun x-hugh-blank-pr ()
   "Blank a Github PR template. 🤘"
