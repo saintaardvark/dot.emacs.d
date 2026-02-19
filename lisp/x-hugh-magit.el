@@ -151,6 +151,26 @@ Meant for use in magit."
   ;; automagic.
   (ansi-term "bash -c 'gh pr create'" "*x-hugh-gpc*"))
 
+;; TODO: Doesn't skip single asterisks, but leaving that for now.
+(defun x-hugh-clean-bullet-lines (beg end)
+  "Clean selected lines: remove **, strip ticket numbers (e.g. MSIMP-85:), normalize dash spacing."
+  (interactive "r")
+  (let ((lines (split-string (buffer-substring-no-properties beg end) "\n")))
+    (delete-region beg end)
+    (insert
+     (mapconcat
+      (lambda (line)
+        (let* ((s line)
+               ;; Remove ** (two or more asterisks) but preserve single *
+               (s (replace-regexp-in-string "\*\*+" "" s))
+               ;; Remove ticket number + colon + optional spaces
+               (s (replace-regexp-in-string "[A-Z]+-[0-9]+: *" "" s))
+               ;; Normalize dash at line start to exactly one space
+               (s (replace-regexp-in-string "^-[ \t]+" "- " s)))
+          s))
+      lines
+      "\n"))))
+
 (defun x-hugh-blank-pr ()
   "Blank a Github PR template. 🤘"
   (interactive)
