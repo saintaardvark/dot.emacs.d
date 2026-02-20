@@ -151,6 +151,12 @@ Meant for use in magit."
   ;; automagic.
   (ansi-term "bash -c 'gh pr create'" "*x-hugh-gpc*"))
 
+;; In conjunction with above:
+(defun x-hugh-save-gh-body-to-kill-ring ()
+  (when (string-match "/tmp/[0-9]+\\.md$" (or buffer-file-name ""))
+    (kill-new (buffer-string))))
+(add-hook 'after-save-hook #'x-hugh-save-gh-body-to-kill-ring)
+
 ;; TODO: Doesn't skip single asterisks, but leaving that for now.
 (defun x-hugh-clean-bullet-lines (beg end)
   "Clean selected lines: remove **, strip ticket numbers (e.g. MSIMP-85:), normalize dash spacing."
