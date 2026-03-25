@@ -33,6 +33,7 @@
 	 (emacs-lisp-mode . smartparens-mode)
 	 (arduino-mode . smartparens-mode)
 	 (bats-mode . smartparens-mode)
+	 (conf-mode . smartparens-mode)
 	 (emacs-lisp-mode . smartparens-mode)
 	 (groovy-mode . smartparens-mode)
 	 (inferior-python-mode . smartparens-mode)
