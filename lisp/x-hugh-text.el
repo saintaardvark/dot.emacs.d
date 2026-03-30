@@ -130,6 +130,7 @@ The car/cdr bits are from the docstring for boxquote-points.  It's a bit silly t
     (indent-region (car (boxquote-points)) (cdr (boxquote-points)))))
 
 
+;; TODO: This could be made a snippet
 (defun x-hugh-details-summary (arg)
   "Add details/summary tag pair to text.  Useful for PRs.
 With prefix argument, uses `prod' instead of `stage'."
@@ -140,7 +141,9 @@ With prefix argument, uses `prod' instead of `stage'."
     (insert "```\n")
     (insert "details go here inside a code block\n")
     (insert "```\n")
-    (insert "</details>\n")))
+    (insert "</details>\n")
+    ;; Put cursor at the "details go here" line
+    (forward-line -3)))
 
 (defun x-hugh-details-surround ()
   "Surround regions with details tags.  Useful for PRs."
