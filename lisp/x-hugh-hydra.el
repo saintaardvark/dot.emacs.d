@@ -40,6 +40,7 @@
 (defhydra hydra-dev (:exit t)
   ("a" eglot-code-actions "Eglot code actions")
   ("b" x-hugh-blank-pr "Blank PR")
+  ("B" x-hugh-clean-bullet-lines "Clean bullets")
   ("c" (describe-keymap combobulate-key-map) "Combobulate keymap")
   ("d" (x-hugh-open-preferred-repo-dir) "Dev dir")
   ("e" eglot "eglot")
