@@ -63,6 +63,7 @@
   ("[" eldoc-box-hover-mode "eldoc hover mode")
   ("]" eldoc-box-hover-at-point-mode "eldoc hover at point mode")
   ("=" x-hugh-move-to-next-assignment-value "=")
+  ("?" magit-blame "magit-blame")
   )
 
 (defhydra hydra-elisp (:exit t)
@@ -163,6 +164,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 
 (defhydra hydra-window (:color amaranth :timeout 5)
   "window"
+  ("d" mp-toggle-window-dedication "Toggle window dedication")
   ("h" windmove-left)
   ("j" windmove-down)
   ("k" windmove-up)
@@ -240,6 +242,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("s" delete-trailing-whitespace "Delete trailing whitespace")
   ("t" x-hugh-markdown-code-block "Markdown code block")
   ("v" visual-line-mode "visual-lines-mode")
+  ("/" x-hugh-copy-and-comment-line "Comment line and copy") 
   )
 
 (defhydra hydra-shell ()
