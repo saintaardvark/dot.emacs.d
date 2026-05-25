@@ -89,6 +89,7 @@
   ("b" x-hugh-edit-dot-bashrc ".bashrc")
   ("B" (find-file "~/.bashrc_local") ".bashrc_local")
   ("c" x-hugh-company-coming "Company coming!")
+  ("C" (find-file "~/.claude") "Claude")
   ("d" x-hugh-die-outlook-die "die, Outlook, die")
   ("D" (find-file "~/.local/share/applications") "Open desktop shortcuts directory")
   ("e" (dired "~/bin") "~/bin")
