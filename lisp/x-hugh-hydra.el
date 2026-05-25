@@ -104,7 +104,7 @@
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
   ("u" (calculator) "Calculator")
   ("w" (image-dired "~/Pictures/Wallpaper") "Wallpaper")
-  ("x" (dired "~/Downloads" "-l --sort=time") "Downloads") ; newest first
+  ("x" (dired "~/Downloads" "-la --sort=time") "Downloads") ; newest first
   ("y" (calendar) "Calendar")
   ("z" (dired "~/Pictures/Screenshots/" "-l --sort=time") "Screenshots") ; newest first
   )
