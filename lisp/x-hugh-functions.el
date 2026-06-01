@@ -354,24 +354,6 @@ Return a list of strings."
        (split-string lines "\n")))))
 
 (defun x-hugh-pick-a-ticket ()
-  "Pick a ticket that's recorded in the journal; handy for branches, repeated logs, etc.
-
-This depends on ~/bin/which_ticket-no_fzf.sh, which should be replaced by some simple elisp.
-"
-  (interactive)
-  (let ((options (run-shell-script-and-capture-output-as-list (expand-file-name "~/bin/which_ticket-no_fzf.sh"))))
-    (helm :sources (helm-build-sync-source "Select an Option"
-                     :candidates options
-                     :action (lambda (selected)
-                               (setq selected (if (stringp selected) selected nil))
-                               (if selected
-                                   (progn
-                                     (message "You selected: %s" selected)
-                                     selected)
-                                 (error "No selection made.")))
-                     :volatile t))))
-
-(defun x-hugh-pick-a-ticket-all-elisp-all-the-time-baby ()
   "Pick a ticket recorded in the journal using only elisp.
 
 Reads the last 500 lines of `~/orgmode/journal.org', extracts lines
