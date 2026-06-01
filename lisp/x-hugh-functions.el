@@ -358,6 +358,46 @@ This depends on ~/bin/which_ticket-no_fzf.sh, which should be replaced by some s
                                  (error "No selection made.")))
                      :volatile t))))
 
+(defun x-hugh-pick-a-ticket-all-elisp-all-the-time-baby ()
+  "Pick a ticket recorded in the journal using only elisp.
+
+Reads the last 500 lines of `~/orgmode/journal.org', extracts lines
+containing DNS-, DS-, or MSIMP- ticket references, strips leading
+text before the ticket prefix, filters to lines with a colon (i.e.
+org headings of the form TICKET-NNN: description), deduplicates, and
+sorts by ticket number descending.  Returns the selected string,
+e.g. `DNS-123: De-quux the frobnicator token'."
+  (interactive)
+  (let* ((lines (with-temp-buffer
+                  (insert-file-contents (expand-file-name "~/orgmode/journal.org"))
+                  (goto-char (point-max))
+                  (forward-line -500)
+                  (split-string (buffer-substring (point) (point-max)) "\n" t)))
+         (ticket-re "\\(?:DNS\\|DS\\|MSIMP\\)-")
+         (matched (cl-remove-if-not
+                   (lambda (line) (string-match-p ticket-re line))
+                   lines))
+         (stripped (mapcar
+                    (lambda (line)
+                      (replace-regexp-in-string
+                       (concat ".*\\(" ticket-re "\\)") "\\1" line))
+                    matched))
+         (with-colon (cl-remove-if-not
+                      (lambda (s) (string-match-p ":" s))
+                      stripped))
+         (candidates (sort (delete-dups with-colon)
+                           (lambda (a b)
+                             (let ((na (and (string-match "-\\([0-9]+\\)" a)
+                                           (string-to-number (match-string 1 a))))
+                                   (nb (and (string-match "-\\([0-9]+\\)" b)
+                                            (string-to-number (match-string 1 b)))))
+                               (> (or na 0) (or nb 0)))))))
+    (let ((selected (helm :sources (helm-build-sync-source "Select a ticket"
+                                     :candidates candidates
+                                     :volatile t)
+                          :buffer "*helm pick ticket*")))
+      (or selected (error "No selection made.")))))
+
 ;; Source: https://www.emacswiki.org/emacs/IncrementNumber
 (defun increment-number-at-point ()
   "Increment number at point."
