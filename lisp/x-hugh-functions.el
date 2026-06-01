@@ -6,6 +6,19 @@
 
 ;;; Code:
 
+(defgroup x-hugh nil
+  "Personal settings and functions."
+  :group 'tools)
+
+(defcustom x-hugh-ticket-prefixes '("DNS" "DS" "MSIMP")
+  "Jira-style ticket prefixes to recognise in the journal."
+  :type '(repeat string)
+  :group 'x-hugh)
+
+(defun x-hugh--ticket-re ()
+  "Return a regex matching any prefix in `x-hugh-ticket-prefixes' followed by a dash."
+  (concat "\\(?:" (mapconcat #'regexp-quote x-hugh-ticket-prefixes "\\|") "\\)-"))
+
 (defun x-hugh-edit-completing-read (arg dir prefix)
   "Edit files matching a particular pattern.
 
@@ -362,18 +375,18 @@ This depends on ~/bin/which_ticket-no_fzf.sh, which should be replaced by some s
   "Pick a ticket recorded in the journal using only elisp.
 
 Reads the last 500 lines of `~/orgmode/journal.org', extracts lines
-containing DNS-, DS-, or MSIMP- ticket references, strips leading
-text before the ticket prefix, filters to lines with a colon (i.e.
-org headings of the form TICKET-NNN: description), deduplicates, and
-sorts by ticket number descending.  Returns the selected string,
+containing ticket references (see `x-hugh-ticket-prefixes'), strips
+leading text before the ticket prefix, filters to lines with a colon
+(i.e. org headings of the form TICKET-NNN: description), deduplicates,
+and sorts by ticket number descending.  Returns the selected string,
 e.g. `DNS-123: De-quux the frobnicator token'."
   (interactive)
-  (let* ((lines (with-temp-buffer
+  (let* ((ticket-re (x-hugh--ticket-re))
+         (lines (with-temp-buffer
                   (insert-file-contents (expand-file-name "~/orgmode/journal.org"))
                   (goto-char (point-max))
                   (forward-line -500)
                   (split-string (buffer-substring (point) (point-max)) "\n" t)))
-         (ticket-re "\\(?:DNS\\|DS\\|MSIMP\\)-")
          (matched (cl-remove-if-not
                    (lambda (line) (string-match-p ticket-re line))
                    lines))
