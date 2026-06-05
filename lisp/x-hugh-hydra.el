@@ -243,6 +243,8 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("s" delete-trailing-whitespace "Delete trailing whitespace")
   ("t" x-hugh-markdown-code-block "Markdown code block")
   ("v" visual-line-mode "visual-lines-mode")
+  ("x" unfill-region "unfill-region")
+  ("y" fill-region "fill-region")
   ("/" x-hugh-copy-and-comment-line "Comment line and copy") 
   )
 
