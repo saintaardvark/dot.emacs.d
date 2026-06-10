@@ -1,4 +1,4 @@
-;;-*-coding: utf-8;-*-
+;; -*- coding: utf-8; lexical-binding: t -*-
 (define-abbrev-table 'global-abbrev-table
   '(
     (":table:" "(╯°□°)╯︵ ┻━┻" nil :count 2)
@@ -11,6 +11,7 @@
     ("iamgery" "imagery" nil :count 0)
     ("kakfa" "kafka" nil :count 2)
     ("pgs" "PostgreSQL" nil :count 2)
+    ("pr" "PR" nil :count 1)
     ("r3" "RSSSA" nil :count 1)
     ("rjs" "RSSSA" nil :count 1)
     ("rw" "rsync window_detector/ /pyboard/" nil :count 0)
