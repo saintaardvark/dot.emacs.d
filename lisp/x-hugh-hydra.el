@@ -122,19 +122,19 @@ Goto:
 ^^^^^^^^---------------------------------------------------------------------------
 _c_: char           _w_: word by char     _h_: headline in buffer  _o_: helm-swiper
 _2_: 2 chars        _W_: some word        _a_: heading in agenda   _p_: helm-swiper
-_L_: char in line                       _q_: swoop org buffers   _f_: search forward
-^  ^                                    ^ ^                      _b_: search backward
+_l_: char in line                       _q_: swoop org buffers   _f_: ffap-menu
+^  ^                                    ^ ^
 -----------------------------------------------------------------------------------
-_B_: helm-buffers       _g_: avy-goto-line  _C_: avy-copy-line  _y_: show snippets
+_b_: helm-buffers       _g_: avy-goto-line  _C_: avy-copy-line  _y_: show snippets
 _m_: helm-mini          _i_: ace-window
 _R_: helm-recentf
-_x_: helm-M-x
+
 
 _'_: Delete trailing whitespace               _._: mark position _/_: jump to mark
 "
   ("c" avy-goto-char)
   ("2" avy-goto-char-2)
-  ("L" avy-goto-char-in-line)
+  ("l" avy-goto-char-in-line)
   ("w" avy-goto-word-1)
   ;; jump to beginning of some word
   ("W" avy-goto-word-0)
@@ -152,12 +152,11 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("o" swiper-helm)
   ("p" swiper-helm)
 
-  ("f" isearch-forward)
-  ("b" isearch-backward)
+  ("f" ffap-menu)
 
   ("." org-mark-ring-push :color red)
   ("/" org-mark-ring-goto :color blue)
-  ("B" helm-buffers-list)
+  ("b" helm-buffers-list)
   ("m" helm-mini)
   ("R" helm-recentf)
   ("y" yas-describe-tables)
@@ -245,7 +244,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("v" visual-line-mode "visual-lines-mode")
   ("x" unfill-region "unfill-region")
   ("y" fill-region "fill-region")
-  ("/" x-hugh-copy-and-comment-line "Comment line and copy") 
+  ("/" x-hugh-copy-and-comment-line "Comment line and copy")
   )
 
 (defhydra hydra-shell ()
