@@ -172,5 +172,22 @@
 (add-hook 'python-ts-mode-hook 'pyvenv-autoload)
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
 
+;; Written by claude
+(defun run-python-with-uv (&rest packages)
+  "Start an inferior Python REPL via `uv run`, with optional extra PACKAGES.
+Example: (run-python-with-uv \"numpy\" \"pandas\")"
+  (interactive)
+  (let* ((pkg-args (mapconcat (lambda (p) (concat "--with " p)) packages " "))
+         (python-shell-interpreter "uv")
+         (python-shell-interpreter-args
+          (string-trim (concat "run " pkg-args " python"))))
+    (run-python nil nil t)))
+
+;; Written by claude
+(defun run-python-numpy ()
+  "Start an inferior Python REPL with numpy available."
+  (interactive)
+  (run-python-with-uv "numpy"))
+
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here

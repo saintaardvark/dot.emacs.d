@@ -302,6 +302,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("h" x-hugh-highlight-indentation-mode-toggle "Toggle indentation highlight")
   ("f" x-hugh-python-fixme "FIXME")
   ("r" run-python "Python shell")
+  ("u" run-python-numpy "Run python with uv/numpy")
   ("v" pyvenv-activate "pyvenv-activate")
   ("V" (dired ".venv/lib/python3.11/site-packages") "Venv site-packages dir")
   )
