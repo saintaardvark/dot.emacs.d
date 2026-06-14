@@ -189,5 +189,9 @@ Example: (run-python-with-uv \"numpy\" \"pandas\")"
   (interactive)
   (run-python-with-uv "numpy"))
 
+;; Seems to stop the odd hesitations when using run-python-numpy
+(add-hook 'inferior-python-mode-hook
+          (lambda () (company-mode -1)))
+
 (provide 'x-hugh-python)
 ;;; x-hugh-python.el ends here
