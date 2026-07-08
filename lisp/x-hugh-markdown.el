@@ -13,6 +13,18 @@
          ("\\.mdwn\\'" . markdown-mode)
 	 (".*mdx$" . markdown-mode)))
 
+;; 😮 🤖
+(with-eval-after-load 'hideshow
+  (add-to-list 'hs-special-modes-alist
+               (list 'markdown-mode
+                     "^<summary>"                              ; block start
+                     "^</details>"                             ; block end
+                     "<!--"                                    ; comment start
+                     (lambda (_arg) (re-search-forward "^</details>" nil t))
+                     nil)))
+
+(add-hook 'markdown-mode-hook #'hs-minor-mode)
+
 (defun x-hugh-rf-markdown-footnote (&optional imgplease)
   "Add a footnote in Markdown mode at the *end* of the buffer.
 

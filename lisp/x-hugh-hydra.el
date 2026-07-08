@@ -22,6 +22,7 @@
   ("n" hydra-goto/body "navigate")
   ("o" hydra-org/body "org")
   ("r" hydra-emoji/body "emoji")
+  ("s" hydra-body/hideshow "hideshow")
   ("t" hydra-text/body "text")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
@@ -336,6 +337,18 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("-" (insert "😑") "😑")
   ("3" (insert "⚠️ DRAG03 ⚠️") "⚠️ DRAG03 ⚠️")
   )
+
+(defhydra hydra-hideshow (:hint nil)
+  "
+Hideshow  _t_: toggle  _h_: hide block  _s_: show block  _H_: hide all  _S_: show all  _l_: hide level  _q_: quit
+"
+  ("t" hs-toggle-hiding)
+  ("h" hs-hide-block)
+  ("s" hs-show-block)
+  ("H" hs-hide-all)
+  ("S" hs-show-all)
+  ("l" hs-hide-level)
+  ("q" nil :exit t))
 
 (defun x-hugh-jump-to-hydra ()
   "Jump to a particular hydra definition so I can edit it."
