@@ -245,5 +245,30 @@ Source: https://stackoverflow.com/a/41079223"
   (if (looking-at (rx whitespace))
       (skip-chars-forward (rx whitespace))))
 
+
+(defun tf-plan-wrap-details ()
+  "Wrap each Terraform plan resource block in the buffer with `<details>' tags.
+
+  A block starts at a line matching `  # module...' and ends at the next
+  top-level closing brace line (four spaces followed by `}').  The header line
+  becomes the `<summary>' (leading whitespace stripped); the resource body is
+  placed verbatim inside a fenced code block.  A blank line separates blocks.
+
+Created by Claude."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^  \\(# module.*\\)$" nil t)
+      (let ((summary (match-string 1))
+            (block-start (match-beginning 0))
+            (body-start (line-beginning-position 2)))  ; start of next line
+        (when (re-search-forward "^    }$" nil t)
+          (let* ((body-end (line-end-position))
+                 (body (buffer-substring-no-properties body-start body-end)))
+            (delete-region block-start body-end)
+            (goto-char block-start)
+            (insert (format "<details>\n<summary>%s</summary>\n\n```\n%s\n```\n</details>"
+                            summary body))))))))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.
