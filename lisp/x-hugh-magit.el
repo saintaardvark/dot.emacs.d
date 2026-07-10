@@ -143,17 +143,115 @@ Meant for use in magit."
   :after consult)
 
 ;; OH WOW, this actually works really well 😍
-(defun x-hugh-gpc()
-  "Try to run gh pr create in ansi-term."
+(defvar x-hugh-gpc--origins (make-hash-table :test 'equal)
+  "Map a gh PR temp directory to data about the run that created it.
+Keys are truename directories (see `x-hugh-gpc'); values are plists
+of (:buffer TERM-BUFFER :root PROJECT-ROOT :dir TMPDIR).")
+
+(defvar x-hugh-gpc--counter 0
+  "Monotonic counter making each `x-hugh-gpc' temp directory unique.")
+
+(defvar-local x-hugh-gpc--origin-buffer nil
+  "The *x-hugh-gpc* term buffer that spawned this PR edit buffer.")
+
+(defun x-hugh-gpc--tmp-base (root)
+  "Return a directory under ROOT to hold gh's PR temp file.
+Prefer inside .git -- invisible to `git status', but still within
+the project so projectile resolves it -- falling back to a
+dot-directory in ROOT when .git is not a real directory (e.g. a
+worktree, where .git is a file)."
+  (let ((dotgit (expand-file-name ".git" root)))
+    (if (file-directory-p dotgit)
+        (expand-file-name "x-hugh-gpc" dotgit)
+      (expand-file-name ".x-hugh-gpc-tmp" root))))
+
+(defun x-hugh-gpc (&optional extra-args)
+  "Run `gh pr create' in an ansi-term.
+Point gh's TMPDIR at a throwaway directory inside the current
+project so the PR body buffer gh opens is seen by projectile, and
+remember which term buffer owns it so the edit buffer can jump
+back with `x-hugh-gpc-return-to-origin'.
+
+EXTRA-ARGS is a list of additional shell-safe arguments (flags such
+as \"--draft\" or \"--base=main\") appended to the gh command.  The
+transient menu `x-hugh-gh-pr' in x-hugh-gh-transient.el supplies it;
+callers must not pass values that need shell quoting."
   (interactive)
-  ;; Use `bash -c` here.  I've had to turn off sourcing .bashrc at
+  ;; Use `bash -c' here.  I've had to turn off sourcing .bashrc at
   ;; Gnome login, and that means losing the EDITOR and github variable
   ;; automagic.
-  (ansi-term "bash -c 'gh pr create'" "*x-hugh-gpc*"))
+  (let* ((root (or (and (fboundp 'projectile-project-root)
+                        (projectile-project-root))
+                   default-directory))
+         (id (setq x-hugh-gpc--counter (1+ x-hugh-gpc--counter)))
+         (tmpdir (file-name-as-directory
+                  (expand-file-name (number-to-string id)
+                                    (x-hugh-gpc--tmp-base root))))
+         (process-environment (cons (concat "TMPDIR=" tmpdir)
+                                    process-environment))
+         (command (mapconcat #'identity
+                             (append '("gh" "pr" "create") extra-args)
+                             " ")))
+    (make-directory tmpdir t)
+    (let ((buf (ansi-term (format "bash -c '%s'" command) "*x-hugh-gpc*")))
+      (puthash (file-truename tmpdir)
+               (list :buffer buf :root root :dir tmpdir)
+               x-hugh-gpc--origins)
+      buf)))
+
+(defun x-hugh-gpc-return-to-origin ()
+  "Switch to the *x-hugh-gpc* buffer that spawned this PR edit buffer."
+  (interactive)
+  (if (buffer-live-p x-hugh-gpc--origin-buffer)
+      (pop-to-buffer x-hugh-gpc--origin-buffer)
+    (message "No live x-hugh-gpc buffer for this PR")))
+
+(define-minor-mode x-hugh-gpc-edit-mode
+  "Minor mode for a gh PR body buffer opened via `x-hugh-gpc'.
+\\{x-hugh-gpc-edit-mode-map}"
+  :lighter " gpc"
+  :keymap (let ((m (make-sparse-keymap)))
+            (define-key m (kbd "C-c g") #'x-hugh-gpc-return-to-origin)
+            m))
+
+(defun x-hugh-gpc--adopt ()
+  "Wire a freshly visited gh PR body buffer back to its origin.
+Runs from `server-visit-hook': if the visited file lives under a
+directory registered by `x-hugh-gpc', point `default-directory' at
+the project root, record the origin term buffer, enable
+`x-hugh-gpc-edit-mode', and arrange to return there and clean up
+the temp directory when the buffer is killed (gh finishes the edit
+on \\[server-edit], which kills the client buffer)."
+  (let ((file (and buffer-file-name (file-truename buffer-file-name))))
+    (when file
+      (catch 'done
+        (maphash
+         (lambda (dir data)
+           (when (string-prefix-p dir file)
+             (let ((origin (plist-get data :buffer))
+                   (root (plist-get data :root))
+                   (tmpdir (plist-get data :dir)))
+               (setq x-hugh-gpc--origin-buffer origin)
+               (setq default-directory root)
+               (x-hugh-gpc-edit-mode 1)
+               (add-hook 'kill-buffer-hook
+                         (lambda ()
+                           (remhash dir x-hugh-gpc--origins)
+                           (when (file-directory-p tmpdir)
+                             (delete-directory tmpdir t))
+                           (when (buffer-live-p origin)
+                             (run-at-time 0 nil #'pop-to-buffer origin)))
+                         nil t))
+             (throw 'done nil)))
+         x-hugh-gpc--origins)))))
+
+(add-hook 'server-visit-hook #'x-hugh-gpc--adopt)
 
 ;; In conjunction with above:
 (defun x-hugh-save-gh-body-to-kill-ring ()
-  (when (string-match "/tmp/[0-9]+\\.md$" (or buffer-file-name ""))
+  "Copy a gh PR body buffer to the kill ring on save."
+  (when (or x-hugh-gpc-edit-mode
+            (string-match "/tmp/[0-9]+\\.md$" (or buffer-file-name "")))
     (kill-new (buffer-string))))
 (add-hook 'after-save-hook #'x-hugh-save-gh-body-to-kill-ring)
 

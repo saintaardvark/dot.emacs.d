@@ -87,6 +87,7 @@
 (use-package x-hugh-company)
 (use-package x-hugh-yasnippet)
 (use-package x-hugh-gh)
+(use-package x-hugh-gh-transient)
 (use-package x-hugh-smartparens)
 (use-package x-hugh-docker)
 (use-package x-hugh-arduino)
