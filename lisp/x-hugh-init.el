@@ -64,6 +64,7 @@
 (use-package x-hugh-reference)
 (use-package x-hugh-modes)
 (use-package x-hugh-text)
+(use-package x-hugh-dubcaps)
 (use-package x-hugh-email)
 (use-package x-hugh-markdown)
 (use-package x-hugh-folding)
