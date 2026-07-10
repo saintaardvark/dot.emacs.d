@@ -22,8 +22,11 @@
         (setq helm-ff-newfile-prompt-p nil)
 	;; Oh, thank god
 	(setq helm-find-files-ignore-thing-at-point t))
-      (use-package helm-swoop
-	:ensure t)
+
+      ;; This is contacting orgmode.org for some reason, and it's hanging.  Commenting this out for now.
+      ;; June 19, 2026.
+      ;; (use-package helm-swoop
+      ;; 	:ensure t)
       (use-package helm-xref
 	:ensure t)
       ))
