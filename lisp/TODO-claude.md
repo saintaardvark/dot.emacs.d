@@ -35,10 +35,19 @@ First run: accept the nono pack install from a regular shell:
       allows ALL outbound traffic.  Now URGENT: as of 2026-08-04
       claude runs with --dangerously-skip-permissions, so nono is the
       only boundary -- open network means silent exfiltration is
-      possible until the allowlist is on.  Try the `--allow-domain`
-      allowlist sketched in `bin/claude-nono`.  Expect web
-      search/fetch and in-sandbox pip/npm to break until their hosts
-      are added too.
+      possible until the allowlist is on.
+  - **PLAN WRITTEN 2026-08-05: see `NETWORK-FILTERING-PLAN.md` at the
+    repo root** -- default-deny egress via a `claude-local` profile
+    that extends the pack profile, rather than `--allow-domain` flags
+    in `bin/claude-nono` (the wrapper is inside the agent's write set
+    when cwd is ~/.emacs.d).  Nothing applied yet.  Notes from that
+    work: the domain sketch in `bin/claude-nono` is stale (no statsig,
+    no sentry in CLI 2.1.220 -- it is api.anthropic.com +
+    platform.claude.com, plus downloads.claude.ai for updates); one
+    `--allow-domain` flips nono into proxy-only default-deny mode; git
+    is already broken in-sandbox because /etc/gitconfig is not
+    readable, fixed in the same profile.  Expect WebFetch and ssh git
+    remotes to break; WebSearch survives (server-side)
   - correction to "nono is the only boundary": it is not, and was not
     before the EDITOR change.  `mcp__ide__executeCode` evaluates
     arbitrary elisp in the Emacs that runs *outside* the sandbox, so
@@ -50,7 +59,10 @@ First run: accept the nono pack install from a regular shell:
     to stop exfiltration: the allowlist constrains the sandboxed
     process, not elisp evaluated in Emacs.  If that matters, the fix
     is on the Emacs side (drop executeCode from the tool set, or
-    gate it), not in the nono profile
+    gate it), not in the nono profile.  The plan does this as change
+    C: `claude-code-ide-enable-execute-code` is a real defcustom, so
+    it is one line in the `:custom` block -- openFile, openDiff and
+    getDiagnostics are unaffected
 - [x] live within emacs -- claude-code.el in a ghostel buffer
 - [x] ability to display files claude is thinking about
   - monet openFile works (tested 2026-08-04 via /ide).  The --ide
