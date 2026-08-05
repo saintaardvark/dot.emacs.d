@@ -35,6 +35,11 @@
   :custom
   (claude-code-terminal-backend 'ghostel)
   (claude-code-program (expand-file-name "bin/claude-nono" user-emacs-directory))
+  ;; nono strips env vars inside the sandbox, so the usual
+  ;; CLAUDE_CODE_SSE_PORT auto-connect never happens.  --ide makes
+  ;; claude connect via the ~/.claude/ide lockfile instead (works as
+  ;; long as monet's is the only live lockfile for the project).
+  (claude-code-program-switches '("--ide"))
   :config
   (add-hook 'claude-code-process-environment-functions
             #'monet-start-server-function)
