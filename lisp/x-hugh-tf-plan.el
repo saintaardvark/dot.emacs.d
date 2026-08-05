@@ -227,8 +227,11 @@ JSON cannot be had."
              (lambda (plan)
                (x-hugh-tf-plan--discard-plan-file plan-file)
                (if plan
-                   (display-buffer
-                    (x-hugh-tf-plan-render plan environment root))
+                   (progn
+                     (display-buffer
+                      (x-hugh-tf-plan-render plan environment root))
+                     (funcall x-hugh-tf-plan-summary-function
+                              (x-hugh-tf-plan-verdict plan environment)))
                  (message "Could not read the plan as JSON; showing the text")
                  (display-buffer text-buffer)))))
         (unless (string-prefix-p "finished" status)
@@ -543,6 +546,15 @@ Replacement destroys, so it is worth making louder than an update.")
 (defface x-hugh-tf-plan-noise-face
   '((t :inherit shadow))
   "Face for init and refresh output.")
+
+(defface x-hugh-tf-plan-clean-face
+  '((t :inherit success :weight bold))
+  "Face for the banner of a plan that would change nothing.")
+
+(defface x-hugh-tf-plan-changes-face
+  '((t :weight bold))
+  "Face for the banner of a plan that would change something.
+Weight only, so that the counts inside it keep their own colours.")
 
 (defface x-hugh-tf-plan-unknown-face
   '((t :inherit shadow :slant italic))
@@ -941,44 +953,110 @@ N init+refresh output  t tree view  g re-run  q quit")
     ('read "read")
     (_ (symbol-name action))))
 
-(defun x-hugh-tf-plan--count (label count face)
-  "Return COUNT and LABEL fontified with FACE, or nil if COUNT is zero."
-  (unless (zerop count)
-    (concat (propertize (number-to-string count) 'face face) " " label)))
+;;;; The verdict
 
-(defun x-hugh-tf-plan--summary-line (plan environment)
-  "Return the heading line summarising PLAN for ENVIRONMENT.
-Replacements are counted as replacements rather than as an add and a
-destroy, which is what Terraform's own summary does."
+(defcustom x-hugh-tf-plan-use-emoji t
+  "When non-nil, lead the verdict banner with an emoji."
+  :type 'boolean)
+
+(defcustom x-hugh-tf-plan-summary-function #'x-hugh-tf-plan-echo-summary
+  "Function called with the verdict, as a string, when a plan finishes.
+A plan takes minutes, by which time you are probably looking at
+something else, so the answer is announced rather than only written to a
+buffer.  Set this to `ignore' for silence, or to something built on
+`alert' for a desktop notification."
+  :type 'function)
+
+(defconst x-hugh-tf-plan--count-labels
+  '((create "to add" x-hugh-tf-plan-create-face)
+    (update "to change" x-hugh-tf-plan-update-face)
+    (replace "to replace" x-hugh-tf-plan-replace-face)
+    (delete "to destroy" x-hugh-tf-plan-delete-face)
+    (read "to read" x-hugh-tf-plan-read-face))
+  "Action, wording and face for each line of a plan summary.
+Replacements are counted as replacements, rather than as an add and a
+destroy as Terraform's own summary does, because a replacement destroys
+and that is worth seeing.")
+
+(defun x-hugh-tf-plan--counts-text (plan &optional faced)
+  "Return the counts in PLAN as a string, empty if nothing would change.
+With FACED, fontify each number by its action."
   (let ((counts (x-hugh-tf-plan-summary plan)))
-    (concat
-     (propertize (format "Plan %s" environment)
-                 'face 'x-hugh-tf-plan-heading-face)
-     "  "
-     (if (plist-get plan :changes)
-         (string-join
-          (delq nil
-                (list (x-hugh-tf-plan--count
-                       "to add" (alist-get 'create counts)
-                       'x-hugh-tf-plan-create-face)
-                      (x-hugh-tf-plan--count
-                       "to change" (alist-get 'update counts)
-                       'x-hugh-tf-plan-update-face)
-                      (x-hugh-tf-plan--count
-                       "to replace" (alist-get 'replace counts)
-                       'x-hugh-tf-plan-replace-face)
-                      (x-hugh-tf-plan--count
-                       "to destroy" (alist-get 'delete counts)
-                       'x-hugh-tf-plan-delete-face)
-                      (x-hugh-tf-plan--count
-                       "to read" (alist-get 'read counts)
-                       'x-hugh-tf-plan-read-face)))
-          ", ")
-       (propertize "no changes" 'face 'success))
-     (propertize (format "  (terraform %s, %d resources unchanged)"
-                         (or (plist-get plan :terraform-version) "?")
-                         (or (plist-get plan :unchanged) 0))
-                 'face 'x-hugh-tf-plan-noise-face))))
+    (string-join
+     (delq nil
+           (mapcar
+            (lambda (entry)
+              (let ((count (or (alist-get (car entry) counts) 0)))
+                (unless (zerop count)
+                  (concat (if faced
+                              (propertize (number-to-string count)
+                                          'face (nth 2 entry))
+                            (number-to-string count))
+                          " " (nth 1 entry)))))
+            x-hugh-tf-plan--count-labels))
+     ", ")))
+
+(defun x-hugh-tf-plan--clean-p (plan)
+  "Return non-nil if PLAN would change nothing.
+Drift does not count: it has already happened, and no apply is needed to
+respond to it unless Terraform also proposes a change."
+  (not (or (plist-get plan :changes)
+           (plist-get plan :outputs))))
+
+(defun x-hugh-tf-plan-verdict (plan environment &optional faced)
+  "Return the one-line verdict on PLAN for ENVIRONMENT.
+With FACED, fontify it for display in a buffer."
+  (let* ((errored (plist-get plan :errored))
+         (clean (x-hugh-tf-plan--clean-p plan))
+         (face (cond (errored 'error)
+                     (clean 'x-hugh-tf-plan-clean-face)
+                     (t 'x-hugh-tf-plan-changes-face)))
+         (text (cond
+                (errored
+                 (format "Terraform errored; the plan for %s is incomplete"
+                         environment))
+                (clean
+                 (format "No changes.  %s matches the configuration."
+                         environment))
+                (t
+                 (format "%s in %s"
+                         (x-hugh-tf-plan--counts-text plan faced)
+                         environment))))
+         (line (concat (if x-hugh-tf-plan-use-emoji
+                           (concat (cond (errored "❌") (clean "✅") (t "⚠️"))
+                                   "  ")
+                         "")
+                       text)))
+    (when faced
+      ;; Appended, so that the counts keep the colours they already have.
+      (add-face-text-property 0 (length line) face t line))
+    line))
+
+(defun x-hugh-tf-plan-echo-summary (summary)
+  "Show SUMMARY in the echo area."
+  (message "%s" summary))
+
+(defun x-hugh-tf-plan--insert-banner (plan environment)
+  "Insert the verdict on PLAN for ENVIRONMENT, set apart by whitespace."
+  (magit-insert-heading (x-hugh-tf-plan-verdict plan environment t))
+  (let ((drift (length (plist-get plan :drift))))
+    (insert "\n"
+            (propertize
+             (format "terraform %s, %d resources unchanged%s"
+                     (or (plist-get plan :terraform-version) "?")
+                     (or (plist-get plan :unchanged) 0)
+                     (if (zerop drift)
+                         ""
+                       (format ", %d changed outside Terraform" drift)))
+             'face 'x-hugh-tf-plan-noise-face)
+            "\n")))
+
+(defun x-hugh-tf-plan--insert-footer (plan)
+  "Insert the summary of PLAN again at the end, where Terraform puts it."
+  (insert "\n"
+          (propertize "Plan: " 'face 'x-hugh-tf-plan-heading-face)
+          (x-hugh-tf-plan--counts-text plan t)
+          ".\n"))
 
 (defun x-hugh-tf-plan--attribute-line (attribute width)
   "Return ATTRIBUTE as a line, with its key padded to WIDTH."
@@ -1243,14 +1321,16 @@ t text view  g re-run  q quit"))
               x-hugh-tf-plan--plan plan
               default-directory (or root default-directory))
         (magit-insert-section (tf-plan)
-          (magit-insert-heading
-            (x-hugh-tf-plan--summary-line plan environment))
-          (when (plist-get plan :errored)
-            (insert (propertize "Terraform reported an error; the plan is incomplete.\n"
-                                'face 'error)))
-          (x-hugh-tf-plan--insert-drift plan)
-          (x-hugh-tf-plan--insert-changes plan)
-          (x-hugh-tf-plan--insert-outputs plan))
+          (x-hugh-tf-plan--insert-banner plan environment)
+          ;; With nothing to apply there is no tree worth drawing, and
+          ;; drawing one buries the answer.  Drift comes after the
+          ;; changes because it is context rather than something to do.
+          (if (x-hugh-tf-plan--clean-p plan)
+              (x-hugh-tf-plan--insert-drift plan)
+            (x-hugh-tf-plan--insert-changes plan)
+            (x-hugh-tf-plan--insert-outputs plan)
+            (x-hugh-tf-plan--insert-drift plan)
+            (x-hugh-tf-plan--insert-footer plan)))
         ;; Sections record whether they want to be hidden, but nothing
         ;; acts on that until the root is shown; magit does this from
         ;; magit-refresh-buffer.  Without it every section is expanded.
