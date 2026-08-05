@@ -84,7 +84,16 @@ The buffer auto-reverts, so it live-updates as Claude writes to it."
   ;; will silently stop working.  Fix: delete the stale
   ;; ~/.claude/ide/<port>.lock (the live one matches the port shown by
   ;; M-x monet-list-sessions), then restart the claude session.
-  (claude-code-program-switches '("--ide"))
+  (claude-code-program-switches
+   '("--ide"
+     "--append-system-prompt"
+     "You are running inside Emacs with the monet IDE integration.  \
+To show the user a file or location, use the IDE's openFile tool, \
+never emacsclient (you cannot see whether emacsclient worked).  \
+While working on nontrivial tasks, keep running notes -- current \
+plan, discoveries, explanations -- in NOTES-claude.md at the \
+project root, updating as you go; the user watches that file live \
+in a side window."))
   :config
   (add-hook 'claude-code-process-environment-functions
             #'monet-start-server-function)
