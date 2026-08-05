@@ -71,10 +71,37 @@ The buffer auto-reverts, so it live-updates as Claude writes to it."
     (display-buffer-in-side-window
      buf '((side . right) (window-width . 0.4)))))
 
+(defcustom x-hugh-claude-ide-nudge-delay 6
+  "Seconds after session start before auto-sending /ide."
+  :type 'number
+  :group 'tools)
+
+(defun x-hugh-claude--nudge-ide ()
+  "Auto-send /ide to a freshly started claude session.
+The CLI's env-var auto-connect establishes a healthy websocket to
+monet, but the mcp__ide tools never reach the model -- the CLI
+appears to freeze its toolset at startup (see NO_IDE_DIAGNOSIS.md).
+A fresh /ide issued after startup retrofits the tools, so poke it
+automatically.  Runs from `claude-code-start-hook' with the new
+session buffer current.  Uses the same internal send pattern as
+`claude-code--do-send-command', which would prompt for a buffer when
+called from a timer."
+  (let ((buf (current-buffer)))
+    (run-with-timer
+     x-hugh-claude-ide-nudge-delay nil
+     (lambda ()
+       (when (buffer-live-p buf)
+         (with-current-buffer buf
+           (claude-code--term-send-string claude-code-terminal-backend "/ide")
+           (sit-for 0.1)
+           (claude-code--term-send-string claude-code-terminal-backend
+                                          (kbd "RET"))))))))
+
 (use-package claude-code
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
   :bind (:map claude-code-command-map
               ("N" . x-hugh-claude-notes))
+  :hook (claude-code-start . x-hugh-claude--nudge-ide)
   :custom
   (claude-code-terminal-backend 'ghostel)
   (claude-code-program (expand-file-name "bin/claude-nono" user-emacs-directory))
