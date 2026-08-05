@@ -2,7 +2,20 @@
 
 ## Claude + Emacs + nono (https://nono.sh)
 
-Phase 1 done on branch `claude-nono`: `bin/claude-nono` wrapper +
+Take 2 on branch `claude-ide`: switched to claude-code-ide.el
+(manzaltu) after the claude-code.el + monet route stalled -- healthy
+websocket, but mcp__ide tools never reached the model, even with the
+auto-/ide nudge.  Same bin/claude-nono wrapper, same ghostel backend.
+This branch also fixes the dead C-c c prefix (bindings moved to
+use-package :bind: C-c c menu, C-c N notes).
+
+Lead for the monet branch, if ever revisited: monet sets
+ENABLE_IDE_INTEGRATION=t but VS Code sets =true (claude-code-ide.el
+sets it not at all).  If the CLI string-compares "true", that one
+character could be the whole bug -- test by rewriting the env var,
+and report upstream to monet if confirmed.
+
+Phase 1 was on branch `claude-nono`: `bin/claude-nono` wrapper +
 `lisp/x-hugh-claude.el` (claude-code.el + monet, ghostel backend).
 First run: accept the nono pack install from a regular shell:
 `nono run --profile always-further/claude -- claude --version`
