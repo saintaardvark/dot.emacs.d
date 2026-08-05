@@ -81,6 +81,7 @@
 
 ;; Devel
 (use-package x-hugh-compile-mode)
+(use-package x-hugh-claude)
 
 (use-package x-hugh-magit)
 (use-package x-hugh-make)
