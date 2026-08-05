@@ -26,8 +26,11 @@
 
 ;;; Code:
 
+(require 'ansi-color)
 (require 'comint)
 (require 'compile)
+(require 'imenu)
+(require 'outline)
 (require 'seq)
 (require 'subr-x)
 
@@ -204,11 +207,362 @@ already initialised."
 (defun x-hugh-tf-plan--finished (buffer status)
   "Handle the plan in BUFFER having finished with STATUS."
   (with-current-buffer buffer
-    (let ((environment x-hugh-tf-plan--environment))
-      (if (string-prefix-p "finished" status)
-          (message "Plan for %s finished" environment)
+    (let ((environment x-hugh-tf-plan--environment)
+          (text (buffer-substring-no-properties (point-min) (point-max))))
+      (unless (string-prefix-p "finished" status)
         (message "Plan for %s did not finish cleanly: %s"
-                 environment (string-trim status))))))
+                 environment (string-trim status)))
+      (display-buffer (x-hugh-tf-plan--show-text text environment)))))
+
+;;; Faces
+
+(defface x-hugh-tf-plan-create-face
+  '((t :inherit diff-added))
+  "Face for resources and attributes being created.")
+
+(defface x-hugh-tf-plan-delete-face
+  '((t :inherit diff-removed))
+  "Face for resources and attributes being destroyed.")
+
+(defface x-hugh-tf-plan-update-face
+  '((t :inherit diff-changed))
+  "Face for resources and attributes being changed in place.")
+
+(defface x-hugh-tf-plan-replace-face
+  '((t :inherit diff-removed :weight bold))
+  "Face for resources being replaced.
+Replacement destroys, so it is worth making louder than an update.")
+
+(defface x-hugh-tf-plan-read-face
+  '((t :inherit font-lock-constant-face))
+  "Face for data sources read during apply.")
+
+(defface x-hugh-tf-plan-address-face
+  '((t :inherit font-lock-function-name-face))
+  "Face for a resource address.")
+
+(defface x-hugh-tf-plan-heading-face
+  '((t :inherit font-lock-keyword-face :weight bold))
+  "Face for the headings Terraform prints between sections.")
+
+(defface x-hugh-tf-plan-noise-face
+  '((t :inherit shadow))
+  "Face for init and refresh output.")
+
+(defface x-hugh-tf-plan-unknown-face
+  '((t :inherit shadow :slant italic))
+  "Face for values that are unknown or withheld.")
+
+;;; Font lock
+
+(defun x-hugh-tf-plan--header-keyword (verbs face)
+  "Return a font-lock keyword matching `# ADDRESS VERB' lines.
+VERBS is a list of literal strings; the address is fontified as an
+address and the verb and its remainder with FACE."
+  (list (rx-to-string
+         `(seq bol (* space) "# " (group (+ (not (any " ")))) " "
+               (group (or ,@verbs) (* nonl))))
+        '(1 'x-hugh-tf-plan-address-face)
+        (list 2 (list 'quote face))))
+
+(defconst x-hugh-tf-plan-text-font-lock-keywords
+  (list
+   ;; Section headings.
+   (cons (rx bol (or "Terraform will perform the following actions:"
+                     "Note: Objects have changed outside of Terraform"
+                     "Changes to Outputs:"
+                     "Terraform planned the following actions,"
+                     "Plan:"
+                     "Saved the plan to:")
+             (* nonl))
+         ''x-hugh-tf-plan-heading-face)
+   (cons (rx bol "No changes." (* nonl)) ''success)
+
+   ;; Resource headers, faced by what is going to happen.
+   (x-hugh-tf-plan--header-keyword
+    '("will be created") 'x-hugh-tf-plan-create-face)
+   (x-hugh-tf-plan--header-keyword
+    '("will be destroyed" "has been deleted") 'x-hugh-tf-plan-delete-face)
+   (x-hugh-tf-plan--header-keyword
+    '("will be updated in-place" "has changed") 'x-hugh-tf-plan-update-face)
+   (x-hugh-tf-plan--header-keyword
+    '("must be replaced" "will be replaced") 'x-hugh-tf-plan-replace-face)
+   (x-hugh-tf-plan--header-keyword
+    '("will be read during apply") 'x-hugh-tf-plan-read-face)
+
+   ;; Attribute changes.  Indentation is required, because the init
+   ;; output has `- ' lines at column zero that are not diffs, and the
+   ;; text after the glyph has to look like an assignment or a block
+   ;; opener, because embedded YAML in a heredoc has `- ' list items
+   ;; that are not diffs either.
+   '("^  +\\(-/\\+\\|\\+/-\\)\
+ \\([A-Za-z_\"][A-Za-z0-9_\"./-]* *\\(?:=\\|{\\|\"\\).*\\)$"
+     (1 'x-hugh-tf-plan-replace-face) (2 'x-hugh-tf-plan-replace-face))
+   '("^  +\\(\\+\\) \\([A-Za-z_\"][A-Za-z0-9_\"./-]* *\\(?:=\\|{\\|\"\\).*\\)$"
+     (1 'x-hugh-tf-plan-create-face) (2 'x-hugh-tf-plan-create-face))
+   '("^  +\\(-\\) \\([A-Za-z_\"][A-Za-z0-9_\"./-]* *\\(?:=\\|{\\|\"\\).*\\)$"
+     (1 'x-hugh-tf-plan-delete-face) (2 'x-hugh-tf-plan-delete-face))
+   '("^  +\\(~\\) \\([A-Za-z_\"][A-Za-z0-9_\"./-]* *\\(?:=\\|{\\|\"\\).*\\)$"
+     (1 'x-hugh-tf-plan-update-face) (2 'x-hugh-tf-plan-update-face))
+
+   ;; Warnings and errors, and the box they are drawn in.
+   '("^│ \\(Warning\\):\\(.*\\)$"
+     (1 'warning) (2 'x-hugh-tf-plan-heading-face))
+   '("^│ \\(Error\\):\\(.*\\)$"
+     (1 'error) (2 'x-hugh-tf-plan-heading-face))
+   (cons (rx bol (any "│╷╵─")) ''x-hugh-tf-plan-noise-face)
+
+   ;; Init and refresh output.
+   (cons (rx bol (or "util/tf_wrapper.sh" "Setting up kubectl context"
+                     "Skipping setup of kubectl context" "Added new context"
+                     "Initializing" "Terraform has been successfully initialized"
+                     "Terraform used the selected providers"
+                     "Acquiring state lock" "Releasing state lock"
+                     "- Reusing previous version" "- Using previously-installed"
+                     "- Finding " "- Installing " "- Downloading "
+                     "- terraform.io/builtin")
+             (* nonl))
+         ''x-hugh-tf-plan-noise-face)
+   (cons (rx (+ nonl) ": "
+             (or "Refreshing state..." "Reading..." "Read complete after"
+                 "Still reading...")
+             (* nonl))
+         ''x-hugh-tf-plan-noise-face)
+
+   ;; Details worth picking out of an already-fontified line, so these
+   ;; override.
+   '("(\\(?:known after apply\\|sensitive value\\|sensitive\\))"
+     (0 'x-hugh-tf-plan-unknown-face t))
+   '("^ *# (\\(?:[0-9]+\\|.*\\) unchanged [a-z]+ hidden)"
+     (0 'x-hugh-tf-plan-unknown-face t))
+   '(" \\(->\\) " (1 'x-hugh-tf-plan-heading-face t))
+   '("^Plan: \\([0-9]+\\) to add, \\([0-9]+\\) to change, \\([0-9]+\\) to destroy"
+     (1 'x-hugh-tf-plan-create-face t)
+     (2 'x-hugh-tf-plan-update-face t)
+     (3 'x-hugh-tf-plan-delete-face t)))
+  "Font lock keywords for `x-hugh-tf-plan-text-mode'.")
+
+;;; Folding the init and refresh output
+
+(defcustom x-hugh-tf-plan-noise-fold-threshold 3
+  "Shortest run of init or refresh lines that gets folded away."
+  :type 'integer)
+
+(defconst x-hugh-tf-plan-noise-line-regexp
+  (concat
+   "\\(?:"
+   (string-join
+    '("^util/tf_wrapper\\.sh "
+      "^Setting up kubectl context"
+      "^Skipping setup of kubectl context"
+      "^Added new context "
+      "^Initializing "
+      "^Terraform has been successfully initialized"
+      "^You may now begin working with Terraform"
+      "^any changes that are required"
+      "^should now work\\."
+      "^If you ever set or change modules"
+      "^rerun this command to reinitialize"
+      "^commands will detect it and remind"
+      "^Acquiring state lock"
+      "^Releasing state lock"
+      "^- \\(?:Reusing previous version\\|Using previously-installed\\)"
+      "^- \\(?:Finding \\|Installing \\|Downloading \\)"
+      "^- terraform\\.io/builtin"
+      ": Refreshing state\\.\\.\\."
+      ": Reading\\.\\.\\.$"
+      ": Read complete after "
+      ": Still reading\\.\\.\\. ")
+    "\\|")
+   "\\)")
+  "Matches a line of Terraform init or state-refresh output.")
+
+(defun x-hugh-tf-plan--noise-line-p ()
+  "Return non-nil if the current line is init or refresh output."
+  (save-excursion
+    (beginning-of-line)
+    (looking-at-p x-hugh-tf-plan-noise-line-regexp)))
+
+(defun x-hugh-tf-plan--blank-line-p ()
+  "Return non-nil if the current line is blank."
+  (save-excursion
+    (beginning-of-line)
+    (looking-at-p "[[:space:]]*$")))
+
+(defun x-hugh-tf-plan--noise-overlays ()
+  "Return the overlays currently hiding init and refresh output."
+  (seq-filter (lambda (overlay) (overlay-get overlay 'x-hugh-tf-plan-noise))
+              (overlays-in (point-min) (point-max))))
+
+(defun x-hugh-tf-plan-fold-noise ()
+  "Collapse each run of init and refresh output to a single line.
+Return the number of runs folded."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((runs 0))
+      (while (not (eobp))
+        (if (not (x-hugh-tf-plan--noise-line-p))
+            (forward-line 1)
+          (let ((start (line-beginning-position))
+                (end nil)
+                (lines 0))
+            ;; A run continues over blank lines, so long as more noise
+            ;; follows; the overlay itself stops at the last noise line.
+            (while (and (not (eobp))
+                        (or (x-hugh-tf-plan--noise-line-p)
+                            (and end (x-hugh-tf-plan--blank-line-p))))
+              (unless (x-hugh-tf-plan--blank-line-p)
+                (setq lines (1+ lines)
+                      end (line-end-position)))
+              (forward-line 1))
+            (when (>= lines x-hugh-tf-plan-noise-fold-threshold)
+              (let ((overlay (make-overlay start end)))
+                (overlay-put overlay 'x-hugh-tf-plan-noise t)
+                (overlay-put overlay 'evaporate t)
+                (overlay-put overlay 'help-echo
+                             "Init and refresh output; N to show")
+                (overlay-put
+                 overlay 'display
+                 (propertize
+                  (format "[%d lines of init and refresh output]" lines)
+                  'face 'x-hugh-tf-plan-noise-face)))
+              (setq runs (1+ runs))))))
+      runs)))
+
+(defun x-hugh-tf-plan-toggle-noise ()
+  "Show or hide the init and refresh output."
+  (interactive)
+  (let ((hidden (x-hugh-tf-plan--noise-overlays)))
+    (if hidden
+        (progn (mapc #'delete-overlay hidden)
+               (message "Showing init and refresh output"))
+      (message "Folded %d run(s) of init and refresh output"
+               (x-hugh-tf-plan-fold-noise)))))
+
+;;; The text viewer
+
+(defun x-hugh-tf-plan--outline-level ()
+  "Return the outline level of the heading at point.
+Terraform indents by two spaces per level, so the indentation is the
+level."
+  (max 1 (1+ (/ (current-indentation) 2))))
+
+(defun x-hugh-tf-plan-fold-bodies ()
+  "Fold the buffer down to its headings, if it has any."
+  (interactive)
+  (when (save-excursion
+          (goto-char (point-min))
+          (re-search-forward (concat "^\\(?:" outline-regexp "\\)") nil t))
+    (outline-hide-body)))
+
+(defun x-hugh-tf-plan-revert ()
+  "Run the plan again for this buffer's environment."
+  (interactive)
+  (let ((environment (or x-hugh-tf-plan--environment
+                         (user-error "No environment recorded for this buffer"))))
+    (x-hugh-make-tf-plan environment)))
+
+(defvar-keymap x-hugh-tf-plan-text-mode-map
+  :doc "Keymap for `x-hugh-tf-plan-text-mode'."
+  "TAB" #'outline-cycle
+  "<backtab>" #'outline-cycle-buffer
+  "n" #'outline-next-visible-heading
+  "p" #'outline-previous-visible-heading
+  "a" #'outline-show-all
+  "z" #'x-hugh-tf-plan-fold-bodies
+  "N" #'x-hugh-tf-plan-toggle-noise
+  "g" #'x-hugh-tf-plan-revert)
+
+(define-derived-mode x-hugh-tf-plan-text-mode special-mode "TF-Plan-Text"
+  "Major mode for reading the text output of a Terraform plan."
+  (setq-local outline-regexp
+              (rx (or (seq (* space) "# " (+ (not (any " "))) " "
+                           (or "will be" "must be" "has been" "has changed"))
+                      (seq (>= 6 space) (or "-/+" "+/-" "+" "-" "~") " "
+                           (+ (not (any " "))) (* nonl) (any "{[("))
+                      "Terraform will perform the following actions:"
+                      "Terraform planned the following actions,"
+                      "Note: Objects have changed outside of Terraform"
+                      "Changes to Outputs:"
+                      "Plan:"
+                      (seq "│ " (or "Warning" "Error") ":"))))
+  (setq-local outline-level #'x-hugh-tf-plan--outline-level)
+  (setq-local outline-minor-mode-cycle t)
+  (setq-local font-lock-defaults
+              '(x-hugh-tf-plan-text-font-lock-keywords t))
+  (setq-local imenu-generic-expression
+              '((nil "^[[:space:]]*# \\([^ ]+\\) \\(?:will be\\|must be\\|has \\)" 1)))
+  (setq-local header-line-format
+              "TAB fold  n/p heading  a show all  z fold all  \
+N init+refresh output  g re-run  q quit")
+  (outline-minor-mode 1))
+
+(defun x-hugh-tf-plan-text-buffer-name (environment)
+  "Name of the text viewer buffer for ENVIRONMENT."
+  (format "*tf-plan text: %s*" environment))
+
+(defun x-hugh-tf-plan--show-text (text environment)
+  "Show TEXT as the plan output for ENVIRONMENT.  Return the buffer."
+  (let ((buffer (get-buffer-create
+                 (x-hugh-tf-plan-text-buffer-name environment))))
+    (with-current-buffer buffer
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert text)
+        ;; comint gives the process a pty, so Terraform may colour its
+        ;; output despite -no-color; we do our own colouring.
+        (ansi-color-filter-region (point-min) (point-max)))
+      (x-hugh-tf-plan-text-mode)
+      (setq x-hugh-tf-plan--environment environment)
+      (goto-char (point-min))
+      (font-lock-ensure)
+      (x-hugh-tf-plan-fold-noise)
+      (x-hugh-tf-plan-fold-bodies))
+    buffer))
+
+;;; Reading plan output you already have
+
+(defun x-hugh-tf-plan--environment-in-text (text)
+  "Return the environment named by tf_wrapper.sh chatter in TEXT, or nil.
+The wrapper is invoked with the environment as its first argument, and
+make echoes the command line."
+  (when (string-match "util/tf_wrapper\\.sh \\([^ \n]+\\)" text)
+    (match-string 1 text)))
+
+;;;###autoload
+(defun x-hugh-tf-plan-from-region (start end)
+  "Show the plan output between START and END in the text viewer."
+  (interactive "r")
+  (let ((text (buffer-substring-no-properties start end)))
+    (pop-to-buffer
+     (x-hugh-tf-plan--show-text
+      text (or (x-hugh-tf-plan--environment-in-text text) "region")))))
+
+;;;###autoload
+(defun x-hugh-tf-plan-from-last-output ()
+  "Show the output of the last command in this shell in the text viewer.
+Works in comint buffers -- shell, eshell is not comint -- where the
+output of the last command is everything after the last input."
+  (interactive)
+  (unless (derived-mode-p 'comint-mode)
+    (user-error "Not a comint buffer; select the output and use %s instead"
+                "x-hugh-tf-plan-from-region"))
+  (let ((start (or comint-last-input-end
+                   (user-error "No command has been run in this buffer"))))
+    (x-hugh-tf-plan-from-region start (point-max))))
+
+;;;###autoload
+(defun x-hugh-tf-plan-from-file (file)
+  "Show the plan output saved in FILE in the text viewer."
+  (interactive "fPlan output file: ")
+  (let ((text (with-temp-buffer
+                (insert-file-contents file)
+                (buffer-string))))
+    (pop-to-buffer
+     (x-hugh-tf-plan--show-text
+      text (or (x-hugh-tf-plan--environment-in-text text)
+               (file-name-base file))))))
 
 (provide 'x-hugh-tf-plan)
 ;;; x-hugh-tf-plan.el ends here
