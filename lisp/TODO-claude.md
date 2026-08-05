@@ -18,8 +18,15 @@ First run: accept the nono pack install from a regular shell:
       are added too.
 - [x] live within emacs -- claude-code.el in a ghostel buffer
 - [x] ability to display files claude is thinking about
-  - monet openFile works (tested 2026-08-04 via /ide; --ide flag now
-    auto-connects since nono strips the handshake env vars)
+  - monet openFile works (tested 2026-08-04 via /ide).  The --ide
+    flag was tried and REVERTED: env-var auto-connect works fine
+    inside nono (env vars are not stripped -- see
+    NO_IDE_DIAGNOSIS.md), and --ide's second, lockfile-based
+    connection left /ide saying "Connected" with no mcp__ide tools
+    reaching the model
+  - if tools ever go missing again: M-x monet-enable-logging BEFORE
+    starting the session, then check *monet-log* for whether
+    tools/list arrives after initialize
   - window layout fixed: custom `monet-open-file-tool` wrapper hops
     out of the claude window before find-file (needs testing)
   - emacsclient habit fixed via --append-system-prompt: use the IDE
