@@ -1,0 +1,45 @@
+#!/bin/sh
+# claude-nono: launch Claude Code confined by the nono sandbox
+# (https://nono.sh), for use as `claude-code-program' in Emacs.
+#
+# monet sets CLAUDE_CODE_SSE_PORT in the environment before Emacs
+# launches claude; --open-port pokes a localhost-TCP hole in the
+# sandbox on that port so claude can reach the MCP/IDE websocket
+# server running inside Emacs.  Emacs itself stays outside the
+# sandbox.
+#
+# First run: nono will prompt to install the signed
+# always-further/claude profile pack.  If that's awkward inside a
+# terminal buffer, accept it once from a regular shell:
+#   nono run --profile always-further/claude -- claude --version
+#
+# NOTE: keep Claude Code's built-in sandbox disabled; nono is the
+# single security boundary.  Otherwise claude retries blocked
+# commands with dangerouslyDisableSandbox and you get two boundaries
+# that are hard to audit.  See:
+# https://nono.sh/docs/cli/clients/claude-code.md
+#
+# ####################################################################
+# #                                                                  #
+# #  TODO(nono): NETWORK IS CURRENTLY WIDE OPEN.  The stock          #
+# #  always-further/claude profile allows all outbound traffic.      #
+# #  Try tightening to an allowlist, e.g.:                           #
+# #                                                                  #
+# #    --allow-domain api.anthropic.com \                            #
+# #    --allow-domain statsig.anthropic.com \                        #
+# #    --allow-domain sentry.io \                                    #
+# #                                                                  #
+# #  Expect web search/fetch and in-sandbox installs (pip, npm,      #
+# #  go get) to break until their hosts are added too.               #
+# #                                                                  #
+# ####################################################################
+
+set -eu
+
+if [ -n "${CLAUDE_CODE_SSE_PORT:-}" ]; then
+    set -- --open-port "$CLAUDE_CODE_SSE_PORT" -- claude "$@"
+else
+    set -- -- claude "$@"
+fi
+
+exec nono run --profile always-further/claude "$@"
