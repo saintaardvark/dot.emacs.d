@@ -30,6 +30,8 @@
 (require 'comint)
 (require 'compile)
 (require 'imenu)
+(require 'json)
+(require 'magit-section)
 (require 'outline)
 (require 'seq)
 (require 'subr-x)
@@ -205,14 +207,35 @@ already initialised."
       (current-buffer))))
 
 (defun x-hugh-tf-plan--finished (buffer status)
-  "Handle the plan in BUFFER having finished with STATUS."
+  "Handle the plan in BUFFER having finished with STATUS.
+On success the saved plan is read back as JSON and shown as a tree of
+changes; the text view is built either way, and is what you get if the
+JSON cannot be had."
   (with-current-buffer buffer
-    (let ((environment x-hugh-tf-plan--environment)
-          (text (buffer-substring-no-properties (point-min) (point-max))))
-      (unless (string-prefix-p "finished" status)
-        (message "Plan for %s did not finish cleanly: %s"
-                 environment (string-trim status)))
-      (display-buffer (x-hugh-tf-plan--show-text text environment)))))
+    (let* ((environment x-hugh-tf-plan--environment)
+           (root x-hugh-tf-plan--root)
+           (plan-file x-hugh-tf-plan--plan-file)
+           (text (buffer-substring-no-properties (point-min) (point-max)))
+           (text-buffer (x-hugh-tf-plan--show-text text environment)))
+      (if (and (string-prefix-p "finished" status)
+               plan-file
+               (file-exists-p plan-file))
+          (progn
+            (message "Plan for %s finished; reading it back as JSON" environment)
+            (x-hugh-tf-plan--fetch-json
+             environment root plan-file
+             (lambda (plan)
+               (x-hugh-tf-plan--discard-plan-file plan-file)
+               (if plan
+                   (display-buffer
+                    (x-hugh-tf-plan-render plan environment root))
+                 (message "Could not read the plan as JSON; showing the text")
+                 (display-buffer text-buffer)))))
+        (unless (string-prefix-p "finished" status)
+          (message "Plan for %s did not finish cleanly: %s"
+                   environment (string-trim status)))
+        (x-hugh-tf-plan--discard-plan-file plan-file)
+        (display-buffer text-buffer)))))
 
 ;;; Reading the saved plan back as JSON
 ;;
@@ -730,6 +753,7 @@ level."
   "a" #'outline-show-all
   "z" #'x-hugh-tf-plan-fold-bodies
   "N" #'x-hugh-tf-plan-toggle-noise
+  "t" #'x-hugh-tf-plan-toggle-view
   "g" #'x-hugh-tf-plan-revert)
 
 (define-derived-mode x-hugh-tf-plan-text-mode special-mode "TF-Plan-Text"
@@ -753,7 +777,7 @@ level."
               '((nil "^[[:space:]]*# \\([^ ]+\\) \\(?:will be\\|must be\\|has \\)" 1)))
   (setq-local header-line-format
               "TAB fold  n/p heading  a show all  z fold all  \
-N init+refresh output  g re-run  q quit")
+N init+refresh output  t tree view  g re-run  q quit")
   (outline-minor-mode 1))
 
 (defun x-hugh-tf-plan-text-buffer-name (environment)
@@ -770,13 +794,433 @@ N init+refresh output  g re-run  q quit")
         (insert text)
         ;; comint gives the process a pty, so Terraform may colour its
         ;; output despite -no-color; we do our own colouring.
-        (ansi-color-filter-region (point-min) (point-max)))
-      (x-hugh-tf-plan-text-mode)
-      (setq x-hugh-tf-plan--environment environment)
-      (goto-char (point-min))
-      (font-lock-ensure)
-      (x-hugh-tf-plan-fold-noise)
-      (x-hugh-tf-plan-fold-bodies))
+        (ansi-color-filter-region (point-min) (point-max))
+        (x-hugh-tf-plan-text-mode)
+        (setq x-hugh-tf-plan--environment environment)
+        (goto-char (point-min))
+        (font-lock-ensure)
+        (x-hugh-tf-plan-fold-noise)
+        (x-hugh-tf-plan-fold-bodies)))
+    buffer))
+
+;;; Formatting values
+
+(defun x-hugh-tf-plan--key-name (key)
+  "Return KEY, an object key, as a string."
+  (if (symbolp key) (symbol-name key) (format "%s" key)))
+
+(defun x-hugh-tf-plan--encode (value)
+  "Return VALUE on one line, in Terraform's brace-and-equals style."
+  (cond
+   ((eq value :unknown) "(known after apply)")
+   ((eq value :sensitive) "(sensitive value)")
+   ((memq value '(:null :absent)) "null")
+   ((eq value :false) "false")
+   ((eq value t) "true")
+   ((numberp value) (number-to-string value))
+   ((stringp value) (json-encode-string value))
+   ((vectorp value)
+    (concat "[" (mapconcat #'x-hugh-tf-plan--encode value ", ") "]"))
+   ((null value) "{}")
+   ((consp value)
+    (concat "{"
+            (mapconcat (lambda (cell)
+                         (format "%s = %s"
+                                 (x-hugh-tf-plan--key-name (car cell))
+                                 (x-hugh-tf-plan--encode (cdr cell))))
+                       value ", ")
+            "}"))
+   (t (format "%S" value))))
+
+(defun x-hugh-tf-plan--format-string (string indent)
+  "Format STRING, as a heredoc indented by INDENT if it has newlines."
+  (if (string-search "\n" string)
+      (let ((pad (make-string (+ indent 4) ?\s)))
+        (concat "<<-EOT\n"
+                (mapconcat (lambda (line) (concat pad line))
+                           (split-string (string-trim-right string "\n+") "\n")
+                           "\n")
+                "\n" (make-string indent ?\s) "EOT"))
+    (json-encode-string string)))
+
+(defun x-hugh-tf-plan--format-multiline (value indent)
+  "Format VALUE, an array or object, over several lines from column INDENT."
+  (let ((pad (make-string (+ indent 2) ?\s))
+        (close (make-string indent ?\s)))
+    (cond
+     ((vectorp value)
+      (concat "[\n"
+              (mapconcat (lambda (element)
+                           (concat pad (x-hugh-tf-plan--format-value
+                                        element (+ indent 2))))
+                         value ",\n")
+              "\n" close "]"))
+     ((consp value)
+      (concat "{\n"
+              (mapconcat (lambda (cell)
+                           (concat pad (x-hugh-tf-plan--key-name (car cell))
+                                   " = " (x-hugh-tf-plan--format-value
+                                          (cdr cell) (+ indent 2))))
+                         value "\n")
+              "\n" close "}"))
+     (t (x-hugh-tf-plan--encode value)))))
+
+(defun x-hugh-tf-plan--format-value (value indent)
+  "Format VALUE for display, with any extra lines indented by INDENT."
+  (cond
+   ((stringp value) (x-hugh-tf-plan--format-string value indent))
+   ((or (vectorp value) (consp value))
+    (let ((compact (x-hugh-tf-plan--encode value)))
+      (if (<= (+ indent (length compact)) x-hugh-tf-plan-value-width)
+          compact
+        (x-hugh-tf-plan--format-multiline value indent))))
+   (t (x-hugh-tf-plan--encode value))))
+
+;;; The section view
+
+(defvar-local x-hugh-tf-plan--plan nil
+  "Parsed plan this buffer is showing.")
+
+(defun x-hugh-tf-plan-buffer-name (environment)
+  "Name of the section view buffer for ENVIRONMENT."
+  (format "*tf-plan: %s*" environment))
+
+(defun x-hugh-tf-plan--action-face (action)
+  "Return the face for ACTION."
+  (pcase action
+    ('create 'x-hugh-tf-plan-create-face)
+    ('delete 'x-hugh-tf-plan-delete-face)
+    ('update 'x-hugh-tf-plan-update-face)
+    ('replace 'x-hugh-tf-plan-replace-face)
+    ('read 'x-hugh-tf-plan-read-face)
+    (_ 'default)))
+
+(defun x-hugh-tf-plan--action-glyph (action)
+  "Return the diff glyph for ACTION."
+  (pcase action
+    ('create "+")
+    ('delete "-")
+    ('update "~")
+    ('replace "-/+")
+    ('read "<=")
+    (_ "?")))
+
+(defun x-hugh-tf-plan--action-label (action)
+  "Return a word for ACTION."
+  (pcase action
+    ('create "create")
+    ('delete "destroy")
+    ('update "update")
+    ('replace "replace")
+    ('read "read")
+    (_ (symbol-name action))))
+
+(defun x-hugh-tf-plan--count (label count face)
+  "Return COUNT and LABEL fontified with FACE, or nil if COUNT is zero."
+  (unless (zerop count)
+    (concat (propertize (number-to-string count) 'face face) " " label)))
+
+(defun x-hugh-tf-plan--summary-line (plan environment)
+  "Return the heading line summarising PLAN for ENVIRONMENT.
+Replacements are counted as replacements rather than as an add and a
+destroy, which is what Terraform's own summary does."
+  (let ((counts (x-hugh-tf-plan-summary plan)))
+    (concat
+     (propertize (format "Plan %s" environment)
+                 'face 'x-hugh-tf-plan-heading-face)
+     "  "
+     (if (plist-get plan :changes)
+         (string-join
+          (delq nil
+                (list (x-hugh-tf-plan--count
+                       "to add" (alist-get 'create counts)
+                       'x-hugh-tf-plan-create-face)
+                      (x-hugh-tf-plan--count
+                       "to change" (alist-get 'update counts)
+                       'x-hugh-tf-plan-update-face)
+                      (x-hugh-tf-plan--count
+                       "to replace" (alist-get 'replace counts)
+                       'x-hugh-tf-plan-replace-face)
+                      (x-hugh-tf-plan--count
+                       "to destroy" (alist-get 'delete counts)
+                       'x-hugh-tf-plan-delete-face)
+                      (x-hugh-tf-plan--count
+                       "to read" (alist-get 'read counts)
+                       'x-hugh-tf-plan-read-face)))
+          ", ")
+       (propertize "no changes" 'face 'success))
+     (propertize (format "  (terraform %s, %d resources unchanged)"
+                         (or (plist-get plan :terraform-version) "?")
+                         (or (plist-get plan :unchanged) 0))
+                 'face 'x-hugh-tf-plan-noise-face))))
+
+(defun x-hugh-tf-plan--attribute-line (attribute width)
+  "Return ATTRIBUTE as a line, with its key padded to WIDTH."
+  (let* ((glyph (plist-get attribute :glyph))
+         (key (x-hugh-tf-plan--key-name (plist-get attribute :key)))
+         (prefix (concat "      " glyph " " (string-pad key width) " = "))
+         (column (length prefix))
+         (face (pcase glyph
+                 ("+" 'x-hugh-tf-plan-create-face)
+                 ("-" 'x-hugh-tf-plan-delete-face)
+                 ("~" 'x-hugh-tf-plan-update-face)
+                 (_ 'x-hugh-tf-plan-unknown-face)))
+         (body
+          (pcase glyph
+            ("+" (x-hugh-tf-plan--format-value
+                  (plist-get attribute :after) column))
+            ("-" (x-hugh-tf-plan--format-value
+                  (plist-get attribute :before) column))
+            ("~" (let ((old (x-hugh-tf-plan--format-value
+                             (plist-get attribute :before) column))
+                       (new (x-hugh-tf-plan--format-value
+                             (plist-get attribute :after) column)))
+                   (if (and (not (string-search "\n" old))
+                            (not (string-search "\n" new))
+                            (<= (+ column (length old) 4 (length new))
+                                x-hugh-tf-plan-value-width))
+                       (concat old " -> " new)
+                     (concat old "\n"
+                             (make-string (max 0 (- column 3)) ?\s)
+                             "-> " new))))
+            (_ (let ((value (plist-get attribute :after)))
+                 (x-hugh-tf-plan--format-value
+                  (if (eq value :absent) (plist-get attribute :before) value)
+                  column))))))
+    (propertize (concat prefix body) 'face face)))
+
+(defun x-hugh-tf-plan--insert-attributes (attributes)
+  "Insert ATTRIBUTES, one per line, with their keys aligned."
+  (when attributes
+    (let ((width (apply #'max
+                        (mapcar (lambda (attribute)
+                                  (length (x-hugh-tf-plan--key-name
+                                           (plist-get attribute :key))))
+                                attributes))))
+      (dolist (attribute attributes)
+        (insert (x-hugh-tf-plan--attribute-line attribute width) "\n")))))
+
+(defun x-hugh-tf-plan--relative-address (resource)
+  "Return the address of RESOURCE without its module prefix."
+  (let ((address (plist-get resource :address))
+        (module (plist-get resource :module)))
+    (if (and module
+             (not (string-empty-p module))
+             (string-prefix-p (concat module ".") address))
+        (substring address (1+ (length module)))
+      address)))
+
+(defun x-hugh-tf-plan--insert-resource (resource)
+  "Insert a collapsed section for RESOURCE."
+  (let* ((action (plist-get resource :action))
+         (face (x-hugh-tf-plan--action-face action))
+         (reason (plist-get resource :reason))
+         (attributes (plist-get resource :attributes))
+         (changed (seq-filter (lambda (a) (plist-get a :changed)) attributes))
+         (unchanged (seq-remove (lambda (a) (plist-get a :changed)) attributes))
+         (start (point)))
+    (magit-insert-section (tf-plan-resource (plist-get resource :address) t)
+      (magit-insert-heading
+        (concat
+         (propertize (string-pad (x-hugh-tf-plan--action-glyph action) 4)
+                     'face face)
+         (propertize (string-pad (x-hugh-tf-plan--action-label action) 8)
+                     'face face)
+         (propertize (x-hugh-tf-plan--relative-address resource)
+                     'face 'x-hugh-tf-plan-address-face)
+         (if reason
+             (propertize (format "  (%s)" (string-replace "_" " " reason))
+                         'face 'x-hugh-tf-plan-unknown-face)
+           "")))
+      (x-hugh-tf-plan--insert-attributes changed)
+      (when unchanged
+        (magit-insert-section (tf-plan-unchanged
+                               (plist-get resource :address) t)
+          (magit-insert-heading
+            (propertize (format "      %d unchanged attribute%s"
+                                (length unchanged)
+                                (if (= 1 (length unchanged)) "" "s"))
+                        'face 'x-hugh-tf-plan-unknown-face))
+          (x-hugh-tf-plan--insert-attributes unchanged))))
+    ;; Carry the resource on the text so that visiting and copying can
+    ;; find it from any line, without reaching into magit's section
+    ;; objects.
+    (put-text-property start (point) 'x-hugh-tf-plan-resource resource)))
+
+(defun x-hugh-tf-plan--group-by-module (resources)
+  "Return RESOURCES grouped into an alist by module address, sorted."
+  (let ((groups '()))
+    (dolist (resource resources)
+      (let* ((module (plist-get resource :module))
+             (cell (assoc module groups)))
+        (if cell
+            (setcdr cell (cons resource (cdr cell)))
+          (push (cons module (list resource)) groups))))
+    (mapcar (lambda (cell) (cons (car cell) (nreverse (cdr cell))))
+            (sort groups (lambda (a b) (string< (car a) (car b)))))))
+
+(defun x-hugh-tf-plan--insert-module (module resources)
+  "Insert a section for MODULE holding RESOURCES."
+  (magit-insert-section (tf-plan-module module)
+    (magit-insert-heading
+      (concat (propertize (if (string-empty-p module) "(root module)" module)
+                          'face 'x-hugh-tf-plan-heading-face)
+              (propertize (format "  %d" (length resources))
+                          'face 'x-hugh-tf-plan-noise-face)))
+    (dolist (resource resources)
+      (x-hugh-tf-plan--insert-resource resource))
+    (insert "\n")))
+
+(defun x-hugh-tf-plan--insert-changes (plan)
+  "Insert the resource changes in PLAN."
+  (let ((changes (plist-get plan :changes)))
+    (when changes
+      (insert "\n")
+      (dolist (group (x-hugh-tf-plan--group-by-module changes))
+        (x-hugh-tf-plan--insert-module (car group) (cdr group))))))
+
+(defun x-hugh-tf-plan--insert-drift (plan)
+  "Insert the out-of-band changes in PLAN, if any."
+  (let ((drift (plist-get plan :drift)))
+    (when drift
+      (insert "\n")
+      (magit-insert-section (tf-plan-drift nil t)
+        (magit-insert-heading
+          (concat (propertize "Changed outside Terraform"
+                              'face 'x-hugh-tf-plan-heading-face)
+                  (propertize (format "  %d" (length drift))
+                              'face 'x-hugh-tf-plan-noise-face)))
+        (dolist (resource drift)
+          (x-hugh-tf-plan--insert-resource resource))
+        (insert "\n")))))
+
+(defun x-hugh-tf-plan--insert-outputs (plan)
+  "Insert the output changes in PLAN, if any."
+  (let ((outputs (plist-get plan :outputs)))
+    (when outputs
+      (magit-insert-section (tf-plan-outputs nil t)
+        (magit-insert-heading
+          (concat (propertize "Changes to Outputs"
+                              'face 'x-hugh-tf-plan-heading-face)
+                  (propertize (format "  %d" (length outputs))
+                              'face 'x-hugh-tf-plan-noise-face)))
+        (dolist (output outputs)
+          (x-hugh-tf-plan--insert-attributes (plist-get output :attributes)))
+        (insert "\n")))))
+
+;;;; Acting on what is under point
+
+(defun x-hugh-tf-plan--resource-at-point ()
+  "Return the resource described by the line at point, or nil."
+  (get-text-property (line-beginning-position) 'x-hugh-tf-plan-resource))
+
+(defun x-hugh-tf-plan--git-grep (root pattern)
+  "Return the hits for PATTERN in the Terraform files under ROOT.
+Each hit is a cons of its `file:line:text' description and a cons of file
+and line."
+  (let ((default-directory root))
+    (delq nil
+          (mapcar (lambda (line)
+                    (when (string-match "\\`\\([^:]+\\):\\([0-9]+\\):" line)
+                      (cons line (cons (match-string 1 line)
+                                       (string-to-number
+                                        (match-string 2 line))))))
+                  ;; git grep exits non-zero when nothing matches, which
+                  ;; process-lines turns into an error.
+                  (ignore-errors
+                    (process-lines "git" "grep" "-n" "-E" pattern
+                                   "--" "*.tf"))))))
+
+(defun x-hugh-tf-plan--visit-hit (root hit)
+  "Visit the file and line of HIT, relative to ROOT."
+  (let ((file (expand-file-name (car (cdr hit)) root))
+        (line (cdr (cdr hit))))
+    (pop-to-buffer (find-file-noselect file))
+    (goto-char (point-min))
+    (forward-line (1- line))))
+
+(defun x-hugh-tf-plan-visit-resource ()
+  "Visit the definition of the resource at point.
+
+The plan gives an address, not a location, so this greps for the block
+that declares it.  A resource inside a module is declared once however
+many times the module is called, so a single hit is the common case."
+  (interactive)
+  (let* ((resource (or (x-hugh-tf-plan--resource-at-point)
+                       (user-error "No resource on this line")))
+         (root (or x-hugh-tf-plan--root default-directory))
+         (keyword (if (equal (plist-get resource :mode) "data")
+                      "data" "resource"))
+         (pattern (format "^[[:space:]]*%s[[:space:]]+\"%s\"[[:space:]]+\"%s\""
+                          keyword
+                          (plist-get resource :type)
+                          (plist-get resource :name)))
+         (hits (x-hugh-tf-plan--git-grep root pattern)))
+    (pcase (length hits)
+      (0 (message "No declaration found for %s" (plist-get resource :address)))
+      (1 (x-hugh-tf-plan--visit-hit root (car hits)))
+      (_ (x-hugh-tf-plan--visit-hit
+          root (assoc (completing-read "Declaration: " hits nil t) hits))))))
+
+(defun x-hugh-tf-plan-copy-address ()
+  "Copy the address of the resource at point to the kill ring."
+  (interactive)
+  (let ((resource (or (x-hugh-tf-plan--resource-at-point)
+                      (user-error "No resource on this line"))))
+    (kill-new (plist-get resource :address))
+    (message "%s" (plist-get resource :address))))
+
+(defun x-hugh-tf-plan-toggle-view ()
+  "Switch between the section view and the text view of this plan."
+  (interactive)
+  (let* ((environment (or x-hugh-tf-plan--environment
+                          (user-error "No environment recorded here")))
+         (other (get-buffer
+                 (if (derived-mode-p 'x-hugh-tf-plan-mode)
+                     (x-hugh-tf-plan-text-buffer-name environment)
+                   (x-hugh-tf-plan-buffer-name environment)))))
+    (if other
+        (pop-to-buffer other)
+      (message "No other view of the plan for %s" environment))))
+
+;;;; The mode
+
+(defvar-keymap x-hugh-tf-plan-mode-map
+  :doc "Keymap for `x-hugh-tf-plan-mode'."
+  :parent magit-section-mode-map
+  "RET" #'x-hugh-tf-plan-visit-resource
+  "w" #'x-hugh-tf-plan-copy-address
+  "t" #'x-hugh-tf-plan-toggle-view
+  "g" #'x-hugh-tf-plan-revert
+  "q" #'quit-window)
+
+(define-derived-mode x-hugh-tf-plan-mode magit-section-mode "TF-Plan"
+  "Major mode for reading a Terraform plan as a tree of changes."
+  (setq-local header-line-format
+              "TAB fold  RET declaration  w copy address  \
+t text view  g re-run  q quit"))
+
+(defun x-hugh-tf-plan-render (plan environment root)
+  "Render PLAN for ENVIRONMENT in ROOT.  Return the buffer."
+  (let ((buffer (get-buffer-create (x-hugh-tf-plan-buffer-name environment))))
+    (with-current-buffer buffer
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (x-hugh-tf-plan-mode)
+        (setq x-hugh-tf-plan--environment environment
+              x-hugh-tf-plan--root root
+              x-hugh-tf-plan--plan plan
+              default-directory (or root default-directory))
+        (magit-insert-section (tf-plan)
+          (magit-insert-heading
+            (x-hugh-tf-plan--summary-line plan environment))
+          (when (plist-get plan :errored)
+            (insert (propertize "Terraform reported an error; the plan is incomplete.\n"
+                                'face 'error)))
+          (x-hugh-tf-plan--insert-drift plan)
+          (x-hugh-tf-plan--insert-changes plan)
+          (x-hugh-tf-plan--insert-outputs plan))
+        (goto-char (point-min))))
     buffer))
 
 ;;; Reading plan output you already have
