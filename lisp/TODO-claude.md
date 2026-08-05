@@ -11,6 +11,13 @@ First run: accept the nono pack install from a regular shell:
   - goal: prevent rogue agent from deleting files
   - stock `always-further/claude` profile: RW limited to cwd,
     `~/.claude`, `~/.claude.json`, `~/.local/share/claude`
+- [ ] **FIX: C-c c prefix vanished** (regression, noticed 2026-08-04).
+      Likely cause: the `:bind (:map claude-code-command-map ...)` added
+      for x-hugh-claude-notes makes use-package *defer* loading
+      claude-code, so the `with-eval-after-load 'claude-code` in
+      x-hugh-keymap.el never fires and C-c c binds nothing.  Candidate
+      fix: add `:demand t` to the claude-code use-package block (or
+      autoload via a plain global binding instead of the keymap var).
 - [ ] **TODO -- BIG ONE -- network filtering**: the stock profile
       allows ALL outbound traffic.  Try the `--allow-domain`
       allowlist sketched in `bin/claude-nono`.  Expect web
