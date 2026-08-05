@@ -68,6 +68,12 @@ already shell-quoted for sh -c -- the vterm backend uses it that way
   (claude-code-ide-terminal-backend 'ghostel)
   (claude-code-ide-cli-path
    (expand-file-name "bin/claude-nono" user-emacs-directory))
+  ;; nono is the security boundary (same judgement call as
+  ;; yolo/podman): kernel-enforced FS limits, so skip the prompt
+  ;; nagging.  NB this raises the stakes on the network-filtering
+  ;; TODO in bin/claude-nono -- until that's done, a rogue agent can
+  ;; exfiltrate anything it can read.
+  (claude-code-ide-cli-extra-flags "--dangerously-skip-permissions")
   (claude-code-ide-system-prompt
    "You are running inside Emacs with IDE integration.  To show the \
 user a file or location, use the IDE's openFile tool, never \
