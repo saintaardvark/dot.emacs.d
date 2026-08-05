@@ -24,7 +24,7 @@
   ("r" hydra-emoji/body "emoji")
   ("s" hydra-body/hideshow "hideshow")
   ("t" hydra-text/body "text")
-  ("T" hydra-terraform/body "TF")
+  ("T" hydra-tf/body "TF")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
   ("z" hydra-zoom/body "zoom")
@@ -249,8 +249,24 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("/" x-hugh-copy-and-comment-line "Comment line and copy")
   )
 
+;; Note: apply and destroy are deliberately absent.  `make tf-apply' can
+;; be typed at the prompt of hydra-tf's "m", which asks first.
 (defhydra hydra-tf (:exit t)
+  ("c" x-hugh-tf-plan-copy-for-pr "Copy the plan for a PR")
+  ("C" x-hugh-tf-plan-copy-resource-for-pr "Copy this resource for a PR")
+  ("d" x-hugh-terraform-plan-to-details "Region to a <details> block")
+  ("f" x-hugh-tf-plan-from-file "Read a saved plan file")
+  ("i" terraform-insert-doc-in-comment "Insert doc URL as a comment")
+  ("k" terraform-kill-doc-url "Copy doc URL")
+  ("l" x-hugh-tf-plan-from-last-output "Read this shell's last output")
+  ("m" x-hugh-tf-plan-run-target "make <target> (init, validate, output)")
+  ("o" terraform-open-doc "Open docs for the thing at point")
   ("p" x-hugh-make-tf-plan "Make plan in current repo")
+  ("P" (let ((current-prefix-arg t))
+	 (call-interactively #'x-hugh-make-tf-plan))
+   "Make plan, skipping init")
+  ("x" x-hugh-tf-plan-from-region "Read the region as a plan")
+  ("=" terraform-format-buffer "terraform fmt this buffer")
   )
 
 (defhydra hydra-shell ()

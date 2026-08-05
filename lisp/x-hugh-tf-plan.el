@@ -206,6 +206,41 @@ already initialised."
                 #'x-hugh-tf-plan--finished nil t)
       (current-buffer))))
 
+(defcustom x-hugh-tf-plan-reporting-targets
+  '("tf-init" "tf-validate" "tf-fmt" "tf-output" "tf-providers" "tf-version")
+  "Make targets that only report, and so need no confirming.
+The Makefile's `tf-%' pattern rule reaches every Terraform subcommand, so
+anything can be typed at the prompt; anything not listed here is
+confirmed first."
+  :type '(repeat string))
+
+;;;###autoload
+(defun x-hugh-tf-plan-run-target (target environment)
+  "Run `make TARGET' for ENVIRONMENT in a comint buffer.
+
+For the subcommands that report -- init, validate, output and the like --
+reachable because the Makefile has a `tf-%' pattern rule.  Anything not
+in `x-hugh-tf-plan-reporting-targets' is confirmed first, so that an
+apply is not one keystroke away."
+  (interactive
+   (let ((root (x-hugh-tf-plan--root-or-error)))
+     (list (completing-read (format-prompt "Target" "tf-init")
+                            x-hugh-tf-plan-reporting-targets
+                            nil nil nil nil "tf-init")
+           (x-hugh-tf-plan-read-environment root))))
+  (unless (or (member target x-hugh-tf-plan-reporting-targets)
+              (yes-or-no-p (format "`make %s' for %s is not a reporting target.  Run it? "
+                                   target environment)))
+    (user-error "Not running make %s" target))
+  (let* ((root (x-hugh-tf-plan--root-or-error))
+         (default-directory root)
+         (compilation-buffer-name-function
+          (lambda (&rest _) (format "*tf %s: %s*" target environment))))
+    (compilation-start (format "ENV=%s make %s"
+                               (shell-quote-argument environment)
+                               (shell-quote-argument target))
+                       t)))
+
 (defun x-hugh-tf-plan--finished (buffer status)
   "Handle the plan in BUFFER having finished with STATUS.
 On success the saved plan is read back as JSON and shown as a tree of
