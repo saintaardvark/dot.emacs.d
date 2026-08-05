@@ -45,10 +45,25 @@ The buffer auto-reverts, so it live-updates as Claude writes to it."
     (display-buffer-in-side-window
      buf '((side . right) (window-width . 0.4)))))
 
+(defun x-hugh-claude--command-via-sh (command-string)
+  "Return COMMAND-STRING as a (program . args) cons running via sh -c.
+Replacement for `claude-code-ide--parse-command-string', whose
+`split-string-shell-command' parse mangles multi-line arguments:
+setting any `claude-code-ide-system-prompt' makes the package join it
+to its built-in prompt with newlines, after which the ghostel/eat
+backends misparse the tail of the prompt as the program name
+\(\"Searching for program: ...side window.\").  The command string is
+already shell-quoted for sh -c -- the vterm backend uses it that way
+-- so just hand it to a real shell.  FIXME: report upstream."
+  (cons "/bin/sh" (list "-c" command-string)))
+
 (use-package claude-code-ide
   :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
   :bind (("C-c c" . claude-code-ide-menu)
          ("C-c N" . x-hugh-claude-notes))
+  :config
+  (advice-add 'claude-code-ide--parse-command-string :override
+              #'x-hugh-claude--command-via-sh)
   :custom
   (claude-code-ide-terminal-backend 'ghostel)
   (claude-code-ide-cli-path
