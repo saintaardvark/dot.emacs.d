@@ -103,6 +103,7 @@
 (use-package x-hugh-shell)
 ;; (use-package x-hugh-ruby)
 (use-package x-hugh-terraform)
+(use-package x-hugh-tf-plan)
 (use-package x-hugh-typescript)
 
 ;; Various modes
