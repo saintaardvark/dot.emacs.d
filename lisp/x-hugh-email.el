@@ -102,6 +102,25 @@ Rewritten as defun."
       (if (looking-at "--")
 	  (insert "\n")))))
 
+(defun x-hugh-email-to-clipboard ()
+  "Clean up pasted email text and copy it to the OS clipboard.
+
+Meant for text copied out of a text-based email client that you
+want to paste into Google Docs: deletes trailing whitespace (a
+no-op if there is none), joins each paragraph onto a single line
+with a blank line between paragraphs, then copies the whole
+buffer to the kill ring, which also puts it on the OS clipboard."
+  (interactive)
+  (delete-trailing-whitespace)
+  (let ((fill-column most-positive-fixnum))
+    (fill-region (point-min) (point-max)))
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\n\\{3,\\}" nil t)
+      (replace-match "\n\n")))
+  (kill-new (buffer-substring-no-properties (point-min) (point-max)))
+  (message "Cleaned up and copied to clipboard"))
+
 (defun x-hugh-fcc-nwcah ()
   "Add fcc/NWCAH header for Mutt"
   (interactive)
