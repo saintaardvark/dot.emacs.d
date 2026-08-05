@@ -65,6 +65,15 @@ First run: accept the nono pack install from a regular shell:
     out of the claude window before find-file (needs testing)
   - emacsclient habit fixed via --append-system-prompt: use the IDE
     openFile tool, not emacsclient
+- [ ] editing the prompt in claude code (ctrl-x ctrl-e / external
+      editor) should open in Emacs, not the vi that's there now.
+      Probably: point EDITOR/VISUAL at emacsclient for the sandboxed
+      session -- but the claude process lives inside nono, so
+      emacsclient needs to reach the Emacs server socket from in
+      there (TCP server + --open-port? --allow on the socket dir?).
+      Overlaps with the round-1 note about steering the agent away
+      from emacsclient -- this use is fine, it's claude's own TUI
+      shelling out, not the model guessing
 - [x] split view: right-hand side has markdown artifact -- running notes,
   explanations, etc
   - `C-c c N` (x-hugh-claude-notes): NOTES-claude.md of the current
