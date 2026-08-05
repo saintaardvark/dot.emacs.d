@@ -31,9 +31,20 @@ First run: accept the nono pack install from a regular shell:
     NO_IDE_DIAGNOSIS.md), and --ide's second, lockfile-based
     connection left /ide saying "Connected" with no mcp__ide tools
     reaching the model
-  - if tools ever go missing again: M-x monet-enable-logging BEFORE
-    starting the session, then check *monet-log* for whether
-    tools/list arrives after initialize
+  - round 2 (NO_IDE_DIAGNOSIS.md): auto-connect websocket is healthy
+    end to end (authenticated, pinged, ESTABLISHED from startup) yet
+    tools never reach the model.  Pattern across all sessions: only a
+    fresh /ide after startup has ever produced tools.  Working theory:
+    the CLI freezes the model's toolset at startup and only an
+    explicit /ide refreshes it -- likely CLI bug, consider reporting
+    upstream (compare claude-code-ide.el issue #133)
+  - workaround in place: x-hugh-claude--nudge-ide auto-sends /ide
+    from claude-code-start-hook after 6s
+    (x-hugh-claude-ide-nudge-delay)
+  - to confirm the theory: M-x monet-enable-logging BEFORE starting a
+    session, then check *monet-log* for whether initialize and
+    tools/list arrive on the auto-connect, and again after the /ide
+    nudge
   - window layout fixed: custom `monet-open-file-tool` wrapper hops
     out of the claude window before find-file (needs testing)
   - emacsclient habit fixed via --append-system-prompt: use the IDE
