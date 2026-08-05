@@ -48,8 +48,29 @@ off to the default tool."
   :custom
   (monet-open-file-tool #'x-hugh-claude-open-file-tool))
 
+(defcustom x-hugh-claude-notes-file "NOTES-claude.md"
+  "File (relative to the project root) where Claude keeps running notes."
+  :type 'string
+  :group 'tools)
+
+(defun x-hugh-claude-notes ()
+  "Show the project's Claude running-notes file in a right side window.
+The buffer auto-reverts, so it live-updates as Claude writes to it."
+  (interactive)
+  (require 'project)
+  (let* ((proj (project-current))
+         (root (if proj (project-root proj) default-directory))
+         (buf (find-file-noselect
+               (expand-file-name x-hugh-claude-notes-file root))))
+    (with-current-buffer buf
+      (auto-revert-mode 1))
+    (display-buffer-in-side-window
+     buf '((side . right) (window-width . 0.4)))))
+
 (use-package claude-code
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :bind (:map claude-code-command-map
+              ("N" . x-hugh-claude-notes))
   :custom
   (claude-code-terminal-backend 'ghostel)
   (claude-code-program (expand-file-name "bin/claude-nono" user-emacs-directory))
