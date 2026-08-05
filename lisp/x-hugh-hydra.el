@@ -24,6 +24,7 @@
   ("r" hydra-emoji/body "emoji")
   ("s" hydra-body/hideshow "hideshow")
   ("t" hydra-text/body "text")
+  ("T" hydra-terraform/body "TF")
   ("w" hydra-window/body "window")
   ("y" hydra-python/body "python")
   ("z" hydra-zoom/body "zoom")
@@ -246,6 +247,10 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("x" unfill-region "unfill-region")
   ("y" fill-region "fill-region")
   ("/" x-hugh-copy-and-comment-line "Comment line and copy")
+  )
+
+(defhydra hydra-tf (:exit t)
+  ("p" x-hugh-make-tf-plan "Make plan in current repo")
   )
 
 (defhydra hydra-shell ()

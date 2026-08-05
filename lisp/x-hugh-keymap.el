@@ -113,6 +113,7 @@
 (global-set-key (kbd "C-c r") 'hydra-emoji/body)
 (global-set-key (kbd "C-c s") 'hydra-hideshow/body)
 (global-set-key (kbd "C-c t") 'hydra-text/body)
+(global-set-key (kbd "C-c T") 'hydra-tf/body)
 (global-set-key (kbd "C-c w") 'hydra-window/body)
 (global-set-key (kbd "C-c y") 'hydra-python/body)
 (global-set-key (kbd "C-c z") 'hydra-zoom/body)
