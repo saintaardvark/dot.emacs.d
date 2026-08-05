@@ -32,7 +32,10 @@ First run: accept the nono pack install from a regular shell:
       fix: add `:demand t` to the claude-code use-package block (or
       autoload via a plain global binding instead of the keymap var).
 - [ ] **TODO -- BIG ONE -- network filtering**: the stock profile
-      allows ALL outbound traffic.  Try the `--allow-domain`
+      allows ALL outbound traffic.  Now URGENT: as of 2026-08-04
+      claude runs with --dangerously-skip-permissions, so nono is the
+      only boundary -- open network means silent exfiltration is
+      possible until the allowlist is on.  Try the `--allow-domain`
       allowlist sketched in `bin/claude-nono`.  Expect web
       search/fetch and in-sandbox pip/npm to break until their hosts
       are added too.
