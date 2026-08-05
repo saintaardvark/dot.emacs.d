@@ -33,7 +33,11 @@
 selected window -- usually the claude terminal, so the file lands on
 top of the session.  Hop to (or make) another window first, then hand
 off to the default tool."
-  (when (string-prefix-p "*claude:" (buffer-name))
+  ;; find-file uses the *selected window*, and this runs from monet's
+  ;; process filter, so check the selected window's buffer -- not
+  ;; (current-buffer), which is the websocket's.
+  (when (string-prefix-p "*claude:"
+                         (buffer-name (window-buffer (selected-window))))
     (let ((win (get-window-with-predicate
                 (lambda (w)
                   (not (string-prefix-p
