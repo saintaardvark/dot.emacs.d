@@ -27,8 +27,26 @@
 ;; The ghostel terminal backend needs ghostel loaded.
 (require 'x-hugh-ghostel)
 
+(defun x-hugh-claude-open-file-tool (&rest args)
+  "Open a file for Claude without clobbering the claude session window.
+`monet-default-open-file-tool' uses `find-file', which reuses the
+selected window -- usually the claude terminal, so the file lands on
+top of the session.  Hop to (or make) another window first, then hand
+off to the default tool."
+  (when (string-prefix-p "*claude:" (buffer-name))
+    (let ((win (get-window-with-predicate
+                (lambda (w)
+                  (not (string-prefix-p
+                        "*claude:" (buffer-name (window-buffer w))))))))
+      (select-window (or win
+                         (split-window-sensibly)
+                         (split-window-right)))))
+  (apply #'monet-default-open-file-tool args))
+
 (use-package monet
-  :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))
+  :vc (:url "https://github.com/stevemolitor/monet" :rev :newest)
+  :custom
+  (monet-open-file-tool #'x-hugh-claude-open-file-tool))
 
 (use-package claude-code
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
