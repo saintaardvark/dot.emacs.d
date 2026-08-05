@@ -36,6 +36,18 @@
 
 set -eu
 
+# Set CLAUDE_NONO_DEBUG=1 (e.g. via M-x setenv) to log what this
+# wrapper sees at launch; compare with `env` inside the sandbox to
+# tell whether nono is stripping the IDE handshake variables.
+if [ -n "${CLAUDE_NONO_DEBUG:-}" ]; then
+    {
+        echo "=== claude-nono $(date)"
+        echo "CLAUDE_CODE_SSE_PORT=${CLAUDE_CODE_SSE_PORT:-unset}"
+        echo "ENABLE_IDE_INTEGRATION=${ENABLE_IDE_INTEGRATION:-unset}"
+        echo "args: $*"
+    } >> "${TMPDIR:-/tmp}/claude-nono.log"
+fi
+
 if [ -n "${CLAUDE_CODE_SSE_PORT:-}" ]; then
     set -- --open-port "$CLAUDE_CODE_SSE_PORT" -- claude "$@"
 else
