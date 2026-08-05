@@ -214,6 +214,264 @@ already initialised."
                  environment (string-trim status)))
       (display-buffer (x-hugh-tf-plan--show-text text environment)))))
 
+;;; Reading the saved plan back as JSON
+;;
+;; `terraform show -json' on a saved plan gives before and after values
+;; for every attribute, which the text output only renders.  The wrapper
+;; prints its own chatter and the kubeconfig update ahead of Terraform's
+;; output, so stdout is not pure JSON and we have to find where the
+;; document starts.
+;;
+;; The fetch is asynchronous.  aws-vault has usually cached its session
+;; by this point, but if it has not, a synchronous call would hang Emacs
+;; with nowhere to type the answer.
+
+(defcustom x-hugh-tf-plan-show-timeout 180
+  "Seconds to wait for `make tf-show' before killing it."
+  :type 'integer)
+
+(defcustom x-hugh-tf-plan-value-width 78
+  "Column beyond which a JSON value is rendered over several lines."
+  :type 'integer)
+
+(defun x-hugh-tf-plan--show-command (environment plan-file)
+  "Return the shell command dumping PLAN-FILE for ENVIRONMENT as JSON."
+  (format "ENV=%s TF_CLI_ARGS_show=%s make tf-show"
+          (shell-quote-argument environment)
+          (shell-quote-argument (concat "-json " plan-file))))
+
+(defun x-hugh-tf-plan--buffer-tail (buffer &optional lines)
+  "Return the last LINES lines of BUFFER as a string.  LINES defaults to 3."
+  (if (not (buffer-live-p buffer))
+      ""
+    (with-current-buffer buffer
+      (let ((end (point-max)))
+        (save-excursion
+          (goto-char end)
+          (forward-line (- (or lines 3)))
+          (string-trim (buffer-substring-no-properties (point) end)))))))
+
+(defun x-hugh-tf-plan--parse-buffer (buffer)
+  "Parse the Terraform plan JSON in BUFFER and return it as a plist."
+  (with-current-buffer buffer
+    (goto-char (point-min))
+    (unless (re-search-forward "{\"format_version\"" nil t)
+      (error "No plan JSON in the output of make tf-show: %s"
+             (x-hugh-tf-plan--buffer-tail buffer)))
+    (goto-char (match-beginning 0))
+    (x-hugh-tf-plan--plan
+     (json-parse-buffer :object-type 'alist
+                        :array-type 'array
+                        :null-object :null
+                        :false-object :false))))
+
+;;;; Turning the JSON into something to render
+
+(defun x-hugh-tf-plan--action (actions)
+  "Return a symbol for the JSON ACTIONS array."
+  (let ((actions (append actions nil)))
+    (cond
+     ((equal actions '("no-op")) 'no-op)
+     ((equal actions '("create")) 'create)
+     ((equal actions '("read")) 'read)
+     ((equal actions '("update")) 'update)
+     ((equal actions '("delete")) 'delete)
+     ;; ("delete" "create") and ("create" "delete") are both replacement;
+     ;; the order says which happens first.
+     ((member "delete" actions) 'replace)
+     (t 'unknown))))
+
+(defun x-hugh-tf-plan--flagged-p (flags key)
+  "Return non-nil if KEY is flagged in FLAGS.
+FLAGS is one of Terraform's parallel structures such as `after_unknown'
+or `after_sensitive', in which a leaf is t and a partially flagged
+container is a nested object.  A partially flagged container counts as
+flagged: for sensitivity that errs towards withholding, and for
+unknownness it matches Terraform's own habit of printing the whole
+attribute as unknown."
+  (cond
+   ((eq flags t) t)
+   ((consp flags) (let ((cell (assq key flags)))
+                    (and cell (not (memq (cdr cell) '(nil :false))))))
+   (t nil)))
+
+(defun x-hugh-tf-plan--value (object key sensitive unknown)
+  "Return the value of KEY in OBJECT, or a marker.
+Markers are `:unknown' if UNKNOWN flags KEY, `:sensitive' if SENSITIVE
+does, and `:absent' if OBJECT does not have KEY at all."
+  (cond
+   ((x-hugh-tf-plan--flagged-p unknown key) :unknown)
+   ((x-hugh-tf-plan--flagged-p sensitive key) :sensitive)
+   ((not (consp object)) :absent)
+   (t (let ((cell (assq key object)))
+        (if cell (cdr cell) :absent)))))
+
+(defun x-hugh-tf-plan--normalize (value)
+  "Return VALUE with every object's keys sorted, for comparison.
+Terraform does not promise a key order, so comparing before and after
+with `equal' needs this or it reports spurious changes."
+  (cond
+   ((vectorp value)
+    (apply #'vector (mapcar #'x-hugh-tf-plan--normalize (append value nil))))
+   ((consp value)
+    (sort (mapcar (lambda (cell)
+                    (cons (car cell) (x-hugh-tf-plan--normalize (cdr cell))))
+                  value)
+          (lambda (a b) (string< (symbol-name (car a)) (symbol-name (car b))))))
+   (t value)))
+
+(defun x-hugh-tf-plan--attribute-keys (before after unknown)
+  "Return the sorted union of the keys of BEFORE, AFTER and UNKNOWN."
+  (let ((keys '()))
+    (dolist (cell (append (and (consp before) before)
+                          (and (consp after) after)))
+      (unless (memq (car cell) keys)
+        (push (car cell) keys)))
+    (when (consp unknown)
+      (dolist (cell unknown)
+        (unless (or (memq (cdr cell) '(nil :false))
+                    (memq (car cell) keys))
+          (push (car cell) keys))))
+    (sort keys (lambda (a b) (string< (symbol-name a) (symbol-name b))))))
+
+(defun x-hugh-tf-plan--attributes (action change)
+  "Return the attribute changes of CHANGE, given its ACTION.
+Each is a plist with `:glyph', `:key', `:before', `:after' and
+`:changed'."
+  (let* ((before (alist-get 'before change))
+         (after (alist-get 'after change))
+         (unknown (alist-get 'after_unknown change))
+         (before-sensitive (alist-get 'before_sensitive change))
+         (after-sensitive (alist-get 'after_sensitive change))
+         (attributes '()))
+    (dolist (key (x-hugh-tf-plan--attribute-keys before after unknown))
+      (let* ((old (x-hugh-tf-plan--value before key before-sensitive nil))
+             (new (x-hugh-tf-plan--value after key after-sensitive unknown))
+             (same (equal (x-hugh-tf-plan--normalize old)
+                          (x-hugh-tf-plan--normalize new))))
+        (push (pcase action
+                ('create (list :glyph "+" :key key :after new :changed t))
+                ('read (list :glyph "+" :key key :after new :changed t))
+                ('delete (list :glyph "-" :key key :before old :changed t))
+                (_ (list :glyph (if same " " "~") :key key
+                         :before old :after new :changed (not same))))
+              attributes)))
+    (nreverse attributes)))
+
+(defun x-hugh-tf-plan--resource (entry)
+  "Return a plist describing the resource change ENTRY."
+  (let* ((change (alist-get 'change entry))
+         (action (x-hugh-tf-plan--action (alist-get 'actions change))))
+    (list :address (alist-get 'address entry)
+          :module (or (alist-get 'module_address entry) "")
+          :type (alist-get 'type entry)
+          :name (alist-get 'name entry)
+          :mode (alist-get 'mode entry)
+          :action action
+          :reason (alist-get 'action_reason entry)
+          :replace-paths (alist-get 'replace_paths change)
+          :attributes (x-hugh-tf-plan--attributes action change))))
+
+(defun x-hugh-tf-plan--output (name change)
+  "Return a plist describing the change to output NAME."
+  (let ((action (x-hugh-tf-plan--action (alist-get 'actions change))))
+    (list :name (symbol-name name)
+          :action action
+          :attributes
+          (list (list :glyph (pcase action ('create "+") ('delete "-") (_ "~"))
+                      :key name
+                      :before (if (x-hugh-tf-plan--flagged-p
+                                   (alist-get 'before_sensitive change) name)
+                                  :sensitive
+                                (alist-get 'before change))
+                      :after (cond
+                              ((eq (alist-get 'after_unknown change) t) :unknown)
+                              ((eq (alist-get 'after_sensitive change) t) :sensitive)
+                              (t (alist-get 'after change)))
+                      :changed t)))))
+
+(defun x-hugh-tf-plan--plan (json)
+  "Return a plist describing the parsed JSON plan."
+  (let* ((resources (mapcar #'x-hugh-tf-plan--resource
+                            (append (alist-get 'resource_changes json) nil)))
+         (drift (mapcar #'x-hugh-tf-plan--resource
+                        (append (alist-get 'resource_drift json) nil)))
+         (outputs (let ((changes (alist-get 'output_changes json))
+                        (result '()))
+                    (dolist (cell (and (consp changes) changes))
+                      (let ((output (x-hugh-tf-plan--output (car cell) (cdr cell))))
+                        (unless (eq (plist-get output :action) 'no-op)
+                          (push output result))))
+                    (nreverse result)))
+         (changes (seq-remove (lambda (resource)
+                                (memq (plist-get resource :action) '(no-op)))
+                              resources)))
+    (list :terraform-version (alist-get 'terraform_version json)
+          :errored (eq (alist-get 'errored json) t)
+          :changes changes
+          :unchanged (- (length resources) (length changes))
+          :drift (seq-remove (lambda (resource)
+                               (eq (plist-get resource :action) 'no-op))
+                             drift)
+          :outputs outputs)))
+
+(defun x-hugh-tf-plan-summary (plan)
+  "Return an alist counting the actions in PLAN."
+  (let ((counts '((create . 0) (update . 0) (replace . 0)
+                  (delete . 0) (read . 0))))
+    (dolist (resource (plist-get plan :changes))
+      (let ((cell (assq (plist-get resource :action) counts)))
+        (when cell (setcdr cell (1+ (cdr cell))))))
+    counts))
+
+;;;; Fetching it
+
+(defun x-hugh-tf-plan--fetch-json (environment root plan-file callback)
+  "Dump PLAN-FILE as JSON and call CALLBACK with the parsed plan.
+Runs `make tf-show' for ENVIRONMENT in ROOT.  CALLBACK is called with
+nil if the plan could not be read."
+  (let* ((default-directory root)
+         (stdout (generate-new-buffer " *tf-plan show*" t))
+         (stderr (generate-new-buffer " *tf-plan show errors*" t))
+         (command (x-hugh-tf-plan--show-command environment plan-file))
+         (timer nil)
+         (process nil))
+    (setq process
+          (make-process
+           :name (format "tf-plan-show-%s" environment)
+           :buffer stdout
+           :stderr stderr
+           :noquery t
+           :command (list shell-file-name shell-command-switch command)
+           :sentinel
+           (lambda (proc _event)
+             (when (memq (process-status proc) '(exit signal))
+               (when timer (cancel-timer timer))
+               (let* ((status (process-exit-status proc))
+                      (plan (and (zerop status)
+                                 (condition-case err
+                                     (x-hugh-tf-plan--parse-buffer stdout)
+                                   (error
+                                    (message "Could not read the plan JSON: %s"
+                                             (error-message-string err))
+                                    nil))))
+                      (errors (x-hugh-tf-plan--buffer-tail stderr)))
+                 (ignore-errors (kill-buffer stdout))
+                 (ignore-errors (kill-buffer stderr))
+                 (unless (zerop status)
+                   (message "make tf-show for %s failed (exit %s): %s"
+                            environment status errors))
+                 (funcall callback plan))))))
+    (setq timer
+          (run-at-time
+           x-hugh-tf-plan-show-timeout nil
+           (lambda ()
+             (when (process-live-p process)
+               (message "make tf-show for %s timed out after %ss; killing it"
+                        environment x-hugh-tf-plan-show-timeout)
+               (kill-process process)))))
+    process))
+
 ;;; Faces
 
 (defface x-hugh-tf-plan-create-face
