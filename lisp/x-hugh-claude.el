@@ -39,6 +39,12 @@
   ;; CLAUDE_CODE_SSE_PORT auto-connect never happens.  --ide makes
   ;; claude connect via the ~/.claude/ide lockfile instead (works as
   ;; long as monet's is the only live lockfile for the project).
+  ;;
+  ;; NOTE: --ide wants *exactly one* matching lockfile.  If a session
+  ;; dies uncleanly it can leave a stale lock behind, and auto-connect
+  ;; will silently stop working.  Fix: delete the stale
+  ;; ~/.claude/ide/<port>.lock (the live one matches the port shown by
+  ;; M-x monet-list-sessions), then restart the claude session.
   (claude-code-program-switches '("--ide"))
   :config
   (add-hook 'claude-code-process-environment-functions
