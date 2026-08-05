@@ -78,19 +78,20 @@ The buffer auto-reverts, so it live-updates as Claude writes to it."
   :custom
   (claude-code-terminal-backend 'ghostel)
   (claude-code-program (expand-file-name "bin/claude-nono" user-emacs-directory))
-  ;; nono strips env vars inside the sandbox, so the usual
-  ;; CLAUDE_CODE_SSE_PORT auto-connect never happens.  --ide makes
-  ;; claude connect via the ~/.claude/ide lockfile instead (works as
-  ;; long as monet's is the only live lockfile for the project).
+  ;; No --ide flag here, on purpose.  CLAUDE_CODE_SSE_PORT and
+  ;; ENABLE_IDE_INTEGRATION survive into the nono sandbox (verified
+  ;; 2026-08-04, NO_IDE_DIAGNOSIS.md), so the CLI auto-connects to
+  ;; monet on its own.  Adding --ide on top made it connect a second
+  ;; time via the ~/.claude/ide lockfile, after which /ide reported
+  ;; "Connected" but no mcp__ide tools ever reached the model.
   ;;
-  ;; NOTE: --ide wants *exactly one* matching lockfile.  If a session
-  ;; dies uncleanly it can leave a stale lock behind, and auto-connect
-  ;; will silently stop working.  Fix: delete the stale
-  ;; ~/.claude/ide/<port>.lock (the live one matches the port shown by
-  ;; M-x monet-list-sessions), then restart the claude session.
+  ;; NOTE: manual /ide (and lockfile discovery generally) wants
+  ;; *exactly one* matching lockfile.  A session that dies uncleanly
+  ;; can leave a stale ~/.claude/ide/<port>.lock behind; delete it
+  ;; (the live one matches the port shown by M-x monet-list-sessions)
+  ;; and restart the claude session.
   (claude-code-program-switches
-   '("--ide"
-     "--append-system-prompt"
+   '("--append-system-prompt"
      "You are running inside Emacs with the monet IDE integration.  \
 To show the user a file or location, use the IDE's openFile tool, \
 never emacsclient (you cannot see whether emacsclient worked).  \
