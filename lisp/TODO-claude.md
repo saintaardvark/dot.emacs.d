@@ -24,7 +24,7 @@ First run: accept the nono pack install from a regular shell:
   - goal: prevent rogue agent from deleting files
   - stock `always-further/claude` profile: RW limited to cwd,
     `~/.claude`, `~/.claude.json`, `~/.local/share/claude`
-- [ ] **FIX: C-c c prefix vanished** (regression, noticed 2026-08-04).
+- [X] **FIX: C-c c prefix vanished** (regression, noticed 2026-08-04).
       Likely cause: the `:bind (:map claude-code-command-map ...)` added
       for x-hugh-claude-notes makes use-package *defer* loading
       claude-code, so the `with-eval-after-load 'claude-code` in
@@ -39,6 +39,18 @@ First run: accept the nono pack install from a regular shell:
       allowlist sketched in `bin/claude-nono`.  Expect web
       search/fetch and in-sandbox pip/npm to break until their hosts
       are added too.
+  - correction to "nono is the only boundary": it is not, and was not
+    before the EDITOR change.  `mcp__ide__executeCode` evaluates
+    arbitrary elisp in the Emacs that runs *outside* the sandbox, so
+    the model can already run unconfined code (and thus unconfined
+    network calls) whenever the IDE tools are live -- that is the
+    same channel wanted for openFile.  emacsclient reaching the
+    server socket is the same hole by another door, so EDITOR added
+    no new capability.  Worth knowing before trusting --allow-domain
+    to stop exfiltration: the allowlist constrains the sandboxed
+    process, not elisp evaluated in Emacs.  If that matters, the fix
+    is on the Emacs side (drop executeCode from the tool set, or
+    gate it), not in the nono profile
 - [x] live within emacs -- claude-code.el in a ghostel buffer
 - [x] ability to display files claude is thinking about
   - monet openFile works (tested 2026-08-04 via /ide).  The --ide
@@ -65,15 +77,21 @@ First run: accept the nono pack install from a regular shell:
     out of the claude window before find-file (needs testing)
   - emacsclient habit fixed via --append-system-prompt: use the IDE
     openFile tool, not emacsclient
-- [ ] editing the prompt in claude code (ctrl-x ctrl-e / external
-      editor) should open in Emacs, not the vi that's there now.
-      Probably: point EDITOR/VISUAL at emacsclient for the sandboxed
-      session -- but the claude process lives inside nono, so
-      emacsclient needs to reach the Emacs server socket from in
-      there (TCP server + --open-port? --allow on the socket dir?).
-      Overlaps with the round-1 note about steering the agent away
-      from emacsclient -- this use is fine, it's claude's own TUI
-      shelling out, not the model guessing
+- [x] editing the prompt in claude code (ctrl-x ctrl-e / external
+      editor) opens in Emacs, not vi.  `bin/claude-nono` now exports
+      EDITOR=VISUAL=emacsclient.  No TCP server and no extra --allow
+      were needed: nono mediates reads of the socket *directory*
+      (`ls /run/user/1000/emacs` is denied, and `nono why` on the
+      socket says path_not_granted) but does not block connect() on
+      the socket itself, so the stock unix-socket server is reachable
+      as-is.  Verified 2026-08-04 from inside the sandbox:
+      `emacsclient --eval '(+ 1 1)'` answers 2, and a full round trip
+      works -- emacsclient blocks, the buffer opens in Emacs, C-x #
+      releases it with exit 0, and claude reads back the edited text.
+      EDITOR is a bare word on purpose (claude may exec it without a
+      shell, so no flags).  This is claude's own TUI shelling out,
+      not the model guessing, so it does not conflict with the
+      round-1 note steering the agent away from emacsclient
 - [x] split view: right-hand side has markdown artifact -- running notes,
   explanations, etc
   - `C-c c N` (x-hugh-claude-notes): NOTES-claude.md of the current

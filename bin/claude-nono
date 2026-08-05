@@ -55,6 +55,26 @@ fi
 harness_tmp="/tmp/claude-$(id -u)"
 mkdir -p "$harness_tmp"
 
+# Claude's external-editor key (C-x C-e in its TUI) shells out to
+# $EDITOR; without this it lands in vi.  emacsclient reaches the Emacs
+# server from inside the sandbox with no extra grant: nono mediates
+# reads of the socket *directory* (ls /run/user/<uid>/emacs is denied,
+# and `nono why` on the socket reports path_not_granted) but does not
+# block connect() on the socket itself.  Tested 2026-08-04 --
+# `emacsclient --eval '(+ 1 1)'` answers 2 from in here, and a full
+# edit round trip works: emacsclient blocks, C-x # in Emacs releases
+# it with exit 0, and the edited text is what claude reads back.
+#
+# Deliberately a bare word, no flags: claude may exec $EDITOR without
+# a shell, in which case anything with a space would fail to resolve.
+# The default socket is found via XDG_RUNTIME_DIR, which nono passes
+# through, so no -s is needed.  If the Emacs server is ever down this
+# errors out rather than falling back -- fine, since this wrapper is
+# launched from Emacs.
+EDITOR=emacsclient
+VISUAL=emacsclient
+export EDITOR VISUAL
+
 if [ -n "${CLAUDE_CODE_SSE_PORT:-}" ]; then
     set -- --open-port "$CLAUDE_CODE_SSE_PORT" -- claude "$@"
 else
