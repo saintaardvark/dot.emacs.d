@@ -118,10 +118,8 @@
 (global-set-key (kbd "C-c y") 'hydra-python/body)
 (global-set-key (kbd "C-c z") 'hydra-zoom/body)
 
-;; Claude Code (see x-hugh-claude).  claude-code-command-map is a
-;; keymap variable, not a prefix command, hence the eval-after-load.
-(with-eval-after-load 'claude-code
-  (global-set-key (kbd "C-c c") claude-code-command-map))
+;; Claude Code: C-c c and C-c N are bound in x-hugh-claude via
+;; use-package :bind, so the commands autoload properly.
 
 ;; Oooh, expand-region!
 (use-package expand-region
