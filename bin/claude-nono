@@ -48,10 +48,17 @@ if [ -n "${CLAUDE_NONO_DEBUG:-}" ]; then
     } >> "${TMPDIR:-/tmp}/claude-nono.log"
 fi
 
+# Claude Code captures every Bash command's stdout under
+# /tmp/claude-<uid>/; without this grant, shell commands inside the
+# sandbox run but their output comes back blank.  mkdir first: the
+# path must exist for the sandbox rule to attach.
+harness_tmp="/tmp/claude-$(id -u)"
+mkdir -p "$harness_tmp"
+
 if [ -n "${CLAUDE_CODE_SSE_PORT:-}" ]; then
     set -- --open-port "$CLAUDE_CODE_SSE_PORT" -- claude "$@"
 else
     set -- -- claude "$@"
 fi
 
-exec nono run --profile always-further/claude "$@"
+exec nono run --profile always-further/claude --allow "$harness_tmp" "$@"
