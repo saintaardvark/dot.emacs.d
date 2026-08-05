@@ -304,18 +304,32 @@ JSON cannot be had."
      ((member "delete" actions) 'replace)
      (t 'unknown))))
 
-(defun x-hugh-tf-plan--flagged-p (flags key)
-  "Return non-nil if KEY is flagged in FLAGS.
-FLAGS is one of Terraform's parallel structures such as `after_unknown'
-or `after_sensitive', in which a leaf is t and a partially flagged
-container is a nested object.  A partially flagged container counts as
-flagged: for sensitivity that errs towards withholding, and for
-unknownness it matches Terraform's own habit of printing the whole
-attribute as unknown."
+(defun x-hugh-tf-plan--flag-set-p (flags)
+  "Return non-nil if FLAGS contains a true leaf anywhere.
+
+FLAGS is a subtree of one of Terraform's parallel structures such as
+`after_unknown' or `after_sensitive'.  Those mirror the shape of the
+value they describe, so a list- or block-typed attribute with nothing
+flagged inside it appears as an empty array or object rather than as
+false.  Only a true leaf means anything is flagged; the presence of a
+container means nothing at all.
+
+A partly flagged container does count as flagged, which errs towards
+withholding for sensitivity, and matches Terraform's habit of printing
+a whole attribute as unknown."
   (cond
    ((eq flags t) t)
-   ((consp flags) (let ((cell (assq key flags)))
-                    (and cell (not (memq (cdr cell) '(nil :false))))))
+   ((vectorp flags) (seq-some #'x-hugh-tf-plan--flag-set-p flags))
+   ((consp flags) (seq-some (lambda (cell)
+                              (x-hugh-tf-plan--flag-set-p (cdr cell)))
+                            flags))
+   (t nil)))
+
+(defun x-hugh-tf-plan--flagged-p (flags key)
+  "Return non-nil if KEY is flagged in FLAGS."
+  (cond
+   ((eq flags t) t)
+   ((consp flags) (x-hugh-tf-plan--flag-set-p (alist-get key flags)))
    (t nil)))
 
 (defun x-hugh-tf-plan--value (object key sensitive unknown)
@@ -352,7 +366,7 @@ with `equal' needs this or it reports spurious changes."
         (push (car cell) keys)))
     (when (consp unknown)
       (dolist (cell unknown)
-        (unless (or (memq (cdr cell) '(nil :false))
+        (unless (or (not (x-hugh-tf-plan--flag-set-p (cdr cell)))
                     (memq (car cell) keys))
           (push (car cell) keys))))
     (sort keys (lambda (a b) (string< (symbol-name a) (symbol-name b))))))
@@ -1022,8 +1036,11 @@ destroy, which is what Terraform's own summary does."
         (substring address (1+ (length module)))
       address)))
 
-(defun x-hugh-tf-plan--insert-resource (resource)
-  "Insert a collapsed section for RESOURCE."
+(defun x-hugh-tf-plan--insert-resource (resource &optional full-address)
+  "Insert a collapsed section for RESOURCE.
+With FULL-ADDRESS, label it with its whole address rather than with the
+part below its module.  Stripping the module only reads well when a
+module heading is standing above it."
   (let* ((action (plist-get resource :action))
          (face (x-hugh-tf-plan--action-face action))
          (reason (plist-get resource :reason))
@@ -1038,7 +1055,9 @@ destroy, which is what Terraform's own summary does."
                      'face face)
          (propertize (string-pad (x-hugh-tf-plan--action-label action) 8)
                      'face face)
-         (propertize (x-hugh-tf-plan--relative-address resource)
+         (propertize (if full-address
+                         (plist-get resource :address)
+                       (x-hugh-tf-plan--relative-address resource))
                      'face 'x-hugh-tf-plan-address-face)
          (if reason
              (propertize (format "  (%s)" (string-replace "_" " " reason))
@@ -1103,7 +1122,7 @@ destroy, which is what Terraform's own summary does."
                   (propertize (format "  %d" (length drift))
                               'face 'x-hugh-tf-plan-noise-face)))
         (dolist (resource drift)
-          (x-hugh-tf-plan--insert-resource resource))
+          (x-hugh-tf-plan--insert-resource resource t))
         (insert "\n")))))
 
 (defun x-hugh-tf-plan--insert-outputs (plan)
@@ -1232,6 +1251,10 @@ t text view  g re-run  q quit"))
           (x-hugh-tf-plan--insert-drift plan)
           (x-hugh-tf-plan--insert-changes plan)
           (x-hugh-tf-plan--insert-outputs plan))
+        ;; Sections record whether they want to be hidden, but nothing
+        ;; acts on that until the root is shown; magit does this from
+        ;; magit-refresh-buffer.  Without it every section is expanded.
+        (magit-section-show magit-root-section)
         (goto-char (point-min))))
     buffer))
 
