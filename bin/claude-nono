@@ -61,4 +61,4 @@ else
     set -- -- claude "$@"
 fi
 
-exec nono run --profile always-further/claude --allow "$harness_tmp" "$@"
+exec nono run --profile always-further/claude --allow-cwd --allow "$harness_tmp" "$@"
