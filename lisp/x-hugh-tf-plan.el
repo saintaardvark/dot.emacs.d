@@ -645,6 +645,8 @@ address and the verb and its remainder with FACE."
       "^If you ever set or change modules"
       "^rerun this command to reinitialize"
       "^commands will detect it and remind"
+      "^Terraform used the selected providers"
+      "^Terraform has compared your real infrastructure"
       "^Acquiring state lock"
       "^Releasing state lock"
       "^- \\(?:Reusing previous version\\|Using previously-installed\\)"
@@ -730,12 +732,16 @@ level."
   (max 1 (1+ (/ (current-indentation) 2))))
 
 (defun x-hugh-tf-plan-fold-bodies ()
-  "Fold the buffer down to its headings, if it has any."
+  "Fold the buffer down to its section and resource headings.
+That is the first two levels: Terraform's own section markers sit at
+column zero and the `# module... will be created' lines at column two.
+Deeper headings are blocks within a resource, which are only worth
+seeing once the resource is expanded."
   (interactive)
   (when (save-excursion
           (goto-char (point-min))
           (re-search-forward (concat "^\\(?:" outline-regexp "\\)") nil t))
-    (outline-hide-body)))
+    (outline-hide-sublevels 2)))
 
 (defun x-hugh-tf-plan-revert ()
   "Run the plan again for this buffer's environment."
@@ -761,8 +767,14 @@ level."
   (setq-local outline-regexp
               (rx (or (seq (* space) "# " (+ (not (any " "))) " "
                            (or "will be" "must be" "has been" "has changed"))
+                      ;; A nested block or heredoc opener, which has to
+                      ;; end the line: an attribute whose value merely
+                      ;; contains a bracket, such as `(known after
+                      ;; apply)', is a leaf and not a heading.
                       (seq (>= 6 space) (or "-/+" "+/-" "+" "-" "~") " "
-                           (+ (not (any " "))) (* nonl) (any "{[("))
+                           (+ (not (any " "))) (* nonl)
+                           (or (any "{[") (seq "<<" (opt "-") (+ (in "A-Z"))))
+                           eol)
                       "Terraform will perform the following actions:"
                       "Terraform planned the following actions,"
                       "Note: Objects have changed outside of Terraform"
