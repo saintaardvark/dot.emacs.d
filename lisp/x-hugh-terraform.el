@@ -13,27 +13,37 @@
 ;; Not needed in newer Emacs versions, but kept here to be defensive
 (require 'subr-x)
 
+;; For the <details> block itself and the header pattern, both of which
+;; x-hugh-tf-plan needs too.
+(require 'x-hugh-tf-plan)
+
 (defun x-hugh-terraform-plan-to-details (start end)
   "Convert a terraform plan block in the region into a GitHub-flavored
 <details>/<summary> block.  The '# module...' line becomes the summary;
-the remaining non-empty lines become the fenced body."
+the remaining non-empty lines become the fenced body.
+
+The summary line is any of the ones Terraform writes above a resource --
+`will be created', `must be replaced', `has changed' and the rest -- not
+just `will be'."
   (interactive "r")
   (let* ((text  (buffer-substring-no-properties start end))
          (lines (split-string text "\n"))
-         (summary-line (seq-find
-                        (lambda (l) (string-match "^[[:space:]]*#.*will be" l))
-                        lines))
-         (body-lines   (seq-filter
-                        (lambda (l)
-                          (and (not (string-empty-p (string-trim l)))
-                               (not (string-match "^[[:space:]]*#.*will be" l))))
+         (header-p (lambda (line)
+                     (string-match-p x-hugh-tf-plan-resource-header-regexp
+                                     line)))
+         (summary-line (seq-find header-p lines))
+         (body-lines   (seq-remove
+                        (lambda (line)
+                          (or (string-empty-p (string-trim line))
+                              (funcall header-p line)))
                         lines)))
     (unless summary-line
-      (user-error "No '# module ... will be' line found in region"))
+      (user-error "No resource header line found in region"))
     (delete-region start end)
-    (insert (format "<details>\n<summary>%s</summary>\n\n```\n%s\n```\n</details>\n"
-                    (string-trim summary-line)
-                    (string-join body-lines "\n")))))
+    (insert (x-hugh-tf-plan-details-block
+             (string-trim summary-line)
+             (concat "```\n" (string-join body-lines "\n") "\n```"))
+            "\n")))
 
 (provide 'x-hugh-terraform)
 ;;; x-hugh-terraform.el ends here

@@ -785,6 +785,7 @@ seeing once the resource is expanded."
   "a" #'outline-show-all
   "z" #'x-hugh-tf-plan-fold-bodies
   "N" #'x-hugh-tf-plan-toggle-noise
+  "P" #'x-hugh-tf-plan-copy-for-pr
   "t" #'x-hugh-tf-plan-toggle-view
   "g" #'x-hugh-tf-plan-revert)
 
@@ -815,7 +816,7 @@ seeing once the resource is expanded."
               '((nil "^[[:space:]]*# \\([^ ]+\\) \\(?:will be\\|must be\\|has \\)" 1)))
   (setq-local header-line-format
               "TAB fold  n/p heading  a show all  z fold all  \
-N init+refresh output  t tree view  g re-run  q quit")
+N init+refresh output  P copy for PR  t tree view  g re-run  q quit")
   (outline-minor-mode 1))
 
 (defun x-hugh-tf-plan-text-buffer-name (environment)
@@ -1299,6 +1300,8 @@ many times the module is called, so a single hit is the common case."
   :parent magit-section-mode-map
   "RET" #'x-hugh-tf-plan-visit-resource
   "w" #'x-hugh-tf-plan-copy-address
+  "P" #'x-hugh-tf-plan-copy-for-pr
+  "W" #'x-hugh-tf-plan-copy-resource-for-pr
   "t" #'x-hugh-tf-plan-toggle-view
   "g" #'x-hugh-tf-plan-revert
   "q" #'quit-window)
@@ -1306,8 +1309,8 @@ many times the module is called, so a single hit is the common case."
 (define-derived-mode x-hugh-tf-plan-mode magit-section-mode "TF-Plan"
   "Major mode for reading a Terraform plan as a tree of changes."
   (setq-local header-line-format
-              "TAB fold  RET declaration  w copy address  \
-t text view  g re-run  q quit"))
+              "TAB fold  RET declaration  w address  W resource for PR  \
+P plan for PR  t text view  g re-run  q quit"))
 
 (defun x-hugh-tf-plan-render (plan environment root)
   "Render PLAN for ENVIRONMENT in ROOT.  Return the buffer."
@@ -1337,6 +1340,263 @@ t text view  g re-run  q quit"))
         (magit-section-show magit-root-section)
         (goto-char (point-min))))
     buffer))
+
+;;; Excerpting the text for a pull request
+;;
+;; The text of the run is kept verbatim, so what goes into a pull request
+;; is Terraform's own output rather than anything reconstructed from the
+;; JSON.  That matters twice over: a near-miss reconstruction would be
+;; read as a real difference in the plan, and Terraform's text hides
+;; unchanged attributes that the section view is happy to show on your
+;; own screen but that have no business in a public diff.
+
+(defcustom x-hugh-tf-plan-pr-format 'details
+  "How `x-hugh-tf-plan-copy-for-pr' wraps the excerpt.
+
+`plain'        the excerpt on its own.
+`fenced'       one fenced code block.
+`details'      one <details> block, summarised by the Plan: line.
+`per-resource' a <details> block per resource, the rest fenced."
+  :type '(choice (const plain)
+                 (const fenced)
+                 (const details)
+                 (const per-resource)))
+
+(defcustom x-hugh-tf-plan-pr-include-warnings t
+  "When non-nil, append Terraform's warnings to the excerpt.
+Cheap to include, because the runner passes -compact-warnings."
+  :type 'boolean)
+
+(defconst x-hugh-tf-plan-resource-header-regexp
+  "^[[:space:]]*# [^ ]+ \\(?:will be\\|must be\\|has been\\|has changed\\)"
+  "Matches the line Terraform prints above each resource's diff.")
+
+(defconst x-hugh-tf-plan--excerpt-start-regexp
+  (rx bol (or "Note: Objects have changed outside of Terraform"
+              "Terraform used the selected providers"
+              "Terraform will perform the following actions:"
+              "Terraform planned the following actions,"
+              "No changes."))
+  "Matches the first line of the part of the output worth keeping.")
+
+(defun x-hugh-tf-plan--excerpt-end (start)
+  "Return the end of the plan excerpt that begins at START.
+
+The Plan: summary ends an excerpt, but the search for it has to stop at
+the warning box that follows: a buffer can hold more than one plan --
+`ENV=stage make plan ; ENV=prod make plan' -- and an unbounded search
+would run into the next one's summary and swallow everything between."
+  (save-excursion
+    (goto-char start)
+    (forward-line 1)
+    (let ((limit (or (save-excursion
+                       (and (re-search-forward "^╷$" nil t)
+                            (match-beginning 0)))
+                     (point-max))))
+      (or (save-excursion
+            (and (re-search-forward "^Plan: .*$" limit t) (match-end 0)))
+          limit))))
+
+(defun x-hugh-tf-plan--excerpts ()
+  "Return each plan excerpt in the current buffer, as a list of strings."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((excerpts '()))
+      (while (re-search-forward x-hugh-tf-plan--excerpt-start-regexp nil t)
+        (let* ((start (match-beginning 0))
+               (end (x-hugh-tf-plan--excerpt-end start)))
+          (push (string-trim (buffer-substring-no-properties start end))
+                excerpts)
+          ;; Skipping to the end also skips the later start lines within
+          ;; this same plan, which is what we want.
+          (goto-char end)))
+      (nreverse excerpts))))
+
+(defun x-hugh-tf-plan--warning-blocks ()
+  "Return the boxed warnings in the current buffer, without repeats.
+Both environments in a two-plan buffer tend to warn about the same
+things."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((blocks '()))
+      (while (re-search-forward "^╷$" nil t)
+        (let ((start (match-beginning 0)))
+          (when (re-search-forward "^╵$" nil t)
+            (push (buffer-substring-no-properties start (match-end 0)) blocks))))
+      (delete-dups (nreverse blocks)))))
+
+(defun x-hugh-tf-plan--fence (text)
+  "Return TEXT as a fenced code block."
+  (concat "```\n" text "\n```"))
+
+(defun x-hugh-tf-plan-details-block (summary body)
+  "Return a GitHub <details> block with SUMMARY and BODY.
+The blank line after the summary is what lets GitHub render markdown --
+a fenced block, say -- inside the block."
+  (format "<details>\n<summary>%s</summary>\n\n%s\n</details>" summary body))
+
+(defun x-hugh-tf-plan--excerpt-summary (text)
+  "Return a one-line summary of the plan excerpt TEXT."
+  (cond
+   ((string-match "^Plan: .*$" text) (match-string 0 text))
+   ((string-match "^No changes\\..*$" text) (match-string 0 text))
+   (t "terraform plan")))
+
+(defun x-hugh-tf-plan--per-resource-markdown (text)
+  "Return the plan excerpt TEXT with one <details> block per resource."
+  (with-temp-buffer
+    (insert text)
+    (goto-char (point-min))
+    (if (not (re-search-forward x-hugh-tf-plan-resource-header-regexp nil t))
+        (x-hugh-tf-plan--fence text)
+      (goto-char (match-beginning 0))
+      (let ((parts '())
+            (preamble (string-trim
+                       (buffer-substring-no-properties (point-min) (point)))))
+        (unless (string-empty-p preamble)
+          (push (x-hugh-tf-plan--fence preamble) parts))
+        (while (looking-at x-hugh-tf-plan-resource-header-regexp)
+          (let ((summary (string-trim
+                          (buffer-substring-no-properties
+                           (line-beginning-position) (line-end-position))))
+                (body-start (progn (forward-line 1) (point)))
+                (end (if (re-search-forward
+                          (concat "\\(?:" x-hugh-tf-plan-resource-header-regexp
+                                  "\\)\\|^Plan: ")
+                          nil t)
+                         (match-beginning 0)
+                       (point-max))))
+            (push (x-hugh-tf-plan-details-block
+                   summary
+                   (x-hugh-tf-plan--fence
+                    (string-trim (buffer-substring-no-properties
+                                  body-start end))))
+                  parts)
+            (goto-char end)))
+        ;; Whatever follows the last resource, which is the Plan: line.
+        ;; Left unfenced: it is the headline.
+        (let ((trailer (string-trim
+                        (buffer-substring-no-properties (point) (point-max)))))
+          (unless (string-empty-p trailer)
+            (push trailer parts)))
+        (string-join (nreverse parts) "\n\n")))))
+
+(defun x-hugh-tf-plan--wrap-for-pr (excerpt format)
+  "Return EXCERPT wrapped according to FORMAT."
+  (pcase format
+    ('plain excerpt)
+    ('fenced (x-hugh-tf-plan--fence excerpt))
+    ('details (x-hugh-tf-plan-details-block
+               (x-hugh-tf-plan--excerpt-summary excerpt)
+               (x-hugh-tf-plan--fence excerpt)))
+    ('per-resource (x-hugh-tf-plan--per-resource-markdown excerpt))
+    (_ (x-hugh-tf-plan--fence excerpt))))
+
+(defun x-hugh-tf-plan--wrap-warnings (blocks format)
+  "Return BLOCKS, Terraform's warnings, wrapped according to FORMAT."
+  (let ((text (string-join blocks "\n")))
+    (pcase format
+      ('plain text)
+      (_ (x-hugh-tf-plan-details-block
+          (format "Warnings (%d)" (length blocks))
+          (x-hugh-tf-plan--fence text))))))
+
+(defun x-hugh-tf-plan--text-buffer ()
+  "Return the buffer holding the text of the plan this buffer is about."
+  (cond
+   ((derived-mode-p 'x-hugh-tf-plan-text-mode) (current-buffer))
+   ((derived-mode-p 'x-hugh-tf-plan-mode)
+    (let ((environment (or x-hugh-tf-plan--environment
+                           (user-error "No environment recorded here"))))
+      (or (get-buffer (x-hugh-tf-plan-text-buffer-name environment))
+          (user-error "The text of the plan for %s was not kept" environment))))
+   (t (current-buffer))))
+
+(defun x-hugh-tf-plan--read-format ()
+  "Read one of the wrappings offered by `x-hugh-tf-plan-pr-format'."
+  (intern (completing-read
+           (format-prompt "Wrap as" x-hugh-tf-plan-pr-format)
+           '("plain" "fenced" "details" "per-resource")
+           nil t nil nil (symbol-name x-hugh-tf-plan-pr-format))))
+
+;;;###autoload
+(defun x-hugh-tf-plan-copy-for-pr (&optional choose-format)
+  "Copy the plan, wrapped for a pull request, to the kill ring.
+
+Takes Terraform's own text -- from this buffer if it holds plan output,
+otherwise from the text view of the plan this buffer is showing -- and
+keeps the part worth reading: the execution plan, any note about changes
+made outside Terraform, and the Plan: summary.  The init and refresh
+output is dropped.
+
+`x-hugh-tf-plan-pr-format' decides the wrapping; with a prefix argument,
+CHOOSE-FORMAT, pick one for this copy."
+  (interactive "P")
+  (let ((format (if choose-format
+                    (x-hugh-tf-plan--read-format)
+                  x-hugh-tf-plan-pr-format)))
+    (with-current-buffer (x-hugh-tf-plan--text-buffer)
+      (let* ((excerpts (x-hugh-tf-plan--excerpts))
+             (warnings (and x-hugh-tf-plan-pr-include-warnings
+                            (x-hugh-tf-plan--warning-blocks)))
+             (parts (append
+                     (mapcar (lambda (excerpt)
+                               (x-hugh-tf-plan--wrap-for-pr excerpt format))
+                             excerpts)
+                     (and warnings
+                          (list (x-hugh-tf-plan--wrap-warnings
+                                 warnings format))))))
+        (unless excerpts
+          (user-error "No plan output in %s" (buffer-name)))
+        (let* ((markdown (string-join parts "\n\n"))
+               (lines (length (split-string markdown "\n"))))
+          (kill-new markdown)
+          (message "Copied %d line%s for a pull request%s"
+                   lines
+                   (if (= lines 1) "" "s")
+                   (if (> (length excerpts) 1)
+                       (format " (%d plans)" (length excerpts))
+                     "")))))))
+
+;;;###autoload
+(defun x-hugh-tf-plan-copy-resource-for-pr ()
+  "Copy the diff of the resource at point, wrapped for a pull request.
+
+Takes Terraform's text for that one resource, so what you paste into a
+review comment shows what Terraform showed, hidden attributes and all."
+  (interactive)
+  (let* ((resource (or (x-hugh-tf-plan--resource-at-point)
+                       (user-error "No resource on this line")))
+         (address (plist-get resource :address))
+         (text-buffer (x-hugh-tf-plan--text-buffer)))
+    (with-current-buffer text-buffer
+      (save-excursion
+        (goto-char (point-min))
+        (unless (re-search-forward
+                 (concat "^[[:space:]]*# " (regexp-quote address) " ") nil t)
+          (user-error "No diff for %s in %s" address (buffer-name)))
+        (let* ((start (match-beginning 0))
+               (summary (string-trim
+                         (buffer-substring-no-properties
+                          (line-beginning-position) (line-end-position))))
+               (end (progn
+                      (forward-line 1)
+                      (if (re-search-forward
+                           (concat "\\(?:"
+                                   x-hugh-tf-plan-resource-header-regexp
+                                   "\\)\\|^Plan: ")
+                           nil t)
+                          (match-beginning 0)
+                        (point-max))))
+               (body (string-trim
+                      (buffer-substring-no-properties
+                       (save-excursion (goto-char start)
+                                       (forward-line 1)
+                                       (point))
+                       end))))
+          (kill-new (x-hugh-tf-plan-details-block
+                     summary (x-hugh-tf-plan--fence body)))
+          (message "Copied %s" address))))))
 
 ;;; Reading plan output you already have
 
