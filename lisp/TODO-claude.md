@@ -17,21 +17,20 @@ First run: accept the nono pack install from a regular shell:
       search/fetch and in-sandbox pip/npm to break until their hosts
       are added too.
 - [x] live within emacs -- claude-code.el in a ghostel buffer
-- [ ] ability to display files claude is thinking about (phase 2)
+- [x] ability to display files claude is thinking about
   - monet openFile works (tested 2026-08-04 via /ide; --ide flag now
     auto-connects since nono strips the handshake env vars)
-  - **fix window layout**: Claude-opened files appear on top of the
-    claude session window instead of splitting into a separate one.
-    Want: claude session stays put, files open in another window
-    (e.g. display-buffer-alist rule, or monet's tool-function hooks)
-  - also seen: agent tried `emacsclient -n +22 file` from inside the
-    sandbox with no way to confirm it landed; steer it toward the
-    monet openFile MCP tool instead (CLAUDE.md note?)
-- [ ] split view: right-hand side has markdown artifact -- running notes,
-  explanations, etc (phase 2)
-  - CLAUDE.md instruction to keep running notes in NOTES-claude.md
-  - live reload of markdown document using emacs markdown live preview
-    mode, auto-revert-file, etc
+  - window layout fixed: custom `monet-open-file-tool` wrapper hops
+    out of the claude window before find-file (needs testing)
+  - emacsclient habit fixed via --append-system-prompt: use the IDE
+    openFile tool, not emacsclient
+- [x] split view: right-hand side has markdown artifact -- running notes,
+  explanations, etc
+  - `C-c c N` (x-hugh-claude-notes): NOTES-claude.md of the current
+    project in a right side window with auto-revert (needs testing)
+  - system prompt tells Claude to keep running notes there
+  - maybe later: rendered preview (grip/markdown live preview)
+    instead of plain markdown-mode
 
 # Refactoring Opportunities
 
