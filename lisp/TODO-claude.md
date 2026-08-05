@@ -18,9 +18,15 @@ First run: accept the nono pack install from a regular shell:
       are added too.
 - [x] live within emacs -- claude-code.el in a ghostel buffer
 - [ ] ability to display files claude is thinking about (phase 2)
-  - monet provides openFile/diff/selection already; needs testing
-  - eg: "here's where the bug is" (opens on right) -- add a
-    display-buffer rule so Claude-opened files land on the right
+  - monet openFile works (tested 2026-08-04 via /ide; --ide flag now
+    auto-connects since nono strips the handshake env vars)
+  - **fix window layout**: Claude-opened files appear on top of the
+    claude session window instead of splitting into a separate one.
+    Want: claude session stays put, files open in another window
+    (e.g. display-buffer-alist rule, or monet's tool-function hooks)
+  - also seen: agent tried `emacsclient -n +22 file` from inside the
+    sandbox with no way to confirm it landed; steer it toward the
+    monet openFile MCP tool instead (CLAUDE.md note?)
 - [ ] split view: right-hand side has markdown artifact -- running notes,
   explanations, etc (phase 2)
   - CLAUDE.md instruction to keep running notes in NOTES-claude.md
