@@ -65,30 +65,34 @@
 (setq inhibit-splash-screen t)
 
 ;; TODO: This whole thing is whack
+;; NOTE: Use Ubuntu Sans Mono, not Inconsolata.  The Inconsolata build
+;; installed here is a single-style font (no italic, no bold), so
+;; org-mode emphasis renders wrong -- /italic/ shows as bold and _underline_
+;; disappears.  Ubuntu Sans Mono ships real Italic and Bold faces.
 (defun x-hugh-set-font-smol ()
   "Set font to 8 point.  fixme: make this something like ctrl-shift-+/- in ff."
   (interactive)
-  (set-frame-font "inconsolata-8" t))
+  (set-frame-font "Ubuntu Sans Mono-8" t))
 
 (defun x-hugh-set-font-semi-smol ()
   "Set font to 12 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-12" t))
+  (set-frame-font "Ubuntu Sans Mono-12" t))
 
 (defun x-hugh-set-font-larger ()
   "Set font to 16 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-16" t))
+  (set-frame-font "Ubuntu Sans Mono-16" t))
 
 (defun x-hugh-set-font-largest ()
   "Set font to 20 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-20" t))
+  (set-frame-font "Ubuntu Sans Mono-20" t))
 
 (defun x-hugh-set-font-zomg ()
   "Set font to 30 point.  FIXME: Make this something like ctrl-shift-+/- in FF."
   (interactive)
-  (set-frame-font "Inconsolata-30" t))
+  (set-frame-font "Ubuntu Sans Mono-30" t))
 
 ;; just make it larger...i always do this at startup anyhow.
 ;; fixme / todo: this is borking the display on wayland.  for now i'm
@@ -150,13 +154,13 @@ assumes font named like `inconsolata-14`."
   "return string with current font, but size increased by one."
   (interactive)
   (let ((biggersize (+ 1 (x-hugh-appearance-experiment-get-font-size))))
-    (format "inconsolata-%d" biggersize)))
+    (format "Ubuntu Sans Mono-%d" biggersize)))
 
 (defun x-hugh-appearance-get-smaller-font-size ()
   "return string with current font, but size increased by one."
   (interactive)
   (let ((smallersize (+ -1 (x-hugh-appearance-experiment-get-font-size))))
-    (format "inconsolata-%d" smallersize)))
+    (format "Ubuntu Sans Mono-%d" smallersize)))
 
 (defun x-hugh-appearance-make-things-bigger ()
   "increase default font size by one."
@@ -173,9 +177,9 @@ assumes font named like `inconsolata-14`."
 (defun fontify-frame-appropriate-font ()
   "return the appropriate font for displays."
   (interactive)
-  (cond ((fontify-frame-screen-res-retina-p) "inconsolata-22")
-        ((fontify-frame-screen-res-high-enough-p) "inconsolata-18")
-        ((fontify-frame-screen-tiny-laptop-p) "inconsolata-12")))
+  (cond ((fontify-frame-screen-res-retina-p) "Ubuntu Sans Mono-22")
+        ((fontify-frame-screen-res-high-enough-p) "Ubuntu Sans Mono-18")
+        ((fontify-frame-screen-tiny-laptop-p) "Ubuntu Sans Mono-12")))
 
 (defun fontify-frame-screen-res-retina-p ()
   "detect retina display."
