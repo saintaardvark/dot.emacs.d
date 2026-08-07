@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-;; Reminder: for Python, run `pip install --user python-lsp-server`
+;; Reminder: for Python, run `uv tool install "python-lsp-server[all]"`
 
 (setq treesit-language-source-alist
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
