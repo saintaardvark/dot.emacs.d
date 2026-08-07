@@ -6,9 +6,10 @@
 
 ;;; Code:
 
-;; Reminder: for Python, run:
+;; Reminder: install the tooling once, editor-wide, via uv:
 ;;
-;;     pip install --user 'python-lsp-server[all]'
+;;     uv tool install ruff
+;;     uv tool install 'python-lsp-server[all]' --with python-lsp-ruff
 ;;
 ;; Alternatively, on Debian run:
 ;;
@@ -82,16 +83,26 @@
 ;;                '(python-mode . ("ty" "server"))))
 ;; ;;   (add-hook 'after-save-hook 'eglot-format))
 
-(use-package python-black
+;; Work switched from black to ruff.  reformatter-define generates a
+;; `ruff-format-on-save-mode' that mirrors the old python-black-on-save-mode
+;; 1:1, plus `ruff-format-buffer' / `ruff-format-region'.
+;;
+;; Program is the global `ruff' (install once with `uv tool install ruff'),
+;; not `uv run ruff': `uv run' only works inside a uv project, so it would
+;; fail on scratch/standalone buffers.  Per-project pinned ruff is a CI
+;; concern, separate from editor formatting.
+;;
+;; TODO: apheleia is worth a look someday -- async, batteries-included ruff
+;; support -- if the on-save reformat ever feels janky.
+(use-package reformatter
   :demand t
   :after python
   :ensure t
-  ;; Note:
-  ;; - need python-ts-mode since I'm using that, not python-mode
-  ;;
-  ;; - python-black-on-save-mode instead of the -dwim variant (which
-  ;; checks that black is listed in pyproject.toml, which I don't use)
-  :hook (python-ts-mode . python-black-on-save-mode)
+  :config
+  (reformatter-define ruff-format
+    :program "ruff"
+    :args (list "format" "--stdin-filename" (or (buffer-file-name) input-file) "-"))
+  :hook (python-ts-mode . ruff-format-on-save-mode)
   )
 
 ;; TODO: Break this out to a group var or some such

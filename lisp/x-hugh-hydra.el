@@ -316,7 +316,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
 ;; figure out what that looks like.
 (defhydra hydra-python (:exit t)
   "python"
-  ("b" python-black-buffer "Black buffer")
+  ("b" ruff-format-buffer "Ruff format buffer")
   ("c" conda-env-activate "Activate conda env")
   ("d" conda-env-deactivate "Deactivate conda env")
   ("e" ein:run "Start jupyter server with ein")
