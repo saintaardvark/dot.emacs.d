@@ -12,7 +12,9 @@
   :ensure t
   ;; :config (add-hook 'after-init-hook #'global-flycheck-mode)
   :custom ((flycheck-check-syntax-automatically (quote (save idle-change)))
-           (flycheck-flake8-maximum-line-length 9990)
+           ;; Dropped flycheck-flake8-maximum-line-length (was 9990, i.e.
+           ;; "never warn on line length"): work switched to ruff, whose
+           ;; default rule set (E4/E7/E9/F) excludes E501, so the knob is moot.
            (flycheck-idle-change-delay 2)
            (flycheck-keymap-prefix ".")))
 
