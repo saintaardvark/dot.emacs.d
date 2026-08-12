@@ -94,3 +94,5 @@ Runtime state and installed packages are gitignored: `elpa*/`,
   needed. (Existing elisp comments do use emoji; leave those as found.)
 
 - Prefer lists over paragraphs; keep prose brief.
+
+- Your commit headlines should end with `(written by Claude 🤖)`.
