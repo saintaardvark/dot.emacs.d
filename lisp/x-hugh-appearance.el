@@ -69,6 +69,14 @@
 ;; installed here is a single-style font (no italic, no bold), so
 ;; org-mode emphasis renders wrong -- /italic/ shows as bold and _underline_
 ;; disappears.  Ubuntu Sans Mono ships real Italic and Bold faces.
+
+;; But!  Debian doesn't have Ubuntu Sans.  To install it:
+;;
+;; - grab the zipfile from https://github.com/canonical/Ubuntu-Sans-Mono-fonts/releases
+;; - unzip it locally
+;; - run find . -type f -name "*.ttf" -exec cp -f {} ~/.local/share/fonts/ \;
+;; - run fc-cache -f -v
+
 (defun x-hugh-set-font-smol ()
   "Set font to 8 point.  fixme: make this something like ctrl-shift-+/- in ff."
   (interactive)
