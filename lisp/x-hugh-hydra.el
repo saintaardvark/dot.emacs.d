@@ -104,6 +104,7 @@
   ("r" (x-hugh-open-password-file) "Open password file")
   ("R" (find-file "~/.config/run-or-raise/shortcuts.conf") "Edit run-or-raise")
   ("s" (find-file "~/.ssh/config") "Open .ssh/config")
+  ("s" (find-file "~/Pictures/Screenshots") "Screenshots")
   ("u" (calculator) "Calculator")
   ("w" (image-dired "~/Pictures/Wallpaper") "Wallpaper")
   ("x" (dired "~/Downloads" "-la --sort=time") "Downloads") ; newest first
