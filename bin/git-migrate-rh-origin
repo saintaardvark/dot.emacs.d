@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# git-migrate-rh-origin: point `origin` at dross instead of rh.
+#
+# For each repo given (or the current directory if none are given):
+#   - require that the `origin` remote's URL looks like
+#     rh:/var/cache/git/<name>
+#   - add a new remote named `rh` with that original URL, so it's
+#     still reachable under its old name
+#   - repoint `origin` at ssh://dross/aardvark/<name>
+#
+# Repos that don't have an `origin` remote, whose `origin` doesn't
+# match the rh:/var/cache/git/* pattern, or that already have an
+# `rh` remote, are skipped with a message on stderr.
+#
+# See also: `x-hugh-gh-migrate-rh-origin' in lisp/x-hugh-gh.el, an
+# Emacs command that does the same thing for a single repo.
+
+set -euo pipefail
+
+usage() {
+    echo "Usage: $(basename "$0") [repo-dir ...]" >&2
+    echo "If no repo-dir is given, operates on the current directory." >&2
+    exit 1
+}
+
+migrate_repo() {
+    local repo="$1"
+    local origin_url name
+
+    if ! git -C "$repo" rev-parse --git-dir >/dev/null 2>&1; then
+        echo "skip: $repo is not a git repo" >&2
+        return
+    fi
+
+    if ! origin_url=$(git -C "$repo" remote get-url origin 2>/dev/null); then
+        echo "skip: $repo has no 'origin' remote" >&2
+        return
+    fi
+
+    case "$origin_url" in
+        rh:/var/cache/git/*)
+            name=${origin_url#rh:/var/cache/git/}
+            ;;
+        *)
+            echo "skip: $repo origin '$origin_url' doesn't match rh:/var/cache/git/*" >&2
+            return
+            ;;
+    esac
+
+    if git -C "$repo" remote get-url rh >/dev/null 2>&1; then
+        echo "skip: $repo already has an 'rh' remote" >&2
+        return
+    fi
+
+    git -C "$repo" remote add rh "$origin_url"
+    git -C "$repo" remote set-url origin "ssh://dross/aardvark/${name}"
+    echo "ok: $repo -> origin=ssh://dross/aardvark/${name} rh=${origin_url}"
+}
+
+case "${1:-}" in
+    -h|--help) usage ;;
+esac
+
+if [ "$#" -eq 0 ]; then
+    migrate_repo "."
+else
+    for repo in "$@"; do
+        migrate_repo "$repo"
+    done
+fi
