@@ -49,17 +49,28 @@ Do it, monkey boy!"
       (when (zerop (apply #'call-process "git" nil t nil args))
         (string-trim (buffer-string))))))
 
+(defconst x-hugh-gh--rh-origin-prefixes
+  '("rh:/var/cache/git/" "/var/cache/git/" "/home/git/")
+  "URL prefixes recognised as pointing at the old rh git host.")
+
+(defun x-hugh-gh--rh-origin-name (url)
+  "Return the repo name if URL matches a `x-hugh-gh--rh-origin-prefixes' entry, else nil."
+  (let ((prefix (seq-find (lambda (p) (string-prefix-p p url))
+                           x-hugh-gh--rh-origin-prefixes)))
+    (when prefix (substring url (length prefix)))))
+
 (defun x-hugh-gh-migrate-rh-origin (dir)
   "Repoint DIR's `origin' remote at dross, keeping the old URL as `rh'.
 
-DIR must be a git repo whose `origin' remote URL looks like
-rh:/var/cache/git/<name>.  A new remote named `rh' is added with
-that original URL, and `origin' is repointed at
+DIR must be a git repo whose `origin' remote URL looks like one of:
+rh:/var/cache/git/<name>, /var/cache/git/<name>, or
+/home/git/<name>.  A new remote named `rh' is added with that
+original URL, and `origin' is repointed at
 ssh://dross/aardvark/<name>.
 
 Signals an error if DIR has no `origin' remote, if that remote's URL
-doesn't match the expected pattern, or if DIR already has an `rh'
-remote.
+doesn't match one of the expected patterns, or if DIR already has an
+`rh' remote.
 
 See also: `bin/git-migrate-rh-origin' for a shell-script equivalent
 that can be run across many repos at once."
@@ -69,15 +80,15 @@ that can be run across many repos at once."
   (let ((origin-url (x-hugh-gh--git dir "remote" "get-url" "origin")))
     (unless origin-url
       (user-error "%s has no 'origin' remote" dir))
-    (unless (string-prefix-p "rh:/var/cache/git/" origin-url)
-      (user-error "%s origin '%s' doesn't match rh:/var/cache/git/*" dir origin-url))
-    (when (x-hugh-gh--git dir "remote" "get-url" "rh")
-      (user-error "%s already has an 'rh' remote" dir))
-    (let* ((name (substring origin-url (length "rh:/var/cache/git/")))
-           (new-url (concat "ssh://dross/aardvark/" name)))
-      (x-hugh-gh--git dir "remote" "add" "rh" origin-url)
-      (x-hugh-gh--git dir "remote" "set-url" "origin" new-url)
-      (message "origin=%s rh=%s" new-url origin-url))))
+    (let ((name (x-hugh-gh--rh-origin-name origin-url)))
+      (unless name
+        (user-error "%s origin '%s' doesn't match a known rh pattern" dir origin-url))
+      (when (x-hugh-gh--git dir "remote" "get-url" "rh")
+        (user-error "%s already has an 'rh' remote" dir))
+      (let ((new-url (concat "ssh://dross/aardvark/" name)))
+        (x-hugh-gh--git dir "remote" "add" "rh" origin-url)
+        (x-hugh-gh--git dir "remote" "set-url" "origin" new-url)
+        (message "origin=%s rh=%s" new-url origin-url)))))
 
 (defun x-hugh-grx (url)
   "Run grx on URL."

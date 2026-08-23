@@ -2,15 +2,17 @@
 # git-migrate-rh-origin: point `origin` at dross instead of rh.
 #
 # For each repo given (or the current directory if none are given):
-#   - require that the `origin` remote's URL looks like
-#     rh:/var/cache/git/<name>
+#   - require that the `origin` remote's URL looks like one of:
+#       rh:/var/cache/git/<name>
+#       /var/cache/git/<name>
+#       /home/git/<name>
 #   - add a new remote named `rh` with that original URL, so it's
 #     still reachable under its old name
 #   - repoint `origin` at ssh://dross/aardvark/<name>
 #
 # Repos that don't have an `origin` remote, whose `origin` doesn't
-# match the rh:/var/cache/git/* pattern, or that already have an
-# `rh` remote, are skipped with a message on stderr.
+# match one of the patterns above, or that already have an `rh`
+# remote, are skipped with a message on stderr.
 #
 # See also: `x-hugh-gh-migrate-rh-origin' in lisp/x-hugh-gh.el, an
 # Emacs command that does the same thing for a single repo.
@@ -41,8 +43,14 @@ migrate_repo() {
         rh:/var/cache/git/*)
             name=${origin_url#rh:/var/cache/git/}
             ;;
+        /var/cache/git/*)
+            name=${origin_url#/var/cache/git/}
+            ;;
+        /home/git/*)
+            name=${origin_url#/home/git/}
+            ;;
         *)
-            echo "skip: $repo origin '$origin_url' doesn't match rh:/var/cache/git/*" >&2
+            echo "skip: $repo origin '$origin_url' doesn't match a known rh pattern" >&2
             return
             ;;
     esac
