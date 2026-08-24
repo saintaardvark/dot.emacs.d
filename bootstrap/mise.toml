@@ -1,0 +1,233 @@
+# Local build automation for this Emacs checkout.
+#
+# Not part of GNU Emacs; keep it out of any patch you send upstream.
+# To hide it from git status:  echo /mise.toml >> .git/info/exclude
+#
+# Two profiles, selected with the EMACS_PROFILE environment variable:
+#
+#   gtk  (default)  GTK3/X11 desktop build -- the workstation configuration
+#   nox             headless --without-x build for a plain Debian server
+#
+#   mise run world                      # desktop
+#   EMACS_PROFILE=nox mise run world    # server
+#
+# Every task honours it, so keep it exported for the whole session if you
+# are working on a server:  export EMACS_PROFILE=nox
+
+[env]
+EMACS_PREFIX = "{{env.HOME}}/.local"
+
+# A self-built tree-sitter under /usr/local takes precedence when present.
+# Harmless on machines without one: pkgconf ignores nonexistent directories.
+PKG_CONFIG_PATH = "/usr/local/lib/pkgconfig"
+
+[vars]
+
+# Needed by both profiles.  libgccjit is handled separately: its version
+# must track the gcc that configure picks (15 on testing, 14 on Debian 13
+# stable), so the deps task derives it from 'gcc -dumpversion'.
+deb_base = """
+build-essential autoconf automake texinfo pkgconf git
+libgnutls28-dev libxml2-dev zlib1g-dev libgmp-dev libncurses-dev
+libsqlite3-dev libacl1-dev liblcms2-dev
+libsystemd-dev libselinux-dev libseccomp-dev
+libtree-sitter-dev
+"""
+
+# Desktop-only.  All of the image libraries are gated on HAVE_X11 in
+# configure.ac, so none of them do anything in a --without-x build.
+deb_gui = """
+libgtk-3-dev libcairo2-dev libharfbuzz-dev libfreetype-dev
+libjpeg-dev libpng-dev libgif-dev libxpm-dev librsvg2-dev libwebp-dev
+libdbus-1-dev libasound2-dev mailutils
+libx11-dev libxext-dev libxi-dev libxrandr-dev libxinerama-dev
+libxfixes-dev libxcomposite-dev
+"""
+
+# Headless-only extras.  Empty today; kept so the profile case below has
+# somewhere to grow.
+#
+# Note on tree-sitter: libtree-sitter-dev is in deb_base so this file works
+# on a machine with no /usr/local build.  On the workstation, which does
+# have one, PKG_CONFIG_PATH above is searched before the system pkgconfig
+# directory, so the /usr/local copy still wins.
+deb_nox = ""
+
+# Not installed and not required anywhere.  Add if you want them:
+#   libtiff-dev            TIFF images (desktop only)
+#   libgpm-dev             console mouse -- genuinely useful on a server
+#   libwebkit2gtk-4.1-dev  --with-xwidgets (embedded WebKit; destabilizes frames)
+#   libmagickwand-dev      --with-imagemagick (off upstream by default; leaks)
+#   libotf-dev libm17n-dev superseded by HarfBuzz
+
+# --- Dependencies -----------------------------------------------------
+
+[tasks.deps-list]
+description = "Print the Debian packages this profile needs"
+run = """
+: "${EMACS_PROFILE:=gtk}"
+case "$EMACS_PROFILE" in
+  gtk) extra="{{vars.deb_gui}}" ;;
+  nox) extra="{{vars.deb_nox}}" ;;
+  *)   echo "unknown EMACS_PROFILE '$EMACS_PROFILE' (want gtk or nox)" >&2; exit 1 ;;
+esac
+base="{{vars.deb_base}}"
+gccver=$(gcc -dumpversion | cut -d. -f1)
+for p in $base $extra "libgccjit-$gccver-dev"; do echo "$p"; done
+"""
+
+[tasks.deps-check]
+description = "Report which required Debian packages are missing"
+run = """
+: "${EMACS_PROFILE:=gtk}"
+echo "profile: $EMACS_PROFILE"
+missing=
+for p in $(mise run deps-list); do
+  dpkg-query -W -f='${Status}' "$p" 2>/dev/null | grep -q 'ok installed' || missing="$missing $p"
+done
+if test -n "$missing"; then
+  echo "missing:$missing"
+  exit 1
+fi
+echo "all required packages installed"
+"""
+
+[tasks.deps]
+description = "Install the required Debian packages (apt, needs sudo)"
+run = """
+: "${EMACS_PROFILE:=gtk}"
+echo "profile: $EMACS_PROFILE"
+sudo apt install --no-install-recommends $(mise run deps-list)
+"""
+
+# --- Build ------------------------------------------------------------
+
+[tasks.pull]
+description = "Fast-forward master from savannah"
+run = "git pull --ff-only origin master"
+
+[tasks.autogen]
+description = "Regenerate configure and friends (needed after a fresh clone)"
+run = "./autogen.sh"
+sources = ["configure.ac", "m4/*.m4", "Makefile.in"]
+outputs = ["configure"]
+
+[tasks.configure]
+description = "Run ./configure for this profile"
+run = """
+: "${EMACS_PROFILE:=gtk}"
+echo "profile: $EMACS_PROFILE"
+
+common="--prefix=$EMACS_PREFIX
+        --without-compress-install
+        --with-native-compilation
+        --with-modules
+        --with-tree-sitter
+        --with-xml2
+        --with-sqlite3
+        --with-gnutls
+        --with-zlib
+        --with-selinux"
+
+case "$EMACS_PROFILE" in
+  gtk)
+    set -- $common \
+      --with-x-toolkit=gtk3 --with-harfbuzz \
+      --with-dbus --with-gif --with-jpeg --with-png --with-xpm \
+      --with-rsvg --with-webp --with-tiff=ifavailable \
+      --with-gpm=no
+    ;;
+  nox)
+    # No window system, so the image libraries are skipped by configure
+    # regardless of what is passed.  D-Bus and sound are rarely wanted on
+    # a server, and --with-dbus is a hard error if libdbus-1-dev is absent.
+    set -- $common \
+      --without-x --without-sound --with-dbus=ifavailable
+    ;;
+  *) echo "unknown EMACS_PROFILE '$EMACS_PROFILE' (want gtk or nox)" >&2; exit 1 ;;
+esac
+
+echo "./configure $*"
+./configure "$@"
+"""
+
+[tasks.bootstrap]
+description = "make bootstrap (clean slate: re-runs autogen + configure + full build)"
+run = "make bootstrap -j\"$(nproc)\""
+
+[tasks.build]
+description = "Incremental make"
+run = "make -j\"$(nproc)\""
+
+[tasks.install]
+description = "Install into $EMACS_PREFIX"
+run = "make install"
+
+[tasks.check]
+description = "Run the test suite"
+run = "make check"
+
+[tasks.clean]
+description = "Delete built files, keep configuration"
+run = "make clean"
+
+[tasks.distclean]
+description = "Delete built files AND configuration"
+run = "make distclean"
+
+# --- Verification -----------------------------------------------------
+
+# configure.ac only hard-errors on xpm/jpeg/png/gif/tiff (and those only
+# when HAVE_X11), plus dbus, gnutls and tree-sitter.  rsvg, webp, sqlite3
+# and ACL all degrade to "off" in silence -- which is how --with-rsvg sat
+# in the configure line for months without producing SVG support.  Check.
+[tasks.verify]
+description = "Confirm the optional features actually made it into config.h"
+run = """
+: "${EMACS_PROFILE:=gtk}"
+test -f src/config.h || { echo "src/config.h absent -- run 'mise run configure'"; exit 1; }
+
+want="HAVE_NATIVE_COMP HAVE_TREE_SITTER HAVE_MODULES HAVE_LIBXML2 HAVE_SQLITE3
+      HAVE_GNUTLS HAVE_ZLIB HAVE_LCMS2 HAVE_LIBSELINUX"
+case "$EMACS_PROFILE" in
+  gtk) want="$want HAVE_GTK3 HAVE_X_WINDOWS HAVE_HARFBUZZ HAVE_DBUS
+                   HAVE_RSVG HAVE_WEBP HAVE_PNG HAVE_JPEG HAVE_GIF HAVE_XPM" ;;
+esac
+
+echo "profile: $EMACS_PROFILE"
+rc=0
+for m in $want; do
+  if grep -q "^#define $m 1" src/config.h; then
+    printf '  ok      %s\\n' "$m"
+  else
+    printf '  MISSING %s\\n' "$m"; rc=1
+  fi
+done
+if grep -q '^#define USE_ACL 1' src/config.h; then
+  printf '  ok      USE_ACL\\n'
+else
+  printf '  MISSING USE_ACL (install libacl1-dev, then reconfigure)\\n'; rc=1
+fi
+grep -m1 '^#define EMACS_CONFIG_FEATURES' src/config.h
+exit $rc
+"""
+
+[tasks.version]
+description = "Show what the freshly built Emacs reports"
+run = "./src/emacs --batch --eval '(progn (princ (emacs-version)) (terpri) (princ system-configuration-features) (terpri))'"
+
+# --- Composites -------------------------------------------------------
+
+[tasks.refresh]
+description = "Pull, then bootstrap with the existing configuration"
+depends = ["pull"]
+run = "mise run bootstrap"
+
+[tasks.reconfigure]
+description = "Pull, regenerate configure, configure, verify, bootstrap"
+depends = ["pull"]
+run = ["mise run autogen", "mise run configure", "mise run verify", "mise run bootstrap"]
+
+[tasks.world]
+description = "Install deps, pull, reconfigure, bootstrap, install"
+run = ["mise run deps", "mise run reconfigure", "mise run install", "mise run version"]
