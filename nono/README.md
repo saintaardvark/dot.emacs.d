@@ -31,6 +31,33 @@ list, expected breakage and rollback are in
 sandboxed session -- it fails with `Failed to open /dev/tty`.  That is
 the point: the review happens outside the cage.
 
+**Updating a profile that is already live needs a `.base` file too.**
+The three commands above are the *first* install only.  Once
+`~/.config/nono/profiles/claude-local.json` exists, `promote` demands a
+sibling `claude-local.base` holding the SHA-256 of the live profile's
+bytes -- its way of noticing that the live profile changed while you
+were drafting.  Without it:
+
+    nono: Profile read error at ~/.config/nono/profile-drafts/claude-local.base: No such file or directory
+
+So the update sequence is four commands, not three:
+
+    cp nono/claude-local.json ~/.config/nono/profile-drafts/
+    printf '%s' "$(sha256sum ~/.config/nono/profiles/claude-local.json | cut -d' ' -f1)" \
+        > ~/.config/nono/profile-drafts/claude-local.base
+    nono profile validate --draft claude-local
+    nono profile promote claude-local
+
+The `.base` file must be exactly 64 lowercase hex characters, which is
+why the `printf` avoids a trailing newline.  If it no longer matches
+the live profile when you promote, nono says `draft base hash does not
+match current profile` -- someone changed the profile underneath you;
+re-read it and redo the draft.  On success the draft file is deleted.
+
+Before any of that, check whether there is anything to do at all:
+
+    diff -u ~/.config/nono/profiles/claude-local.json nono/claude-local.json
+
 Inspect a draft without promoting it, by passing the path where a
 profile name would go:
 
@@ -48,7 +75,8 @@ The chain is three deep, and all of it has to be present:
 The pack profile is also registered under the bare names `claude` and
 `claude-code`; `nono profile list` shows all three sources at once.
 
-Two different errors look alike here:
+Three errors turn up around this, and only one of them means the
+inheritance chain is broken:
 
 - `Profile inheritance error: base profile 'X' not found` -- the base
   really is missing, usually because the pack was never pulled (step 3
@@ -58,6 +86,11 @@ Two different errors look alike here:
   just is not live *yet*.  Every command that takes `--profile NAME`
   says this until the draft has been promoted.  Before then, refer to
   the draft by path instead, as in the section above.
+
+- `Profile read error at .../claude-local.base: No such file or
+  directory` -- also not an inheritance problem, despite reading like
+  one.  It means the opposite of the previous error: `claude-local`
+  *is* already live, so `promote` wants the hash file described above.
 
 ## Setting all this up on a new machine
 
