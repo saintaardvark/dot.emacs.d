@@ -241,7 +241,60 @@ enough -- no advice, no load-order trap.
 Also update the `TODO(nono)` comment in the commentary header to point
 at this plan.
 
+### D. `bin/nono-here` -- a standalone wrapper, for use outside Emacs
+
+Not strictly part of the egress work, but it belongs here: nono is
+worth having as a habit, not just as something Emacs does on your
+behalf when it launches Claude.  `bin/claude-nono` cannot serve that --
+it is claude-shaped (it reads `CLAUDE_CODE_SSE_PORT`, sets
+`EDITOR`/`VISUAL`, and hardcodes the claude profile) and Emacs-shaped
+(no argument handling, because Emacs supplies the command).
+
+`bin/nono-here` is the general one: sandbox *this directory* and run
+something in it.
+
+    nono-here                                  # interactive shell, cwd r+w
+    nono-here make test                        # one command
+    nono-here -R less suspicious.py            # cwd read-only
+    nono-here -d pypi.org -d files.pythonhosted.org uv sync
+    nono-here -N ./configure                   # no outbound network at all
+    nono-here -n -p python-dev pytest          # dry run: print capabilities
+
+Design notes, each of which is a finding rather than a preference:
+
+- **`-a "$PWD"`, not `--allow-cwd`.**  Per finding 5, `--allow-cwd`
+  applies the profile's workdir level and the `default` profile sets
+  none, so the flag would silently grant nothing.  `-R` swaps the grant
+  to read-only.
+
+- **Profile defaults to `default`, not `claude-local`.**  The
+  allowlist in change A is shaped for the Claude CLI's own hosts;
+  handing it to `make` or `npm` would be both too narrow and
+  misleading.  `-p` or `NONO_HERE_PROFILE` overrides, and the built-in
+  `python-dev` / `node-dev` / `go-dev` / `rust-dev` profiles are the
+  right thing for those ecosystems.
+
+- **Network stays as the profile has it until you name a domain.**
+  Because of finding 2, the *first* `-d` flips the whole session into
+  proxy-only default-deny -- so `-d` is all-or-nothing, and the help
+  text says so.  `-N` is the blunt version: no egress at all.
+
+- **No `--dangerously-skip-permissions` equivalent.**  Unlike the
+  Claude wrapper there is no agent here to trip over prompts; denials
+  should be visible.
+
+It deliberately does not wrap `bin/claude-nono`, and `bin/claude-nono`
+is not rewritten in terms of it: the two share a philosophy, not code.
+The one thing they must not disagree about is the profile, and they
+do not -- each names its own explicitly.
+
 ## Rollout
+
+Change D is independent of A-C and can land first; it touches nothing
+the Claude session uses.
+
+0. Add `bin/nono-here`, check `nono-here -n` prints a capability list
+   with cwd read-write, and run something real in it.
 
 1. Write the draft, then:
 
@@ -312,9 +365,16 @@ protection than it is:
 
 ## Open questions
 
-- Does `extends` accept the namespaced `always-further/claude`, or only
-  the bare pack profile name?  Resolved by step 1.
+- ~~Does `extends` accept the namespaced `always-further/claude`?~~
+  Yes -- resolved in finding 5.
 - Are ELPA hosts wanted at all in-sandbox, given that Emacs installs
   packages outside the sandbox?  Probably droppable.
 - Should `downloads.claude.ai` be included, or should self-update be
   something that only happens outside the sandbox on purpose?
+- Does a comma-separated `NONO_ALLOW_DOMAIN` split into several
+  entries, or arrive as one malformed host?  If it splits, change B's
+  `CLAUDE_NONO_ALLOW_DOMAIN` can be dropped in favour of nono's own
+  variable.
+- Should `bin/nono-here` live in this repo at all, or in the dotfiles
+  repo where the rest of `~/.local/bin` comes from?  It is here because
+  `bin/claude-nono` is here.
