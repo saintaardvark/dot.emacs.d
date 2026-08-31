@@ -1,5 +1,63 @@
 # NOTES-claude
 
+## 2026-08-31 — B and C are in; the cage is closed on the next launch
+
+Both one-liners landed, plus the comment surgery around them.  Nothing
+here affects *this* session: it was launched under the old profile with
+the old tool set, so the change shows up the next time you start Claude
+from Emacs.
+
+**B — `bin/claude-nono`** now runs `--profile claude-local`.  The
+"NETWORK IS CURRENTLY WIDE OPEN" banner is replaced by what is actually
+in force, including the escape hatch:
+
+    M-x setenv RET CLAUDE_NONO_ALLOW_DOMAIN RET pypi.org files.pythonhosted.org
+
+Traced the built command line to be sure of the argument order:
+
+    exec nono run --profile claude-local --allow-cwd --allow /tmp/claude-1000 \
+        --allow-domain files.pythonhosted.org --allow-domain pypi.org \
+        --open-port 48615 -- claude --version
+
+I left `--allow /tmp/claude-1000` in even though pack 0.0.16 grants it:
+it costs nothing, and blank shell output is a miserable thing to
+re-diagnose.
+
+**C — `lisp/x-hugh-claude.el`** sets `claude-code-ide-enable-execute-code`
+to nil, closing the elisp-eval path that ran *outside* the sandbox.
+openFile, openDiff and getDiagnostics are untouched.
+
+### The plan was wrong about how that setting takes effect
+
+It claimed the MCP tool list is rebuilt on every `tools/list` request,
+so ordering did not matter.  It is not.  It is built once, at load time:
+
+    claude-code-ide-mcp-handlers.el:663
+      (setq claude-code-ide-mcp-tools (claude-code-ide-mcp--build-tool-list))
+
+with the same pattern for the schemas at 708, and nothing outside the
+test suite calls the builders again.  So the value has to be set
+*before* that file loads.  `:custom` does that (it runs at startup, and
+the package is deferred behind its `:bind` autoloads); a `setq` in
+`:config` would have been too late and would have looked like it
+worked.  Corrected in the plan.
+
+### What to check on the next session, in this order
+
+1. Does the model answer at all?  That proves `api.anthropic.com` plus
+   the proxy handshake.
+2. `/ide` connected, and openFile still opens a file — that proves the
+   localhost websocket survived proxy mode.
+3. `M-: (assoc "executeCode" claude-code-ide-mcp-tools)` → nil.
+4. `git log` with no `/etc/gitconfig` warning; `git commit` still needs
+   the `core.hooksPath` workaround, since `~/.githooks_global` is a
+   separate unresolved thing.
+5. Expect `git fetch`/`push` to fail: every remote here is ssh, and
+   proxy mode is HTTP CONNECT.  Agent commits, you push.
+
+Rollback if something is badly wrong: one word in `bin/claude-nono`,
+`claude-local` back to `always-further/claude`.
+
 ## 2026-08-31 (later) — the `.base` file, and a wrong guess corrected
 
 The exact message, from the laptop (user `hugh`, not this machine):
