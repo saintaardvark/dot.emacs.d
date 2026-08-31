@@ -159,14 +159,18 @@ fails to exec its `post-checkout` hook.  Candidate for the same
 
 ## Changes
 
-### A. New user profile `claude-local`
+### A. New user profile `claude-local`  -- WRITTEN 2026-08-31, NOT YET PROMOTED
 
-Draft at `~/.config/nono/profile-drafts/claude-local.json`:
+The profile now lives in the repo at [`nono/claude-local.json`](nono/claude-local.json),
+with the promote workflow in [`nono/README.md`](nono/README.md); a copy
+is staged at `~/.config/nono/profile-drafts/claude-local.json`.  It is
+the JSON sketched below, minus the three ELPA hosts (Emacs installs
+packages outside the sandbox, so nothing in there wants them -- the
+open question is closed by dropping them) and plus a `$schema` line and
+a `meta.version`.
 
 ```json
 {
-  "meta": { "name": "claude-local",
-            "description": "Local overlay: outbound allowlist + system gitconfig" },
   "extends": "always-further/claude",
   "filesystem": { "read_file": ["/etc/gitconfig"] },
   "network": {
@@ -179,19 +183,39 @@ Draft at `~/.config/nono/profile-drafts/claude-local.json`:
       "api.github.com",
       "codeload.github.com",
       "raw.githubusercontent.com",
-      "objects.githubusercontent.com",
-      "melpa.org",
-      "elpa.gnu.org",
-      "elpa.nongnu.org"
+      "objects.githubusercontent.com"
     ]
   }
 }
 ```
 
 The first four entries are what the CLI needs to run.  The GitHub
-entries are for git over https and `gh`; the ELPA entries are for this
-repo specifically (package archives, in case anything in-sandbox wants
-them).  Drop any of them if unused -- a shorter list is a better list.
+entries are for git over https and `gh`.  Drop any of them if unused --
+a shorter list is a better list.
+
+**What is already verified** (rollout steps 1 and 2, run against the
+draft file by path, which does not require promoting it):
+
+    $ nono profile validate --draft claude-local
+      [ok]  JSON syntax valid
+      [ok]  All 28 group references valid
+      Result: valid
+
+    $ nono why --profile <draft> --host api.anthropic.com   -> ALLOWED  proxy_allowed
+    $ nono why --profile <draft> --host platform.claude.com -> ALLOWED  proxy_allowed
+    $ nono why --profile <draft> --host github.com          -> ALLOWED  proxy_allowed
+    $ nono why --profile <draft> --host example.com         -> DENIED   proxy_filtered
+    $ nono why --profile <draft> --path /etc/gitconfig --op read -> ALLOWED
+
+`nono profile show <draft>` confirms inheritance is intact: every
+filesystem grant from the pack profile is still there, `Workdir access`
+is still `ReadWrite`, and a dry run reports `net proxy`.
+
+**What is left, and needs a human:** `nono profile promote claude-local`
+opens `/dev/tty` for its y/N review, so it cannot be run from inside a
+sandboxed session -- it fails with `Failed to open /dev/tty`.  Run it
+from a plain terminal.  Nothing else in this plan should land before
+that, since changes B and C name a profile that does not exist yet.
 
 ### B. `bin/claude-nono`
 
@@ -294,9 +318,11 @@ Change D is independent of A-C and can land first; it touches nothing
 the Claude session uses.
 
 0. Add `bin/nono-here`, check `nono-here -n` prints a capability list
-   with cwd read-write, and run something real in it.
+   with cwd read-write, and run something real in it.  *(Written
+   2026-08-31; only the dry runs are verified -- nono cannot nest, so
+   a real run has to happen outside this sandbox.)*
 
-1. Write the draft, then:
+1. Write the draft, then:  *(done 2026-08-31, except `promote`)*
 
        nono profile validate --draft claude-local
        nono profile promote claude-local
