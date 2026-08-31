@@ -36,6 +36,17 @@ First run: accept the nono pack install from a regular shell:
       claude runs with --dangerously-skip-permissions, so nono is the
       only boundary -- open network means silent exfiltration is
       possible until the allowlist is on.
+  - **STATUS 2026-08-31 (branch `nono-network-filtering`): change A
+    is written but NOT LIVE.**  The profile is tracked at
+    `nono/claude-local.json` and staged in
+    `~/.config/nono/profile-drafts/`; it validates, and `nono why`
+    against it allows the Anthropic and GitHub hosts and denies
+    everything else.  It needs one command from a real terminal:
+    `nono profile promote claude-local`.  Changes B and C must not
+    land before that -- they name a profile that does not exist yet.
+    Change D (`bin/nono-here`, a standalone wrapper for sandboxing
+    anything outside Emacs) is written; only its dry runs are tested,
+    because nono cannot nest.
   - **PLAN WRITTEN 2026-08-05: see `NETWORK-FILTERING-PLAN.md` at the
     repo root** -- default-deny egress via a `claude-local` profile
     that extends the pack profile, rather than `--allow-domain` flags
