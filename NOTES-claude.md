@@ -1,5 +1,54 @@
 # NOTES-claude
 
+## 2026-08-31 (later) — the promote worked; nothing is missing
+
+Short answer to the missing-profile error: there is no missing profile.
+`claude-local` is live and enforcing.
+
+    $ ls ~/.config/nono/profiles/
+    claude-local.json  pi.json          # written 08:08
+
+    $ nono profile list | tail -3
+    claude-local  ... extends always-further/claude
+    pi            ... extends nolabs-ai/pi
+
+    $ nono why --profile claude-local --host api.anthropic.com  -> ALLOWED
+    $ nono why --profile claude-local --host example.com        -> DENIED
+
+The chain is three deep and every link resolves: `claude-local` ->
+`always-further/claude` (pack 0.0.16, also registered under the bare
+names `claude` and `claude-code`) -> `default` (built into the binary).
+
+### What the error probably was
+
+nono has two different not-found messages, and only one of them means
+trouble.  I reproduced both with throwaway drafts:
+
+- `Profile inheritance error: base profile 'X' not found` — the real
+  one.  `validate` reports it and `promote` refuses to write anything.
+  Since `claude-local.json` *did* get written, this is not what you saw.
+
+- `Profile not found: claude-local` — what every `--profile NAME`
+  command says while the draft is still only a draft.  `nono profile
+  show claude-local` or any of the `nono why --profile claude-local`
+  checks, run a moment too early, produces exactly this.  That is my
+  guess at what happened, and it is harmless.
+
+For completeness: `nono profile promote <new-draft> --diff` does not
+error on a first promote — it diffs against an empty file and prints
+the whole draft as added.  So promote itself was never the source.
+
+Both messages are now documented in `nono/README.md`, along with the
+chain diagram.
+
+### Where that leaves the plan
+
+Change A is done.  **B and C are unblocked and are the next thing.**
+B is one line in `bin/claude-nono` (`--profile claude-local`); C is one
+line in `lisp/x-hugh-claude.el` (`claude-code-ide-enable-execute-code`
+to nil).  Worth remembering before B lands: all four git remotes here
+are ssh, so the sandboxed agent will be able to commit but not push.
+
 ## 2026-08-31 — standalone nono wrapper, then step A of the network plan
 
 Branch `nono-network-filtering`, six commits.  Both things asked for
