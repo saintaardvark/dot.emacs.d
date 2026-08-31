@@ -37,6 +37,28 @@ profile name would go:
     nono profile show   ~/.config/nono/profile-drafts/claude-local.json
     nono why --profile ~/.config/nono/profile-drafts/claude-local.json --host github.com
 
+## What it is built on
+
+The chain is three deep, and all of it has to be present:
+
+    claude-local            ~/.config/nono/profiles/claude-local.json
+      -> always-further/claude   pack 0.0.16, ~/.config/nono/packages/
+           -> default            built into the nono binary
+
+The pack profile is also registered under the bare names `claude` and
+`claude-code`; `nono profile list` shows all three sources at once.
+
+Two different errors look alike here:
+
+- `Profile inheritance error: base profile 'X' not found` -- the base
+  really is missing, usually because the pack was never pulled (step 3
+  below).  `validate` catches this and `promote` refuses to write.
+
+- `Profile not found: claude-local` -- nothing is broken; that name
+  just is not live *yet*.  Every command that takes `--profile NAME`
+  says this until the draft has been promoted.  Before then, refer to
+  the draft by path instead, as in the section above.
+
 ## Setting all this up on a new machine
 
 Verified against nono 0.71.0, pack `always-further/claude` 0.0.16, and
