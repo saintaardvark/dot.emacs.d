@@ -174,7 +174,7 @@ fails to exec its `post-checkout` hook.  Candidate for the same
 
 ## Changes
 
-### A. New user profile `claude-local`  -- WRITTEN 2026-08-31, NOT YET PROMOTED
+### A. New user profile `claude-local`  -- DONE, PROMOTED 2026-08-31
 
 The profile now lives in the repo at [`nono/claude-local.json`](nono/claude-local.json),
 with the promote workflow in [`nono/README.md`](nono/README.md); a copy
@@ -226,11 +226,21 @@ draft file by path, which does not require promoting it):
 filesystem grant from the pack profile is still there, `Workdir access`
 is still `ReadWrite`, and a dry run reports `net proxy`.
 
-**What is left, and needs a human:** `nono profile promote claude-local`
-opens `/dev/tty` for its y/N review, so it cannot be run from inside a
-sandboxed session -- it fails with `Failed to open /dev/tty`.  Run it
-from a plain terminal.  Nothing else in this plan should land before
-that, since changes B and C name a profile that does not exist yet.
+**Promoted 2026-08-31.**  `nono profile promote claude-local` opens
+`/dev/tty` for its y/N review, so it has to be run from a plain
+terminal -- inside a sandboxed session it fails with `Failed to open
+/dev/tty`.  Confirmed live afterwards: `nono profile list` shows
+`claude-local ... extends always-further/claude` under User, and
+`nono why --profile claude-local` allows `api.anthropic.com` and
+denies `example.com`.  Changes B and C are now unblocked.
+
+A `Profile not found: claude-local` seen along the way is what every
+`--profile NAME` command says until the draft is promoted; it is not a
+broken base.  A genuinely missing base reads
+`Profile inheritance error: base profile 'X' not found`, and `promote`
+refuses to write at all in that case.  The chain here is
+`claude-local` -> `always-further/claude` (pack 0.0.16) -> `default`
+(built in), and all three resolve.
 
 ### B. `bin/claude-nono`
 
@@ -337,7 +347,7 @@ the Claude session uses.
    2026-08-31; only the dry runs are verified -- nono cannot nest, so
    a real run has to happen outside this sandbox.)*
 
-1. Write the draft, then:  *(done 2026-08-31, except `promote`)*
+1. Write the draft, then:  *(done 2026-08-31, promote included)*
 
        nono profile validate --draft claude-local
        nono profile promote claude-local

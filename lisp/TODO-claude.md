@@ -36,14 +36,16 @@ First run: accept the nono pack install from a regular shell:
       claude runs with --dangerously-skip-permissions, so nono is the
       only boundary -- open network means silent exfiltration is
       possible until the allowlist is on.
-  - **STATUS 2026-08-31 (branch `nono-network-filtering`): change A
-    is written but NOT LIVE.**  The profile is tracked at
-    `nono/claude-local.json` and staged in
-    `~/.config/nono/profile-drafts/`; it validates, and `nono why`
-    against it allows the Anthropic and GitHub hosts and denies
-    everything else.  It needs one command from a real terminal:
-    `nono profile promote claude-local`.  Changes B and C must not
-    land before that -- they name a profile that does not exist yet.
+  - **STATUS 2026-08-31: change A is LIVE.**  `claude-local` is
+    promoted and enforcing -- `nono why --profile claude-local` allows
+    api.anthropic.com and denies example.com.  Source of truth is
+    `nono/claude-local.json`; the chain is claude-local ->
+    always-further/claude (pack 0.0.16) -> default.  **Changes B and C
+    are now unblocked and are the next thing to do**: point
+    `bin/claude-nono` at `claude-local`, and set
+    `claude-code-ide-enable-execute-code` to nil.  Note that all four
+    git remotes here are ssh, so once B lands the sandboxed agent can
+    commit but not push.
     Change D (`bin/nono-here`, a standalone wrapper for sandboxing
     anything outside Emacs) is written; only its dry runs are tested,
     because nono cannot nest.
