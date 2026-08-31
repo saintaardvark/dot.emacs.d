@@ -103,6 +103,43 @@ the `~/.config` -> `dotfiles/.config` symlink resolves fine -- the
 resolved path `/home/aardvark/dotfiles/.config/nono/profile-drafts`
 shows up in the dry-run capability list.)
 
+### 5. Re-check on 2026-08-31
+
+Same nono (0.71.0).  Four things changed or were wrong:
+
+- **`/tmp/claude-$UID` is now in the pack profile.**  The
+  `--allow "$harness_tmp"` line in `bin/claude-nono` is redundant --
+  the dry-run capability list shows `/tmp/claude-1000` with the flag
+  removed.  Harmless, but it can go.
+
+- **The `extends` spelling is fine.**  `nono profile show
+  always-further/claude` resolves, and `nono profile list` shows the
+  pack registered under the bare names `claude` and `claude-code` as
+  well.  Open question 1 is closed.
+
+- **`--allow-cwd` is profile-dependent.**  It applies the *profile's*
+  workdir level, and only the claude pack profile sets one
+  (`Workdir access: ReadWrite`).  Under `default` the flag grants
+  nothing at all; a general-purpose wrapper has to pass `-a "$PWD"`.
+  This matters for change D, not for `bin/claude-nono`.
+
+- **nono reads `NONO_ALLOW_DOMAIN` itself** (it is the documented env
+  form of `--allow-domain`), and a comma-separated value does flip the
+  session into proxy mode.  I could not confirm from `--dry-run` that
+  the comma actually splits into two entries -- the capability list
+  prints `net proxy` and no hostnames -- so change B keeps its own
+  word-split variable under a distinct name rather than relying on it.
+
+Also confirmed unchanged: the `git_config` group grants `~/.gitconfig`
+and `~/.config/git/*` but not `/etc/gitconfig` (finding 3 stands), and
+`nono why` answers from the profile alone -- it ignores flags and env
+overrides, which is exactly what the rollout checks want.
+
+One new piece of sandbox friction, unrelated to networking:
+`~/.githooks_global` is not readable, so `git checkout` succeeds but
+fails to exec its `post-checkout` hook.  Candidate for the same
+`read_file`/`read` treatment as `/etc/gitconfig` if it becomes annoying.
+
 ## Design decisions
 
 - **Default-deny egress via a profile, not wrapper flags.**  Tamper
