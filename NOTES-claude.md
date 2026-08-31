@@ -1,53 +1,67 @@
 # NOTES-claude
 
-## 2026-08-31 (later) — the promote worked; nothing is missing
+## 2026-08-31 (later) — the `.base` file, and a wrong guess corrected
 
-Short answer to the missing-profile error: there is no missing profile.
-`claude-local` is live and enforcing.
+The exact message, from the laptop (user `hugh`, not this machine):
 
-    $ ls ~/.config/nono/profiles/
-    claude-local.json  pi.json          # written 08:08
+    $ nono profile promote claude-local
+    nono: Profile read error at /home/hugh/.config/nono/profile-drafts/claude-local.base: No such file or directory
 
-    $ nono profile list | tail -3
-    claude-local  ... extends always-further/claude
-    pi            ... extends nolabs-ai/pi
+**It is not a missing base profile.**  It is a missing *hash* file, and
+it means `claude-local` is already live on that laptop.  From nono's
+own authoring guide (`nono profile guide`, section 6):
 
-    $ nono why --profile claude-local --host api.anthropic.com  -> ALLOWED
-    $ nono why --profile claude-local --host example.com        -> DENIED
+> When drafting a change to a profile that already exists, you must
+> also create a `.base` file alongside the draft JSON.  The `.base`
+> file contains the SHA-256 hex digest of the current profile bytes.
+> `promote` checks this hash to detect if the live profile changed
+> while the draft was in progress.
 
-The chain is three deep and every link resolves: `claude-local` ->
-`always-further/claude` (pack 0.0.16, also registered under the bare
-names `claude` and `claude-code`) -> `default` (built into the binary).
+A first promote needs no `.base` -- which is why it went through
+cleanly here and stalled there.  The guide is explicit about that:
+"no `.base` needed — this is a new profile".
 
-### What the error probably was
+### What to run on the laptop
 
-nono has two different not-found messages, and only one of them means
-trouble.  I reproduced both with throwaway drafts:
+First, see whether there is anything to promote at all:
 
-- `Profile inheritance error: base profile 'X' not found` — the real
-  one.  `validate` reports it and `promote` refuses to write anything.
-  Since `claude-local.json` *did* get written, this is not what you saw.
+    diff -u ~/.config/nono/profiles/claude-local.json ~/.emacs.d/nono/claude-local.json
 
-- `Profile not found: claude-local` — what every `--profile NAME`
-  command says while the draft is still only a draft.  `nono profile
-  show claude-local` or any of the `nono why --profile claude-local`
-  checks, run a moment too early, produces exactly this.  That is my
-  guess at what happened, and it is harmless.
+If they match, it is already done; `nono profile list` will show
+`claude-local` under User.  If they differ:
 
-For completeness: `nono profile promote <new-draft> --diff` does not
-error on a first promote — it diffs against an empty file and prints
-the whole draft as added.  So promote itself was never the source.
+    cp ~/.emacs.d/nono/claude-local.json ~/.config/nono/profile-drafts/
+    printf '%s' "$(sha256sum ~/.config/nono/profiles/claude-local.json | cut -d' ' -f1)" \
+        > ~/.config/nono/profile-drafts/claude-local.base
+    nono profile validate --draft claude-local
+    nono profile promote claude-local
 
-Both messages are now documented in `nono/README.md`, along with the
-chain diagram.
+Exactly 64 lowercase hex characters, hence `printf` rather than `echo`.
+A stale hash gives `draft base hash does not match current profile`.
+On success the draft is deleted.
+
+### Correcting myself
+
+My previous entry guessed the error was `Profile not found:
+claude-local` from a check run before promotion.  Wrong -- that guess
+was made without the message, and the real one points the other way
+entirely: the profile exists rather than not existing.  Both messages
+are now in `nono/README.md`, next to the `.base` one, since all three
+read like inheritance failures and none of them is.
+
+Still true from that entry, verified on *this* machine: `claude-local`
+is live here, the chain `claude-local` -> `always-further/claude` (pack
+0.0.16) -> `default` resolves, and `nono why --profile claude-local`
+allows `api.anthropic.com` and denies `example.com`.
 
 ### Where that leaves the plan
 
-Change A is done.  **B and C are unblocked and are the next thing.**
-B is one line in `bin/claude-nono` (`--profile claude-local`); C is one
-line in `lisp/x-hugh-claude.el` (`claude-code-ide-enable-execute-code`
-to nil).  Worth remembering before B lands: all four git remotes here
-are ssh, so the sandboxed agent will be able to commit but not push.
+Change A is done here.  **B and C are unblocked and are the next
+thing.**  B is one line in `bin/claude-nono` (`--profile claude-local`);
+C is one line in `lisp/x-hugh-claude.el`
+(`claude-code-ide-enable-execute-code` to nil).  Before B lands: all
+four git remotes here are ssh, so the sandboxed agent will be able to
+commit but not push.
 
 ## 2026-08-31 — standalone nono wrapper, then step A of the network plan
 
