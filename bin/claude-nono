@@ -8,10 +8,16 @@
 # server running inside Emacs.  Emacs itself stays outside the
 # sandbox.
 #
-# First run: nono will prompt to install the signed
-# always-further/claude profile pack.  If that's awkward inside a
-# terminal buffer, accept it once from a regular shell:
-#   nono run --profile always-further/claude -- claude --version
+# The profile is claude-local, a local overlay on the signed
+# always-further/claude pack: same filesystem policy, plus a
+# default-deny outbound allowlist and read access to /etc/gitconfig.
+# It is tracked at nono/claude-local.json; ~/.config/nono/profiles/ is
+# not writable from inside the sandbox, so the live copy cannot be
+# edited by the thing it confines.  Read it with:
+#   nono profile show claude-local
+#
+# New machine: pull the pack, then promote the overlay -- see
+# nono/README.md.  Both need a real terminal, not an Emacs session.
 #
 # NOTE: keep Claude Code's built-in sandbox disabled; nono is the
 # single security boundary.  Otherwise claude retries blocked
@@ -19,20 +25,22 @@
 # that are hard to audit.  See:
 # https://nono.sh/docs/cli/clients/claude-code.md
 #
-# ####################################################################
-# #                                                                  #
-# #  TODO(nono): NETWORK IS CURRENTLY WIDE OPEN.  The stock          #
-# #  always-further/claude profile allows all outbound traffic.      #
-# #  Try tightening to an allowlist, e.g.:                           #
-# #                                                                  #
-# #    --allow-domain api.anthropic.com \                            #
-# #    --allow-domain statsig.anthropic.com \                        #
-# #    --allow-domain sentry.io \                                    #
-# #                                                                  #
-# #  Expect web search/fetch and in-sandbox installs (pip, npm,      #
-# #  go get) to break until their hosts are added too.               #
-# #                                                                  #
-# ####################################################################
+# Outbound traffic is default-deny as of 2026-08-31: naming even one
+# domain puts nono in proxy-only mode, and the list lives in the
+# profile.  Consequences worth knowing before you debug something:
+#
+#   - WebFetch on an arbitrary host fails; it is fetched client-side.
+#     WebSearch still works -- that one runs server-side.
+#   - ssh git remotes do not survive proxy mode (HTTP CONNECT), and
+#     every remote on this repo is ssh.  The agent can commit; you
+#     push.
+#   - pip / apt / go get reach nothing until their hosts are added.
+#
+# For a one-off host, without editing the profile:
+#   M-x setenv RET CLAUDE_NONO_ALLOW_DOMAIN RET pypi.org files.pythonhosted.org
+# Recurring needs belong in nono/claude-local.json, promoted by hand.
+#
+# See NETWORK-FILTERING-PLAN.md for the reasoning and the rollback.
 
 set -eu
 
@@ -81,4 +89,15 @@ else
     set -- -- claude "$@"
 fi
 
-exec nono run --profile always-further/claude --allow-cwd --allow "$harness_tmp" "$@"
+# One-off widening for a single session; see the note above.  The
+# variable is deliberately word-split, and deliberately not nono's own
+# NONO_ALLOW_DOMAIN: that one is read by nono directly and it is not
+# confirmed that a comma-separated value splits into several entries.
+for domain in ${CLAUDE_NONO_ALLOW_DOMAIN:-}; do
+    set -- --allow-domain "$domain" "$@"
+done
+
+# --allow "$harness_tmp" is redundant with the pack profile as of
+# 0.0.16, which grants /tmp/claude-$UID itself.  Kept because it costs
+# nothing and blank shell output is a miserable thing to re-diagnose.
+exec nono run --profile claude-local --allow-cwd --allow "$harness_tmp" "$@"
