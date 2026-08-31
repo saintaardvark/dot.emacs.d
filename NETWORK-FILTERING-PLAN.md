@@ -1,8 +1,9 @@
 # Network filtering plan: putting an outbound allowlist on claude-nono
 
-Status: proposed, nothing applied yet.  Written 2026-08-05 against
-nono v0.71.0 and Claude Code 2.1.220 (native install,
-`~/.local/share/claude/versions/2.1.220`).
+Status: written 2026-08-05 against nono v0.71.0 and Claude Code
+2.1.220; re-checked 2026-08-31 against the same nono and Claude Code
+2.1.251.  Change A is written but not promoted, change D is written,
+changes B and C are still proposals -- see each section.
 
 Tracked from the network-filtering item in `lisp/TODO-claude.md`.
 
@@ -37,6 +38,20 @@ appears anywhere in the 2.1.220 binary.  Telemetry now rides on
 | `downloads.claude.ai` | auto-update and the plugin marketplace CDN |
 | `registry.npmjs.org` | plugin / npm fetches |
 | `*.mcp.claude.com` | only if the hosted gmail/gcal/slack/microsoft365 MCP servers get enabled |
+
+**Correction, 2026-08-31, CLI 2.1.251.**  `statsig` still appears only
+as a bare word, no domain -- but `sentry` does now resolve to real
+hostnames in the binary: `o1158394.ingest.us.sentry.io`, plus the
+wildcards `*.sentry.io` and `*.ingest.us.sentry.io`.  Either it was
+added between 2.1.220 and 2.1.251 or the original check missed it.  It
+stays off the allowlist deliberately: crash reporting to a third party
+is precisely the kind of egress this plan exists to stop, and losing it
+costs nothing here.  Also new in the strings and also left off:
+`mcp-proxy.anthropic.com` (only used by hosted MCP servers),
+`claude.googleapis.com` (Vertex), `*.claudeusercontent.com` (the web
+app's iframes), and `releases.claude.com`, which appears as a bare
+hostname with no URL built from it -- the update path is still
+`https://downloads.claude.ai/claude`.
 
 Corroboration: the `nono` binary itself hardcodes exactly two
 Anthropic-side hosts, `api.anthropic.com` and `platform.claude.com`.
