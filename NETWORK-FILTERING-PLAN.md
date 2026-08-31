@@ -242,7 +242,7 @@ refuses to write at all in that case.  The chain here is
 `claude-local` -> `always-further/claude` (pack 0.0.16) -> `default`
 (built in), and all three resolve.
 
-### B. `bin/claude-nono`
+### B. `bin/claude-nono`  -- DONE 2026-08-31
 
 Point at the new profile, replace the TODO banner with a description of
 the policy that is actually in force, and add the escape hatch:
@@ -269,7 +269,7 @@ The header comment should also lose the "NETWORK IS CURRENTLY WIDE
 OPEN" block and gain a note that the allowlist lives in the profile,
 with the `nono profile show claude-local` command to read it.
 
-### C. `lisp/x-hugh-claude.el`
+### C. `lisp/x-hugh-claude.el`  -- DONE 2026-08-31
 
 Add to the `claude-code-ide` `:custom` block:
 
@@ -282,10 +282,23 @@ Add to the `claude-code-ide` `:custom` block:
 ```
 
 `claude-code-ide-enable-execute-code` is a real defcustom
-(`elpa/claude-code-ide/claude-code-ide.el:194`) and the tool list is
-rebuilt on every `tools/list` request
-(`claude-code-ide-mcp.el:307`), so setting it through `:custom` is
-enough -- no advice, no load-order trap.
+(`elpa/claude-code-ide/claude-code-ide.el:194`), so `:custom` is the
+right place -- but **the claim that the tool list is rebuilt per
+`tools/list` request was wrong.**  It is built exactly once, at load
+time of `claude-code-ide-mcp-handlers.el`:
+
+    663:(setq claude-code-ide-mcp-tools (claude-code-ide-mcp--build-tool-list))
+
+with the same pattern for the schemas at line 708.  Outside the test
+suite nothing calls the builders again -- the tests have to `setq`
+both by hand after changing the variable, which is the giveaway.
+
+So there *is* a load-order requirement: the value must be set before
+that file loads.  `:custom` satisfies it (it runs at startup, and the
+package is deferred behind `:bind` autoloads), but a `setq` in
+`:config` would not.  Verify after a restart with
+
+    M-: (assoc "executeCode" claude-code-ide-mcp-tools)   => nil
 
 Also update the `TODO(nono)` comment in the commentary header to point
 at this plan.

@@ -31,7 +31,7 @@ First run: accept the nono pack install from a regular shell:
       x-hugh-keymap.el never fires and C-c c binds nothing.  Candidate
       fix: add `:demand t` to the claude-code use-package block (or
       autoload via a plain global binding instead of the keymap var).
-- [ ] **TODO -- BIG ONE -- network filtering**: the stock profile
+- [x] **network filtering** (done 2026-08-31): the stock profile
       allows ALL outbound traffic.  Now URGENT: as of 2026-08-04
       claude runs with --dangerously-skip-permissions, so nono is the
       only boundary -- open network means silent exfiltration is
@@ -40,12 +40,14 @@ First run: accept the nono pack install from a regular shell:
     promoted and enforcing -- `nono why --profile claude-local` allows
     api.anthropic.com and denies example.com.  Source of truth is
     `nono/claude-local.json`; the chain is claude-local ->
-    always-further/claude (pack 0.0.16) -> default.  **Changes B and C
-    are now unblocked and are the next thing to do**: point
-    `bin/claude-nono` at `claude-local`, and set
-    `claude-code-ide-enable-execute-code` to nil.  Note that all four
-    git remotes here are ssh, so once B lands the sandboxed agent can
-    commit but not push.
+    always-further/claude (pack 0.0.16) -> default.  **B and C landed
+    the same day**: `bin/claude-nono` runs `--profile claude-local`
+    with a `CLAUDE_NONO_ALLOW_DOMAIN` escape hatch, and
+    `claude-code-ide-enable-execute-code` is nil.  Untested until the
+    next session starts -- the first one to check is whether the model
+    answers at all, then `/ide` and openFile, then git.  All four
+    remotes here are ssh, so the sandboxed agent can commit but not
+    push.
     Change D (`bin/nono-here`, a standalone wrapper for sandboxing
     anything outside Emacs) is written; only its dry runs are tested,
     because nono cannot nest.
