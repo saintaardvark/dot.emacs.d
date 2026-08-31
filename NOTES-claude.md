@@ -66,8 +66,36 @@ command from a real terminal is what is left.
   was made with `git -c core.hooksPath=<empty dir>` plus
   `GIT_CONFIG_NOSYSTEM=1`.
 
+### Follow-up, same day: new-machine steps + a correction
+
+`nono/README.md` now has a "Setting all this up on a new machine"
+section: install nono and check the kernel can enforce, install Claude
+Code, `nono pull always-further/claude`, promote `claude-local`, then
+the `nono why` checks.  It notes that Emacs needs no `PATH` entry
+(`claude-code-ide-cli-path` is an absolute path built from
+`user-emacs-directory`) but `bin/nono-here` does, and that steps 1-4
+have to happen in a real terminal because two of them prompt.
+
+While gathering the facts for it I found the CLI has moved on: 2.1.251
+here, against 2.1.220 when the plan was written.  Re-grepping the new
+binary turned up one thing the plan gets wrong:
+
+- **`sentry.io` is in there now** -- `o1158394.ingest.us.sentry.io`
+  plus `*.sentry.io` and `*.ingest.us.sentry.io`.  Finding 1 says it is
+  absent.  Corrected in place.  I did *not* add it to the allowlist:
+  crash reporting to a third party is the kind of egress the plan
+  exists to stop.
+- `statsig` is still a bare word with no domain, so that half of
+  finding 1 stands.
+- `downloads.claude.ai/claude` is still the update URL, so the
+  allowlist entry is right.
+- Also present and also deliberately omitted: `mcp-proxy.anthropic.com`
+  (hosted MCP only), `claude.googleapis.com` (Vertex),
+  `*.claudeusercontent.com` (web app iframes).
+
 ### Questions for when you are back
 
+0. NOTES-claude.md is tracked now, as you asked.
 1. **Promote it?**  `nono profile promote claude-local` from a plain
    terminal is the whole of what is left in step A.  Changes B and C
    must wait for it — they name a profile that does not exist yet.
