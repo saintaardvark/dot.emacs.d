@@ -14,8 +14,9 @@
 ;; CLAUDE_CODE_SSE_PORT into a nono --open-port hole (claude-code-ide
 ;; uses the same env var).
 ;;
-;; TODO(nono): network is currently WIDE OPEN.  Tighten with
-;; --allow-domain in bin/claude-nono -- see the big comment there.
+;; Outbound traffic is default-deny as of 2026-08-31, via the
+;; claude-local nono profile.  See bin/claude-nono and
+;; NETWORK-FILTERING-PLAN.md.
 ;;
 ;; Keybindings (here, not x-hugh-keymap, so use-package can autoload):
 ;;   C-c c -> claude-code-ide-menu
@@ -70,10 +71,22 @@ already shell-quoted for sh -c -- the vterm backend uses it that way
    (expand-file-name "bin/claude-nono" user-emacs-directory))
   ;; nono is the security boundary (same judgement call as
   ;; yolo/podman): kernel-enforced FS limits, so skip the prompt
-  ;; nagging.  NB this raises the stakes on the network-filtering
-  ;; TODO in bin/claude-nono -- until that's done, a rogue agent can
-  ;; exfiltrate anything it can read.
+  ;; nagging.  The egress allowlist that this leans on is now in
+  ;; place -- see bin/claude-nono.
   (claude-code-ide-cli-extra-flags "--dangerously-skip-permissions")
+  ;; That allowlist only binds the *sandboxed* process.  executeCode
+  ;; evaluates elisp in this Emacs, outside the cage, which is an
+  ;; unfiltered network path straight past it -- so the two changes
+  ;; only make sense together.  openFile, openDiff and getDiagnostics,
+  ;; the tools actually wanted here, are unaffected.
+  ;;
+  ;; This has to be set before claude-code-ide-mcp-handlers.el loads:
+  ;; that file builds the tool list once, at load time, with a plain
+  ;; setq (claude-code-ide-mcp-handlers.el:663) -- it is not rebuilt
+  ;; per tools/list request.  :custom runs at startup and the package
+  ;; is deferred, so the ordering holds; check it after a restart with
+  ;;   M-: (assoc "executeCode" claude-code-ide-mcp-tools)  => nil
+  (claude-code-ide-enable-execute-code nil)
   (claude-code-ide-system-prompt
    "You are running inside Emacs with IDE integration.  To show the \
 user a file or location, use the IDE's openFile tool, never \
