@@ -1,0 +1,103 @@
+#!/bin/sh
+# nono-here: run something inside the nono sandbox (https://nono.sh)
+# with the current directory as its work area.
+#
+# The companion to bin/claude-nono, for everything that is not Claude
+# Code launched from Emacs: an unfamiliar Makefile, a fresh clone's
+# postinstall scripts, a build you would rather not hand your whole
+# home directory to -- or just a shell to poke at a repo in.
+#
+# See NETWORK-FILTERING-PLAN.md (change D) for why it looks like this.
+
+set -eu
+
+me=${0##*/}
+
+usage() {
+    cat <<EOF
+usage: $me [options] [command [args...]]
+
+With a command, runs it in the sandbox; with none, starts an
+interactive sandboxed shell.  The current directory is granted
+read-write; nothing else is, beyond what the profile allows.
+
+  -p PROFILE  nono profile (default: \$NONO_HERE_PROFILE, else "default").
+              Try python-dev / node-dev / go-dev / rust-dev for those.
+  -R          grant the current directory read-only instead of read-write
+  -a DIR      extra read-write grant, repeatable
+  -r DIR      extra read-only grant, repeatable
+  -d DOMAIN   allow one outbound host, repeatable.  CAUTION: the first
+              -d switches nono from "all outbound allowed" to
+              proxy-only default-deny, so once you name one host you
+              have to name them all.
+  -N          block outbound network entirely
+  -n          dry run: print the capabilities, run nothing
+  -h          this help
+
+examples:
+  $me                                        # shell, cwd read-write
+  $me make test
+  $me -R less ./suspicious.py
+  $me -d pypi.org -d files.pythonhosted.org uv sync
+  $me -N ./configure
+EOF
+}
+
+die() { printf '%s: %s\n' "$me" "$1" >&2; exit 2; }
+need() { [ "$1" -ge 2 ] || die "$2 needs an argument"; }
+
+profile=${NONO_HERE_PROFILE:-default}
+cwd_flag=--allow
+dry=
+block_net=
+# Repeatable grants accumulate newline-separated; paths with newlines
+# in them are not supported, spaces are.
+rw_grants=
+ro_grants=
+domains=
+
+while [ $# -gt 0 ]; do
+    case $1 in
+        -p) need $# -p; profile=$2; shift 2 ;;
+        -a) need $# -a; rw_grants="$rw_grants$2
+"; shift 2 ;;
+        -r) need $# -r; ro_grants="$ro_grants$2
+"; shift 2 ;;
+        -d) need $# -d; domains="$domains$2
+"; shift 2 ;;
+        -R) cwd_flag=--read; shift ;;
+        -N) block_net=1; shift ;;
+        -n) dry=1; shift ;;
+        -h|--help) usage; exit 0 ;;
+        --) shift; break ;;
+        -*) die "unknown option $1" ;;
+        *) break ;;
+    esac
+done
+
+if [ $# -gt 0 ]; then
+    subcmd=run
+    set -- -- "$@"
+else
+    subcmd=shell
+fi
+
+# Everything below prepends, so the command (if any) stays last.
+oldifs=$IFS
+IFS='
+'
+for d in $domains; do set -- --allow-domain "$d" "$@"; done
+for g in $ro_grants; do set -- --read "$g" "$@"; done
+for g in $rw_grants; do set -- --allow "$g" "$@"; done
+IFS=$oldifs
+
+# $PWD explicitly rather than --allow-cwd: that flag applies the level
+# the *profile* sets for the working directory, and the stock `default`
+# profile sets none, so it would silently grant nothing.  Checked with
+# `nono run --dry-run --profile default --allow-cwd -- true`.
+set -- --profile "$profile" "$cwd_flag" "$PWD" "$@"
+
+if [ -n "$block_net" ]; then set -- --block-net "$@"; fi
+if [ -n "$dry" ]; then set -- --dry-run "$@"; fi
+
+exec nono "$subcmd" "$@"
