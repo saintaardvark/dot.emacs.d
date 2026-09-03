@@ -121,6 +121,7 @@
 (use-package x-hugh-linum)
 (use-package x-hugh-midnight-mode)
 (use-package x-hugh-nyan)
+(use-package x-hugh-open-multiple-urls)
 (use-package x-hugh-paren) 		; But also see x-hugh-smartparens
 (use-package x-hugh-ssh)
 (use-package x-hugh-tramp)
