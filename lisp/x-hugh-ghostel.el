@@ -10,6 +10,11 @@
   :load-path "~/dev/src/github.com/dakra/ghostel/lisp"
   :bind (("C-x m" . ghostel)
          :map ghostel-semi-char-mode-map
+         ;; Semi-char mode forwards nearly every key to the pty, so
+         ;; the global M-o (other-window) never runs in a ghostel
+         ;; buffer -- Claude Code's included.  Neither claude nor a
+         ;; shell wants ESC o, so take it back here.
+         ("M-o" . other-window)
          ("C-s"  . consult-line)
          ("M-<backspace>" . ghostel-backward-kill-word)
          ;; ;; I'm used to go up/down the shell history with M-n/p from eshell
