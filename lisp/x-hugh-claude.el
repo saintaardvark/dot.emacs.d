@@ -20,7 +20,11 @@
 ;;
 ;; Keybindings (here, not x-hugh-keymap, so use-package can autoload):
 ;;   C-c c -> claude-code-ide-menu
-;;   C-c N -> x-hugh-claude-notes
+;;   C-c N -> x-hugh-claude-notes (the pinned notes toggle)
+;;
+;; Unbound, for a hydra:
+;;   x-hugh-claude-notes-toggle         ordinary window, C-x C-f style
+;;   x-hugh-claude-notes-toggle-pinned  notes and Claude both side windows
 
 ;;; Code:
 
@@ -32,19 +36,95 @@
   :type 'string
   :group 'tools)
 
-(defun x-hugh-claude-notes ()
-  "Show the project's Claude running-notes file in a right side window.
-The buffer auto-reverts, so it live-updates as Claude writes to it."
-  (interactive)
+(defcustom x-hugh-claude-notes-side 'right
+  "Frame side for the pinned notes window.
+`right' stacks it above the Claude window in the same column;
+`left' gives it a full-height column of its own, opposite Claude."
+  :type '(choice (const :tag "Right, stacked above Claude" right)
+                 (const :tag "Left, opposite Claude" left))
+  :group 'tools)
+
+(defcustom x-hugh-claude-notes-width nil
+  "Width in columns of the pinned notes window.
+nil means match `claude-code-ide-window-width' when the notes share
+Claude's column, and 80 otherwise."
+  :type '(choice (const :tag "Automatic" nil) integer)
+  :group 'tools)
+
+(defun x-hugh-claude--notes-file ()
+  "Absolute path of the current project's Claude notes file."
   (require 'project)
   (let* ((proj (project-current))
-         (root (if proj (project-root proj) default-directory))
-         (buf (find-file-noselect
-               (expand-file-name x-hugh-claude-notes-file root))))
+         (root (if proj (project-root proj) default-directory)))
+    (expand-file-name x-hugh-claude-notes-file root)))
+
+(defun x-hugh-claude--notes-buffer ()
+  "Return the buffer visiting the project's notes file, visiting it if needed.
+The buffer auto-reverts, so it live-updates as Claude writes to it."
+  (let ((buf (find-file-noselect (x-hugh-claude--notes-file))))
     (with-current-buffer buf
       (auto-revert-mode 1))
-    (display-buffer-in-side-window
-     buf '((side . right) (window-width . 0.4)))))
+    buf))
+
+(defun x-hugh-claude--notes-window ()
+  "Return the window on this frame showing the notes file, or nil.
+Deliberately uses `get-file-buffer': asking whether the notes are
+visible must not visit the file."
+  (let ((buf (get-file-buffer (x-hugh-claude--notes-file))))
+    (and buf (get-buffer-window buf))))
+
+(defun x-hugh-claude--notes-width ()
+  "Width in columns for the pinned notes window."
+  (or x-hugh-claude-notes-width
+      (and (eq x-hugh-claude-notes-side 'right)
+           ;; Sharing Claude's column: an equal width means displaying
+           ;; the notes does not resize the column under Claude.
+           (bound-and-true-p claude-code-ide-window-width))
+      80))
+
+(defun x-hugh-claude--hide-window (win)
+  "Remove WIN from the frame, or show its previous buffer if it cannot go.
+`delete-window' signals on the sole main window, which happens when the
+notes are the only thing left outside the side windows."
+  (condition-case nil
+      (delete-window win)
+    (error (switch-to-prev-buffer win))))
+
+(defun x-hugh-claude-notes-toggle ()
+  "Toggle an ordinary window showing the project's Claude notes file.
+This is the \\[find-file] equivalent: the window is split off the main
+area and behaves like any other.  For a window that survives
+\\[delete-other-windows], use `x-hugh-claude-notes-toggle-pinned'."
+  (interactive)
+  (if-let* ((win (x-hugh-claude--notes-window)))
+      (x-hugh-claude--hide-window win)
+    (display-buffer (x-hugh-claude--notes-buffer)
+                    '(display-buffer-pop-up-window
+                      (inhibit-same-window . t)))))
+
+(defun x-hugh-claude-notes-toggle-pinned ()
+  "Toggle the project's Claude notes file in a side window.
+On: the notes join Claude as a side window, so \\[delete-other-windows]
+leaves both standing and no stray `display-buffer' reuses either.  Off:
+back to Claude alone.  `x-hugh-claude-notes-side' picks the edge.
+
+The notes take slot -1 on the right.  claude-code-ide assigns its
+instances non-negative slots only (blocks of 16 at 0, 16, 32 ...), so a
+negative slot is never claimed out from under this window -- where slot
+0, the default, would land in Claude's own window and displace it."
+  (interactive)
+  (if-let* ((win (x-hugh-claude--notes-window)))
+      (x-hugh-claude--hide-window win)
+    (display-buffer
+     (x-hugh-claude--notes-buffer)
+     `((display-buffer-in-side-window)
+       (side . ,x-hugh-claude-notes-side)
+       (slot . ,(if (eq x-hugh-claude-notes-side 'right) -1 0))
+       (window-width . ,(x-hugh-claude--notes-width))
+       (window-parameters . ((no-delete-other-windows . t)))))))
+
+;; C-c N kept its meaning: show the notes in a side window.
+(defalias 'x-hugh-claude-notes #'x-hugh-claude-notes-toggle-pinned)
 
 ;; The external editor (C-x C-e / ctrl-g in Claude's TUI) opens the
 ;; prompt in an emacsclient buffer.  With `server-window' nil, server.el

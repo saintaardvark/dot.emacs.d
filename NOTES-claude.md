@@ -506,3 +506,92 @@ Mechanics worth remembering:
 Verified working 2026-09-10.  Emacs cannot exec inside the sandbox (its
 dump file is unreadable), so it was parse-checked here and tested by
 Hugh in the live session.
+
+## 2026-09-10 — side windows, and the slot collision between Claude and C-c N
+
+### What a side window is
+
+An Emacs 26 feature (elisp manual, "Side Windows").  The frame is split
+into a main window area plus up to four side areas, one per edge.
+`display-buffer-in-side-window' is the action function that puts a
+buffer in one.
+
+- Side windows sit outside the main window tree.  `C-x 1' in the main
+  area leaves them standing; from inside one it errors.
+- They cannot be split.
+- `window-toggle-side-windows' hides or restores all of a frame's side
+  windows at once.
+- They stay in the `other-window' cycle, so M-o reaches them.
+- `display-buffer' will not place a buffer in one unless an action
+  targets it, but it will reuse one -- see the collision below.
+
+Placement comes from two alist entries: `side' (left/right/top/bottom)
+and `slot' (a number; 0 is the middle, negative goes toward the
+top/left, positive toward the bottom/right).  `window-sides-slots' caps
+how many windows each side may hold; the default is no limit.
+Note that lisp/x-hugh-window-layout.el sets it to (0 1 0 0), which
+would forbid right-side windows entirely -- that file is not loaded
+from x-hugh-init.el, so it has no effect today.
+
+### How claude-code-ide uses it
+
+`claude-code-ide--display-buffer-in-side-window' (claude-code-ide.el:947)
+binds a one-shot `display-buffer-alist' entry matching the buffer name:
+side right, width 100, a per-session slot, the `no-delete-other-windows'
+window parameter, and `set-window-dedicated-p' with t at the end so no
+stray `display-buffer' reuses the window.
+
+Dedication has two strengths, and the difference is what
+`x-hugh-claude-server-window' exploits:
+
+- t is strong: `set-window-buffer' signals rather than replace.
+- any other non-nil value is weak: `set-window-buffer' succeeds and
+  resets the flag to nil.
+
+### The collision
+
+`claude-code-ide--assign-window-slot' hands each project a block of 16
+slots and the first project gets base 0, so a single Claude instance
+sits at side right, slot 0.  `x-hugh-claude-notes' calls
+`display-buffer-in-side-window' with no `slot' entry, which defaults to
+0 -- the same window.
+
+Reading window.el 30.2: a matching slot means reuse, and
+`window--display-buffer' resets the dedicated flag to nil before
+`set-window-buffer', so the strong dedication does not protect the
+window.  C-c N should therefore replace Claude in that window rather
+than opening beside it.  Not confirmed by running it (emacs cannot exec
+in the sandbox).
+
+Fix if that is the behaviour: give the notes buffer `(slot . -1)'.
+claude-code-ide only ever assigns non-negative slots (blocks at 0, 16,
+32 ...), so a negative slot cannot be claimed by a future instance, and
+the notes window lands above Claude on the right edge.
+
+### Two toggles for the notes buffer (same day)
+
+`x-hugh-claude-notes` grew a slot bug and two entry points:
+
+- `x-hugh-claude-notes-toggle' -- ordinary window split off the main
+  area, the C-x C-f equivalent.  Nothing pinned, nothing dedicated.
+
+- `x-hugh-claude-notes-toggle-pinned' -- notes join Claude as a side
+  window, so C-x 1 leaves both standing.  C-c N runs this one
+  (`x-hugh-claude-notes' is now an alias for it).
+
+Both hide by deleting the window, falling back to
+`switch-to-prev-buffer' if the window is the sole main one.  Visibility
+is tested with `get-file-buffer', so asking does not visit the file.
+
+`x-hugh-claude-notes-side' picks the edge: `right' (default) stacks the
+notes at slot -1 above Claude in the same column; `left' gives them a
+full-height column opposite Claude.  The negative slot is the fix for
+the collision described above -- claude-code-ide only ever hands its
+instances non-negative slots.
+
+`x-hugh-claude-notes-width' is nil by default, which matches
+`claude-code-ide-window-width' when sharing Claude's column so that
+showing the notes does not resize it, and falls back to 80 on the left.
+
+`window-toggle-side-windows' hides and restores both at once, if that
+is ever wanted.
