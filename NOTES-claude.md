@@ -396,3 +396,71 @@ stripped). The failure is above it — most likely the tool list is
 frozen at session start, so a mid-session `/ide` reconnect can't
 retrofit tools. Needs checks run from Emacs, outside the sandbox; those
 are listed at the end of that file.
+
+## 2026-09-10: emacsclient "quit unexpectedly (exit code 1)"
+
+Symptom: C-g in Claude's TUI, which shells out to `$EDITOR`
+(`emacsclient`, set by `bin/claude-nono`), fails with "Emacsclient
+quit unexpectedly (exit code 1)" instead of opening a buffer.
+
+From inside the sandbox:
+
+    $ emacsclient --eval '(+ 1 1)'
+    emacsclient: can't connect to /run/user/1000/emacs/server: Permission denied
+
+`connect(2)` returns errno 13, EACCES (confirmed with a raw perl
+`IO::Socket::UNIX`).
+
+### Cause
+
+nono is now 0.74.0; the wrapper's "no extra grant needed" note was
+tested against 0.71.0.  0.74.0 added AF_UNIX mediation, with its own
+profile fields and flags:
+
+    filesystem.unix_socket / unix_socket_dir / unix_socket_subtree (+ _bind)
+    linux.af_unix_mediation
+    nono run --allow-unix-socket / --allow-unix-socket-dir / ...
+
+A filesystem grant on the socket does not satisfy it.  The live
+profile lists `/run/user/1000/emacs/server` under both `allow_file`
+and `read_file`, and
+
+    nono why --profile claude-local --path /run/user/1000/emacs/server --op read
+    ALLOWED  Reason: granted_path  Access: read+write
+
+still connect() is denied.  `nono why` has no operation for AF_UNIX
+connect (its `--scope abstract-unix-socket` is a different thing), so
+it answers a question nobody asked.  The check that does work is
+`nono run --dry-run`, which prints capabilities line by line: with
+the grant there is a `sock` line, without it there is not.
+
+### Fix
+
+`bin/claude-nono` now passes `--allow-unix-socket
+"$XDG_RUNTIME_DIR/emacs/server"`, guarded on the socket existing.
+Verified by dry-run of the exact command line the wrapper builds; a
+real end-to-end test is impossible from in here because nono cannot
+nest (the nested run dies at `Proxy bind failed`).  Restart the Claude
+session for the wrapper change to take effect.
+
+### Loose end: the live profile has drifted from git
+
+`~/.config/nono/profiles/claude-local.json` (mtime Sep 10 10:34) is no
+longer what `nono/claude-local.json` says.  Extra entries not in the
+repo copy:
+
+    filesystem.allow:      /tmp/cc-socks-1000
+    filesystem.read:       $HOME/.githooks
+    filesystem.allow_file: ~/.githooks_global/prepare-commit-msg
+                           ~/.githooks_global/post-commit
+                           /run/user/1000/emacs/server
+                           "/wyvern-migrate-to-uv              ---"
+    filesystem.read_file:  /run/user/1000/emacs/server
+                           "/wyvern-migrate-to-uv              ---"
+
+The last one is garbage -- a skill name with the column padding still
+attached, captured as a path.  It grants nothing (no such file), but
+it means denial save-prompts are writing to the live profile, and the
+repo copy is no longer the source of truth.  Two things to decide:
+whether to reconcile the drift back into git, and whether to keep the
+socket in the profile at all now that the wrapper grants it.

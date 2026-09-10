@@ -64,14 +64,21 @@ harness_tmp="/tmp/claude-$(id -u)"
 mkdir -p "$harness_tmp"
 
 # Claude's external-editor key (C-x C-e in its TUI) shells out to
-# $EDITOR; without this it lands in vi.  emacsclient reaches the Emacs
-# server from inside the sandbox with no extra grant: nono mediates
-# reads of the socket *directory* (ls /run/user/<uid>/emacs is denied,
-# and `nono why` on the socket reports path_not_granted) but does not
-# block connect() on the socket itself.  Tested 2026-08-04 --
-# `emacsclient --eval '(+ 1 1)'` answers 2 from in here, and a full
-# edit round trip works: emacsclient blocks, C-x # in Emacs releases
-# it with exit 0, and the edited text is what claude reads back.
+# $EDITOR; without this it lands in vi.  Reaching the Emacs server
+# from inside the sandbox needs an explicit AF_UNIX grant -- see
+# --allow-unix-socket on the exec line at the bottom.  nono still
+# denies reads of the socket *directory* (ls /run/user/<uid>/emacs
+# fails), which is fine: emacsclient only needs connect().
+#
+# This used to work with no grant at all (tested 2026-08-04, nono
+# 0.71.0).  nono 0.74.0 added AF_UNIX mediation, and connect() then
+# started failing with EACCES -- Emacs reports it as "Emacsclient quit
+# unexpectedly (exit code 1)".  A filesystem grant on the socket does
+# NOT cover connect(): the profile grants it under allow_file and
+# read_file, `nono why --path <socket> --op read` answers ALLOWED, and
+# emacsclient still cannot connect.  Only the unix_socket capability
+# counts.  Confirm with `nono run --dry-run`, which prints a separate
+# "sock" line for it.
 #
 # Deliberately a bare word, no flags: claude may exec $EDITOR without
 # a shell, in which case anything with a space would fail to resolve.
@@ -96,6 +103,14 @@ fi
 for domain in ${CLAUDE_NONO_ALLOW_DOMAIN:-}; do
     set -- --allow-domain "$domain" "$@"
 done
+
+# The Emacs server socket, for $EDITOR above.  Guarded on both the
+# variable and the socket: if the Emacs server is down there is
+# nothing to grant, and naming a path that does not exist is a
+# needless widening of the policy.
+if [ -S "${XDG_RUNTIME_DIR:-}/emacs/server" ]; then
+    set -- --allow-unix-socket "$XDG_RUNTIME_DIR/emacs/server" "$@"
+fi
 
 # --allow "$harness_tmp" is redundant with the pack profile as of
 # 0.0.16, which grants /tmp/claude-$UID itself.  Kept because it costs
