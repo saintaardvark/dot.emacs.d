@@ -464,3 +464,45 @@ it means denial save-prompts are writing to the live profile, and the
 repo copy is no longer the source of truth.  Two things to decide:
 whether to reconcile the drift back into git, and whether to keep the
 socket in the profile at all now that the wrapper grants it.
+
+## 2026-09-10 — the ctrl-g editor buffer now opens in the Claude window
+
+**Question 1: can I edit inside the Claude buffer itself?**  No, not
+with claude-code-ide.  That buffer is a terminal emulator (ghostel);
+its text is the screen the TUI paints, and self-inserting keys are
+bound to "send this byte to the pty".  There is nothing for Emacs
+editing commands to act on.  Real Emacs editing of the prompt means
+not running the TUI at all -- an ACP/print-mode client such as
+agent-shell, which renders into an ordinary buffer.  Cost: no TUI
+(permission dialogs, /commands, plan mode, ctrl-r) and the nono
+wrapper would have to be re-pointed at the ACP binary.
+
+**Question 2: can the editor buffer take over the Claude window?**
+Yes, and that is what landed.  `server-window' is now
+`x-hugh-claude-server-window' (lisp/x-hugh-claude.el).  It puts the
+emacsclient buffer in the window already showing `*claude-code[...]*'
+instead of splitting the frame.
+
+Mechanics worth remembering:
+
+- The Claude window is a *dedicated* side window
+  (claude-code-ide.el:995), so `set-window-buffer' would signal.  The
+  fix downgrades dedication to a soft value first; `set-window-buffer'
+  accepts that and resets the flag to nil.
+
+- `x-hugh-claude--rededicate' on `window-buffer-change-functions'
+  restores hard dedication once the terminal buffer is back in the
+  window, then removes itself.
+
+- C-x # works unchanged: `server-kill-new-buffers' is t, so the temp
+  buffer is killed and the window falls back to its previous buffer,
+  the terminal.
+
+- Only files under `temporary-file-directory' are redirected, so
+  ordinary emacsclient use (git commit messages, `emacsclient foo.py')
+  keeps server.el's default placement.  Set
+  `x-hugh-claude-editor-in-claude-window' to nil to disable entirely.
+
+Verified working 2026-09-10.  Emacs cannot exec inside the sandbox (its
+dump file is unreadable), so it was parse-checked here and tested by
+Hugh in the live session.
