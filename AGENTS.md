@@ -64,6 +64,14 @@ Runtime state and installed packages are gitignored: `elpa*/`,
 - Every module sets `;;; -*- lexical-binding: t -*-` on line 1 and ends
   with a matching `(provide ...)`. Keep that shape.
 
+- Never add, change, or remove a keybinding without asking Hugh first.
+  This applies to every keymap, global or mode-local, and to hydra
+  heads. Write the command, leave it unbound, and propose a binding or
+  a hydra to attach it to. Hugh decides.
+
+- Do not leave a comment noting that a command has no keybinding. Most
+  commands here do not, so the comment says nothing.
+
 - Keymaps are centralized. Actual `global-set-key` / `define-key` calls
   go in `lisp/x-hugh-keymap.el`, which loads near the end. In other
   modules leave a comment noting the binding, not the binding itself.
