@@ -216,5 +216,30 @@ Created by Claude."
             (insert (format "<details>\n<summary>%s</summary>\n\n```\n%s\n```\n</details>"
                             summary body))))))))
 
+(defun x-hugh-copy-region-unwrapped (beg end)
+  "Copy region from BEG to END to the kill ring with line wrapping removed.
+
+Meant for pasting into Google Docs and the like.  Within each
+paragraph, every newline (and the whitespace around it) becomes a
+single space; blank lines between paragraphs are kept.  Leading
+and trailing whitespace is trimmed.  The buffer is not modified."
+  (interactive "r")
+  (let ((text (buffer-substring-no-properties beg end)))
+    (with-temp-buffer
+      (insert text)
+      (delete-trailing-whitespace)
+      (goto-char (point-min))
+      (while (re-search-forward "[ \t]*\n[ \t]*" nil t)
+        ;; Only join when there is text on both sides, i.e. this is
+        ;; a wrap inside a paragraph rather than a paragraph break.
+        (unless (or (eq (char-before (match-beginning 0)) ?\n)
+                    (eq (char-after) ?\n)
+                    (= (match-beginning 0) (point-min))
+                    (eobp))
+          (replace-match " ")))
+      (kill-new (string-trim (buffer-string)))))
+  (deactivate-mark)
+  (message "Copied region unwrapped"))
+
 (provide 'x-hugh-text)
 ;;; x-hugh-text.el ends here.

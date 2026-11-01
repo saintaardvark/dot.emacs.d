@@ -226,6 +226,7 @@ _'_: Delete trailing whitespace               _._: mark position _/_: jump to ma
   ("a" align-values "align regions")
   ("b" x-hugh-boxquote-yank-and-indent "boxquote-yank-indent")
   ("c" x-hugh-git-changetype "git-changetype")
+  ("C" x-hugh-copy-region-unwrapped "Copy region unwrapped")
   ("d" x-hugh-markdown-footnote "markdown footnote")
   ("e" x-hugh-details-summary "<details>")
   ("E" x-hugh-details-surround "<details>, but surround")
